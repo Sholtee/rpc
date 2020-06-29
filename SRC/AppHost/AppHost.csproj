@@ -8,11 +8,6 @@
   <Import Project="../Common.targets" />
 
   <ItemGroup>
-    <Folder Include="Private\" />
-    <Folder Include="Public\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Injector.NET" Version="3.*" />
   </ItemGroup>
 
