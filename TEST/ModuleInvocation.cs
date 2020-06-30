@@ -23,6 +23,8 @@ namespace Solti.Utils.AppHost.Tests
             void Void();
             [Alias("Cica")]
             void Bar();
+            [Ignore]
+            void Ignored();
         }
 
         private static ModuleInvocation GetModuleInvocation() 
@@ -131,6 +133,19 @@ namespace Solti.Utils.AppHost.Tests
 
             Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Bar), JsonSerializer.Serialize(new object[0])));
             Assert.DoesNotThrow(() => Invocation.Invoke(mockInjector.Object, nameof(IService), "Cica", JsonSerializer.Serialize(new object[0])));
+        }
+
+        [Test]
+        public void ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount() 
+        {
+            var mockService = new Mock<IService>(MockBehavior.Strict);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.Get(typeof(IService), null))
+                .Returns(mockService.Object);
+
+            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Ignored), JsonSerializer.Serialize(new object[0])));
         }
     }
 }

@@ -107,7 +107,7 @@ namespace Solti.Utils.AppHost.Internals
                                 (Expression) CreateSwitch
                                 (
                                     parameter: methodId, 
-                                    cases: GetAllInterfaceMethods(iface).Select
+                                    cases: GetAllInterfaceMethods(iface).Where(method => method.GetCustomAttribute<IgnoreAttribute>() == null).Select
                                     (
                                         method => 
                                         (
