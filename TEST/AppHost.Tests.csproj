@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <AssemblyName>Solti.Utils.AppHost.Tests</AssemblyName>
+    <RootNamespace>Solti.Utils.AppHost.Tests</RootNamespace>
+    <Configurations>Debug</Configurations>
+    <OutputType>Library</OutputType>
+    <Configurations>Debug</Configurations>
+  </PropertyGroup>
+
+  <!--OpenCover requires .NET Core 2.2 while Test Explorer needs 3.X-->
+  <PropertyGroup Condition="'$(CI)'==''">
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\BIN\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.*" />
+    <PackageReference Include="nunit" Version="3.*" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
+    <PackageReference Include="NunitXml.TestLogger" Version="2.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SRC\AppHost\AppHost.csproj" />
+  </ItemGroup>
+
+</Project>
