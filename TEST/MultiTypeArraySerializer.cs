@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 using NUnit.Framework;
 
@@ -45,5 +46,9 @@ namespace Solti.Utils.AppHost.Tests
                 Assert.That(result[i], Is.EqualTo(testCase.Result[i]));
             }
         }
+
+        [TestCase("[]")]
+        [TestCase("[1, 2]")]
+        public void Deserialize_ShouldThrowOnInvalidLength(string jsonString) => Assert.Throws<JsonException>(() => MultiTypeArraySerializer.Deserialize(jsonString, typeof(int)));
     }
 }
