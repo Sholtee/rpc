@@ -27,7 +27,7 @@ namespace Solti.Utils.AppHost.Internals
     internal class ModuleInvocationBuilder
     {
         #region Private
-        private static MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
+        private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
 
         private readonly HashSet<Type> FModules = new HashSet<Type>();
 
