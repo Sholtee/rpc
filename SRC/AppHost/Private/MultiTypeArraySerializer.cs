@@ -10,6 +10,8 @@ using System.Text.Json.Serialization;
 
 namespace Solti.Utils.AppHost.Internals
 {
+    using Properties;
+
     internal static class MultiTypeArraySerializer
     {
         public static object[] Deserialize(string jsonString, params Type[] elementTypes) 
@@ -32,7 +34,7 @@ namespace Solti.Utils.AppHost.Internals
                 // Csak tomboket tamogatunk
                 //
 
-                if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
+                if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException(Resources.NOT_AN_ARRAY);
 
                 object[] result = new object[ElementTypes.Count];
 
@@ -44,7 +46,7 @@ namespace Solti.Utils.AppHost.Internals
                         // A tomb hossza kissebb mint az elvart.
                         //
 
-                        if (i < result.Length) throw new JsonException();
+                        if (i < result.Length) throw new JsonException(Resources.INAPPROPRIATE_ARRAY_LENGTH);
 
                         return result;
                     }
@@ -53,7 +55,7 @@ namespace Solti.Utils.AppHost.Internals
                     // A tomb hossza nagyobb mint az elvart
                     //
 
-                    if (i == result.Length) throw new JsonException();
+                    if (i == result.Length) throw new JsonException(Resources.INAPPROPRIATE_ARRAY_LENGTH);
 
                     //
                     // Elem deszerializalasa es rogzitese
