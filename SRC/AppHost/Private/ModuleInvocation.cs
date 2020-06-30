@@ -85,37 +85,42 @@ namespace Solti.Utils.AppHost.Internals
         private Expression<ModuleInvocation> BuildExpression(IEnumerable<Type> interfaces) 
         {
             ParameterExpression
-                injector = Expression.Parameter(typeof(IInjector), nameof(injector)),
-                ifaceId  = Expression.Parameter(typeof(string),    nameof(ifaceId)),
-                methodId = Expression.Parameter(typeof(string),    nameof(methodId)),
-                args     = Expression.Parameter(typeof(string),    nameof(args));
+                injector  = Expression.Parameter(typeof(IInjector), nameof(injector)),
+                ifaceId   = Expression.Parameter(typeof(string),    nameof(ifaceId)),
+                methodId  = Expression.Parameter(typeof(string),    nameof(methodId)),
+                args      = Expression.Parameter(typeof(string),    nameof(args)),
+                argsArray = Expression.Variable (typeof(object?[]), nameof(argsArray));
 
             return Expression.Lambda<ModuleInvocation>
             (
-                CreateSwitch
+                Expression.Block
                 (
-                    parameter: ifaceId,
-                    cases: interfaces.Select
+                    variables: new[] { argsArray },
+                    CreateSwitch
                     (
-                        iface =>
+                        parameter: ifaceId,
+                        cases: interfaces.Select
                         (
-                            (MemberInfo) iface,
-                            (Expression) CreateSwitch
+                            iface =>
                             (
-                                parameter: methodId, 
-                                cases: GetAllInterfaceMethods(iface).Select
+                                (MemberInfo) iface,
+                                (Expression) CreateSwitch
                                 (
-                                    method => 
+                                    parameter: methodId, 
+                                    cases: GetAllInterfaceMethods(iface).Select
                                     (
-                                        (MemberInfo) method, 
-                                        (Expression) InvokeModule(iface, method)
-                                    )
-                                ), 
-                                defaultBody: Throw<MissingMethodException>(new[] { typeof(string), typeof(string) }, ifaceId, methodId)
+                                        method => 
+                                        (
+                                            (MemberInfo) method, 
+                                            (Expression) InvokeModule(iface, method)
+                                        )
+                                    ), 
+                                    defaultBody: Throw<MissingMethodException>(new[] { typeof(string), typeof(string) }, ifaceId, methodId)
+                                )
                             )
-                        )
-                    ),
-                    defaultBody: Throw<ServiceNotFoundException>(new[] { typeof(string) }, ifaceId)
+                        ),
+                        defaultBody: Throw<ServiceNotFoundException>(new[] { typeof(string) }, ifaceId)
+                    )
                 ),
                 injector,
                 ifaceId,
@@ -126,60 +131,62 @@ namespace Solti.Utils.AppHost.Internals
 
             Expression InvokeModule(Type iface, MethodInfo method)
             {
-                //
-                // object[] argsArray = deserializer(argsString);
-                //
-
-                ParameterExpression argsArray = Expression.Variable(typeof(object[]), nameof(argsArray));
-
-                Expression getArgs = Expression.Assign
-                (
-                    argsArray,
-                    Expression.Invoke
-                    (
-                        Expression.Constant(GetDeserializerFor(method)),
-                        args
-                    )
-                );
-
-                //
-                // ((TInterface) injector.Get(typeof(TInterface), null)).Method((T0) argsArray[0], ..., (TN) argsArray[N])
-                //
-
-                Expression call = Expression.Call
-                (
+                Expression 
                     //
-                    // (TInterface) injector.Get(typeof(TInterface), null)
+                    // argsArray = deserializer(argsString);
                     //
 
-                    instance: Expression.Convert
+                    assignArgs = Expression.Assign
                     (
-                        Expression.Call
+                        argsArray,
+                        Expression.Invoke
                         (
-                            injector,
-                            InjectorGet,
-                            Expression.Constant(iface),
-                            Expression.Constant(null, typeof(string))
-                        ),
-                        iface
+                            Expression.Constant(GetDeserializerFor(method)),
+                            args
+                        )
                     ),
 
                     //
-                    // .Method((T0) argsArray[0], ..., (TN) argsArray[N])
+                    // ((TInterface) injector.Get(typeof(TInterface), null)).Method((T0) argsArray[0], ..., (TN) argsArray[N])
                     //
 
-                    method,
-                    arguments: method.GetParameters().Select
+                    callModule = Expression.Call
                     (
-                        (para, i) => Expression.Convert
-                        (
-                            Expression.ArrayAccess(argsArray, Expression.Constant(i)),
-                            para.ParameterType
-                        )
-                    )
-                );
+                        //
+                        // (TInterface) injector.Get(typeof(TInterface), null)
+                        //
 
-                List<Expression> block = new List<Expression> { getArgs };
+                        instance: Expression.Convert
+                        (
+                            Expression.Call
+                            (
+                                injector,
+                                InjectorGet,
+                                Expression.Constant(iface),
+                                Expression.Constant(null, typeof(string))
+                            ),
+                            iface
+                        ),
+
+                        //
+                        // .Method((T0) argsArray[0], ..., (TN) argsArray[N])
+                        //
+
+                        method,
+                        arguments: method.GetParameters().Select
+                        (
+                            (para, i) => Expression.Convert
+                            (
+                                Expression.ArrayAccess(argsArray, Expression.Constant(i)),
+                                para.ParameterType
+                            )
+                        )
+                    );
+
+                List<Expression> block = new List<Expression> 
+                { 
+                    assignArgs
+                };
 
                 if (method.ReturnType != typeof(void))
                     //
@@ -188,7 +195,7 @@ namespace Solti.Utils.AppHost.Internals
 
                     block.Add
                     (
-                        Expression.Convert(call, typeof(object))
+                        Expression.Convert(callModule, typeof(object))
                     );
                 else
                 {
@@ -197,15 +204,11 @@ namespace Solti.Utils.AppHost.Internals
                     // return null;
                     //
 
-                    block.Add(call);
+                    block.Add(callModule);
                     block.Add(Expression.Default(typeof(object)));
                 }
 
-                return Expression.Block
-                (
-                    variables: new[] { argsArray },
-                    block
-                );
+                return Expression.Block(block);
             }
         }
         #endregion
