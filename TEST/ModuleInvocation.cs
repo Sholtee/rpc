@@ -47,7 +47,7 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(new Mock<IService>().Object);
 
-            Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }));
+            Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 })));
 
             mockInjector.Verify(i => i.Get(It.IsAny<Type>(), null), Times.Once);
         }
@@ -65,7 +65,7 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.That(Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 })), Is.EqualTo(3));
+            Assert.That(Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }))), Is.EqualTo(3));
             mockService.Verify(svc => svc.Add(1, 2), Times.Once);
         }
 
@@ -74,7 +74,7 @@ namespace Solti.Utils.AppHost.Tests
         {
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
-            Assert.Throws<ServiceNotFoundException>(() => Invocation.Invoke(mockInjector.Object, "Invalid", nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 })));
+            Assert.Throws<ServiceNotFoundException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, "Invalid", nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }))));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, nameof(IService), "Invalid", null));
+            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Invalid", null)));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<JsonException>(() => Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, })));
+            Assert.Throws<JsonException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, }))));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.IsNull(Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Void), JsonSerializer.Serialize(new object[0])));
+            Assert.IsNull(Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Void), JsonSerializer.Serialize(new object[0]))));
             mockService.Verify(svc => svc.Void(), Times.Once);
         }
 
@@ -131,8 +131,8 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Bar), JsonSerializer.Serialize(new object[0])));
-            Assert.DoesNotThrow(() => Invocation.Invoke(mockInjector.Object, nameof(IService), "Cica", JsonSerializer.Serialize(new object[0])));
+            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Bar), JsonSerializer.Serialize(new object[0]))));
+            Assert.DoesNotThrow(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Cica", JsonSerializer.Serialize(new object[0]))));
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace Solti.Utils.AppHost.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, nameof(IService), nameof(IService.Ignored), JsonSerializer.Serialize(new object[0])));
+            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Ignored), JsonSerializer.Serialize(new object[0]))));
         }
     }
 }

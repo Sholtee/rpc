@@ -15,7 +15,7 @@ namespace Solti.Utils.AppHost
 
     internal class RequestContext : IRequestContext
     {
-        private RequestContext(string? sessionId, string module, string method, string args)
+        internal RequestContext(string? sessionId, string module, string method, string args)
         {
             SessionId = sessionId;
             Module = module;

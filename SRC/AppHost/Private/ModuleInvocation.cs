@@ -16,13 +16,11 @@ namespace Solti.Utils.AppHost.Internals
     using Properties;
 
     /// <summary>
-    /// Executes module methods by name.
+    /// Executes module methods.
     /// </summary>
     /// <param name="injector">The <see cref="IInjector"/> in which the module was registered.</param>
-    /// <param name="ifaceId">The short name of the service interface (e.g.: IMyService).</param>
-    /// <param name="methodId">The name of the interface emthod to be invoked.</param>
-    /// <param name="args">The serialized method arguments.</param>
-    internal delegate object ModuleInvocation(IInjector injector, string ifaceId, string methodId, string args);
+    /// <param name="context">The context which describes the invocation.</param>
+    internal delegate object ModuleInvocation(IInjector injector, IRequestContext context);
 
     internal class ModuleInvocationBuilder
     {
@@ -49,9 +47,9 @@ namespace Solti.Utils.AppHost.Internals
             Expression.Default(typeof(object))
         );
 
-        private Expression CreateSwitch(ParameterExpression parameter, IEnumerable<(MemberInfo Member, Expression Body)> cases, Expression defaultBody) => Expression.Switch
+        private Expression CreateSwitch(Expression value, IEnumerable<(MemberInfo Member, Expression Body)> cases, Expression defaultBody) => Expression.Switch
         (
-            switchValue: parameter,
+            switchValue: value,
             defaultBody,
             comparison: null, // default
             cases: cases.Select
@@ -86,10 +84,12 @@ namespace Solti.Utils.AppHost.Internals
         {
             ParameterExpression
                 injector  = Expression.Parameter(typeof(IInjector), nameof(injector)),
-                ifaceId   = Expression.Parameter(typeof(string),    nameof(ifaceId)),
-                methodId  = Expression.Parameter(typeof(string),    nameof(methodId)),
-                args      = Expression.Parameter(typeof(string),    nameof(args)),
-                argsArray = Expression.Variable (typeof(object?[]), nameof(argsArray));
+                context   = Expression.Parameter(typeof(IRequestContext), nameof(context)),
+                argsArray = Expression.Variable(typeof(object?[]), nameof(argsArray));
+
+            Expression
+                ifaceId  = GetFromContext(nameof(IRequestContext.Module)),
+                methodId = GetFromContext(nameof(IRequestContext.Method));
 
             return Expression.Lambda<ModuleInvocation>
             (
@@ -98,7 +98,7 @@ namespace Solti.Utils.AppHost.Internals
                     variables: new[] { argsArray },
                     CreateSwitch
                     (
-                        parameter: ifaceId,
+                        value: ifaceId,
                         cases: interfaces.Select
                         (
                             iface =>
@@ -106,7 +106,7 @@ namespace Solti.Utils.AppHost.Internals
                                 (MemberInfo) iface,
                                 (Expression) CreateSwitch
                                 (
-                                    parameter: methodId, 
+                                    value: methodId, 
                                     cases: GetAllInterfaceMethods(iface).Where(method => method.GetCustomAttribute<IgnoreAttribute>() == null).Select
                                     (
                                         method => 
@@ -123,9 +123,7 @@ namespace Solti.Utils.AppHost.Internals
                     )
                 ),
                 injector,
-                ifaceId,
-                methodId,
-                args
+                context
             );
 
 
@@ -142,7 +140,7 @@ namespace Solti.Utils.AppHost.Internals
                         Expression.Invoke
                         (
                             Expression.Constant(GetDeserializerFor(method)),
-                            args
+                            GetFromContext(nameof(IRequestContext.Args))
                         )
                     ),
 
@@ -210,6 +208,12 @@ namespace Solti.Utils.AppHost.Internals
 
                 return Expression.Block(block);
             }
+
+            MemberExpression GetFromContext(string name) => Expression.Property
+            (
+                context,
+                typeof(IRequestContext).GetProperty(name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
+            );
         }
         #endregion
 
