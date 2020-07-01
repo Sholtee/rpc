@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Security.Authentication;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -104,6 +105,7 @@ namespace Solti.Utils.AppHost
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
 
+            response.ContentEncoding = Encoding.UTF8;
             response.AddHeader("Content-Type", "application/json");
 
             object?[] toBeSerialized = new object[2];
