@@ -105,8 +105,8 @@ namespace Solti.Utils.AppHost
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
 
+            response.ContentType = "application/json";
             response.ContentEncoding = Encoding.UTF8;
-            response.AddHeader("Content-Type", "application/json");
 
             object?[] toBeSerialized = new object[2];
 
