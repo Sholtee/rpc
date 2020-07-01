@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Injector.NET" Version="3.*" />
     <PackageReference Include="Injector.NET.Extensions" Version="3.*" />
+    <PackageReference Include="Solti.Utils.Primitives" Version="1.*" />
     <PackageReference Include="System.Text.Json" Version="4.*" />
   </ItemGroup>
 
