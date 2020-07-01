@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Security.Authentication;
 using System.Text.Json;
@@ -24,7 +25,10 @@ namespace Solti.Utils.AppHost
     /// </summary>
     public class AppHostBase: Disposable
     {
-        private readonly IServiceContainer FRootContainer = new ServiceContainer();
+        /// <summary>
+        /// The root service container.
+        /// </summary>
+        public IServiceContainer RootContainer { get; } = new ServiceContainer();
 
         private readonly ModuleInvocationBuilder FModuleInvocationBuilder = new ModuleInvocationBuilder();
 
@@ -33,15 +37,18 @@ namespace Solti.Utils.AppHost
         /// <summary>
         /// Processes HTTP requests asynchronously.
         /// </summary>
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         protected virtual async Task<object?> ProcessRequest(HttpListenerRequest request) 
         {
-            IRequestContext context = await RequestContext.Create(request ?? throw new ArgumentNullException(nameof(request)));
-
-            using (IInjector injector = FRootContainer.CreateInjector()) 
+            try
             {
-                injector.UnderlyingContainer.Instance(context);
+                IRequestContext context = await RequestContext.Create(request ?? throw new ArgumentNullException(nameof(request)));
 
-                object? result = FModuleInvocation!(injector, context);
+                object? result = InvokeModule(context);
+
+                //
+                // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt.
+                //
 
                 if (result is Task task)
                 {
@@ -59,7 +66,36 @@ namespace Solti.Utils.AppHost
 
                 return result;
             }
+            
+            //
+            // A "catch" blokk ne az InvokeModule()-ban legyen h pl a RequestContext.Create() altal dobott
+            // hibakat is el tudjuk kapni
+            //
+
+            catch (Exception ex)
+            {
+                return ex;
+            }
         }
+
+        /// <summary>
+        /// Invokes a module method described by the <paramref name="context"/>.
+        /// </summary>
+        protected virtual object? InvokeModule(IRequestContext context) 
+        {
+            using (IInjector injector = CreateInjector())
+            {
+                injector.UnderlyingContainer.Instance(context);
+
+                return FModuleInvocation!(injector, context);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="IInjector"/> instance for a session.
+        /// </summary>
+        /// <remarks>You should override this method if you're using child containers.</remarks>
+        protected virtual IInjector CreateInjector() => RootContainer.CreateInjector();
 
         /// <summary>
         /// Sets the HTTP response.

@@ -131,7 +131,7 @@ namespace Solti.Utils.AppHost.Internals
             {
                 Expression 
                     //
-                    // argsArray = deserializer(argsString);
+                    // argsArray = deserializer(context.Args);
                     //
 
                     assignArgs = Expression.Assign
