@@ -134,7 +134,7 @@ namespace Solti.Utils.AppHost
             if (ex is InvalidCredentialException) return  HttpStatusCode.Unauthorized;
             if (ex is UnauthorizedAccessException) return HttpStatusCode.Forbidden;
             
-            return HttpStatusCode.BadRequest;
+            return HttpStatusCode.InternalServerError;
         }
 
         /// <summary>
