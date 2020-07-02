@@ -6,14 +6,13 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Solti.Utils.AppHost
+namespace Solti.Utils.AppHost.Internals
 {
     using Primitives.Patterns;
     
@@ -24,7 +23,7 @@ namespace Solti.Utils.AppHost
     {
         private bool FNeedToRemoveUrlReservation;
 
-        private readonly HttpListener FListener = new HttpListener();
+        private HttpListener FListener = new HttpListener();
 
         #region Protected
         /// <summary>
@@ -96,16 +95,28 @@ namespace Solti.Utils.AppHost
                 {
                     HttpListenerResponse response = context.Response;
 
-                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    response.StatusCode = (int) HttpStatusCode.InternalServerError;
                     response.ContentType = "text/html";
-                    response.ContentEncoding = Encoding.UTF8;
 
-                    using StreamWriter sw = new StreamWriter(response.OutputStream, response.ContentEncoding);
-                    sw.Write("Internal Server Error");
+                    WriteResponseString(response, "Internal Server Error");
 
                     response.Close();
                 }
             }
+        }
+
+        /// <summary>
+        /// Writes the given string into a <see cref="HttpListenerResponse"/>.
+        /// </summary>
+        protected static void WriteResponseString(HttpListenerResponse response, string responseString) 
+        {
+            if (response == null)
+                throw new ArgumentNullException(nameof(response));
+
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+            response.ContentEncoding = Encoding.UTF8;
+            response.ContentLength64 = buffer.Length;
+            response.OutputStream.Write(buffer, 0, buffer.Length);
         }
 
         /// <summary>
@@ -145,7 +156,7 @@ namespace Solti.Utils.AppHost
         /// <summary>
         /// Returns true if the Web Service has already been started (that does not mean that it is listening).
         /// </summary>
-        public bool IsStarted { get; private set; }
+        public bool IsStarted => Url != null;
 
         /// <summary>
         /// Returns true if the Web Service is listening.
@@ -163,13 +174,11 @@ namespace Solti.Utils.AppHost
         /// Starts the Web Service.
         /// </summary>
         [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start(string url)
         {
             if (IsStarted)
                 return;
-
-            if (new[] { "http", "https" }.Contains(new Uri(url).Scheme))
-                throw new NotSupportedException();
 
             FListener.Prefixes.Add(url);
 
@@ -177,22 +186,45 @@ namespace Solti.Utils.AppHost
             {
                 FListener.Start();
             }
-            catch (HttpListenerException ex) when (Environment.OSVersion.Platform != PlatformID.Win32NT && ex.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
+            catch (HttpListenerException ex) 
             {
-                AddUrlReservation(url);
-                FListener.Start();
-                FNeedToRemoveUrlReservation = true;
+                //
+                // Fasz se tudja miert de ha kivetel volt akkor a HttpListener felszabaditasra kerul:
+                // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
+                //
+
+                EnsureListenerNotDisposed();
+
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
+                {
+                    AddUrlReservation(url);
+                    FNeedToRemoveUrlReservation = true;
+                    FListener.Start();
+                }                              
             }
 
             ThreadPool.QueueUserWorkItem(_ => Listen());
 
-            IsStarted = true;
             Url = url;
+
+            void EnsureListenerNotDisposed() 
+            {
+                try
+                {
+                    FListener.Stop();
+                }
+                catch (ObjectDisposedException)
+                {
+                    FListener = new HttpListener();
+                    FListener.Prefixes.Add(url);
+                }
+            }
         }
 
         /// <summary>
         /// Shuts down the Web Service.
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Stop()
         {
             if (!IsStarted) return;
@@ -203,7 +235,6 @@ namespace Solti.Utils.AppHost
             if (FNeedToRemoveUrlReservation)
                 RemoveUrlReservation(Url!);
 
-            IsStarted = false;
             Url = null;
         }
 
