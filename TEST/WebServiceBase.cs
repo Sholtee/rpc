@@ -96,5 +96,22 @@ namespace Solti.Utils.AppHost.Tests
 
             Assert.That(responseBody, Is.EqualTo("Internal Server Error"));
         }
+
+        [Test]
+        public void Service_CanBeRestarted() 
+        {
+            Assert.That(Svc.IsStarted);
+            Assert.That(Svc.IsListening);
+
+            Assert.DoesNotThrow(Svc.Stop);
+
+            Assert.That(!Svc.IsStarted);
+            Assert.That(!Svc.IsListening);
+
+            Assert.DoesNotThrow(() => Svc.Start(TestUrl));
+
+            Assert.That(Svc.IsStarted);
+            Assert.That(Svc.IsListening);
+        }
     }
 }
