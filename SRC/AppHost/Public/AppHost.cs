@@ -113,7 +113,11 @@ namespace Solti.Utils.AppHost
             if (result is Exception ex)
             {
                 response.StatusCode = (int) GetErrorCode(ex);
-                toBeSerialized[1] = ex;
+                toBeSerialized[1] = new
+                {
+                    ExceptionType = ex.GetType().FullName,
+                    Exception = ex
+                };
             }
             else 
             {
