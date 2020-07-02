@@ -36,11 +36,9 @@ namespace Solti.Utils.AppHost.Internals
 
             while (IsListening)
             {
-                FListener.BeginGetContext(asyncResult => 
+                FListener.BeginGetContext(asyncResult =>
                 {
-                    if (!IsListening) return;
-
-                    HttpListenerContext context;
+                    HttpListenerContext? context = null;
 
                     try
                     {
@@ -50,25 +48,23 @@ namespace Solti.Utils.AppHost.Internals
 
                         context = FListener.EndGetContext(asyncResult);
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         //
-                        // FListener.Stop() hivva volt amig az EndGetContext() varakozott akkor is ide jutunk
+                        // Ha az FListener.Stop() hivva volt amig az EndGetContext() varakozott akkor ide jutunk
                         //
 
-                        return;
-                    }
-                    finally 
-                    {
-                        //
-                        // Ha a kiszolgalo leallitasra kerult (catch) v sikeresen lekerdeztuk a kontextust akkor jelezzuk
-                        // h a "while" ciklus a kovetkezo iteracioba lephet (ha tud).
-                        //
-                        
-                        nextTurn.Set();
+                        Trace.WriteLine($"{nameof(FListener)}.{nameof(FListener.EndGetContext)} failed with error: {ex}");
                     }
 
-                    SafeCallContextProcessor(context);
+                    //
+                    // Ha a kiszolgalo leallitasra kerult (catch) v sikeresen lekerdeztuk a kontextust akkor jelezzuk
+                    // h a "while" ciklus a kovetkezo iteracioba lephet (ha tud).
+                    //
+
+                    nextTurn.Set();
+
+                    if (context != null) SafeCallContextProcessor(context);
                 }, null);
 
                 nextTurn.WaitOne();
@@ -200,7 +196,13 @@ namespace Solti.Utils.AppHost.Internals
                     AddUrlReservation(url);
                     FNeedToRemoveUrlReservation = true;
                     FListener.Start();
-                }                              
+                }
+
+                //
+                // Ha nem URL rezervacios gondunk volt akkor tovabb dobjuk a kivetelt
+                //
+
+                else throw;
             }
 
             ThreadPool.QueueUserWorkItem(_ => Listen());
