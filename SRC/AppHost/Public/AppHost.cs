@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Net;
 using System.Security.Authentication;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Solti.Utils.AppHost
     using Internals;
 
     using Primitives;
-    using Primitives.Patterns;
+    using Primitives.Patterns; 
 
     /// <summary>
     /// AppHost
@@ -105,27 +106,39 @@ namespace Solti.Utils.AppHost
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
 
-            response.ContentType = "application/json";
-            response.ContentEncoding = Encoding.UTF8;
-
-            object?[] toBeSerialized = new object[2];
-
-            if (result is Exception ex)
+            switch(result)
             {
-                response.StatusCode = (int) GetErrorCode(ex);
-                toBeSerialized[1] = new
-                {
-                    ExceptionType = ex.GetType().FullName,
-                    Exception = ex
-                };
+                case Stream stream:
+                    response.StatusCode = (int) HttpStatusCode.OK;
+                    response.ContentType = "application/octet-stream";
+                    response.ContentEncoding = null;
+                    stream.CopyTo(response.OutputStream);
+                    break;
+                case Exception ex:
+                    response.StatusCode = (int) GetErrorCode(ex);
+                    response.ContentType = "application/json";
+                    response.ContentEncoding = Encoding.UTF8;
+                    await JsonSerializer.SerializeAsync(response.OutputStream, new object?[2] 
+                    { 
+                        null,  
+                        new
+                        {
+                            ExceptionType = ex.GetType().FullName,
+                            Exception = ex
+                        }
+                    });
+                    break;
+                default:
+                    response.StatusCode = (int) HttpStatusCode.OK;
+                    response.ContentType = "application/json";
+                    response.ContentEncoding = Encoding.UTF8;
+                    await JsonSerializer.SerializeAsync(response.OutputStream, new object?[2]
+                    {
+                        result,
+                        null
+                    });
+                    break;
             }
-            else 
-            {
-                response.StatusCode = (int) HttpStatusCode.OK;
-                toBeSerialized[0] = result;
-            }
-
-            await JsonSerializer.SerializeAsync(response.OutputStream, toBeSerialized);
 
             response.ContentLength64 = response.OutputStream.Length;
             response.Close();
