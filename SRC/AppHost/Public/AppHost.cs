@@ -127,6 +127,7 @@ namespace Solti.Utils.AppHost
 
             await JsonSerializer.SerializeAsync(response.OutputStream, toBeSerialized);
 
+            response.ContentLength64 = response.OutputStream.Length;
             response.Close();
         }
 
