@@ -102,7 +102,7 @@ namespace Solti.Utils.AppHost
         /// <summary>
         /// Sets the HTTP response.
         /// </summary>
-        protected virtual async Task CreateResponse(object result, HttpListenerResponse response)
+        protected virtual async Task CreateResponse(object? result, HttpListenerResponse response)
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
 
