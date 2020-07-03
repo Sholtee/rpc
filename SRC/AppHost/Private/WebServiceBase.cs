@@ -21,6 +21,7 @@ namespace Solti.Utils.AppHost.Internals
     /// </summary>
     public class WebServiceBase: Disposable
     {
+        #region Private
         private bool FNeedToRemoveUrlReservation;
 
         private HttpListener? FListener;
@@ -48,6 +49,7 @@ namespace Solti.Utils.AppHost.Internals
                 );
             } while (Task.WaitAny(isTerminated, getContext) == 1);
         }
+        #endregion
 
         #region Protected
         /// <summary>
