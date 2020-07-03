@@ -24,53 +24,30 @@ namespace Solti.Utils.AppHost.Internals
         private bool FNeedToRemoveUrlReservation;
 
         private HttpListener FListener = new HttpListener();
+        private Thread? FListenerThread;
+        private readonly ManualResetEventSlim FTerminated = new ManualResetEventSlim(false);
 
-        #region Protected
-        /// <summary>
-        /// Processes new requests.
-        /// </summary>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected virtual void Listen()
+        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
+        private void Listen()
         {
-            using AutoResetEvent nextTurn = new AutoResetEvent(false);
+            Task isTerminated = new Task(FTerminated.Wait);
+            isTerminated.Start();
 
-            while (IsListening)
+            Task<HttpListenerContext> getContext;
+
+            do
             {
-                FListener.BeginGetContext(asyncResult =>
-                {
-                    HttpListenerContext? context = null;
-
-                    try
-                    {
-                        //
-                        // Blokkolodik amig nincs adat.
-                        //
-
-                        context = FListener.EndGetContext(asyncResult);
-                    }
-                    catch(Exception ex)
-                    {
-                        //
-                        // Ha az FListener.Stop() hivva volt amig az EndGetContext() varakozott akkor ide jutunk
-                        //
-
-                        Trace.WriteLine($"{nameof(FListener)}.{nameof(FListener.EndGetContext)} failed with error: {ex}");
-                    }
-
-                    //
-                    // Ha a kiszolgalo leallitasra kerult (catch) v sikeresen lekerdeztuk a kontextust akkor jelezzuk
-                    // h a "while" ciklus a kovetkezo iteracioba lephet (ha tud).
-                    //
-
-                    nextTurn.Set();
-
-                    if (context != null) SafeCallContextProcessor(context);
-                }, null);
-
-                nextTurn.WaitOne();
-            }
+                getContext = FListener.GetContextAsync();
+                getContext.ContinueWith
+                (
+                    (t, _) => SafeCallContextProcessor(t.Result), 
+                    null, 
+                    TaskContinuationOptions.OnlyOnRanToCompletion
+                );
+            } while (Task.WaitAny(isTerminated, getContext) == 1);
         }
 
+        #region Protected
         /// <summary>
         /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
         /// </summary>
@@ -142,6 +119,7 @@ namespace Solti.Utils.AppHost.Internals
                 //
 
                 (FListener as IDisposable)?.Dispose();
+                FTerminated.Dispose();
             }
 
             base.Dispose(disposeManaged);
@@ -152,13 +130,12 @@ namespace Solti.Utils.AppHost.Internals
         /// <summary>
         /// Returns true if the Web Service has already been started (that does not mean that it is listening).
         /// </summary>
-        public bool IsStarted => Url != null;
+        public bool IsStarted => FListenerThread != null;
 
         /// <summary>
         /// Returns true if the Web Service is listening.
         /// </summary>
-        public bool IsListening => FListener.IsListening;
-
+        public bool IsListening => FListener.IsListening && FListenerThread?.IsAlive == true;
 
         /// <summary>
         /// The URL on which the Web Service is listaning.
@@ -205,7 +182,10 @@ namespace Solti.Utils.AppHost.Internals
                 else throw;
             }
 
-            ThreadPool.QueueUserWorkItem(_ => Listen());
+            FTerminated.Reset();
+
+            FListenerThread = new Thread(Listen);
+            FListenerThread.Start();
 
             Url = url;
 
@@ -230,6 +210,11 @@ namespace Solti.Utils.AppHost.Internals
         public void Stop()
         {
             if (!IsStarted) return;
+
+            FTerminated.Set();
+
+            FListenerThread!.Join();
+            FListenerThread = null;
 
             FListener.Stop();
             FListener.Prefixes.Remove(Url);
