@@ -98,7 +98,7 @@ namespace Solti.Utils.AppHost.Tests
         }
 
         [Test]
-        public void Service_CanBeRestarted() 
+        public async Task Service_CanBeRestarted() 
         {
             Assert.That(Svc.IsStarted);
             Assert.That(Svc.IsListening);
@@ -112,6 +112,12 @@ namespace Solti.Utils.AppHost.Tests
 
             Assert.That(Svc.IsStarted);
             Assert.That(Svc.IsListening);
+
+            //
+            // ujrainditas utan is mukodik
+            //
+
+            await Service_ShouldHandleRequests();
         }
     }
 }

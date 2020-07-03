@@ -23,13 +23,15 @@ namespace Solti.Utils.AppHost.Internals
     {
         private bool FNeedToRemoveUrlReservation;
 
-        private HttpListener FListener = new HttpListener();
+        private HttpListener? FListener;
         private Thread? FListenerThread;
         private readonly ManualResetEventSlim FTerminated = new ManualResetEventSlim(false);
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
+            Debug.Assert(FListener != null);
+
             Task isTerminated = new Task(FTerminated.Wait);
             isTerminated.Start();
 
@@ -37,7 +39,7 @@ namespace Solti.Utils.AppHost.Internals
 
             do
             {
-                getContext = FListener.GetContextAsync();
+                getContext = FListener!.GetContextAsync();
                 getContext.ContinueWith
                 (
                     (t, _) => SafeCallContextProcessor(t.Result), 
@@ -114,11 +116,6 @@ namespace Solti.Utils.AppHost.Internals
                 if (IsStarted)
                     Stop();
 
-                //
-                // Megvalisotja az IDisposable-t csak explicit-en
-                //
-
-                (FListener as IDisposable)?.Dispose();
                 FTerminated.Dispose();
             }
 
@@ -135,7 +132,7 @@ namespace Solti.Utils.AppHost.Internals
         /// <summary>
         /// Returns true if the Web Service is listening.
         /// </summary>
-        public bool IsListening => FListener.IsListening && FListenerThread?.IsAlive == true;
+        public bool IsListening => FListener?.IsListening == true && FListenerThread?.IsAlive == true;
 
         /// <summary>
         /// The URL on which the Web Service is listaning.
@@ -153,7 +150,7 @@ namespace Solti.Utils.AppHost.Internals
             if (IsStarted)
                 return;
 
-            FListener.Prefixes.Add(url);
+            FListener = InitCore();
 
             try
             {
@@ -189,6 +186,13 @@ namespace Solti.Utils.AppHost.Internals
 
             Url = url;
 
+            HttpListener InitCore() 
+            {
+                var result = new HttpListener();
+                result.Prefixes.Add(url);
+                return result;
+            }
+
             void EnsureListenerNotDisposed() 
             {
                 try
@@ -197,8 +201,7 @@ namespace Solti.Utils.AppHost.Internals
                 }
                 catch (ObjectDisposedException)
                 {
-                    FListener = new HttpListener();
-                    FListener.Prefixes.Add(url);
+                    FListener = InitCore();
                 }
             }
         }
@@ -216,8 +219,8 @@ namespace Solti.Utils.AppHost.Internals
             FListenerThread!.Join();
             FListenerThread = null;
 
-            FListener.Stop();
-            FListener.Prefixes.Remove(Url);
+            FListener!.Close();
+            FListener = null;
 
             if (FNeedToRemoveUrlReservation)
                 RemoveUrlReservation(Url!);
