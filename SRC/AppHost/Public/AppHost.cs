@@ -40,33 +40,16 @@ namespace Solti.Utils.AppHost
         /// Processes HTTP requests asynchronously.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected virtual async Task<object?> ProcessRequest(HttpListenerRequest request) 
+        protected virtual async Task ProcessRequestContext(HttpListenerContext context) 
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            object? result;
+
             try
             {
-                IRequestContext context = await RequestContext.Create(request ?? throw new ArgumentNullException(nameof(request)));
-
-                object? result = InvokeModule(context);
-
-                //
-                // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt.
-                //
-
-                if (result is Task task)
-                {
-                    await task;
-
-                    Type taskType = task.GetType();
-
-                    result = !taskType.IsGenericType
-                        ? null
-                        : taskType
-                            .GetProperty(nameof(Task<object>.Result))
-                            .ToGetter()
-                            .Invoke(task);
-                }
-
-                return result;
+                result = await InvokeModule(await RequestContext.Create(context.Request));
             }
             
             //
@@ -76,21 +59,46 @@ namespace Solti.Utils.AppHost
 
             catch (Exception ex)
             {
-                return ex;
+                result = ex;
             }
+
+            await CreateResponse(result, context.Response);
         }
 
         /// <summary>
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
-        protected virtual object? InvokeModule(IRequestContext context) 
+        protected async virtual Task<object?> InvokeModule(IRequestContext context) 
         {
-            using (IInjector injector = CreateInjector())
-            {
-                injector.UnderlyingContainer.Instance(context);
+            if (context == null) 
+                throw new ArgumentNullException(nameof(context));
 
-                return FModuleInvocation!(injector, context);
+            await using IInjector injector = CreateInjector();
+
+            injector.UnderlyingContainer.Instance(context);
+
+            object? result = FModuleInvocation!(injector, context);
+
+            //
+            // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt (es addig
+            // az injector sem szabadithato fel).
+            //
+
+            if (result is Task task)
+            {
+                await task;
+
+                Type taskType = task.GetType();
+
+                result = !taskType.IsGenericType
+                    ? null
+                    : taskType
+                        .GetProperty(nameof(Task<object>.Result))
+                        .ToGetter()
+                        .Invoke(task);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -104,7 +112,8 @@ namespace Solti.Utils.AppHost
         /// </summary>
         protected virtual async Task CreateResponse(object? result, HttpListenerResponse response)
         {
-            if (response == null) throw new ArgumentNullException(nameof(response));
+            if (response == null) 
+                throw new ArgumentNullException(nameof(response));
 
             switch(result)
             {
