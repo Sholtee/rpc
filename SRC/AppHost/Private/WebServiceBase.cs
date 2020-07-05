@@ -67,6 +67,22 @@ namespace Solti.Utils.AppHost.Internals
 
             return result;
         }
+
+        private static void InvokeNetsh(string arguments) 
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                throw new NotSupportedException();
+
+            var psi = new ProcessStartInfo("netsh", arguments)
+            {
+                Verb = "runas",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                UseShellExecute = true
+            };
+
+            Process.Start(psi)?.WaitForExit();
+        }
         #endregion
 
         #region Protected
@@ -241,41 +257,13 @@ namespace Solti.Utils.AppHost.Internals
         /// Adds an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-        public static void AddUrlReservation(string url)
-        {
-            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-                return;
-
-            var psi = new ProcessStartInfo("netsh", $"http add urlacl url={url} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes")
-            {
-                Verb = "runas",
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                UseShellExecute = true
-            };
-
-            Process.Start(psi)?.WaitForExit();
-        }
+        public static void AddUrlReservation(string url) => InvokeNetsh($"http add urlacl url={url} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes");
 
         /// <summary>
         /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-        public static void RemoveUrlReservation(string url)
-        {
-            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-                return;
-
-            var psi = new ProcessStartInfo("netsh", $"http delete urlacl url={url}")
-            {
-                Verb = "runas",
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                UseShellExecute = true
-            };
-
-            Process.Start(psi)?.WaitForExit();
-        }
+        public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url}");
         #endregion
     }
 }
