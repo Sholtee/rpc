@@ -176,13 +176,12 @@ namespace Solti.Utils.AppHost
                     response.StatusCode = (int) GetErrorCode(ex);
                     response.ContentType = "application/json";
                     response.ContentEncoding = Encoding.UTF8;
-                    await JsonSerializer.SerializeAsync(response.OutputStream, new object?[2] 
-                    { 
-                        null,  
-                        new
+                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse 
+                    {
+                        Exception = new ExceptionInfo 
                         {
-                            ExceptionType = ex.GetType().FullName,
-                            Exception = ex
+                            TypeName = ex.GetType().FullName,
+                            Instance = ex
                         }
                     });
                     break;
@@ -190,10 +189,9 @@ namespace Solti.Utils.AppHost
                     response.StatusCode = (int) HttpStatusCode.OK;
                     response.ContentType = "application/json";
                     response.ContentEncoding = Encoding.UTF8;
-                    await JsonSerializer.SerializeAsync(response.OutputStream, new object?[2]
+                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse 
                     {
-                        result,
-                        null
+                        Result = result
                     });
                     break;
             }
