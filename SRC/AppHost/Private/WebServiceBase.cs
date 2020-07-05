@@ -73,15 +73,19 @@ namespace Solti.Utils.AppHost.Internals
         /// <summary>
         /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
         /// </summary>
-        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null"), SuppressMessage("Design", "CA1031:Do not catch general exception types")]
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             try
             {
                 await ProcessRequestContext(context);
             }
-            catch
+            catch(Exception ex)
             {
+                Trace.WriteLine($"{nameof(ProcessRequestContext)}() failed with error: {ex}");
 
                 try
                 {
