@@ -158,9 +158,9 @@ namespace Solti.Utils.AppHost
         /// </summary>
         protected virtual HttpStatusCode GetErrorCode(Exception ex) 
         {
-            if (ex is InvalidCredentialException) return  HttpStatusCode.Unauthorized;
-            if (ex is UnauthorizedAccessException) return HttpStatusCode.Forbidden;
-            
+            if (ex is InvalidCredentialException) return HttpStatusCode.Forbidden;
+            if (ex is UnauthorizedAccessException) return HttpStatusCode.Unauthorized;
+
             return HttpStatusCode.InternalServerError;
         }
 
