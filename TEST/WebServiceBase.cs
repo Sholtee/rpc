@@ -39,7 +39,7 @@ namespace Solti.Utils.AppHost.Tests
                 response.ContentType = "text/html";
                 response.StatusCode = 200;
 
-                WriteResponseString(response, Hello);
+                WriteResponseString(response, Hello).Wait();
 
                 response.Close();
             };

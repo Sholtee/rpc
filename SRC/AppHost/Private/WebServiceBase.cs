@@ -33,8 +33,7 @@ namespace Solti.Utils.AppHost.Internals
         {
             Debug.Assert(FListener != null);
 
-            Task isTerminated = new Task(FTerminated.Wait);
-            isTerminated.Start();
+            Task isTerminated = Task.Factory.StartNew(FTerminated.Wait, TaskCreationOptions.LongRunning);
 
             Task<HttpListenerContext> getContext;
 
@@ -53,6 +52,8 @@ namespace Solti.Utils.AppHost.Internals
         private static HttpListener CreateCore(string url) 
         {
             var result = new HttpListener();
+
+            result.IgnoreWriteExceptions = true;
 
             try
             {
@@ -73,36 +74,39 @@ namespace Solti.Utils.AppHost.Internals
         /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
         /// </summary>
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null"), SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected virtual void SafeCallContextProcessor(HttpListenerContext context) 
+        protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
             try
             {
-                ProcessRequestContext(context).GetAwaiter().GetResult();
+                await ProcessRequestContext(context);
             }
             catch
             {
-                //
-                // Ha nem a kiszolgalo leallitas miatt volt a kivetel akkor HTTP 500
-                //
 
-                if (IsListening)
+                try
                 {
                     HttpListenerResponse response = context.Response;
 
                     response.StatusCode = (int) HttpStatusCode.InternalServerError;
                     response.ContentType = "text/html";
 
-                    WriteResponseString(response, "Internal Server Error");
+                    await WriteResponseString(response, "Internal Server Error");
 
                     response.Close();
                 }
+
+                //
+                // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
+                //
+
+                catch (ObjectDisposedException) { }
             }
         }
 
         /// <summary>
         /// Writes the given string into a <see cref="HttpListenerResponse"/>.
         /// </summary>
-        protected static void WriteResponseString(HttpListenerResponse response, string responseString) 
+        protected async static Task WriteResponseString(HttpListenerResponse response, string responseString) 
         {
             if (response == null)
                 throw new ArgumentNullException(nameof(response));
@@ -110,7 +114,7 @@ namespace Solti.Utils.AppHost.Internals
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentEncoding = Encoding.UTF8;
             response.ContentLength64 = buffer.Length;
-            response.OutputStream.Write(buffer, 0, buffer.Length);
+            await response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
         }
 
         /// <summary>
