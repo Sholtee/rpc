@@ -49,6 +49,23 @@ namespace Solti.Utils.AppHost.Internals
                 );
             } while (Task.WaitAny(isTerminated, getContext) == 1);
         }
+
+        private static HttpListener CreateCore(string url) 
+        {
+            var result = new HttpListener();
+
+            try
+            {
+                result.Prefixes.Add(url);
+            }
+            catch
+            {
+                result.Close();
+                throw;
+            }
+
+            return result;
+        }
         #endregion
 
         #region Protected
@@ -152,7 +169,8 @@ namespace Solti.Utils.AppHost.Internals
             if (IsStarted)
                 return;
 
-            FListener = InitCore();
+            createcore:
+            FListener = CreateCore(url);
 
             try
             {
@@ -160,25 +178,25 @@ namespace Solti.Utils.AppHost.Internals
             }
             catch (HttpListenerException ex) 
             {
-                //
-                // Fasz se tudja miert de ha kivetel volt akkor a HttpListener felszabaditasra kerul:
-                // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
-                //
-
-                EnsureListenerNotDisposed();
-
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
                 {
                     AddUrlReservation(url);
                     FNeedToRemoveUrlReservation = true;
-                    FListener.Start();
+
+                    //
+                    // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
+                    // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
+                    //
+
+                    goto createcore;
                 }
 
                 //
                 // Ha nem URL rezervacios gondunk volt akkor tovabb dobjuk a kivetelt
                 //
 
-                else throw;
+                FListener = null;
+                throw;
             }
 
             FTerminated.Reset();
@@ -187,25 +205,6 @@ namespace Solti.Utils.AppHost.Internals
             FListenerThread.Start();
 
             Url = url;
-
-            HttpListener InitCore() 
-            {
-                var result = new HttpListener();
-                result.Prefixes.Add(url);
-                return result;
-            }
-
-            void EnsureListenerNotDisposed() 
-            {
-                try
-                {
-                    FListener.Stop();
-                }
-                catch (ObjectDisposedException)
-                {
-                    FListener = InitCore();
-                }
-            }
         }
 
         /// <summary>
