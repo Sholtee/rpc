@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* WebServiceBase.cs                                                             *
+* WebService.cs                                                                 *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -19,11 +19,12 @@ namespace Solti.Utils.AppHost.Internals
     /// <summary>
     /// Implements a general Web Service over HTTP. 
     /// </summary>
-    public class WebServiceBase: Disposable
+    public class WebService: Disposable
     {
         #region Private
         private bool FNeedToRemoveUrlReservation;
 
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#System_Net_HttpListener_System_IDisposable_Dispose")]
         private HttpListener? FListener;
         private Thread? FListenerThread;
         private readonly ManualResetEventSlim FTerminated = new ManualResetEventSlim(false);
@@ -188,7 +189,7 @@ namespace Solti.Utils.AppHost.Internals
         /// </summary>
         [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void Start(string url)
+        public virtual void Start(string url)
         {
             if (IsStarted)
                 return;
@@ -235,7 +236,8 @@ namespace Solti.Utils.AppHost.Internals
         /// Shuts down the Web Service.
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void Stop()
+        [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
+        public virtual void Stop()
         {
             if (!IsStarted) return;
 

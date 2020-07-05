@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* AppHost.cs                                                                    *
+* RpcService.cs                                                                 *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -18,29 +18,81 @@ namespace Solti.Utils.AppHost
     using DI.Interfaces;
     
     using Internals;
-
     using Primitives;
-    using Primitives.Patterns; 
 
     /// <summary>
-    /// AppHost
+    /// RPC service
     /// </summary>
-    public class AppHostBase: Disposable
+    public class RpcService : WebService, IModuleRegistry
     {
-        /// <summary>
-        /// The root service container.
-        /// </summary>
-        public IServiceContainer RootContainer { get; } = new ServiceContainer();
+        private readonly IServiceContainer FContainer;
 
-        private readonly ModuleInvocationBuilder FModuleInvocationBuilder = new ModuleInvocationBuilder();
+        private readonly ModuleInvocationBuilder FModuleInvocationBuilder;
 
         private ModuleInvocation? FModuleInvocation;
 
+        #region Public
+        /// <summary>
+        /// Creates a new <see cref="RpcService"/> instance.
+        /// </summary>
+        public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder) : base()
+        {
+            FContainer = container ?? throw new ArgumentNullException(nameof(container));
+            FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RpcService"/> instance.
+        /// </summary>
+        public RpcService(IServiceContainer container) : this(container, new ModuleInvocationBuilder()) { }
+
+        /// <summary>
+        /// See <see cref="IModuleRegistry.Register{TInterface, TImplementation}"/>.
+        /// </summary>
+        public virtual void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface
+        {
+            if (IsStarted)
+                throw new InvalidOperationException();
+
+            FContainer.Service<TInterface, TImplementation>(Lifetime.Scoped);
+            FModuleInvocationBuilder.AddModule<TInterface>();
+        }
+
+        /// <summary>
+        /// See <see cref="WebService.Start(string)"/>.
+        /// </summary>
+        public override void Start(string url)
+        {
+            if (IsStarted)
+                throw new InvalidOperationException();
+
+            //
+            // Elsonek hivjuk h ha megformed akkor a kiszolgalo el se induljon.
+            //
+
+            FModuleInvocation = FModuleInvocationBuilder.Build();
+
+            base.Start(url);      
+        }
+
+        /// <summary>
+        /// See <see cref="WebService.Stop"/>.
+        /// </summary>
+        public override void Stop()
+        {
+            if (!IsStarted)
+                throw new InvalidOperationException();
+
+            base.Stop();
+        }
+        #endregion
+
+        #region Protected
         /// <summary>
         /// Processes HTTP requests asynchronously.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected virtual async Task ProcessRequestContext(HttpListenerContext context) 
+        protected override async Task ProcessRequestContext(HttpListenerContext context) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -73,11 +125,14 @@ namespace Solti.Utils.AppHost
             if (context == null) 
                 throw new ArgumentNullException(nameof(context));
 
-            await using IInjector injector = CreateInjector();
+            if (FModuleInvocation == null)
+                throw new InvalidOperationException();
+
+            await using IInjector injector = FContainer.CreateInjector();
 
             injector.UnderlyingContainer.Instance(context);
 
-            object? result = FModuleInvocation!(injector, context);
+            object? result = FModuleInvocation(injector, context);
 
             //
             // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt (es addig
@@ -100,12 +155,6 @@ namespace Solti.Utils.AppHost
 
             return result;
         }
-
-        /// <summary>
-        /// Creates a new <see cref="IInjector"/> instance for a session.
-        /// </summary>
-        /// <remarks>You should override this method if you're using child containers.</remarks>
-        protected virtual IInjector CreateInjector() => RootContainer.CreateInjector();
 
         /// <summary>
         /// Sets the HTTP response.
@@ -163,16 +212,6 @@ namespace Solti.Utils.AppHost
 
             return HttpStatusCode.InternalServerError;
         }
-
-        /// <summary>
-        /// Build the <see cref="AppHost"/>
-        /// </summary>
-        public void Build() 
-        {
-            if (FModuleInvocation != null)
-                throw new InvalidOperationException(); // TODO
-
-            FModuleInvocation = FModuleInvocationBuilder.Build();
-        }
+        #endregion
     }
 }

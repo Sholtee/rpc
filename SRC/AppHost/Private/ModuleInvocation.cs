@@ -16,13 +16,16 @@ namespace Solti.Utils.AppHost.Internals
     using Properties;
 
     /// <summary>
-    /// Executes module methods.
+    /// Executes module methods by context.
     /// </summary>
     /// <param name="injector">The <see cref="IInjector"/> in which the module was registered.</param>
     /// <param name="context">The context which describes the invocation.</param>
-    internal delegate object ModuleInvocation(IInjector injector, IRequestContext context);
+    public delegate object ModuleInvocation(IInjector injector, IRequestContext context);
 
-    internal class ModuleInvocationBuilder
+    /// <summary>
+    /// Builds <see cref="ModuleInvocation"/> instances.
+    /// </summary>
+    public class ModuleInvocationBuilder
     {
         #region Private
         private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
@@ -240,6 +243,9 @@ namespace Solti.Utils.AppHost.Internals
         #endregion
 
         #region Public
+        /// <summary>
+        /// Adds a module to this builder.
+        /// </summary>
         public void AddModule<TInterface>() where TInterface : class 
         {
             if (!typeof(TInterface).IsInterface)
@@ -249,9 +255,14 @@ namespace Solti.Utils.AppHost.Internals
         }
 
         /// <summary>
+        /// Returns the registered modules.
+        /// </summary>
+        public IReadOnlyCollection<Type> Modules => FModules;
+
+        /// <summary>
         /// Builds a <see cref="ModuleInvocation"/> instance.
         /// </summary>
-        public ModuleInvocation Build() => BuildExpression(FModules).Compile();
+        public virtual ModuleInvocation Build() => BuildExpression(FModules).Compile();
         #endregion
     }
 }

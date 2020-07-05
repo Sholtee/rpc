@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* WebServiceBase.cs                                                             *
+* WebService.cs                                                                 *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -16,13 +16,13 @@ namespace Solti.Utils.AppHost.Tests
     using Internals;
 
     [TestFixture]
-    public class WebServiceBaseTests
+    public class WebServiceTests
     {
         const string 
             Hello   = "Hello World",
             TestUrl = "http://127.0.0.1:1986/test/";
 
-        private class DummyWebService : WebServiceBase 
+        private class DummyWebService : WebService 
         {
             protected override Task ProcessRequestContext(HttpListenerContext context)
             {
