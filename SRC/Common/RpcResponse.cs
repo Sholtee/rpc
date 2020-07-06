@@ -5,7 +5,7 @@
 ********************************************************************************/
 using System;
 
-namespace Solti.Utils.AppHost
+namespace Solti.Utils.Rpc
 {
     /// <summary>
     /// Describes a remote exception.

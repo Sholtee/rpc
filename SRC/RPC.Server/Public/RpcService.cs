@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Solti.Utils.AppHost
+namespace Solti.Utils.Rpc
 {
     using DI;
     using DI.Interfaces;

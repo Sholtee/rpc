@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppHost", "SRC\AppHost\AppHost.csproj", "{F160383A-7000-4FE4-B5E8-D2CA329F48B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Server", "SRC\RPC.Server\RPC.Server.csproj", "{F160383A-7000-4FE4-B5E8-D2CA329F48B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppHost.Tests", "TEST\AppHost.Tests.csproj", "{4F92F535-C640-457A-A908-40529B17AE7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Tests", "TEST\RPC.Tests.csproj", "{4F92F535-C640-457A-A908-40529B17AE7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

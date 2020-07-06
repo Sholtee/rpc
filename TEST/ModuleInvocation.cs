@@ -9,7 +9,7 @@ using System.Text.Json;
 using Moq;
 using NUnit.Framework;
 
-namespace Solti.Utils.AppHost.Tests
+namespace Solti.Utils.Rpc.Tests
 {
     using DI.Interfaces;
     using Internals;

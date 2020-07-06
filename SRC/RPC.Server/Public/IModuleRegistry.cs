@@ -3,7 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-namespace Solti.Utils.AppHost
+namespace Solti.Utils.Rpc
 {
     /// <summary>
     /// Defines an abstract module registry.

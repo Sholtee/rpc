@@ -11,6 +11,6 @@ using System.Runtime.CompilerServices;
         NeutralResourcesLanguage("en")
 #if DEBUG
         , 
-        InternalsVisibleTo("Solti.Utils.AppHost.Tests")
+        InternalsVisibleTo("Solti.Utils.Rpc.Tests")
 #endif
 ]

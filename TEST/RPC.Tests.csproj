@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <AssemblyName>Solti.Utils.AppHost.Tests</AssemblyName>
-    <RootNamespace>Solti.Utils.AppHost.Tests</RootNamespace>
+    <AssemblyName>Solti.Utils.Rpc.Tests</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc.Tests</RootNamespace>
     <Configurations>Debug</Configurations>
     <OutputType>Library</OutputType>
     <Configurations>Debug</Configurations>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SRC\AppHost\AppHost.csproj" />
+    <ProjectReference Include="..\SRC\RPC.Server\RPC.Server.csproj" />
   </ItemGroup>
 
 </Project>

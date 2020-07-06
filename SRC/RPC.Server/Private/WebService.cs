@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Solti.Utils.AppHost.Internals
+namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
     

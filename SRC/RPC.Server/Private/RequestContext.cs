@@ -9,7 +9,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Solti.Utils.AppHost
+namespace Solti.Utils.Rpc.Internals
 {
     using Properties;
 

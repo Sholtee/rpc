@@ -5,7 +5,7 @@
 ********************************************************************************/
 using System.Diagnostics.CodeAnalysis;
 
-namespace Solti.Utils.AppHost
+namespace Solti.Utils.Rpc
 {
     /// <summary>
     /// Describes a request context.

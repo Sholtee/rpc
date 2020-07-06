@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Solti.Utils.AppHost</AssemblyName>
-    <RootNamespace>Solti.Utils.AppHost</RootNamespace>
+    <AssemblyName>Solti.Utils.Rpc.Server</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc</RootNamespace>
   </PropertyGroup>
 
-  <Import Project="../Common.targets" />
+  <Import Project="../Common/Common.targets" />
+
+  <ItemGroup>
+    <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Injector.NET" Version="3.*" />

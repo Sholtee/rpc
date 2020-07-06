@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 using NUnit.Framework;
 
-namespace Solti.Utils.AppHost.Tests
+namespace Solti.Utils.Rpc.Tests
 {
     using Internals;
 

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Solti.Utils.AppHost.Internals
+namespace Solti.Utils.Rpc.Internals
 {
     using DI.Interfaces;
     using Properties;
