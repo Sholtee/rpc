@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Solti.Utils.Rpc.Client</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc</RootNamespace>
+  </PropertyGroup>
+
+  <Import Project="..\Common\Common.targets" />
+
+  <ItemGroup>
+    <Compile Include="..\Common\AliasAttribute.cs" Link="Public\AliasAttribute.cs" />
+    <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.*" />
+    <PackageReference Include="ProxyGen.NET" Version="3.*" />
+    <PackageReference Include="System.Text.Json" Version="4.*" />
+    <PackageReference Include="Solti.Utils.Primitives" Version="1.*" />
+  </ItemGroup>
+</Project>

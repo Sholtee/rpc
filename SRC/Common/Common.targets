@@ -13,7 +13,7 @@
     <Product>Solti.Utils.AppHost</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIconUrl>https://github.com/Sholtee/apphost/raw/master/icon.png</PackageIconUrl>
-    <PackageTags>app-host;service-host</PackageTags>
+    <PackageTags>RPC;remote-procedure-call</PackageTags>
     <PackageReleaseNotes>See https://github.com/Sholtee/apphost/blob/master/history.md </PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/sholtee/apphost</RepositoryUrl>

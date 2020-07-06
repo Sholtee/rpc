@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Server", "SRC\RPC.Serve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Tests", "TEST\RPC.Tests.csproj", "{4F92F535-C640-457A-A908-40529B17AE7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPC.Client", "SRC\RPC.Client\RPC.Client.csproj", "{EA247979-47CA-4ABA-990F-7E267BD72C4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4F92F535-C640-457A-A908-40529B17AE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F92F535-C640-457A-A908-40529B17AE7F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F92F535-C640-457A-A908-40529B17AE7F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{EA247979-47CA-4ABA-990F-7E267BD72C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA247979-47CA-4ABA-990F-7E267BD72C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA247979-47CA-4ABA-990F-7E267BD72C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA247979-47CA-4ABA-990F-7E267BD72C4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

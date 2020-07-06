@@ -5,9 +5,10 @@
     <RootNamespace>Solti.Utils.Rpc</RootNamespace>
   </PropertyGroup>
 
-  <Import Project="../Common/Common.targets" />
+  <Import Project="..\Common\Common.targets" />
 
   <ItemGroup>
+    <Compile Include="..\Common\AliasAttribute.cs" Link="Public\Attributes\AliasAttribute.cs" />
     <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
   </ItemGroup>
 
