@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Include="..\Common\AliasAttribute.cs" Link="Public\Attributes\AliasAttribute.cs" />
+    <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
     <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
   </ItemGroup>
 
