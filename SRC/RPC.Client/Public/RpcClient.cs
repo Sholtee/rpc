@@ -56,9 +56,7 @@ namespace Solti.Utils.Rpc
 
             RpcResponse result = JsonSerializer.Deserialize<RpcResponse>(await response.Content.ReadAsStringAsync());
 
-            if (result.Exception != null)
-            {
-            }
+            if (result.Exception != null) ProcessRemoteError(result.Exception);
 
             return result.Result;
         }
@@ -76,6 +74,28 @@ namespace Solti.Utils.Rpc
                 return cast.MakeGenericMethod(returnType).ToStaticDelegate();
             })
             .Invoke(new object[] { task } );
+
+        private static void ProcessRemoteError(ExceptionInfo exception) 
+        {
+            Type exceptionType = Type.GetType(exception.TypeName, throwOnError: false);
+
+            Exception? instance = null;
+
+            if (exceptionType != null)
+            {
+                Func<object?[], object>? ctor = exceptionType.GetConstructor(new[] { typeof(string) })?.ToStaticDelegate();
+
+                //
+                // Ha van string parameteru konstruktora akkor azt hasznaljuk
+                //
+
+                if (ctor != null) instance = (Exception) ctor.Invoke(new object?[] { exception.Message });
+            }
+
+            if (instance == null) instance = new RpcException(exception.Message);
+
+            throw instance;
+        }
 
         /// <summary>
         /// See <see cref="InterfaceInterceptor{TInterface}.Invoke(MethodInfo, object[], MemberInfo)"/>

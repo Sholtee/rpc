@@ -180,8 +180,9 @@ namespace Solti.Utils.Rpc
                     {
                         Exception = new ExceptionInfo 
                         {
-                            TypeName = ex.GetType().FullName,
-                            Instance = ex
+                            TypeName = ex.GetType().AssemblyQualifiedName,
+                            Message  = ex.Message,
+                            Data     = ex.Data
                         }
                     });
                     break;

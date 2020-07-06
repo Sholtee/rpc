@@ -3,7 +3,8 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System;
+using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Solti.Utils.Rpc
 {
@@ -19,9 +20,15 @@ namespace Solti.Utils.Rpc
         public string TypeName { get; set; }
 
         /// <summary>
-        /// The exception instace.
+        /// The textual description of the error.
         /// </summary>
-        public Exception Instance { get; set; }
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Custom user data related to this error.
+        /// </summary>
+        [SuppressMessage("Usage", "CA2227:Collection properties should be read only")]
+        public IDictionary Data { get; set; }
     }
     #pragma warning restore CS8618
 
