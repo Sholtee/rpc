@@ -136,18 +136,19 @@ namespace Solti.Utils.Rpc
             if (exception == null)
                 throw new ArgumentNullException(nameof(exception));
 
-            Func<object?[], object>? getRemoteException = Type
-                .GetType(exception.TypeName, throwOnError: false)
-                ?.GetConstructor(new[] { typeof(string) })
-                ?.ToStaticDelegate();
+            Type? remoteException = Type.GetType(exception.TypeName, throwOnError: false);
+            
+            if (remoteException != null && typeof(Exception).IsAssignableFrom(remoteException))
+            {
+                Func<object?[], object>? ctor = remoteException
+                    .GetConstructor(new[] { typeof(string) })
+                    ?.ToStaticDelegate();
 
-            //
-            // Ha nem sikerult a tavoli kivetelt betolteni akkor sima Exception-t dobunk
-            //
+                if (ctor != null) 
+                    throw new RpcException(Resources.RPC_FAILED, (Exception) ctor(new object?[] { exception.Message }));
+            }
 
-            Exception instance = (Exception?) getRemoteException?.Invoke(new object?[] { exception.Message }) ?? new Exception(exception.Message);
-
-            throw new RpcException(Resources.RPC_FAILED, instance);
+            throw new RpcException(Resources.RPC_FAILED, new Exception(exception.Message));
         }
         #endregion
 
