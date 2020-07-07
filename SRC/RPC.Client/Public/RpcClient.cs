@@ -108,7 +108,6 @@ namespace Solti.Utils.Rpc
             if (SessionId != null) paramz.Add("sessionid", SessionId);
 
             HttpResponseMessage response = await client.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
-            response.EnsureSuccessStatusCode();
 
             IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
             (

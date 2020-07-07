@@ -25,19 +25,21 @@ namespace Solti.Utils.Rpc
     /// </summary>
     public class RpcService : WebService, IModuleRegistry
     {
-        private readonly IServiceContainer FContainer;
-
         private readonly ModuleInvocationBuilder FModuleInvocationBuilder;
-
         private ModuleInvocation? FModuleInvocation;
 
         #region Public
+        /// <summary>
+        /// The <see cref="IServiceContainer"/> associated with this service.
+        /// </summary>
+        public IServiceContainer Container { get; }
+
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
         public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder) : base()
         {
-            FContainer = container ?? throw new ArgumentNullException(nameof(container));
+            Container = container ?? throw new ArgumentNullException(nameof(container));
             FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
         }
 
@@ -54,7 +56,7 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            FContainer.Service<TInterface, TImplementation>(Lifetime.Scoped);
+            Container.Service<TInterface, TImplementation>(Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
@@ -66,7 +68,7 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            FContainer.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
+            Container.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
@@ -140,7 +142,7 @@ namespace Solti.Utils.Rpc
             if (FModuleInvocation == null)
                 throw new InvalidOperationException();
 
-            await using IInjector injector = FContainer.CreateInjector();
+            await using IInjector injector = Container.CreateInjector();
 
             injector.UnderlyingContainer.Instance(context);
 
@@ -182,13 +184,13 @@ namespace Solti.Utils.Rpc
                 switch (result)
                 {
                     case Stream stream:
-                        response.StatusCode = (int)HttpStatusCode.OK;
+                        response.StatusCode = (int) HttpStatusCode.OK;
                         response.ContentType = "application/octet-stream";
                         response.ContentEncoding = null;
                         outputStream = stream;
                         break;
                     case Exception ex:
-                        response.StatusCode = (int)GetErrorCode(ex);
+                        response.StatusCode = (int) GetErrorCode(ex);
                         response.ContentType = "application/json";
                         response.ContentEncoding = Encoding.UTF8;
                         await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
@@ -202,7 +204,7 @@ namespace Solti.Utils.Rpc
                         });
                         break;
                     default:
-                        response.StatusCode = (int)HttpStatusCode.OK;
+                        response.StatusCode = (int) HttpStatusCode.OK;
                         response.ContentType = "application/json";
                         response.ContentEncoding = Encoding.UTF8;
                         await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
