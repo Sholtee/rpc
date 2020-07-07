@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Solti.Utils.Rpc.Attributes</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc</RootNamespace>
+  </PropertyGroup>
+
+  <Import Project="..\Common\Common.targets" />
+
+
+</Project>

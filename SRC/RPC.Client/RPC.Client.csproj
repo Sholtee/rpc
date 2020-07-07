@@ -8,7 +8,6 @@
   <Import Project="..\Common\Common.targets" />
 
   <ItemGroup>
-    <Compile Include="..\Common\AliasAttribute.cs" Link="Public\AliasAttribute.cs" />
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
     <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
   </ItemGroup>
@@ -19,6 +18,11 @@
     <PackageReference Include="ProxyGen.NET" Version="3.*" />
     <PackageReference Include="System.Text.Json" Version="4.*" />
     <PackageReference Include="Solti.Utils.Primitives" Version="1.*" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\RPC.Attributes\RPC.Attributes.csproj" />
   </ItemGroup>
 
 
