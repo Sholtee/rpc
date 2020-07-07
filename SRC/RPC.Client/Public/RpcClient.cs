@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
@@ -20,6 +19,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace Solti.Utils.Rpc
 {   
     using Primitives;
+    using Primitives.Threading;
     using Properties;
     using Proxy;
     using Proxy.Generators;
@@ -47,20 +47,6 @@ namespace Solti.Utils.Rpc
 
             public override object? Invoke(MethodInfo method, object[] args, MemberInfo extra) => Owner.InvokeService(method, args);
         }
-
-        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        private static Task<T> Cast<T>(Task<object?> task) => task.ContinueWith(t => Task.FromResult((T) t.Result!)).Unwrap();
-
-        private static Task Cast(Task<object?> task, Type returnType) => (Task) Cache
-            .GetOrAdd(returnType, () =>
-            {
-                MethodInfo cast = ((MethodCallExpression)((Expression<Action>)(() => Cast<object>(null!))).Body)
-                    .Method
-                    .GetGenericMethodDefinition();
-
-                return cast.MakeGenericMethod(returnType).ToStaticDelegate();
-            })
-            .Invoke(new object[] { task });
 
         private TInterface CreateProxy() => (TInterface) ProxyGenerator<TInterface, MethodCallForwarder>
             .GeneratedType
@@ -135,7 +121,10 @@ namespace Solti.Utils.Rpc
             {
                 if (method.ReturnType == typeof(Task)) return getResult;
 
-                return Cast(getResult, method.ReturnType.GetGenericArguments().Single());
+                return getResult.Cast
+                (
+                    method.ReturnType.GetGenericArguments().Single()
+                );
             }
         }
 
