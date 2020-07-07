@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
-    <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
+    <Compile Include="..\Common\ExceptionInfo.cs" Link="Public\ExceptionInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>

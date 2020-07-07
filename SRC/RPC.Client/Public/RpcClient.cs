@@ -10,11 +10,14 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.WebUtilities;
+
+[assembly: InternalsVisibleTo("Solti.Utils.Rpc.RpcClient<Solti.Utils.Rpc.Tests.RpcTests.IModule>.MethodCallForwarder_Solti.Utils.Rpc.Tests.RpcTests.IModule_Proxy")]
 
 namespace Solti.Utils.Rpc
 {   
@@ -81,6 +84,7 @@ namespace Solti.Utils.Rpc
             using var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json");
 
             using var client = new HttpClient();
+            client.Timeout = Timeout;
 
             var paramz = new Dictionary<string, string>
             {
@@ -92,7 +96,10 @@ namespace Solti.Utils.Rpc
             HttpResponseMessage response = await client.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
             response.EnsureSuccessStatusCode();
 
-            RpcResponse result = JsonSerializer.Deserialize<RpcResponse>(await response.Content.ReadAsStringAsync());
+            Type returnType = method.ReturnType;
+            if (returnType == typeof(void)) returnType = typeof(object);
+
+            IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(TypedRpcResponse<>).MakeGenericType(returnType));
 
             if (result.Exception != null) ProcessRemoteError(result.Exception);
 
@@ -162,6 +169,11 @@ namespace Solti.Utils.Rpc
         /// The address of the remote host (e.g.: "www.mysite.com:1986/api").
         /// </summary>
         public string Host { get; }
+
+        /// <summary>
+        /// Represents the request timeout.
+        /// </summary>
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// Creates a new <see cref="RpcClient{TInterface}"/> instance.

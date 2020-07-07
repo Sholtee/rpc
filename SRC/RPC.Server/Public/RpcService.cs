@@ -176,40 +176,57 @@ namespace Solti.Utils.Rpc
             if (response == null) 
                 throw new ArgumentNullException(nameof(response));
 
-            switch(result)
+            Stream? outputStream = null; // Ertekadas azert h ne reklamaljon a fordito
+            try
             {
-                case Stream stream:
-                    response.StatusCode = (int) HttpStatusCode.OK;
-                    response.ContentType = "application/octet-stream";
-                    response.ContentEncoding = null;
-                    stream.CopyTo(response.OutputStream);
-                    break;
-                case Exception ex:
-                    response.StatusCode = (int) GetErrorCode(ex);
-                    response.ContentType = "application/json";
-                    response.ContentEncoding = Encoding.UTF8;
-                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse 
-                    {
-                        Exception = new ExceptionInfo 
+                switch (result)
+                {
+                    case Stream stream:
+                        response.StatusCode = (int)HttpStatusCode.OK;
+                        response.ContentType = "application/octet-stream";
+                        response.ContentEncoding = null;
+                        outputStream = stream;
+                        break;
+                    case Exception ex:
+                        response.StatusCode = (int)GetErrorCode(ex);
+                        response.ContentType = "application/json";
+                        response.ContentEncoding = Encoding.UTF8;
+                        await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
                         {
-                            TypeName = ex.GetType().AssemblyQualifiedName,
-                            Message  = ex.Message,
-                            Data     = ex.Data
-                        }
-                    });
-                    break;
-                default:
-                    response.StatusCode = (int) HttpStatusCode.OK;
-                    response.ContentType = "application/json";
-                    response.ContentEncoding = Encoding.UTF8;
-                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse 
-                    {
-                        Result = result
-                    });
-                    break;
+                            Exception = new ExceptionInfo
+                            {
+                                TypeName = ex.GetType().AssemblyQualifiedName,
+                                Message = ex.Message,
+                                Data = ex.Data
+                            }
+                        });
+                        break;
+                    default:
+                        response.StatusCode = (int)HttpStatusCode.OK;
+                        response.ContentType = "application/json";
+                        response.ContentEncoding = Encoding.UTF8;
+                        await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
+                        {
+                            Result = result
+                        });
+                        break;
+                }
+
+                //
+                // A "response.ContentLength64 = response.OutputStream.Length" nem mukodne
+                //
+
+                response.ContentLength64 = outputStream.Length;
+                outputStream.Seek(0, SeekOrigin.Begin);
+                await outputStream.CopyToAsync(response.OutputStream);
             }
 
-            response.ContentLength64 = response.OutputStream.Length;
+            //
+            // Mindenkepp felszabaditjuk a Stream-t meg ha RPC interface-metodus is adta vissza akkor is
+            //
+
+            finally { outputStream?.Dispose(); }
+
             response.Close();
         }
 
