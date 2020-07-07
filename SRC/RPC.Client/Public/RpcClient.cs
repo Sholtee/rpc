@@ -45,7 +45,7 @@ namespace Solti.Utils.Rpc
 
             public MethodCallForwarder(RpcClient<TInterface> owner) : base(null) => Owner = owner;
 
-            public override object? Invoke(MethodInfo method, object[] args, MemberInfo extra) => Owner.InvokeServicy(method, args);
+            public override object? Invoke(MethodInfo method, object[] args, MemberInfo extra) => Owner.InvokeService(method, args);
         }
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
@@ -116,7 +116,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Does the actual remote module invocation.
         /// </summary>
-        protected virtual object? InvokeServicy(MethodInfo method, object[] args)
+        protected virtual object? InvokeService(MethodInfo method, object[] args)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
