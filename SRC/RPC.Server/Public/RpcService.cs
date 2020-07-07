@@ -222,7 +222,7 @@ namespace Solti.Utils.Rpc
             }
 
             //
-            // Mindenkepp felszabaditjuk a Stream-t meg ha RPC interface-metodus is adta vissza akkor is
+            // Mindenkepp felszabaditjuk a Stream-et meg ha RPC interface-metodus adta vissza akkor is
             //
 
             finally { outputStream?.Dispose(); }

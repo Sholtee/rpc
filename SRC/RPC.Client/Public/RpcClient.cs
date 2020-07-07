@@ -83,8 +83,10 @@ namespace Solti.Utils.Rpc
 
             using var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json");
 
-            using var client = new HttpClient();
-            client.Timeout = Timeout;
+            using var client = new HttpClient
+            {
+                Timeout = Timeout
+            };
 
             var paramz = new Dictionary<string, string>
             {
@@ -97,7 +99,11 @@ namespace Solti.Utils.Rpc
             response.EnsureSuccessStatusCode();
 
             Type returnType = method.ReturnType;
-            if (returnType == typeof(void)) returnType = typeof(object);
+
+            if (returnType == typeof(void) || returnType == typeof(Task)) 
+                returnType = typeof(object);
+            else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>)) 
+                returnType = returnType.GetGenericArguments().Single();
 
             IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(TypedRpcResponse<>).MakeGenericType(returnType));
 
