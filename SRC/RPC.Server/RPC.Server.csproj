@@ -39,7 +39,7 @@
 
   <PropertyGroup>
     <Description>SDK designed for building lightweight RPC servers.</Description>
-    <PackageId>Solti.Utils.Rpc.Server</PackageId>
+    <PackageId>RPC.NET.Server</PackageId>
   </PropertyGroup>
   
 </Project>

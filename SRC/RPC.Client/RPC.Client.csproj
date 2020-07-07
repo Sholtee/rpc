@@ -40,7 +40,7 @@
 
   <PropertyGroup>
     <Description>Lightweight client to invoke RPC services built with RPC.NET</Description>
-    <PackageId>Solti.Utils.Rpc.Client</PackageId>
+    <PackageId>RPC.NET.Client</PackageId>
   </PropertyGroup>
   
 </Project>
