@@ -56,6 +56,18 @@ namespace Solti.Utils.Rpc
             .GetConstructor(new Type[] { typeof(RpcClient<TInterface>) })
             .ToStaticDelegate()
             .Invoke(new object[] { this });
+
+        private static Type GenerateTypeResponseTo(MethodInfo method) 
+        {
+            Type returnType = method.ReturnType;
+
+            if (returnType == typeof(void) || returnType == typeof(Task))
+                returnType = typeof(object);
+            else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
+                returnType = returnType.GetGenericArguments().Single();
+
+            return typeof(TypedRpcResponse<>).MakeGenericType(returnType);
+        }
         #endregion
 
         #region Protected
@@ -98,14 +110,11 @@ namespace Solti.Utils.Rpc
             HttpResponseMessage response = await client.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
             response.EnsureSuccessStatusCode();
 
-            Type returnType = method.ReturnType;
-
-            if (returnType == typeof(void) || returnType == typeof(Task)) 
-                returnType = typeof(object);
-            else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>)) 
-                returnType = returnType.GetGenericArguments().Single();
-
-            IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize(await response.Content.ReadAsStringAsync(), typeof(TypedRpcResponse<>).MakeGenericType(returnType));
+            IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
+            (
+                await response.Content.ReadAsStringAsync(), 
+                GenerateTypeResponseTo(method)
+            );
 
             if (result.Exception != null) ProcessRemoteError(result.Exception);
 
@@ -129,7 +138,6 @@ namespace Solti.Utils.Rpc
                 //
 
                 return getResult.GetAwaiter().GetResult();
-
             else
             {
                 if (method.ReturnType == typeof(Task)) return getResult;
