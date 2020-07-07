@@ -49,12 +49,24 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// See <see cref="IModuleRegistry.Register{TInterface, TImplementation}"/>.
         /// </summary>
-        public virtual void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface
+        public void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface
         {
             if (IsStarted)
                 throw new InvalidOperationException();
 
             FContainer.Service<TInterface, TImplementation>(Lifetime.Scoped);
+            FModuleInvocationBuilder.AddModule<TInterface>();
+        }
+
+        /// <summary>
+        /// See <see cref="IModuleRegistry.Register{TInterface}(Func{IInjector, TInterface})"/>.
+        /// </summary>
+        public void Register<TInterface>(Func<IInjector, TInterface> factory) where TInterface : class
+        {
+            if (IsStarted)
+                throw new InvalidOperationException();
+
+            FContainer.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
