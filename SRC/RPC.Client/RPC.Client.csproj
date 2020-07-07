@@ -12,7 +12,6 @@
     <Compile Include="..\Common\RpcResponse.cs" Link="Public\RpcResponse.cs" />
   </ItemGroup>
 
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.*" />
     <PackageReference Include="ProxyGen.NET" Version="3.*" />
@@ -20,11 +19,9 @@
     <PackageReference Include="Solti.Utils.Primitives" Version="1.*" />
   </ItemGroup>
 
-
   <ItemGroup>
     <ProjectReference Include="..\RPC.Attributes\RPC.Attributes.csproj" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -34,11 +31,16 @@
     </Compile>
   </ItemGroup>
 
-
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <PropertyGroup>
+    <Description>Lightweight client to invoke RPC services built with RPC.NET</Description>
+    <PackageId>Solti.Utils.Rpc.Client</PackageId>
+  </PropertyGroup>
+  
 </Project>

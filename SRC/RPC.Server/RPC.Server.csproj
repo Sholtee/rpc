@@ -37,4 +37,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <PropertyGroup>
+    <Description>SDK designed for building lightweight RPC servers.</Description>
+    <PackageId>Solti.Utils.Rpc.Server</PackageId>
+  </PropertyGroup>
+  
 </Project>

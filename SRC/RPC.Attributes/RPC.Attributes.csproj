@@ -7,5 +7,9 @@
 
   <Import Project="..\Common\Common.targets" />
 
-
+  <PropertyGroup>
+    <Description>Provides common attributes for the RPC.NET library.</Description>
+    <PackageId>Solti.Utils.Rpc.Attributes</PackageId>
+  </PropertyGroup>
+  
 </Project>
