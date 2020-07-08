@@ -82,9 +82,11 @@ namespace Solti.Utils.Rpc
             return member.GetCustomAttribute<AliasAttribute>(inherit: false)?.Name ?? member.Name;
         }
 
+
         /// <summary>
         /// Does the actual remote module invocation.
         /// </summary>
+        [SuppressMessage("Globalization", "CA1304:Specify CultureInfo")]
         protected virtual async Task<object?> InvokeServiceAsync(MethodInfo method, object[] args)
         {
             if (method == null)
@@ -109,15 +111,21 @@ namespace Solti.Utils.Rpc
 
             HttpResponseMessage response = await client.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
 
-            IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
-            (
-                await response.Content.ReadAsStringAsync(), 
-                GenerateTypeResponseTo(method)
-            );
-
-            if (result.Exception != null) ProcessRemoteError(result.Exception);
-
-            return result.Result;
+            switch (response.Content.Headers.ContentType.MediaType) 
+            {
+                case "application/json":
+                    IRpcResonse result = (IRpcResonse)JsonSerializer.Deserialize
+                    (
+                        await response.Content.ReadAsStringAsync(),
+                        GenerateTypeResponseTo(method)
+                    );
+                    if (result.Exception != null) ProcessRemoteError(result.Exception);
+                    return result.Result;
+                case "application/octet-stream":
+                    return await response.Content.ReadAsStreamAsync();
+                default: 
+                    throw new NotSupportedException(Resources.CONTENT_TYPE_NOT_SUPPORTED);
+            }
         }
 
         /// <summary>

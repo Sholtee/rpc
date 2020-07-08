@@ -61,6 +61,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content type not supported..
+        /// </summary>
+        internal static string CONTENT_TYPE_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("CONTENT_TYPE_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remote Procedure Call failed. See inner exception for details..
         /// </summary>
         internal static string RPC_FAILED {
