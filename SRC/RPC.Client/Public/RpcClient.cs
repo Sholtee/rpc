@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.WebUtilities;
 namespace Solti.Utils.Rpc
 {   
     using Primitives;
+    using Primitives.Patterns;
     using Primitives.Threading;
     using Properties;
     using Proxy;
@@ -30,9 +31,11 @@ namespace Solti.Utils.Rpc
     /// <summary>
     /// Contains the logic related to RPC service invocation
     /// </summary>
-    public class RpcClient<TInterface> where TInterface: class
+    public class RpcClient<TInterface>: Disposable where TInterface: class
     {
         #region Private
+        private readonly HttpClient FHttpClient;
+
         static RpcClient() 
         {
             string cacheDir = Path.Combine(Path.GetTempPath(), $".rpcclient", typeof(RpcClient<TInterface>).Assembly.GetName().Version.ToString());
@@ -95,26 +98,24 @@ namespace Solti.Utils.Rpc
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            using var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json");
+            HttpResponseMessage response;
 
-            using var client = new HttpClient
+            using (var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json"))
             {
-                Timeout = Timeout
-            };
+                var paramz = new Dictionary<string, string>
+                {
+                    { "module", GetMemberId(method.ReflectedType) },
+                    { "method", GetMemberId(method)}
+                };
+                if (SessionId != null) paramz.Add("sessionid", SessionId);
 
-            var paramz = new Dictionary<string, string>
-            {
-                { "module", GetMemberId(method.ReflectedType) },
-                { "method", GetMemberId(method)}
-            };
-            if (SessionId != null) paramz.Add("sessionid", SessionId);
-
-            HttpResponseMessage response = await client.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
+                response = await FHttpClient.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
+            }
 
             switch (response.Content.Headers.ContentType.MediaType) 
             {
                 case "application/json":
-                    IRpcResonse result = (IRpcResonse)JsonSerializer.Deserialize
+                    IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
                     (
                         await response.Content.ReadAsStringAsync(),
                         GenerateTypeResponseTo(method)
@@ -178,6 +179,16 @@ namespace Solti.Utils.Rpc
 
             throw new RpcException(Resources.RPC_FAILED, new Exception(exception.Message));
         }
+
+        /// <summary>
+        /// See <see cref="IDisposable.Dispose"/>.
+        /// </summary>
+        protected override void Dispose(bool disposeManaged)
+        {
+            if (disposeManaged) FHttpClient.Dispose();
+
+            base.Dispose(disposeManaged);
+        }
         #endregion
 
         #region Public
@@ -194,17 +205,26 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Represents the request timeout.
         /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
+        public TimeSpan Timeout => FHttpClient.Timeout;
 
         /// <summary>
         /// Creates a new <see cref="RpcClient{TInterface}"/> instance.
         /// </summary>
-        public RpcClient(string host, string? sessionId)
+        public RpcClient(string host, TimeSpan timeout, string? sessionId = null)
         {
             Host = host ?? throw new ArgumentNullException(nameof(host));
             SessionId = sessionId;
+            FHttpClient = new HttpClient
+            {
+                Timeout = timeout
+            };
             Proxy = CreateProxy();
         }
+
+        /// <summary>
+        /// Creates a new <see cref="RpcClient{TInterface}"/> instance.
+        /// </summary>
+        public RpcClient(string host, string? sessionId = null) : this(host, TimeSpan.FromSeconds(10), sessionId) { }
 
         /// <summary>
         /// The generated proxy instance related to this client.

@@ -4,6 +4,9 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using Moq;
@@ -18,10 +21,12 @@ namespace Solti.Utils.Rpc.Tests
     {
         public interface IModule 
         {
-            public void Dummy();
-            public void Faulty();
-            public int Add(int a, int b);
-            public Task<int> AddAsync(int a, int b);
+            void Dummy();
+            void Faulty();
+            int Add(int a, int b);
+            Task<int> AddAsync(int a, int b);
+            Stream GetStream();
+            Task<Stream> GetStreamAsync();
         }
 
         const string Host = "http://127.0.0.1:1986/test/";
@@ -55,7 +60,7 @@ namespace Solti.Utils.Rpc.Tests
             });
             Server.Start(Host);
 
-            var client = new RpcClient<IModule>(Host, "cica");
+            using var client = new RpcClient<IModule>(Host, "cica");
             client.Proxy.Dummy();
 
             Assert.That(context, Is.Not.Null);
@@ -76,11 +81,38 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            var client = new RpcClient<IModule>(Host, null);
+            using var client = new RpcClient<IModule>(Host);
 
             Assert.That(client.Proxy.Add(1, 2), Is.EqualTo(3));
 
             mockModule.Verify(i => i.Add(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        }
+
+        [Test]
+        public async Task MultipleRemoteAdd_ShouldWork()
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.Add(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>((a, b) => a + b);
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            await Task.WhenAll
+            (
+                Enumerable.Repeat(0, 10).Select
+                (
+                    _ => Task.Factory.StartNew(() =>
+                    {
+                        using var client = new RpcClient<IModule>(Host);
+
+                        Assert.That(client.Proxy.Add(1, 2), Is.EqualTo(3));
+                    })
+                ).ToArray()
+            );
+
+            mockModule.Verify(i => i.Add(1, 2), Times.Exactly(10));
         }
 
         [Test]
@@ -94,7 +126,7 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            var client = new RpcClient<IModule>(Host, null);
+            using var client = new RpcClient<IModule>(Host);
 
             Assert.That(await client.Proxy.AddAsync(1, 2), Is.EqualTo(3));
 
@@ -112,11 +144,65 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            var client = new RpcClient<IModule>(Host, null);
+            using var client = new RpcClient<IModule>(Host);
 
             var ex = Assert.Throws<RpcException>(client.Proxy.Faulty);
             Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
+        }
+
+        [Test]
+        public void GetStream_ShouldWork() 
+        {
+            var stm = new MemoryStream();
+            byte[] bytes = Encoding.UTF8.GetBytes("kutya");
+            stm.Write(bytes, 0, bytes.Length);
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.GetStream())
+                .Returns(stm);
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+
+            Stream sentStm = null;
+
+            Assert.DoesNotThrow(() => sentStm = client.Proxy.GetStream());
+            Assert.That(new StreamReader(sentStm).ReadToEnd, Is.EqualTo("kutya"));
+
+            //
+            // Kiszolgalo ldalon a Stream fel lett szabaditva.
+            //
+
+            Assert.Throws<ObjectDisposedException>(() => stm.Seek(0, SeekOrigin.Begin));
+        }
+
+
+        [Test]
+        public void GetStreamAsync_ShouldWork()
+        {
+            var stm = new MemoryStream();
+            byte[] bytes = Encoding.UTF8.GetBytes("kutya");
+            stm.Write(bytes, 0, bytes.Length);
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.GetStreamAsync())
+                .Returns(Task.FromResult((Stream) stm));
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+
+            Stream sentStm = null;
+
+            Assert.DoesNotThrowAsync(async () => sentStm = await client.Proxy.GetStreamAsync());
+            Assert.That(new StreamReader(sentStm).ReadToEnd, Is.EqualTo("kutya"));
+            Assert.Throws<ObjectDisposedException>(() => stm.Seek(0, SeekOrigin.Begin));
         }
     }
 }
