@@ -1,0 +1,38 @@
+{
+	"metadata": [{
+		"src": [{
+		    "src": "../",
+			"files": ["*/*.csproj"],
+			"exclude": ["**/bin/**", "**/obj/**"]
+		}],
+		"dest": "../BIN/DOC",
+		"properties": {
+			"TargetFramework": "netstandard2.0"
+		}
+	}],
+	"build": {
+		"content": [
+			{
+				"files": ["*.yml"],
+				"src": "../BIN/DOC"
+			},
+			{
+				"files": ["index.md"]
+			}
+		],
+		"dest": "../Artifacts/DOC",
+		"resource": [{
+			"files": ["icon.png"],
+			"src": "../"
+		}],
+		"globalMetadata": {
+			"_appTitle": "RPC.NET",
+			"_appFaviconPath": "icon.png",
+			"_disableNavbar": true,
+			"_disableContribution": true
+		},
+		"xrefService": [
+			"https://xref.docs.microsoft.com/query?uid={uid}"
+		]
+	}
+}
