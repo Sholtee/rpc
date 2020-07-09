@@ -98,19 +98,42 @@ namespace Solti.Utils.Rpc
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
+            //
+            // Egyedi fejlecek felvetele
+            //
+
+            FHttpClient.DefaultRequestHeaders.Clear();
+
+            foreach (KeyValuePair<string, string> header in CustomHeaders)
+            {
+                FHttpClient.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
+
+            //
+            // Parmeter az API hivashoz.
+            //
+
+            var paramz = new Dictionary<string, string>
+            {
+                { "module", GetMemberId(method.ReflectedType) },
+                { "method", GetMemberId(method)}
+            };
+            if (SessionId != null) paramz.Add("sessionid", SessionId);
+
+            //
+            // POST
+            //
+
             HttpResponseMessage response;
 
             using (var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json"))
             {
-                var paramz = new Dictionary<string, string>
-                {
-                    { "module", GetMemberId(method.ReflectedType) },
-                    { "method", GetMemberId(method)}
-                };
-                if (SessionId != null) paramz.Add("sessionid", SessionId);
-
                 response = await FHttpClient.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
             }
+
+            //
+            // Eredmeny feldolgozas.
+            //
 
             switch (response.Content.Headers.ContentType.MediaType) 
             {
@@ -205,26 +228,28 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Represents the request timeout.
         /// </summary>
-        public TimeSpan Timeout => FHttpClient.Timeout;
-
-        /// <summary>
-        /// Creates a new <see cref="RpcClient{TInterface}"/> instance.
-        /// </summary>
-        public RpcClient(string host, TimeSpan timeout, string? sessionId = null)
+        public TimeSpan Timeout 
         {
-            Host = host ?? throw new ArgumentNullException(nameof(host));
-            SessionId = sessionId;
-            FHttpClient = new HttpClient
-            {
-                Timeout = timeout
-            };
-            Proxy = CreateProxy();
+            get => FHttpClient.Timeout;
+            set => FHttpClient.Timeout = value;
         }
+        
+        /// <summary>
+        /// Custom headers
+        /// </summary>
+        public IDictionary<string, string> CustomHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Creates a new <see cref="RpcClient{TInterface}"/> instance.
         /// </summary>
-        public RpcClient(string host, string? sessionId = null) : this(host, TimeSpan.FromSeconds(10), sessionId) { }
+        public RpcClient(string host, string? sessionId = null)
+        {
+            Host        = host ?? throw new ArgumentNullException(nameof(host));
+            SessionId   = sessionId;
+            FHttpClient = new HttpClient();
+            Timeout     = TimeSpan.FromSeconds(10);
+            Proxy       = CreateProxy();
+        }
 
         /// <summary>
         /// The generated proxy instance related to this client.

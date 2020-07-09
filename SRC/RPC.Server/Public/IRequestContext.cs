@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Solti.Utils.Rpc
@@ -33,5 +34,10 @@ namespace Solti.Utils.Rpc
         /// The serialized arguments of the request.
         /// </summary>
         public string Args { get; }
+
+        /// <summary>
+        /// Headers sent by the client
+        /// </summary>
+        public IReadOnlyDictionary<string, string> Headers { get; }
     }
 }

@@ -4,8 +4,10 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,12 +17,13 @@ namespace Solti.Utils.Rpc.Internals
 
     internal class RequestContext : IRequestContext
     {
-        internal RequestContext(string? sessionId, string module, string method, string args)
+        internal RequestContext(string? sessionId, string module, string method, string args, IReadOnlyDictionary<string, string> headers)
         {
             SessionId = sessionId;
-            Module = module;
-            Method = method;
-            Args = args;
+            Module    = module;
+            Method    = method;
+            Args      = args;
+            Headers   = headers;
         }
 
         public static async Task<RequestContext> Create(HttpListenerRequest request) 
@@ -32,7 +35,9 @@ namespace Solti.Utils.Rpc.Internals
                 queryString.Get("sessionid"),
                 queryString.Get("module") ?? throw new InvalidOperationException(Resources.NO_MODULE),
                 queryString.Get("method") ?? throw new InvalidOperationException(Resources.NO_METHOD),
-                await ReadBody()
+                await ReadBody(),
+                request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key])
+
             );
 
             async Task<string> ReadBody()
@@ -49,5 +54,7 @@ namespace Solti.Utils.Rpc.Internals
         public string Method { get; }
 
         public string Args { get; }
+
+        public IReadOnlyDictionary<string, string> Headers { get; }
     }
 }
