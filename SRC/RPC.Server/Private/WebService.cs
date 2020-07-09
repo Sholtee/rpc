@@ -187,7 +187,7 @@ namespace Solti.Utils.Rpc.Internals
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
-        /// The URL on which the Web Service is listaning.
+        /// The URL on which the Web Service is listening.
         /// </summary>
         [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
         public string? Url { get; private set; }
