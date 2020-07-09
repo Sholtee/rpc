@@ -1,0 +1,69 @@
+#############################################################################
+#                                                                           #
+# appveyor.yml                                                              #
+#                                                                           #
+# Author: Denes Solti                                                       #
+#                                                                           #
+#############################################################################
+
+# common configuration for ALL branches
+image: Visual Studio 2019
+
+environment:
+  COVERALLS_REPO_TOKEN:  
+    secure: xXx
+  GITHUB_REPO_TOKEN:
+    secure: qJEufJv866eebR/Boe1UnV3p1arOIX9BTyqAQnAVY49h4Ks40Sr0rHb3iN70e7BZ
+  NUGET_REPO_TOKEN:
+    secure: xXx
+  GITHUB_EMAIL:
+    secure: Z6F+xZzdZzc5DMYB/4J0KUhyoTzTlXH75ciGl7hFH9s=
+
+branches:
+  # blacklist
+  except:
+    - gh-pages
+
+# prevent MSBuild from running
+build: off
+
+clone_script:
+  - cmd: |
+      git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+      git checkout -qf %APPVEYOR_REPO_COMMIT%
+
+# "before_test" runs after repo cloning so use it instead of "init"
+before_test:
+  - ps: |
+      Set-Location -path ".\scripts"
+      .(".\includes.ps1")
+      Update-AppveyorBuild -Version "$($PROJECT.version).$($Env:APPVEYOR_BUILD_NUMBER)-$($Env:APPVEYOR_REPO_BRANCH)"
+      Get-SysInfo
+
+test_script:
+  - ps: Test
+
+after_test:
+  - ps: Push-Test-Results
+
+# after build failure or success
+on_finish:
+  - ps: |
+      Push-Artifact "*.txt"
+      Push-Artifact "BenchmarkDotNet.Artifacts\BenchmarkRun-*.log"    
+
+# override settings for `master` branch
+for:
+-
+  branches:
+    only:
+      - master
+
+  before_deploy:
+    - ps: Git-Config 
+  
+  deploy_script: 
+    # update documentation & publish nuget package
+    - ps: |
+        GH-Pages
+        Deploy
