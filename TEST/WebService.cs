@@ -94,7 +94,7 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            Assert.That(responseBody, Is.EqualTo("Internal Server Error"));
+            Assert.That(responseBody, Is.EqualTo(new Exception().Message));
         }
 
         [Test]

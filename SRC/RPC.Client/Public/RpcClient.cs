@@ -148,6 +148,11 @@ namespace Solti.Utils.Rpc
             switch (response.Content.Headers.ContentType.MediaType) 
             {
                 case "application/json":
+                    //
+                    // Itt direkt nincs "response.EnsureSuccessStatusCode()" mivel hiba eseten a reszleteknek is
+                    // JSON formaban kene megerkezniuk.
+                    //
+
                     IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
                     (
                         await response.Content.ReadAsStringAsync(),
@@ -156,9 +161,20 @@ namespace Solti.Utils.Rpc
                     if (result.Exception != null) ProcessRemoteError(result.Exception);
                     return result.Result;
                 case "application/octet-stream":
+                    response.EnsureSuccessStatusCode();
                     return await response.Content.ReadAsStreamAsync();
-                default: 
-                    throw new NotSupportedException(Resources.CONTENT_TYPE_NOT_SUPPORTED);
+                default:
+                    //
+                    // Status megfelelo?
+                    //
+
+                    response.EnsureSuccessStatusCode();
+
+                    //
+                    // Ha igen akkor csak a tartalom tipusa nem jo
+                    //
+
+                    throw new RpcException(Resources.CONTENT_TYPE_NOT_SUPPORTED);
             }
         }
 

@@ -134,6 +134,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
+        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         protected async virtual Task<object?> InvokeModule(IRequestContext context) 
         {
             if (context == null) 
@@ -146,7 +147,11 @@ namespace Solti.Utils.Rpc
 
             injector.UnderlyingContainer.Instance(context);
 
-            object? result = FModuleInvocation(injector, context);
+            //
+            // A modul megszolitas is aszinkron legyen h az idotullepes kezeles megfeleloen mukodjon (lasd WebService.SafeCallContextProcessor()).
+            //
+
+            object? result = await Task.Factory.StartNew(() => FModuleInvocation(injector, context), TaskCreationOptions.LongRunning);
 
             //
             // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt (es addig

@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -204,6 +205,42 @@ namespace Solti.Utils.Rpc.Tests
             Assert.DoesNotThrowAsync(async () => sentStm = await client.Proxy.GetStreamAsync());
             Assert.That(new StreamReader(sentStm).ReadToEnd, Is.EqualTo("kutya"));
             Assert.Throws<ObjectDisposedException>(() => stm.Seek(0, SeekOrigin.Begin));
+        }
+
+        [Test]
+        public void Server_ShouldTimeout() 
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.Faulty())
+                .Callback(new ManualResetEventSlim().Wait);
+
+            Server.Timeout = TimeSpan.FromSeconds(1);
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+
+            Assert.Throws<HttpRequestException>(client.Proxy.Faulty);
+        }
+
+        [Test]
+        public void Client_ShouldTimeout() 
+        {
+            using var evt = new ManualResetEventSlim();
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.Faulty())
+                .Callback(evt.Wait);
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+            client.Timeout = TimeSpan.FromSeconds(1);
+
+            Assert.Throws<TaskCanceledException>(client.Proxy.Faulty);
         }
 
         public interface IDummy 

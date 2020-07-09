@@ -98,7 +98,10 @@ namespace Solti.Utils.Rpc.Internals
 
             try
             {
-                await ProcessRequestContext(context);
+                Task processor = ProcessRequestContext(context);
+
+                if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
+                    throw new TimeoutException();
             }
             catch(Exception ex)
             {
@@ -111,7 +114,7 @@ namespace Solti.Utils.Rpc.Internals
                     response.StatusCode = (int) HttpStatusCode.InternalServerError;
                     response.ContentType = "text/html";
 
-                    await WriteResponseString(response, "Internal Server Error");
+                    await WriteResponseString(response, ex.Message);
 
                     response.Close();
                 }
@@ -177,6 +180,11 @@ namespace Solti.Utils.Rpc.Internals
         /// Returns true if the Web Service is listening.
         /// </summary>
         public bool IsListening => FListener?.IsListening == true && FListenerThread?.IsAlive == true;
+
+        /// <summary>
+        /// The maximum amount of time that is available for the service to serve the request.
+        /// </summary>
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// The URL on which the Web Service is listaning.
