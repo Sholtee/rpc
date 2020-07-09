@@ -1,694 +1,955 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
-- uid: Solti.Utils.Rpc.Tests
-  name: Solti.Utils.Rpc.Tests
-  href: Solti.Utils.Rpc.Tests.html
-  commentId: N:Solti.Utils.Rpc.Tests
-  fullName: Solti.Utils.Rpc.Tests
-  nameWithType: Solti.Utils.Rpc.Tests
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests
-  name: ModuleInvocationTests
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html
-  commentId: T:Solti.Utils.Rpc.Tests.ModuleInvocationTests
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests
-  nameWithType: ModuleInvocationTests
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService
-  name: ModuleInvocationTests.IService
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html
-  commentId: T:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService
-  nameWithType: ModuleInvocationTests.IService
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Add(System.Int32,System.Int32)
-  name: Add(Int32, Int32)
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Add_System_Int32_System_Int32_
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Add(System.Int32,System.Int32)
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Add(System.Int32, System.Int32)
-  nameWithType: ModuleInvocationTests.IService.Add(Int32, Int32)
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Add*
-  name: Add
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Add_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Add
+- uid: Solti.Utils.Rpc
+  name: Solti.Utils.Rpc
+  href: Solti.Utils.Rpc.html
+  commentId: N:Solti.Utils.Rpc
+  fullName: Solti.Utils.Rpc
+  nameWithType: Solti.Utils.Rpc
+- uid: Solti.Utils.Rpc.AliasAttribute
+  name: AliasAttribute
+  href: Solti.Utils.Rpc.AliasAttribute.html
+  commentId: T:Solti.Utils.Rpc.AliasAttribute
+  fullName: Solti.Utils.Rpc.AliasAttribute
+  nameWithType: AliasAttribute
+- uid: Solti.Utils.Rpc.AliasAttribute.#ctor(System.String)
+  name: AliasAttribute(String)
+  href: Solti.Utils.Rpc.AliasAttribute.html#Solti_Utils_Rpc_AliasAttribute__ctor_System_String_
+  commentId: M:Solti.Utils.Rpc.AliasAttribute.#ctor(System.String)
+  fullName: Solti.Utils.Rpc.AliasAttribute.AliasAttribute(System.String)
+  nameWithType: AliasAttribute.AliasAttribute(String)
+- uid: Solti.Utils.Rpc.AliasAttribute.#ctor*
+  name: AliasAttribute
+  href: Solti.Utils.Rpc.AliasAttribute.html#Solti_Utils_Rpc_AliasAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.AliasAttribute.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Add
-  nameWithType: ModuleInvocationTests.IService.Add
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Bar
-  name: Bar()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Bar
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Bar
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Bar()
-  nameWithType: ModuleInvocationTests.IService.Bar()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Bar*
-  name: Bar
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Bar_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Bar
+  fullName: Solti.Utils.Rpc.AliasAttribute.AliasAttribute
+  nameWithType: AliasAttribute.AliasAttribute
+- uid: Solti.Utils.Rpc.AliasAttribute.Name
+  name: Name
+  href: Solti.Utils.Rpc.AliasAttribute.html#Solti_Utils_Rpc_AliasAttribute_Name
+  commentId: P:Solti.Utils.Rpc.AliasAttribute.Name
+  fullName: Solti.Utils.Rpc.AliasAttribute.Name
+  nameWithType: AliasAttribute.Name
+- uid: Solti.Utils.Rpc.AliasAttribute.Name*
+  name: Name
+  href: Solti.Utils.Rpc.AliasAttribute.html#Solti_Utils_Rpc_AliasAttribute_Name_
+  commentId: Overload:Solti.Utils.Rpc.AliasAttribute.Name
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Bar
-  nameWithType: ModuleInvocationTests.IService.Bar
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Ignored
-  name: Ignored()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Ignored
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Ignored
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Ignored()
-  nameWithType: ModuleInvocationTests.IService.Ignored()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Ignored*
-  name: Ignored
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Ignored_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Ignored
+  fullName: Solti.Utils.Rpc.AliasAttribute.Name
+  nameWithType: AliasAttribute.Name
+- uid: Solti.Utils.Rpc.ExceptionInfo
+  name: ExceptionInfo
+  href: Solti.Utils.Rpc.ExceptionInfo.html
+  commentId: T:Solti.Utils.Rpc.ExceptionInfo
+  fullName: Solti.Utils.Rpc.ExceptionInfo
+  nameWithType: ExceptionInfo
+- uid: Solti.Utils.Rpc.ExceptionInfo.Data
+  name: Data
+  href: Solti.Utils.Rpc.ExceptionInfo.html#Solti_Utils_Rpc_ExceptionInfo_Data
+  commentId: P:Solti.Utils.Rpc.ExceptionInfo.Data
+  fullName: Solti.Utils.Rpc.ExceptionInfo.Data
+  nameWithType: ExceptionInfo.Data
+- uid: Solti.Utils.Rpc.ExceptionInfo.Data*
+  name: Data
+  href: Solti.Utils.Rpc.ExceptionInfo.html#Solti_Utils_Rpc_ExceptionInfo_Data_
+  commentId: Overload:Solti.Utils.Rpc.ExceptionInfo.Data
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Ignored
-  nameWithType: ModuleInvocationTests.IService.Ignored
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Void
-  name: Void()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Void
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Void
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Void()
-  nameWithType: ModuleInvocationTests.IService.Void()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Void*
-  name: Void
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_IService_Void_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Void
+  fullName: Solti.Utils.Rpc.ExceptionInfo.Data
+  nameWithType: ExceptionInfo.Data
+- uid: Solti.Utils.Rpc.ExceptionInfo.Message
+  name: Message
+  href: Solti.Utils.Rpc.ExceptionInfo.html#Solti_Utils_Rpc_ExceptionInfo_Message
+  commentId: P:Solti.Utils.Rpc.ExceptionInfo.Message
+  fullName: Solti.Utils.Rpc.ExceptionInfo.Message
+  nameWithType: ExceptionInfo.Message
+- uid: Solti.Utils.Rpc.ExceptionInfo.Message*
+  name: Message
+  href: Solti.Utils.Rpc.ExceptionInfo.html#Solti_Utils_Rpc_ExceptionInfo_Message_
+  commentId: Overload:Solti.Utils.Rpc.ExceptionInfo.Message
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.IService.Void
-  nameWithType: ModuleInvocationTests.IService.Void
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod
-  name: ModuleInvocation_ShouldCallTheDesiredMethod()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldCallTheDesiredMethod
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod*
-  name: ModuleInvocation_ShouldCallTheDesiredMethod
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldCallTheDesiredMethod_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod
+  fullName: Solti.Utils.Rpc.ExceptionInfo.Message
+  nameWithType: ExceptionInfo.Message
+- uid: Solti.Utils.Rpc.ExceptionInfo.TypeName
+  name: TypeName
+  href: Solti.Utils.Rpc.ExceptionInfo.html#Solti_Utils_Rpc_ExceptionInfo_TypeName
+  commentId: P:Solti.Utils.Rpc.ExceptionInfo.TypeName
+  fullName: Solti.Utils.Rpc.ExceptionInfo.TypeName
+  nameWithType: ExceptionInfo.TypeName
+- uid: Solti.Utils.Rpc.ExceptionInfo.TypeName*
+  name: TypeName
+  href: Solti.Utils.Rpc.ExceptionInfo.html#Solti_Utils_Rpc_ExceptionInfo_TypeName_
+  commentId: Overload:Solti.Utils.Rpc.ExceptionInfo.TypeName
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldCallTheDesiredMethod
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias
-  name: ModuleInvocation_ShouldHandleMethodAlias()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldHandleMethodAlias
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias*
-  name: ModuleInvocation_ShouldHandleMethodAlias
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldHandleMethodAlias_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias
+  fullName: Solti.Utils.Rpc.ExceptionInfo.TypeName
+  nameWithType: ExceptionInfo.TypeName
+- uid: Solti.Utils.Rpc.IgnoreAttribute
+  name: IgnoreAttribute
+  href: Solti.Utils.Rpc.IgnoreAttribute.html
+  commentId: T:Solti.Utils.Rpc.IgnoreAttribute
+  fullName: Solti.Utils.Rpc.IgnoreAttribute
+  nameWithType: IgnoreAttribute
+- uid: Solti.Utils.Rpc.IModuleRegistry
+  name: IModuleRegistry
+  href: Solti.Utils.Rpc.IModuleRegistry.html
+  commentId: T:Solti.Utils.Rpc.IModuleRegistry
+  fullName: Solti.Utils.Rpc.IModuleRegistry
+  nameWithType: IModuleRegistry
+- uid: Solti.Utils.Rpc.IModuleRegistry.Register*
+  name: Register
+  href: Solti.Utils.Rpc.IModuleRegistry.html#Solti_Utils_Rpc_IModuleRegistry_Register_
+  commentId: Overload:Solti.Utils.Rpc.IModuleRegistry.Register
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldHandleMethodAlias
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService
-  name: ModuleInvocation_ShouldQueryTheService()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldQueryTheService
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService*
-  name: ModuleInvocation_ShouldQueryTheService
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldQueryTheService_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService
+  fullName: Solti.Utils.Rpc.IModuleRegistry.Register
+  nameWithType: IModuleRegistry.Register
+- uid: Solti.Utils.Rpc.IModuleRegistry.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
+  name: Register<TInterface>(Func<IInjector, TInterface>)
+  href: Solti.Utils.Rpc.IModuleRegistry.html#Solti_Utils_Rpc_IModuleRegistry_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__
+  commentId: M:Solti.Utils.Rpc.IModuleRegistry.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
+  name.vb: Register(Of TInterface)(Func(Of IInjector, TInterface))
+  fullName: Solti.Utils.Rpc.IModuleRegistry.Register<TInterface>(System.Func<Solti.Utils.DI.Interfaces.IInjector, TInterface>)
+  fullName.vb: Solti.Utils.Rpc.IModuleRegistry.Register(Of TInterface)(System.Func(Of Solti.Utils.DI.Interfaces.IInjector, TInterface))
+  nameWithType: IModuleRegistry.Register<TInterface>(Func<IInjector, TInterface>)
+  nameWithType.vb: IModuleRegistry.Register(Of TInterface)(Func(Of IInjector, TInterface))
+- uid: Solti.Utils.Rpc.IModuleRegistry.Register``2
+  name: Register<TInterface, TImplementation>()
+  href: Solti.Utils.Rpc.IModuleRegistry.html#Solti_Utils_Rpc_IModuleRegistry_Register__2
+  commentId: M:Solti.Utils.Rpc.IModuleRegistry.Register``2
+  name.vb: Register(Of TInterface, TImplementation)()
+  fullName: Solti.Utils.Rpc.IModuleRegistry.Register<TInterface, TImplementation>()
+  fullName.vb: Solti.Utils.Rpc.IModuleRegistry.Register(Of TInterface, TImplementation)()
+  nameWithType: IModuleRegistry.Register<TInterface, TImplementation>()
+  nameWithType.vb: IModuleRegistry.Register(Of TInterface, TImplementation)()
+- uid: Solti.Utils.Rpc.Internals
+  name: Solti.Utils.Rpc.Internals
+  href: Solti.Utils.Rpc.Internals.html
+  commentId: N:Solti.Utils.Rpc.Internals
+  fullName: Solti.Utils.Rpc.Internals
+  nameWithType: Solti.Utils.Rpc.Internals
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocation
+  name: ModuleInvocation
+  href: Solti.Utils.Rpc.Internals.ModuleInvocation.html
+  commentId: T:Solti.Utils.Rpc.Internals.ModuleInvocation
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocation
+  nameWithType: ModuleInvocation
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
+  name: ModuleInvocationBuilder
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html
+  commentId: T:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
+  nameWithType: ModuleInvocationBuilder
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule*
+  name: AddModule
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldQueryTheService
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
-  name: ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount*
-  name: ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule
+  nameWithType: ModuleInvocationBuilder.AddModule
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule``1
+  name: AddModule<TInterface>()
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule__1
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule``1
+  name.vb: AddModule(Of TInterface)()
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule<TInterface>()
+  fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Of TInterface)()
+  nameWithType: ModuleInvocationBuilder.AddModule<TInterface>()
+  nameWithType.vb: ModuleInvocationBuilder.AddModule(Of TInterface)()
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
+  name: Build()
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Build
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build()
+  nameWithType: ModuleInvocationBuilder.Build()
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Build_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldTakeIgnoreAttributeIntoAccount
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound
-  name: ModuleInvocation_ShouldThrowIfTheMethodNotFound()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldThrowIfTheMethodNotFound
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound*
-  name: ModuleInvocation_ShouldThrowIfTheMethodNotFound
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldThrowIfTheMethodNotFound_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
+  nameWithType: ModuleInvocationBuilder.Build
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)
+  name: GetDeserializerFor(MethodInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetDeserializerFor_System_Reflection_MethodInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)
+  nameWithType: ModuleInvocationBuilder.GetDeserializerFor(MethodInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor*
+  name: GetDeserializerFor
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetDeserializerFor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheMethodNotFound
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound
-  name: ModuleInvocation_ShouldThrowIfTheModuleNotFound()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldThrowIfTheModuleNotFound
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound*
-  name: ModuleInvocation_ShouldThrowIfTheModuleNotFound
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldThrowIfTheModuleNotFound_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor
+  nameWithType: ModuleInvocationBuilder.GetDeserializerFor
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)
+  name: GetMemberId(MemberInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetMemberId_System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)
+  nameWithType: ModuleInvocationBuilder.GetMemberId(MemberInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId*
+  name: GetMemberId
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetMemberId_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldThrowIfTheModuleNotFound
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter
-  name: ModuleInvocation_ShouldThrowOnInvalidParameter()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldThrowOnInvalidParameter
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter*
-  name: ModuleInvocation_ShouldThrowOnInvalidParameter
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldThrowOnInvalidParameter_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId
+  nameWithType: ModuleInvocationBuilder.GetMemberId
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
+  name: Modules
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Modules
+  commentId: P:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
+  nameWithType: ModuleInvocationBuilder.Modules
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules*
+  name: Modules
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Modules_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldThrowOnInvalidParameter
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods
-  name: ModuleInvocation_ShouldWorkWithVoidMethods()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldWorkWithVoidMethods
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods()
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods*
-  name: ModuleInvocation_ShouldWorkWithVoidMethods
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_ModuleInvocation_ShouldWorkWithVoidMethods_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
+  nameWithType: ModuleInvocationBuilder.Modules
+- uid: Solti.Utils.Rpc.Internals.WebService
+  name: WebService
+  href: Solti.Utils.Rpc.Internals.WebService.html
+  commentId: T:Solti.Utils.Rpc.Internals.WebService
+  fullName: Solti.Utils.Rpc.Internals.WebService
+  nameWithType: WebService
+- uid: Solti.Utils.Rpc.Internals.WebService.AddUrlReservation(System.String)
+  name: AddUrlReservation(String)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddUrlReservation_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.AddUrlReservation(System.String)
+  fullName: Solti.Utils.Rpc.Internals.WebService.AddUrlReservation(System.String)
+  nameWithType: WebService.AddUrlReservation(String)
+- uid: Solti.Utils.Rpc.Internals.WebService.AddUrlReservation*
+  name: AddUrlReservation
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddUrlReservation_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.AddUrlReservation
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods
-  nameWithType: ModuleInvocationTests.ModuleInvocation_ShouldWorkWithVoidMethods
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.SetupFixture
-  name: SetupFixture()
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_SetupFixture
-  commentId: M:Solti.Utils.Rpc.Tests.ModuleInvocationTests.SetupFixture
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.SetupFixture()
-  nameWithType: ModuleInvocationTests.SetupFixture()
-- uid: Solti.Utils.Rpc.Tests.ModuleInvocationTests.SetupFixture*
-  name: SetupFixture
-  href: Solti.Utils.Rpc.Tests.ModuleInvocationTests.html#Solti_Utils_Rpc_Tests_ModuleInvocationTests_SetupFixture_
-  commentId: Overload:Solti.Utils.Rpc.Tests.ModuleInvocationTests.SetupFixture
+  fullName: Solti.Utils.Rpc.Internals.WebService.AddUrlReservation
+  nameWithType: WebService.AddUrlReservation
+- uid: Solti.Utils.Rpc.Internals.WebService.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Dispose_System_Boolean_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.Dispose(System.Boolean)
+  fullName: Solti.Utils.Rpc.Internals.WebService.Dispose(System.Boolean)
+  nameWithType: WebService.Dispose(Boolean)
+- uid: Solti.Utils.Rpc.Internals.WebService.Dispose*
+  name: Dispose
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Dispose_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Dispose
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.ModuleInvocationTests.SetupFixture
-  nameWithType: ModuleInvocationTests.SetupFixture
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests
-  name: MultiTypeArraySerializerTests
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html
-  commentId: T:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests
-  nameWithType: MultiTypeArraySerializerTests
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength(System.String)
-  name: Deserialize_ShouldThrowOnInvalidLength(String)
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html#Solti_Utils_Rpc_Tests_MultiTypeArraySerializerTests_Deserialize_ShouldThrowOnInvalidLength_System_String_
-  commentId: M:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength(System.String)
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength(System.String)
-  nameWithType: MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength(String)
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength*
-  name: Deserialize_ShouldThrowOnInvalidLength
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html#Solti_Utils_Rpc_Tests_MultiTypeArraySerializerTests_Deserialize_ShouldThrowOnInvalidLength_
-  commentId: Overload:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength
+  fullName: Solti.Utils.Rpc.Internals.WebService.Dispose
+  nameWithType: WebService.Dispose
+- uid: Solti.Utils.Rpc.Internals.WebService.IsListening
+  name: IsListening
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsListening
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.IsListening
+  fullName: Solti.Utils.Rpc.Internals.WebService.IsListening
+  nameWithType: WebService.IsListening
+- uid: Solti.Utils.Rpc.Internals.WebService.IsListening*
+  name: IsListening
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsListening_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.IsListening
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength
-  nameWithType: MultiTypeArraySerializerTests.Deserialize_ShouldThrowOnInvalidLength
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith(System.ValueTuple{System.String,System.Type[],System.Object[]})
-  name: Deserialize_ShouldWorkWith((String Json, Type[] Types, Object[] Result))
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html#Solti_Utils_Rpc_Tests_MultiTypeArraySerializerTests_Deserialize_ShouldWorkWith_System_ValueTuple_System_String_System_Type___System_Object____
-  commentId: M:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith(System.ValueTuple{System.String,System.Type[],System.Object[]})
-  name.vb: Deserialize_ShouldWorkWith((Json As String, Types As Type(), Result As Object()))
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith(System.ValueTuple<System.String, System.Type[], System.Object[]>)
-  fullName.vb: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith(System.ValueTuple(Of System.String, System.Type(), System.Object()))
-  nameWithType: MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith((String Json, Type[] Types, Object[] Result))
-  nameWithType.vb: MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith((Json As String, Types As Type(), Result As Object()))
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith*
-  name: Deserialize_ShouldWorkWith
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html#Solti_Utils_Rpc_Tests_MultiTypeArraySerializerTests_Deserialize_ShouldWorkWith_
-  commentId: Overload:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith
+  fullName: Solti.Utils.Rpc.Internals.WebService.IsListening
+  nameWithType: WebService.IsListening
+- uid: Solti.Utils.Rpc.Internals.WebService.IsStarted
+  name: IsStarted
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsStarted
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.IsStarted
+  fullName: Solti.Utils.Rpc.Internals.WebService.IsStarted
+  nameWithType: WebService.IsStarted
+- uid: Solti.Utils.Rpc.Internals.WebService.IsStarted*
+  name: IsStarted
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsStarted_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.IsStarted
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith
-  nameWithType: MultiTypeArraySerializerTests.Deserialize_ShouldWorkWith
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.TestCases
-  name: TestCases
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html#Solti_Utils_Rpc_Tests_MultiTypeArraySerializerTests_TestCases
-  commentId: P:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.TestCases
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.TestCases
-  nameWithType: MultiTypeArraySerializerTests.TestCases
-- uid: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.TestCases*
-  name: TestCases
-  href: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.html#Solti_Utils_Rpc_Tests_MultiTypeArraySerializerTests_TestCases_
-  commentId: Overload:Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.TestCases
+  fullName: Solti.Utils.Rpc.Internals.WebService.IsStarted
+  nameWithType: WebService.IsStarted
+- uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
+  name: ProcessRequestContext(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
+  nameWithType: WebService.ProcessRequestContext(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext*
+  name: ProcessRequestContext
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.MultiTypeArraySerializerTests.TestCases
-  nameWithType: MultiTypeArraySerializerTests.TestCases
-- uid: Solti.Utils.Rpc.Tests.RpcTests
-  name: RpcTests
-  href: Solti.Utils.Rpc.Tests.RpcTests.html
-  commentId: T:Solti.Utils.Rpc.Tests.RpcTests
-  fullName: Solti.Utils.Rpc.Tests.RpcTests
-  nameWithType: RpcTests
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Client_MaySendCustomHeaders
-  name: Client_MaySendCustomHeaders()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Client_MaySendCustomHeaders
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Client_MaySendCustomHeaders
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Client_MaySendCustomHeaders()
-  nameWithType: RpcTests.Client_MaySendCustomHeaders()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Client_MaySendCustomHeaders*
-  name: Client_MaySendCustomHeaders
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Client_MaySendCustomHeaders_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Client_MaySendCustomHeaders
+  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext
+  nameWithType: WebService.ProcessRequestContext
+- uid: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation(System.String)
+  name: RemoveUrlReservation(String)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_RemoveUrlReservation_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation(System.String)
+  fullName: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation(System.String)
+  nameWithType: WebService.RemoveUrlReservation(String)
+- uid: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation*
+  name: RemoveUrlReservation
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_RemoveUrlReservation_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Client_MaySendCustomHeaders
-  nameWithType: RpcTests.Client_MaySendCustomHeaders
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldHandleRemoteExceptions
-  name: Client_ShouldHandleRemoteExceptions()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Client_ShouldHandleRemoteExceptions
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldHandleRemoteExceptions
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldHandleRemoteExceptions()
-  nameWithType: RpcTests.Client_ShouldHandleRemoteExceptions()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldHandleRemoteExceptions*
-  name: Client_ShouldHandleRemoteExceptions
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Client_ShouldHandleRemoteExceptions_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldHandleRemoteExceptions
+  fullName: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation
+  nameWithType: WebService.RemoveUrlReservation
+- uid: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)
+  name: SafeCallContextProcessor(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)
+  nameWithType: WebService.SafeCallContextProcessor(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor*
+  name: SafeCallContextProcessor
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldHandleRemoteExceptions
-  nameWithType: RpcTests.Client_ShouldHandleRemoteExceptions
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldTimeout
-  name: Client_ShouldTimeout()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Client_ShouldTimeout
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldTimeout
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldTimeout()
-  nameWithType: RpcTests.Client_ShouldTimeout()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldTimeout*
-  name: Client_ShouldTimeout
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Client_ShouldTimeout_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldTimeout
+  fullName: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor
+  nameWithType: WebService.SafeCallContextProcessor
+- uid: Solti.Utils.Rpc.Internals.WebService.Start(System.String)
+  name: Start(String)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Start_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.Start(System.String)
+  fullName: Solti.Utils.Rpc.Internals.WebService.Start(System.String)
+  nameWithType: WebService.Start(String)
+- uid: Solti.Utils.Rpc.Internals.WebService.Start*
+  name: Start
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Start_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Start
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Client_ShouldTimeout
-  nameWithType: RpcTests.Client_ShouldTimeout
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Context_ShouldBeAccessible
-  name: Context_ShouldBeAccessible()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Context_ShouldBeAccessible
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Context_ShouldBeAccessible
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Context_ShouldBeAccessible()
-  nameWithType: RpcTests.Context_ShouldBeAccessible()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Context_ShouldBeAccessible*
-  name: Context_ShouldBeAccessible
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Context_ShouldBeAccessible_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Context_ShouldBeAccessible
+  fullName: Solti.Utils.Rpc.Internals.WebService.Start
+  nameWithType: WebService.Start
+- uid: Solti.Utils.Rpc.Internals.WebService.Stop
+  name: Stop()
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Stop
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.Stop
+  fullName: Solti.Utils.Rpc.Internals.WebService.Stop()
+  nameWithType: WebService.Stop()
+- uid: Solti.Utils.Rpc.Internals.WebService.Stop*
+  name: Stop
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Stop_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Stop
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Context_ShouldBeAccessible
-  nameWithType: RpcTests.Context_ShouldBeAccessible
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack
-  name: RpcTests.GetMyHeaderBack
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html
-  commentId: T:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack
-  nameWithType: RpcTests.GetMyHeaderBack
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.#ctor(Solti.Utils.Rpc.IRequestContext)
-  name: GetMyHeaderBack(IRequestContext)
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_GetMyHeaderBack__ctor_Solti_Utils_Rpc_IRequestContext_
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.#ctor(Solti.Utils.Rpc.IRequestContext)
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.GetMyHeaderBack(Solti.Utils.Rpc.IRequestContext)
-  nameWithType: RpcTests.GetMyHeaderBack.GetMyHeaderBack(IRequestContext)
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.#ctor*
-  name: GetMyHeaderBack
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_GetMyHeaderBack__ctor_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.#ctor
+  fullName: Solti.Utils.Rpc.Internals.WebService.Stop
+  nameWithType: WebService.Stop
+- uid: Solti.Utils.Rpc.Internals.WebService.Timeout
+  name: Timeout
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Timeout
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.Timeout
+  fullName: Solti.Utils.Rpc.Internals.WebService.Timeout
+  nameWithType: WebService.Timeout
+- uid: Solti.Utils.Rpc.Internals.WebService.Timeout*
+  name: Timeout
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Timeout_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Timeout
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.GetMyHeaderBack
-  nameWithType: RpcTests.GetMyHeaderBack.GetMyHeaderBack
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Context
-  name: Context
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_GetMyHeaderBack_Context
-  commentId: P:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Context
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Context
-  nameWithType: RpcTests.GetMyHeaderBack.Context
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Context*
-  name: Context
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_GetMyHeaderBack_Context_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Context
+  fullName: Solti.Utils.Rpc.Internals.WebService.Timeout
+  nameWithType: WebService.Timeout
+- uid: Solti.Utils.Rpc.Internals.WebService.Url
+  name: Url
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Url
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.Url
+  fullName: Solti.Utils.Rpc.Internals.WebService.Url
+  nameWithType: WebService.Url
+- uid: Solti.Utils.Rpc.Internals.WebService.Url*
+  name: Url
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Url_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Url
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Context
-  nameWithType: RpcTests.GetMyHeaderBack.Context
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Solti#Utils#Rpc#Tests#RpcTests#IGetMyHeaderBack#GetMyHeaderBack
-  name: RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_GetMyHeaderBack_Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_GetMyHeaderBack
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Solti#Utils#Rpc#Tests#RpcTests#IGetMyHeaderBack#GetMyHeaderBack
-  name.vb: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-  nameWithType: RpcTests.GetMyHeaderBack.RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-  nameWithType.vb: RpcTests.GetMyHeaderBack.Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Solti#Utils#Rpc#Tests#RpcTests#IGetMyHeaderBack#GetMyHeaderBack*
-  name: RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  href: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_GetMyHeaderBack_Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_GetMyHeaderBack_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Solti#Utils#Rpc#Tests#RpcTests#IGetMyHeaderBack#GetMyHeaderBack
+  fullName: Solti.Utils.Rpc.Internals.WebService.Url
+  nameWithType: WebService.Url
+- uid: Solti.Utils.Rpc.Internals.WebService.WriteResponseString(System.Net.HttpListenerResponse,System.String)
+  name: WriteResponseString(HttpListenerResponse, String)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_WriteResponseString_System_Net_HttpListenerResponse_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.WriteResponseString(System.Net.HttpListenerResponse,System.String)
+  fullName: Solti.Utils.Rpc.Internals.WebService.WriteResponseString(System.Net.HttpListenerResponse, System.String)
+  nameWithType: WebService.WriteResponseString(HttpListenerResponse, String)
+- uid: Solti.Utils.Rpc.Internals.WebService.WriteResponseString*
+  name: WriteResponseString
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_WriteResponseString_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.WriteResponseString
   isSpec: "True"
-  name.vb: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetMyHeaderBack.Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  nameWithType: RpcTests.GetMyHeaderBack.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  nameWithType.vb: RpcTests.GetMyHeaderBack.Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetStream_ShouldWork
-  name: GetStream_ShouldWork()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_GetStream_ShouldWork
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.GetStream_ShouldWork
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetStream_ShouldWork()
-  nameWithType: RpcTests.GetStream_ShouldWork()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetStream_ShouldWork*
-  name: GetStream_ShouldWork
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_GetStream_ShouldWork_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.GetStream_ShouldWork
+  fullName: Solti.Utils.Rpc.Internals.WebService.WriteResponseString
+  nameWithType: WebService.WriteResponseString
+- uid: Solti.Utils.Rpc.IRequestContext
+  name: IRequestContext
+  href: Solti.Utils.Rpc.IRequestContext.html
+  commentId: T:Solti.Utils.Rpc.IRequestContext
+  fullName: Solti.Utils.Rpc.IRequestContext
+  nameWithType: IRequestContext
+- uid: Solti.Utils.Rpc.IRequestContext.Args
+  name: Args
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Args
+  commentId: P:Solti.Utils.Rpc.IRequestContext.Args
+  fullName: Solti.Utils.Rpc.IRequestContext.Args
+  nameWithType: IRequestContext.Args
+- uid: Solti.Utils.Rpc.IRequestContext.Args*
+  name: Args
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Args_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Args
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetStream_ShouldWork
-  nameWithType: RpcTests.GetStream_ShouldWork
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetStreamAsync_ShouldWork
-  name: GetStreamAsync_ShouldWork()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_GetStreamAsync_ShouldWork
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.GetStreamAsync_ShouldWork
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetStreamAsync_ShouldWork()
-  nameWithType: RpcTests.GetStreamAsync_ShouldWork()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.GetStreamAsync_ShouldWork*
-  name: GetStreamAsync_ShouldWork
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_GetStreamAsync_ShouldWork_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.GetStreamAsync_ShouldWork
+  fullName: Solti.Utils.Rpc.IRequestContext.Args
+  nameWithType: IRequestContext.Args
+- uid: Solti.Utils.Rpc.IRequestContext.Headers
+  name: Headers
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Headers
+  commentId: P:Solti.Utils.Rpc.IRequestContext.Headers
+  fullName: Solti.Utils.Rpc.IRequestContext.Headers
+  nameWithType: IRequestContext.Headers
+- uid: Solti.Utils.Rpc.IRequestContext.Headers*
+  name: Headers
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Headers_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Headers
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.GetStreamAsync_ShouldWork
-  nameWithType: RpcTests.GetStreamAsync_ShouldWork
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IDummy
-  name: RpcTests.IDummy
-  href: Solti.Utils.Rpc.Tests.RpcTests.IDummy.html
-  commentId: T:Solti.Utils.Rpc.Tests.RpcTests.IDummy
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IDummy
-  nameWithType: RpcTests.IDummy
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_1
-  name: Method_1()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IDummy.html#Solti_Utils_Rpc_Tests_RpcTests_IDummy_Method_1
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_1
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_1()
-  nameWithType: RpcTests.IDummy.Method_1()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_1*
-  name: Method_1
-  href: Solti.Utils.Rpc.Tests.RpcTests.IDummy.html#Solti_Utils_Rpc_Tests_RpcTests_IDummy_Method_1_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_1
+  fullName: Solti.Utils.Rpc.IRequestContext.Headers
+  nameWithType: IRequestContext.Headers
+- uid: Solti.Utils.Rpc.IRequestContext.Method
+  name: Method
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Method
+  commentId: P:Solti.Utils.Rpc.IRequestContext.Method
+  fullName: Solti.Utils.Rpc.IRequestContext.Method
+  nameWithType: IRequestContext.Method
+- uid: Solti.Utils.Rpc.IRequestContext.Method*
+  name: Method
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Method_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Method
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_1
-  nameWithType: RpcTests.IDummy.Method_1
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_2
-  name: Method_2()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IDummy.html#Solti_Utils_Rpc_Tests_RpcTests_IDummy_Method_2
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_2
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_2()
-  nameWithType: RpcTests.IDummy.Method_2()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_2*
-  name: Method_2
-  href: Solti.Utils.Rpc.Tests.RpcTests.IDummy.html#Solti_Utils_Rpc_Tests_RpcTests_IDummy_Method_2_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_2
+  fullName: Solti.Utils.Rpc.IRequestContext.Method
+  nameWithType: IRequestContext.Method
+- uid: Solti.Utils.Rpc.IRequestContext.Module
+  name: Module
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Module
+  commentId: P:Solti.Utils.Rpc.IRequestContext.Module
+  fullName: Solti.Utils.Rpc.IRequestContext.Module
+  nameWithType: IRequestContext.Module
+- uid: Solti.Utils.Rpc.IRequestContext.Module*
+  name: Module
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Module_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Module
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IDummy.Method_2
-  nameWithType: RpcTests.IDummy.Method_2
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack
-  name: RpcTests.IGetMyHeaderBack
-  href: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.html
-  commentId: T:Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack
-  nameWithType: RpcTests.IGetMyHeaderBack
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  name: GetMyHeaderBack()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_GetMyHeaderBack
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-  nameWithType: RpcTests.IGetMyHeaderBack.GetMyHeaderBack()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack*
-  name: GetMyHeaderBack
-  href: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.html#Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_GetMyHeaderBack_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
+  fullName: Solti.Utils.Rpc.IRequestContext.Module
+  nameWithType: IRequestContext.Module
+- uid: Solti.Utils.Rpc.IRequestContext.SessionId
+  name: SessionId
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_SessionId
+  commentId: P:Solti.Utils.Rpc.IRequestContext.SessionId
+  fullName: Solti.Utils.Rpc.IRequestContext.SessionId
+  nameWithType: IRequestContext.SessionId
+- uid: Solti.Utils.Rpc.IRequestContext.SessionId*
+  name: SessionId
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_SessionId_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.SessionId
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-  nameWithType: RpcTests.IGetMyHeaderBack.GetMyHeaderBack
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule
-  name: RpcTests.IModule
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html
-  commentId: T:Solti.Utils.Rpc.Tests.RpcTests.IModule
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule
-  nameWithType: RpcTests.IModule
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.Add(System.Int32,System.Int32)
-  name: Add(Int32, Int32)
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_Add_System_Int32_System_Int32_
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IModule.Add(System.Int32,System.Int32)
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.Add(System.Int32, System.Int32)
-  nameWithType: RpcTests.IModule.Add(Int32, Int32)
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.Add*
-  name: Add
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_Add_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IModule.Add
+  fullName: Solti.Utils.Rpc.IRequestContext.SessionId
+  nameWithType: IRequestContext.SessionId
+- uid: Solti.Utils.Rpc.RpcClient`1
+  name: RpcClient<TInterface>
+  href: Solti.Utils.Rpc.RpcClient-1.html
+  commentId: T:Solti.Utils.Rpc.RpcClient`1
+  name.vb: RpcClient(Of TInterface)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface)
+  nameWithType: RpcClient<TInterface>
+  nameWithType.vb: RpcClient(Of TInterface)
+- uid: Solti.Utils.Rpc.RpcClient`1.#ctor(System.String,System.String)
+  name: RpcClient(String, String)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1__ctor_System_String_System_String_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.#ctor(System.String,System.String)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.RpcClient(System.String, System.String)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).RpcClient(System.String, System.String)
+  nameWithType: RpcClient<TInterface>.RpcClient(String, String)
+  nameWithType.vb: RpcClient(Of TInterface).RpcClient(String, String)
+- uid: Solti.Utils.Rpc.RpcClient`1.#ctor*
+  name: RpcClient
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1__ctor_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.Add
-  nameWithType: RpcTests.IModule.Add
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.AddAsync(System.Int32,System.Int32)
-  name: AddAsync(Int32, Int32)
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_AddAsync_System_Int32_System_Int32_
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IModule.AddAsync(System.Int32,System.Int32)
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.AddAsync(System.Int32, System.Int32)
-  nameWithType: RpcTests.IModule.AddAsync(Int32, Int32)
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.AddAsync*
-  name: AddAsync
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_AddAsync_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IModule.AddAsync
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.RpcClient
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).RpcClient
+  nameWithType: RpcClient<TInterface>.RpcClient
+  nameWithType.vb: RpcClient(Of TInterface).RpcClient
+- uid: Solti.Utils.Rpc.RpcClient`1.CustomHeaders
+  name: CustomHeaders
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_CustomHeaders
+  commentId: P:Solti.Utils.Rpc.RpcClient`1.CustomHeaders
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.CustomHeaders
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).CustomHeaders
+  nameWithType: RpcClient<TInterface>.CustomHeaders
+  nameWithType.vb: RpcClient(Of TInterface).CustomHeaders
+- uid: Solti.Utils.Rpc.RpcClient`1.CustomHeaders*
+  name: CustomHeaders
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_CustomHeaders_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.CustomHeaders
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.AddAsync
-  nameWithType: RpcTests.IModule.AddAsync
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.Dummy
-  name: Dummy()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_Dummy
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IModule.Dummy
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.Dummy()
-  nameWithType: RpcTests.IModule.Dummy()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.Dummy*
-  name: Dummy
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_Dummy_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IModule.Dummy
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.CustomHeaders
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).CustomHeaders
+  nameWithType: RpcClient<TInterface>.CustomHeaders
+  nameWithType.vb: RpcClient(Of TInterface).CustomHeaders
+- uid: Solti.Utils.Rpc.RpcClient`1.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Dispose_System_Boolean_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.Dispose(System.Boolean)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Dispose(System.Boolean)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Dispose(System.Boolean)
+  nameWithType: RpcClient<TInterface>.Dispose(Boolean)
+  nameWithType.vb: RpcClient(Of TInterface).Dispose(Boolean)
+- uid: Solti.Utils.Rpc.RpcClient`1.Dispose*
+  name: Dispose
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Dispose_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.Dispose
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.Dummy
-  nameWithType: RpcTests.IModule.Dummy
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.Faulty
-  name: Faulty()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_Faulty
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IModule.Faulty
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.Faulty()
-  nameWithType: RpcTests.IModule.Faulty()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.Faulty*
-  name: Faulty
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_Faulty_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IModule.Faulty
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Dispose
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Dispose
+  nameWithType: RpcClient<TInterface>.Dispose
+  nameWithType.vb: RpcClient(Of TInterface).Dispose
+- uid: Solti.Utils.Rpc.RpcClient`1.GetMemberId(System.Reflection.MemberInfo)
+  name: GetMemberId(MemberInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_GetMemberId_System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.GetMemberId(System.Reflection.MemberInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.GetMemberId(System.Reflection.MemberInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetMemberId(System.Reflection.MemberInfo)
+  nameWithType: RpcClient<TInterface>.GetMemberId(MemberInfo)
+  nameWithType.vb: RpcClient(Of TInterface).GetMemberId(MemberInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.GetMemberId*
+  name: GetMemberId
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_GetMemberId_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.GetMemberId
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.Faulty
-  nameWithType: RpcTests.IModule.Faulty
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStream
-  name: GetStream()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_GetStream
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStream
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStream()
-  nameWithType: RpcTests.IModule.GetStream()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStream*
-  name: GetStream
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_GetStream_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStream
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.GetMemberId
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetMemberId
+  nameWithType: RpcClient<TInterface>.GetMemberId
+  nameWithType.vb: RpcClient(Of TInterface).GetMemberId
+- uid: Solti.Utils.Rpc.RpcClient`1.Host
+  name: Host
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Host
+  commentId: P:Solti.Utils.Rpc.RpcClient`1.Host
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Host
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Host
+  nameWithType: RpcClient<TInterface>.Host
+  nameWithType.vb: RpcClient(Of TInterface).Host
+- uid: Solti.Utils.Rpc.RpcClient`1.Host*
+  name: Host
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Host_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.Host
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStream
-  nameWithType: RpcTests.IModule.GetStream
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStreamAsync
-  name: GetStreamAsync()
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_GetStreamAsync
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStreamAsync
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStreamAsync()
-  nameWithType: RpcTests.IModule.GetStreamAsync()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStreamAsync*
-  name: GetStreamAsync
-  href: Solti.Utils.Rpc.Tests.RpcTests.IModule.html#Solti_Utils_Rpc_Tests_RpcTests_IModule_GetStreamAsync_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStreamAsync
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Host
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Host
+  nameWithType: RpcClient<TInterface>.Host
+  nameWithType.vb: RpcClient(Of TInterface).Host
+- uid: Solti.Utils.Rpc.RpcClient`1.InvokeService(System.Reflection.MethodInfo,System.Object[])
+  name: InvokeService(MethodInfo, Object[])
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeService_System_Reflection_MethodInfo_System_Object___
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.InvokeService(System.Reflection.MethodInfo,System.Object[])
+  name.vb: InvokeService(MethodInfo, Object())
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeService(System.Reflection.MethodInfo, System.Object[])
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeService(System.Reflection.MethodInfo, System.Object())
+  nameWithType: RpcClient<TInterface>.InvokeService(MethodInfo, Object[])
+  nameWithType.vb: RpcClient(Of TInterface).InvokeService(MethodInfo, Object())
+- uid: Solti.Utils.Rpc.RpcClient`1.InvokeService*
+  name: InvokeService
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeService_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.InvokeService
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.IModule.GetStreamAsync
-  nameWithType: RpcTests.IModule.GetStreamAsync
-- uid: Solti.Utils.Rpc.Tests.RpcTests.MultipleRemoteAdd_ShouldWork
-  name: MultipleRemoteAdd_ShouldWork()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_MultipleRemoteAdd_ShouldWork
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.MultipleRemoteAdd_ShouldWork
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.MultipleRemoteAdd_ShouldWork()
-  nameWithType: RpcTests.MultipleRemoteAdd_ShouldWork()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.MultipleRemoteAdd_ShouldWork*
-  name: MultipleRemoteAdd_ShouldWork
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_MultipleRemoteAdd_ShouldWork_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.MultipleRemoteAdd_ShouldWork
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeService
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeService
+  nameWithType: RpcClient<TInterface>.InvokeService
+  nameWithType.vb: RpcClient(Of TInterface).InvokeService
+- uid: Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(System.Reflection.MethodInfo,System.Object[])
+  name: InvokeServiceAsync(MethodInfo, Object[])
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeServiceAsync_System_Reflection_MethodInfo_System_Object___
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(System.Reflection.MethodInfo,System.Object[])
+  name.vb: InvokeServiceAsync(MethodInfo, Object())
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeServiceAsync(System.Reflection.MethodInfo, System.Object[])
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeServiceAsync(System.Reflection.MethodInfo, System.Object())
+  nameWithType: RpcClient<TInterface>.InvokeServiceAsync(MethodInfo, Object[])
+  nameWithType.vb: RpcClient(Of TInterface).InvokeServiceAsync(MethodInfo, Object())
+- uid: Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync*
+  name: InvokeServiceAsync
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeServiceAsync_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.MultipleRemoteAdd_ShouldWork
-  nameWithType: RpcTests.MultipleRemoteAdd_ShouldWork
-- uid: Solti.Utils.Rpc.Tests.RpcTests.RemoteAdd_ShouldWork
-  name: RemoteAdd_ShouldWork()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_RemoteAdd_ShouldWork
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.RemoteAdd_ShouldWork
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.RemoteAdd_ShouldWork()
-  nameWithType: RpcTests.RemoteAdd_ShouldWork()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.RemoteAdd_ShouldWork*
-  name: RemoteAdd_ShouldWork
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_RemoteAdd_ShouldWork_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.RemoteAdd_ShouldWork
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeServiceAsync
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeServiceAsync
+  nameWithType: RpcClient<TInterface>.InvokeServiceAsync
+  nameWithType.vb: RpcClient(Of TInterface).InvokeServiceAsync
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder
+  name: RpcClient<TInterface>.MethodCallForwarder
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html
+  commentId: T:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder
+  name.vb: RpcClient(Of TInterface).MethodCallForwarder
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.#ctor(Solti.Utils.Rpc.RpcClient{`0})
+  name: MethodCallForwarder(RpcClient<TInterface>)
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder__ctor_Solti_Utils_Rpc_RpcClient__0__
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.#ctor(Solti.Utils.Rpc.RpcClient{`0})
+  name.vb: MethodCallForwarder(RpcClient(Of TInterface))
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.MethodCallForwarder(Solti.Utils.Rpc.RpcClient<TInterface>)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.MethodCallForwarder(Solti.Utils.Rpc.RpcClient(Of TInterface))
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder.MethodCallForwarder(RpcClient<TInterface>)
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.MethodCallForwarder(RpcClient(Of TInterface))
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.#ctor*
+  name: MethodCallForwarder
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder__ctor_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.RemoteAdd_ShouldWork
-  nameWithType: RpcTests.RemoteAdd_ShouldWork
-- uid: Solti.Utils.Rpc.Tests.RpcTests.RemoteAddAsync_ShouldWork
-  name: RemoteAddAsync_ShouldWork()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_RemoteAddAsync_ShouldWork
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.RemoteAddAsync_ShouldWork
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.RemoteAddAsync_ShouldWork()
-  nameWithType: RpcTests.RemoteAddAsync_ShouldWork()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.RemoteAddAsync_ShouldWork*
-  name: RemoteAddAsync_ShouldWork
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_RemoteAddAsync_ShouldWork_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.RemoteAddAsync_ShouldWork
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.MethodCallForwarder
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.MethodCallForwarder
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder.MethodCallForwarder
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.MethodCallForwarder
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
+  name: Invoke(MethodInfo, Object[], MemberInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder_Invoke_System_Reflection_MethodInfo_System_Object___System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
+  name.vb: Invoke(MethodInfo, Object(), MemberInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.Invoke(System.Reflection.MethodInfo, System.Object[], System.Reflection.MemberInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Invoke(System.Reflection.MethodInfo, System.Object(), System.Reflection.MemberInfo)
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder.Invoke(MethodInfo, Object[], MemberInfo)
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.Invoke(MethodInfo, Object(), MemberInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke*
+  name: Invoke
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder_Invoke_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.RemoteAddAsync_ShouldWork
-  nameWithType: RpcTests.RemoteAddAsync_ShouldWork
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Server
-  name: Server
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Server
-  commentId: P:Solti.Utils.Rpc.Tests.RpcTests.Server
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Server
-  nameWithType: RpcTests.Server
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Server*
-  name: Server
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Server_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Server
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.Invoke
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Invoke
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder.Invoke
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.Invoke
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Owner
+  name: Owner
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder_Owner
+  commentId: P:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Owner
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.Owner
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Owner
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder.Owner
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.Owner
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Owner*
+  name: Owner
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder_Owner_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Owner
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Server
-  nameWithType: RpcTests.Server
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldProcessRequestAsynchronously
-  name: Server_ShouldProcessRequestAsynchronously()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Server_ShouldProcessRequestAsynchronously
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldProcessRequestAsynchronously
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldProcessRequestAsynchronously()
-  nameWithType: RpcTests.Server_ShouldProcessRequestAsynchronously()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldProcessRequestAsynchronously*
-  name: Server_ShouldProcessRequestAsynchronously
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Server_ShouldProcessRequestAsynchronously_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldProcessRequestAsynchronously
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.Owner
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Owner
+  nameWithType: RpcClient<TInterface>.MethodCallForwarder.Owner
+  nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.Owner
+- uid: Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.ExceptionInfo)
+  name: ProcessRemoteError(ExceptionInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_Solti_Utils_Rpc_ExceptionInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.ExceptionInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.ProcessRemoteError(Solti.Utils.Rpc.ExceptionInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).ProcessRemoteError(Solti.Utils.Rpc.ExceptionInfo)
+  nameWithType: RpcClient<TInterface>.ProcessRemoteError(ExceptionInfo)
+  nameWithType.vb: RpcClient(Of TInterface).ProcessRemoteError(ExceptionInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError*
+  name: ProcessRemoteError
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldProcessRequestAsynchronously
-  nameWithType: RpcTests.Server_ShouldProcessRequestAsynchronously
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldTimeout
-  name: Server_ShouldTimeout()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Server_ShouldTimeout
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldTimeout
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldTimeout()
-  nameWithType: RpcTests.Server_ShouldTimeout()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldTimeout*
-  name: Server_ShouldTimeout
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Server_ShouldTimeout_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldTimeout
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.ProcessRemoteError
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).ProcessRemoteError
+  nameWithType: RpcClient<TInterface>.ProcessRemoteError
+  nameWithType.vb: RpcClient(Of TInterface).ProcessRemoteError
+- uid: Solti.Utils.Rpc.RpcClient`1.Proxy
+  name: Proxy
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Proxy
+  commentId: P:Solti.Utils.Rpc.RpcClient`1.Proxy
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Proxy
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Proxy
+  nameWithType: RpcClient<TInterface>.Proxy
+  nameWithType.vb: RpcClient(Of TInterface).Proxy
+- uid: Solti.Utils.Rpc.RpcClient`1.Proxy*
+  name: Proxy
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Proxy_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.Proxy
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Server_ShouldTimeout
-  nameWithType: RpcTests.Server_ShouldTimeout
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Setup
-  name: Setup()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Setup
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Setup
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Setup()
-  nameWithType: RpcTests.Setup()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Setup*
-  name: Setup
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Setup_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Setup
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Proxy
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Proxy
+  nameWithType: RpcClient<TInterface>.Proxy
+  nameWithType.vb: RpcClient(Of TInterface).Proxy
+- uid: Solti.Utils.Rpc.RpcClient`1.SessionId
+  name: SessionId
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_SessionId
+  commentId: P:Solti.Utils.Rpc.RpcClient`1.SessionId
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.SessionId
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).SessionId
+  nameWithType: RpcClient<TInterface>.SessionId
+  nameWithType.vb: RpcClient(Of TInterface).SessionId
+- uid: Solti.Utils.Rpc.RpcClient`1.SessionId*
+  name: SessionId
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_SessionId_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.SessionId
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Setup
-  nameWithType: RpcTests.Setup
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Teardown
-  name: Teardown()
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Teardown
-  commentId: M:Solti.Utils.Rpc.Tests.RpcTests.Teardown
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Teardown()
-  nameWithType: RpcTests.Teardown()
-- uid: Solti.Utils.Rpc.Tests.RpcTests.Teardown*
-  name: Teardown
-  href: Solti.Utils.Rpc.Tests.RpcTests.html#Solti_Utils_Rpc_Tests_RpcTests_Teardown_
-  commentId: Overload:Solti.Utils.Rpc.Tests.RpcTests.Teardown
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.SessionId
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).SessionId
+  nameWithType: RpcClient<TInterface>.SessionId
+  nameWithType.vb: RpcClient(Of TInterface).SessionId
+- uid: Solti.Utils.Rpc.RpcClient`1.Timeout
+  name: Timeout
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Timeout
+  commentId: P:Solti.Utils.Rpc.RpcClient`1.Timeout
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Timeout
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Timeout
+  nameWithType: RpcClient<TInterface>.Timeout
+  nameWithType.vb: RpcClient(Of TInterface).Timeout
+- uid: Solti.Utils.Rpc.RpcClient`1.Timeout*
+  name: Timeout
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Timeout_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.Timeout
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.RpcTests.Teardown
-  nameWithType: RpcTests.Teardown
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests
-  name: WebServiceTests
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html
-  commentId: T:Solti.Utils.Rpc.Tests.WebServiceTests
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests
-  nameWithType: WebServiceTests
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_CanBeRestarted
-  name: Service_CanBeRestarted()
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_CanBeRestarted
-  commentId: M:Solti.Utils.Rpc.Tests.WebServiceTests.Service_CanBeRestarted
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_CanBeRestarted()
-  nameWithType: WebServiceTests.Service_CanBeRestarted()
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_CanBeRestarted*
-  name: Service_CanBeRestarted
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_CanBeRestarted_
-  commentId: Overload:Solti.Utils.Rpc.Tests.WebServiceTests.Service_CanBeRestarted
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.Timeout
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Timeout
+  nameWithType: RpcClient<TInterface>.Timeout
+  nameWithType.vb: RpcClient(Of TInterface).Timeout
+- uid: Solti.Utils.Rpc.RpcException
+  name: RpcException
+  href: Solti.Utils.Rpc.RpcException.html
+  commentId: T:Solti.Utils.Rpc.RpcException
+  fullName: Solti.Utils.Rpc.RpcException
+  nameWithType: RpcException
+- uid: Solti.Utils.Rpc.RpcException.#ctor
+  name: RpcException()
+  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor
+  commentId: M:Solti.Utils.Rpc.RpcException.#ctor
+  fullName: Solti.Utils.Rpc.RpcException.RpcException()
+  nameWithType: RpcException.RpcException()
+- uid: Solti.Utils.Rpc.RpcException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: RpcException(SerializationInfo, StreamingContext)
+  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:Solti.Utils.Rpc.RpcException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: Solti.Utils.Rpc.RpcException.RpcException(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: RpcException.RpcException(SerializationInfo, StreamingContext)
+- uid: Solti.Utils.Rpc.RpcException.#ctor(System.String)
+  name: RpcException(String)
+  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor_System_String_
+  commentId: M:Solti.Utils.Rpc.RpcException.#ctor(System.String)
+  fullName: Solti.Utils.Rpc.RpcException.RpcException(System.String)
+  nameWithType: RpcException.RpcException(String)
+- uid: Solti.Utils.Rpc.RpcException.#ctor(System.String,System.Exception)
+  name: RpcException(String, Exception)
+  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor_System_String_System_Exception_
+  commentId: M:Solti.Utils.Rpc.RpcException.#ctor(System.String,System.Exception)
+  fullName: Solti.Utils.Rpc.RpcException.RpcException(System.String, System.Exception)
+  nameWithType: RpcException.RpcException(String, Exception)
+- uid: Solti.Utils.Rpc.RpcException.#ctor*
+  name: RpcException
+  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor_
+  commentId: Overload:Solti.Utils.Rpc.RpcException.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_CanBeRestarted
-  nameWithType: WebServiceTests.Service_CanBeRestarted
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleExceptions
-  name: Service_ShouldHandleExceptions()
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_ShouldHandleExceptions
-  commentId: M:Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleExceptions
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleExceptions()
-  nameWithType: WebServiceTests.Service_ShouldHandleExceptions()
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleExceptions*
-  name: Service_ShouldHandleExceptions
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_ShouldHandleExceptions_
-  commentId: Overload:Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleExceptions
+  fullName: Solti.Utils.Rpc.RpcException.RpcException
+  nameWithType: RpcException.RpcException
+- uid: Solti.Utils.Rpc.RpcResponse
+  name: RpcResponse
+  href: Solti.Utils.Rpc.RpcResponse.html
+  commentId: T:Solti.Utils.Rpc.RpcResponse
+  fullName: Solti.Utils.Rpc.RpcResponse
+  nameWithType: RpcResponse
+- uid: Solti.Utils.Rpc.RpcResponse.Exception
+  name: Exception
+  href: Solti.Utils.Rpc.RpcResponse.html#Solti_Utils_Rpc_RpcResponse_Exception
+  commentId: P:Solti.Utils.Rpc.RpcResponse.Exception
+  fullName: Solti.Utils.Rpc.RpcResponse.Exception
+  nameWithType: RpcResponse.Exception
+- uid: Solti.Utils.Rpc.RpcResponse.Exception*
+  name: Exception
+  href: Solti.Utils.Rpc.RpcResponse.html#Solti_Utils_Rpc_RpcResponse_Exception_
+  commentId: Overload:Solti.Utils.Rpc.RpcResponse.Exception
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleExceptions
-  nameWithType: WebServiceTests.Service_ShouldHandleExceptions
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequests
-  name: Service_ShouldHandleRequests()
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_ShouldHandleRequests
-  commentId: M:Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequests
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequests()
-  nameWithType: WebServiceTests.Service_ShouldHandleRequests()
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequests*
-  name: Service_ShouldHandleRequests
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_ShouldHandleRequests_
-  commentId: Overload:Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequests
+  fullName: Solti.Utils.Rpc.RpcResponse.Exception
+  nameWithType: RpcResponse.Exception
+- uid: Solti.Utils.Rpc.RpcResponse.Result
+  name: Result
+  href: Solti.Utils.Rpc.RpcResponse.html#Solti_Utils_Rpc_RpcResponse_Result
+  commentId: P:Solti.Utils.Rpc.RpcResponse.Result
+  fullName: Solti.Utils.Rpc.RpcResponse.Result
+  nameWithType: RpcResponse.Result
+- uid: Solti.Utils.Rpc.RpcResponse.Result*
+  name: Result
+  href: Solti.Utils.Rpc.RpcResponse.html#Solti_Utils_Rpc_RpcResponse_Result_
+  commentId: Overload:Solti.Utils.Rpc.RpcResponse.Result
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequests
-  nameWithType: WebServiceTests.Service_ShouldHandleRequests
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequestsAsynchronously
-  name: Service_ShouldHandleRequestsAsynchronously()
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_ShouldHandleRequestsAsynchronously
-  commentId: M:Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequestsAsynchronously
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequestsAsynchronously()
-  nameWithType: WebServiceTests.Service_ShouldHandleRequestsAsynchronously()
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequestsAsynchronously*
-  name: Service_ShouldHandleRequestsAsynchronously
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_Service_ShouldHandleRequestsAsynchronously_
-  commentId: Overload:Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequestsAsynchronously
+  fullName: Solti.Utils.Rpc.RpcResponse.Result
+  nameWithType: RpcResponse.Result
+- uid: Solti.Utils.Rpc.RpcService
+  name: RpcService
+  href: Solti.Utils.Rpc.RpcService.html
+  commentId: T:Solti.Utils.Rpc.RpcService
+  fullName: Solti.Utils.Rpc.RpcService
+  nameWithType: RpcService
+- uid: Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)
+  name: RpcService(IServiceContainer)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_
+  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)
+  fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer)
+  nameWithType: RpcService.RpcService(IServiceContainer)
+- uid: Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  name: RpcService(IServiceContainer, ModuleInvocationBuilder)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_
+  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer, Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  nameWithType: RpcService.RpcService(IServiceContainer, ModuleInvocationBuilder)
+- uid: Solti.Utils.Rpc.RpcService.#ctor*
+  name: RpcService
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.Service_ShouldHandleRequestsAsynchronously
-  nameWithType: WebServiceTests.Service_ShouldHandleRequestsAsynchronously
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.SetupFixture
-  name: SetupFixture()
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_SetupFixture
-  commentId: M:Solti.Utils.Rpc.Tests.WebServiceTests.SetupFixture
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.SetupFixture()
-  nameWithType: WebServiceTests.SetupFixture()
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.SetupFixture*
-  name: SetupFixture
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_SetupFixture_
-  commentId: Overload:Solti.Utils.Rpc.Tests.WebServiceTests.SetupFixture
+  fullName: Solti.Utils.Rpc.RpcService.RpcService
+  nameWithType: RpcService.RpcService
+- uid: Solti.Utils.Rpc.RpcService.Container
+  name: Container
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Container
+  commentId: P:Solti.Utils.Rpc.RpcService.Container
+  fullName: Solti.Utils.Rpc.RpcService.Container
+  nameWithType: RpcService.Container
+- uid: Solti.Utils.Rpc.RpcService.Container*
+  name: Container
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Container_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.Container
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.SetupFixture
-  nameWithType: WebServiceTests.SetupFixture
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.TeardownFixture
-  name: TeardownFixture()
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_TeardownFixture
-  commentId: M:Solti.Utils.Rpc.Tests.WebServiceTests.TeardownFixture
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.TeardownFixture()
-  nameWithType: WebServiceTests.TeardownFixture()
-- uid: Solti.Utils.Rpc.Tests.WebServiceTests.TeardownFixture*
-  name: TeardownFixture
-  href: Solti.Utils.Rpc.Tests.WebServiceTests.html#Solti_Utils_Rpc_Tests_WebServiceTests_TeardownFixture_
-  commentId: Overload:Solti.Utils.Rpc.Tests.WebServiceTests.TeardownFixture
+  fullName: Solti.Utils.Rpc.RpcService.Container
+  nameWithType: RpcService.Container
+- uid: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse)
+  name: CreateResponse(Object, HttpListenerResponse)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_System_Object_System_Net_HttpListenerResponse_
+  commentId: M:Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse)
+  fullName: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object, System.Net.HttpListenerResponse)
+  nameWithType: RpcService.CreateResponse(Object, HttpListenerResponse)
+- uid: Solti.Utils.Rpc.RpcService.CreateResponse*
+  name: CreateResponse
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.CreateResponse
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Tests.WebServiceTests.TeardownFixture
-  nameWithType: WebServiceTests.TeardownFixture
+  fullName: Solti.Utils.Rpc.RpcService.CreateResponse
+  nameWithType: RpcService.CreateResponse
+- uid: Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
+  name: GetErrorCode(Exception)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_GetErrorCode_System_Exception_
+  commentId: M:Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
+  fullName: Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
+  nameWithType: RpcService.GetErrorCode(Exception)
+- uid: Solti.Utils.Rpc.RpcService.GetErrorCode*
+  name: GetErrorCode
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_GetErrorCode_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.GetErrorCode
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.GetErrorCode
+  nameWithType: RpcService.GetErrorCode
+- uid: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
+  name: InvokeModule(IRequestContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_IRequestContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
+  fullName: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
+  nameWithType: RpcService.InvokeModule(IRequestContext)
+- uid: Solti.Utils.Rpc.RpcService.InvokeModule*
+  name: InvokeModule
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.InvokeModule
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.InvokeModule
+  nameWithType: RpcService.InvokeModule
+- uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
+  name: ProcessRequestContext(HttpListenerContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
+  nameWithType: RpcService.ProcessRequestContext(HttpListenerContext)
+- uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext*
+  name: ProcessRequestContext
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.ProcessRequestContext
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.ProcessRequestContext
+  nameWithType: RpcService.ProcessRequestContext
+- uid: Solti.Utils.Rpc.RpcService.Register*
+  name: Register
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Register_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.Register
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.Register
+  nameWithType: RpcService.Register
+- uid: Solti.Utils.Rpc.RpcService.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
+  name: Register<TInterface>(Func<IInjector, TInterface>)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__
+  commentId: M:Solti.Utils.Rpc.RpcService.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
+  name.vb: Register(Of TInterface)(Func(Of IInjector, TInterface))
+  fullName: Solti.Utils.Rpc.RpcService.Register<TInterface>(System.Func<Solti.Utils.DI.Interfaces.IInjector, TInterface>)
+  fullName.vb: Solti.Utils.Rpc.RpcService.Register(Of TInterface)(System.Func(Of Solti.Utils.DI.Interfaces.IInjector, TInterface))
+  nameWithType: RpcService.Register<TInterface>(Func<IInjector, TInterface>)
+  nameWithType.vb: RpcService.Register(Of TInterface)(Func(Of IInjector, TInterface))
+- uid: Solti.Utils.Rpc.RpcService.Register``2
+  name: Register<TInterface, TImplementation>()
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Register__2
+  commentId: M:Solti.Utils.Rpc.RpcService.Register``2
+  name.vb: Register(Of TInterface, TImplementation)()
+  fullName: Solti.Utils.Rpc.RpcService.Register<TInterface, TImplementation>()
+  fullName.vb: Solti.Utils.Rpc.RpcService.Register(Of TInterface, TImplementation)()
+  nameWithType: RpcService.Register<TInterface, TImplementation>()
+  nameWithType.vb: RpcService.Register(Of TInterface, TImplementation)()
+- uid: Solti.Utils.Rpc.RpcService.Start(System.String)
+  name: Start(String)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Start_System_String_
+  commentId: M:Solti.Utils.Rpc.RpcService.Start(System.String)
+  fullName: Solti.Utils.Rpc.RpcService.Start(System.String)
+  nameWithType: RpcService.Start(String)
+- uid: Solti.Utils.Rpc.RpcService.Start*
+  name: Start
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Start_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.Start
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.Start
+  nameWithType: RpcService.Start
+- uid: Solti.Utils.Rpc.RpcService.Stop
+  name: Stop()
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Stop
+  commentId: M:Solti.Utils.Rpc.RpcService.Stop
+  fullName: Solti.Utils.Rpc.RpcService.Stop()
+  nameWithType: RpcService.Stop()
+- uid: Solti.Utils.Rpc.RpcService.Stop*
+  name: Stop
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Stop_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.Stop
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.Stop
+  nameWithType: RpcService.Stop
+- uid: Solti.Utils.Rpc.TypedRpcResponse`1
+  name: TypedRpcResponse<TResult>
+  href: Solti.Utils.Rpc.TypedRpcResponse-1.html
+  commentId: T:Solti.Utils.Rpc.TypedRpcResponse`1
+  name.vb: TypedRpcResponse(Of TResult)
+  fullName: Solti.Utils.Rpc.TypedRpcResponse<TResult>
+  fullName.vb: Solti.Utils.Rpc.TypedRpcResponse(Of TResult)
+  nameWithType: TypedRpcResponse<TResult>
+  nameWithType.vb: TypedRpcResponse(Of TResult)
+- uid: Solti.Utils.Rpc.TypedRpcResponse`1.Exception
+  name: Exception
+  href: Solti.Utils.Rpc.TypedRpcResponse-1.html#Solti_Utils_Rpc_TypedRpcResponse_1_Exception
+  commentId: P:Solti.Utils.Rpc.TypedRpcResponse`1.Exception
+  fullName: Solti.Utils.Rpc.TypedRpcResponse<TResult>.Exception
+  fullName.vb: Solti.Utils.Rpc.TypedRpcResponse(Of TResult).Exception
+  nameWithType: TypedRpcResponse<TResult>.Exception
+  nameWithType.vb: TypedRpcResponse(Of TResult).Exception
+- uid: Solti.Utils.Rpc.TypedRpcResponse`1.Exception*
+  name: Exception
+  href: Solti.Utils.Rpc.TypedRpcResponse-1.html#Solti_Utils_Rpc_TypedRpcResponse_1_Exception_
+  commentId: Overload:Solti.Utils.Rpc.TypedRpcResponse`1.Exception
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.TypedRpcResponse<TResult>.Exception
+  fullName.vb: Solti.Utils.Rpc.TypedRpcResponse(Of TResult).Exception
+  nameWithType: TypedRpcResponse<TResult>.Exception
+  nameWithType.vb: TypedRpcResponse(Of TResult).Exception
+- uid: Solti.Utils.Rpc.TypedRpcResponse`1.Result
+  name: Result
+  href: Solti.Utils.Rpc.TypedRpcResponse-1.html#Solti_Utils_Rpc_TypedRpcResponse_1_Result
+  commentId: P:Solti.Utils.Rpc.TypedRpcResponse`1.Result
+  fullName: Solti.Utils.Rpc.TypedRpcResponse<TResult>.Result
+  fullName.vb: Solti.Utils.Rpc.TypedRpcResponse(Of TResult).Result
+  nameWithType: TypedRpcResponse<TResult>.Result
+  nameWithType.vb: TypedRpcResponse(Of TResult).Result
+- uid: Solti.Utils.Rpc.TypedRpcResponse`1.Result*
+  name: Result
+  href: Solti.Utils.Rpc.TypedRpcResponse-1.html#Solti_Utils_Rpc_TypedRpcResponse_1_Result_
+  commentId: Overload:Solti.Utils.Rpc.TypedRpcResponse`1.Result
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.TypedRpcResponse<TResult>.Result
+  fullName.vb: Solti.Utils.Rpc.TypedRpcResponse(Of TResult).Result
+  nameWithType: TypedRpcResponse<TResult>.Result
+  nameWithType.vb: TypedRpcResponse(Of TResult).Result

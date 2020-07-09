@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IRequestContext
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IRequestContext
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.46.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.IRequestContext">
+  
+  
+  <h1 id="Solti_Utils_Rpc_IRequestContext" data-uid="Solti.Utils.Rpc.IRequestContext" class="text-break">Interface IRequestContext
+  </h1>
+  <div class="markdown level0 summary"><p>Describes a request context.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.html">Solti.Utils.Rpc</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_IRequestContext_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IRequestContext</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_IRequestContext_Args_" data-uid="Solti.Utils.Rpc.IRequestContext.Args*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_Args" data-uid="Solti.Utils.Rpc.IRequestContext.Args">Args</h4>
+  <div class="markdown level1 summary"><p>The serialized arguments of the request.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Args { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_IRequestContext_Headers_" data-uid="Solti.Utils.Rpc.IRequestContext.Headers*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_Headers" data-uid="Solti.Utils.Rpc.IRequestContext.Headers">Headers</h4>
+  <div class="markdown level1 summary"><p>Headers sent by the client</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;string, string&gt; Headers { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_IRequestContext_Method_" data-uid="Solti.Utils.Rpc.IRequestContext.Method*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_Method" data-uid="Solti.Utils.Rpc.IRequestContext.Method">Method</h4>
+  <div class="markdown level1 summary"><p>The module method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Method { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_IRequestContext_Method_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>It must not use by ref parameters.</p>
+</div>
+  <a id="Solti_Utils_Rpc_IRequestContext_Module_" data-uid="Solti.Utils.Rpc.IRequestContext.Module*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_Module" data-uid="Solti.Utils.Rpc.IRequestContext.Module">Module</h4>
+  <div class="markdown level1 summary"><p>The module we want to invoke.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Module { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_IRequestContext_SessionId_" data-uid="Solti.Utils.Rpc.IRequestContext.SessionId*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_SessionId" data-uid="Solti.Utils.Rpc.IRequestContext.SessionId">SessionId</h4>
+  <div class="markdown level1 summary"><p>The (optional) session ID related to the caller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string SessionId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface RpcTests.IGetMyHeaderBack
+    <title>Delegate ModuleInvocation
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface RpcTests.IGetMyHeaderBack
+    <meta name="title" content="Delegate ModuleInvocation
    | RPC.NET ">
     <meta name="generator" content="docfx 2.46.0.0">
     
@@ -37,29 +37,44 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocation">
   
   
-  <h1 id="Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack" data-uid="Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack" class="text-break">Interface RpcTests.IGetMyHeaderBack
+  <h1 id="Solti_Utils_Rpc_Internals_ModuleInvocation" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocation" class="text-break">Delegate ModuleInvocation
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Executes module methods by context.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Tests.html">Solti.Utils.Rpc.Tests</a></h6>
-  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Tests.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_syntax">Syntax</h5>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Internals.html">Solti.Utils.Rpc.Internals</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Internals_ModuleInvocation_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IGetMyHeaderBack</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate object ModuleInvocation(IInjector injector, IRequestContext context);</code></pre>
   </div>
-  <h3 id="methods">Methods
-  </h3>
-  <a id="Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_GetMyHeaderBack_" data-uid="Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack*"></a>
-  <h4 id="Solti_Utils_Rpc_Tests_RpcTests_IGetMyHeaderBack_GetMyHeaderBack" data-uid="Solti.Utils.Rpc.Tests.RpcTests.IGetMyHeaderBack.GetMyHeaderBack">GetMyHeaderBack()</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string GetMyHeaderBack()</code></pre>
-  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">injector</span></td>
+        <td><p>The <span class="xref">Solti.Utils.DI.Interfaces.IInjector</span> in which the module was registered.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.IRequestContext.html">IRequestContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>The context which describes the invocation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -70,7 +85,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td></td>
       </tr>
     </tbody>

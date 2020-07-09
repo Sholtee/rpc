@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ModuleInvocationBuilder
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ModuleInvocationBuilder
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.46.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder" class="text-break">Class ModuleInvocationBuilder
+  </h1>
+  <div class="markdown level0 summary"><p>Builds <a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a> instances.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ModuleInvocationBuilder</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Internals.html">Solti.Utils.Rpc.Internals</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ModuleInvocationBuilder</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Modules_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Modules" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules">Modules</h4>
+  <div class="markdown level1 summary"><p>Returns the registered modules.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyCollection&lt;Type&gt; Modules { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule__1" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule``1">AddModule&lt;TInterface&gt;()</h4>
+  <div class="markdown level1 summary"><p>Adds a module to this builder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddModule&lt;TInterface&gt;()
+    where TInterface : class</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInterface</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Build_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Build" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build">Build()</h4>
+  <div class="markdown level1 summary"><p>Builds a <a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual ModuleInvocation Build()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetDeserializerFor_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetDeserializerFor_System_Reflection_MethodInfo_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)">GetDeserializerFor(MethodInfo)</h4>
+  <div class="markdown level1 summary"><p>Gets the deserializer for the given method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual Func&lt;string, object[]&gt; GetDeserializerFor(MethodInfo ifaceMethod)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
+        <td><span class="parametername">ifaceMethod</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetMemberId_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetMemberId_System_Reflection_MemberInfo_" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)">GetMemberId(MemberInfo)</h4>
+  <div class="markdown level1 summary"><p>Gets the member name to be used in the execution process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual string GetMemberId(MemberInfo member)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.memberinfo">MemberInfo</a></td>
+        <td><span class="parametername">member</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
