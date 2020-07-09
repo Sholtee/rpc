@@ -284,5 +284,31 @@ namespace Solti.Utils.Rpc.Tests
             evt.Set();
             t1.Wait(TimeSpan.FromSeconds(5));
         }
+
+        public interface IGetMyHeaderBack 
+        {
+            string GetMyHeaderBack();
+        }
+
+        public class GetMyHeaderBack : IGetMyHeaderBack
+        {
+            public IRequestContext Context { get; }
+
+            public GetMyHeaderBack(IRequestContext context) => Context = context;
+
+            string IGetMyHeaderBack.GetMyHeaderBack() => Context.Headers["cica"];
+        }
+
+        [Test]
+        public void Client_MaySendCustomHeaders() 
+        {
+            Server.Register<IGetMyHeaderBack, GetMyHeaderBack>();
+            Server.Start(Host);
+
+            using var client = new RpcClient<IGetMyHeaderBack>(Host);
+            client.CustomHeaders.Add("cica", "mica");
+
+            Assert.That(client.Proxy.GetMyHeaderBack(), Is.EqualTo("mica"));
+        }
     }
 }
