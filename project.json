@@ -2,7 +2,7 @@
   "bin": "\\BIN\\Release",
   "solution": "\\RPC.sln",
   "commonprops": "\\SRC\\Common\\Common.targets",
-  "app": "\\SRC",
+  "app": "\\SRC\\index.md",
   "vendor": "\\Vendor",
   "tests": "\\Test\\*.Tests.csproj",
   "testtarget": "netcoreapp2.2",
