@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Moq;
@@ -203,6 +204,48 @@ namespace Solti.Utils.Rpc.Tests
             Assert.DoesNotThrowAsync(async () => sentStm = await client.Proxy.GetStreamAsync());
             Assert.That(new StreamReader(sentStm).ReadToEnd, Is.EqualTo("kutya"));
             Assert.Throws<ObjectDisposedException>(() => stm.Seek(0, SeekOrigin.Begin));
+        }
+
+        public interface IDummy 
+        {
+            void Method_1();
+            void Method_2();
+        }
+
+        [Test]
+        public void Server_ShouldProcessRequestAsynchronously() 
+        {
+            var evt = new ManualResetEventSlim();
+
+            var mockModule = new Mock<IDummy>(MockBehavior.Strict);
+
+            mockModule
+                .Setup(i => i.Method_1())
+                .Callback(evt.Wait);
+
+            mockModule.Setup(i => i.Method_2());
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            Task t1 = Task.Factory.StartNew(() => 
+            {
+                using var client = new RpcClient<IDummy>(Host);
+                client.Proxy.Method_1();
+            });
+
+            Thread.Sleep(100);
+
+            using var client = new RpcClient<IDummy>(Host);
+
+            //
+            // Ha kiszolgalo oldalon a feldolgozas szinkron akkor ez itt deadlock
+            //
+
+            client.Proxy.Method_2();
+
+            evt.Set();
+            t1.Wait(TimeSpan.FromSeconds(5));
         }
     }
 }

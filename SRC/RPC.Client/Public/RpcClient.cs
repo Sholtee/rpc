@@ -10,14 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.WebUtilities;
-
-[assembly: InternalsVisibleTo("Solti.Utils.Rpc.RpcClient<Solti.Utils.Rpc.Tests.RpcTests.IModule>.MethodCallForwarder_Solti.Utils.Rpc.Tests.RpcTests.IModule_Proxy")]
 
 namespace Solti.Utils.Rpc
 {   
@@ -44,13 +41,26 @@ namespace Solti.Utils.Rpc
             ProxyGenerator<TInterface, MethodCallForwarder>.CacheDirectory = cacheDir;
         }
 
-        [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes")]
-        internal class MethodCallForwarder : InterfaceInterceptor<TInterface>
+        /// <summary>
+        /// Implements the underlying <see cref="InterfaceInterceptor{TInterface}"/>.
+        /// </summary>
+        /// <remarks>This is an internal class, you should never use it.</remarks>
+        [SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "ProxyGen.NET requires types to be visible.")]
+        public class MethodCallForwarder : InterfaceInterceptor<TInterface>
         {
+            /// <summary>
+            /// The owner of this entity.
+            /// </summary>
             public RpcClient<TInterface> Owner { get; }
 
-            public MethodCallForwarder(RpcClient<TInterface> owner) : base(null) => Owner = owner;
+            /// <summary>
+            /// Creates a new <see cref="MethodCallForwarder"/> instance.
+            /// </summary>
+            public MethodCallForwarder(RpcClient<TInterface> owner) : base(null) => Owner = owner ?? throw new ArgumentNullException(nameof(owner));
 
+            /// <summary>
+            /// Forwards the intercepted method calls to the <see cref="Owner"/>.
+            /// </summary>
             public override object? Invoke(MethodInfo method, object[] args, MemberInfo extra) => Owner.InvokeService(method, args);
         }
 
