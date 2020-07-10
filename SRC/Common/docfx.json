@@ -1,11 +1,11 @@
 {
 	"metadata": [{
 		"src": [{
-		    "src": ".",
+		    "src": "../",
 			"files": ["*/*.csproj"],
 			"exclude": ["**/bin/**", "**/obj/**"]
 		}],
-		"dest": "../BIN/DOC",
+		"dest": "../../BIN/DOC",
 		"properties": {
 			"TargetFramework": "netstandard2.0"
 		}
@@ -14,7 +14,7 @@
 		"content": [
 			{
 				"files": ["*.yml"],
-				"src": "../BIN/DOC"
+				"src": "../../BIN/DOC"
 			},
 			{
 				"files": ["index.md"]
@@ -23,7 +23,7 @@
 		"dest": "../Artifacts/DOC",
 		"resource": [{
 			"files": ["icon.png"],
-			"src": "../"
+			"src": "../../"
 		}],
 		"globalMetadata": {
 			"_appTitle": "RPC.NET",
