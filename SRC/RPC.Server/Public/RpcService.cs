@@ -18,7 +18,6 @@ namespace Solti.Utils.Rpc
     using DI.Interfaces;
     
     using Internals;
-    using Primitives;
 
     /// <summary>
     /// RPC service
@@ -147,32 +146,7 @@ namespace Solti.Utils.Rpc
 
             injector.UnderlyingContainer.Instance(context);
 
-            //
-            // A modul megszolitas aszinkron h az idotullepes kezeles megfeleloen mukodjon (lasd WebService.SafeCallContextProcessor()).
-            //
-
-            object? result = await FModuleInvocation(injector, context);
-
-            //
-            // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt (es addig
-            // az injector sem szabadithato fel).
-            //
-
-            if (result is Task task)
-            {
-                await task;
-
-                Type taskType = task.GetType();
-
-                result = !taskType.IsGenericType
-                    ? null
-                    : taskType
-                        .GetProperty(nameof(Task<object>.Result))
-                        .ToGetter()
-                        .Invoke(task);
-            }
-
-            return result;
+            return await FModuleInvocation(injector, context);
         }
 
         /// <summary>

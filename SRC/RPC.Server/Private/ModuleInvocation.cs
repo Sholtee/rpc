@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 namespace Solti.Utils.Rpc.Internals
 {
     using DI.Interfaces;
+
+    using Primitives;
     using Properties;
 
     /// <summary>
@@ -131,7 +133,7 @@ namespace Solti.Utils.Rpc.Internals
                 context
             );
 
-            Expression InvokeModule(Type iface, MethodInfo method)
+            Expression InvokeModule(Type module, MethodInfo ifaceMethod)
             {
                 Expression 
                     //
@@ -143,7 +145,7 @@ namespace Solti.Utils.Rpc.Internals
                         argsArray,
                         Expression.Invoke
                         (
-                            Expression.Constant(GetDeserializerFor(method)),
+                            Expression.Constant(GetDeserializerFor(ifaceMethod)),
                             GetFromContext(nameof(IRequestContext.Args))
                         )
                     ),
@@ -164,18 +166,18 @@ namespace Solti.Utils.Rpc.Internals
                             (
                                 injector,
                                 InjectorGet,
-                                Expression.Constant(iface),
+                                Expression.Constant(module),
                                 Expression.Constant(null, typeof(string))
                             ),
-                            iface
+                            module
                         ),
 
                         //
                         // .Method((T0) argsArray[0], ..., (TN) argsArray[N])
                         //
 
-                        method,
-                        arguments: method.GetParameters().Select
+                        ifaceMethod,
+                        arguments: ifaceMethod.GetParameters().Select
                         (
                             (para, i) => Expression.Convert
                             (
@@ -190,7 +192,7 @@ namespace Solti.Utils.Rpc.Internals
                     assignArgs
                 };
 
-                if (method.ReturnType != typeof(void))
+                if (ifaceMethod.ReturnType != typeof(void))
                     //
                     // return (object) ...;
                     //
@@ -211,17 +213,17 @@ namespace Solti.Utils.Rpc.Internals
                 }
 
                 //
-                // new Task<object?>(() => ..., TaskCreationOptions.xXx)
+                // AsTask(() => ...)
                 //
 
                 return Expression.Invoke
                 (
-                    Expression.Constant((Func<Func<object?>, TaskCreationOptions, Task<object?>>) CreateTask),
+                    Expression.Constant((Func<Func<object?>, MethodInfo, Task<object?>>) AsTask),
                     Expression.Lambda<Func<object?>>
                     (
                        Expression.Block(block)
                     ),                
-                    Expression.Constant(IsLongRunning(method) ? TaskCreationOptions.LongRunning : TaskCreationOptions.None)
+                    Expression.Constant(ifaceMethod)
                 );
             }
 
@@ -230,8 +232,6 @@ namespace Solti.Utils.Rpc.Internals
                 context,
                 typeof(IRequestContext).GetProperty(name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
             );
-
-            static Task<object?> CreateTask(Func<object?> invocation, TaskCreationOptions opts) => Task.Factory.StartNew(invocation, opts);
         }
         #endregion
 
@@ -263,15 +263,58 @@ namespace Solti.Utils.Rpc.Internals
             return jsonString => MultiTypeArraySerializer.Deserialize(jsonString, argTypes);
         }
 
+
         /// <summary>
-        /// Returns true if the given method may run long.
+        /// Creates a new task for an invocation.
         /// </summary>
-        protected virtual bool IsLongRunning(MethodInfo ifaceMethod)
+        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
+        protected virtual Task<object?> AsTask(Func<object?> invoke, MethodInfo ifaceMethod) 
         {
+            if (invoke == null)
+                throw new ArgumentNullException(nameof(invoke));
+
             if (ifaceMethod == null)
                 throw new ArgumentNullException(nameof(ifaceMethod));
 
-            return ifaceMethod.GetCustomAttribute<MayRunLongAttribute>() != null;
+            //
+            // 1) Ha a metodus visszaterese Task akkor azt hasznaljuk.
+            //
+
+            if (typeof(Task).IsAssignableFrom(ifaceMethod.ReturnType)) 
+            {
+                Task task = (Task) invoke()!;
+
+                //
+                // Ha a Task-nak nincs eredmenye akkor NULL-t adunk vissza.
+                //
+
+                Type taskType = task.GetType();
+
+                if (!taskType.IsGenericType) 
+                    return task.ContinueWith(_ => default(object?), null);
+
+                //
+                // Kulomben konvertaljuk Task<object?> tipusura.
+                //
+
+                return task.ContinueWith
+                (
+                    taskType.GetProperty(nameof(Task<object?>.Result)).ToGetter()
+                );
+            }
+
+            //
+            // 2) Ha rendelkezik MayRunLong attributummal akkor hosszan futo Task-ot kell letrehozzunk hozza
+            //
+
+            if (ifaceMethod.GetCustomAttribute<MayRunLongAttribute>() != null)
+                return Task.Factory.StartNew(invoke, TaskCreationOptions.LongRunning);
+
+            //
+            // 3) Kulomben hivjuk a metodust es nincs tenyleges worker
+            //
+
+            return Task.FromResult(invoke());
         }
         #endregion
 
