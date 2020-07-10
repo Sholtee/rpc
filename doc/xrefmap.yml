@@ -155,6 +155,22 @@ references:
   fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Of TInterface)()
   nameWithType: ModuleInvocationBuilder.AddModule<TInterface>()
   nameWithType.vb: ModuleInvocationBuilder.AddModule(Of TInterface)()
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func{System.Object},System.Reflection.MethodInfo)
+  name: AsTask(Func<Object>, MethodInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_System_Func_System_Object__System_Reflection_MethodInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func{System.Object},System.Reflection.MethodInfo)
+  name.vb: AsTask(Func(Of Object), MethodInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func<System.Object>, System.Reflection.MethodInfo)
+  fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func(Of System.Object), System.Reflection.MethodInfo)
+  nameWithType: ModuleInvocationBuilder.AsTask(Func<Object>, MethodInfo)
+  nameWithType.vb: ModuleInvocationBuilder.AsTask(Func(Of Object), MethodInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask*
+  name: AsTask
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask
+  nameWithType: ModuleInvocationBuilder.AsTask
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
   name: Build()
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Build
@@ -194,19 +210,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId
   nameWithType: ModuleInvocationBuilder.GetMemberId
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning(System.Reflection.MethodInfo)
-  name: IsLongRunning(MethodInfo)
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_IsLongRunning_System_Reflection_MethodInfo_
-  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning(System.Reflection.MethodInfo)
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning(System.Reflection.MethodInfo)
-  nameWithType: ModuleInvocationBuilder.IsLongRunning(MethodInfo)
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning*
-  name: IsLongRunning
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_IsLongRunning_
-  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning
-  nameWithType: ModuleInvocationBuilder.IsLongRunning
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
   name: Modules
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Modules
