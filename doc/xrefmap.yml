@@ -194,6 +194,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId
   nameWithType: ModuleInvocationBuilder.GetMemberId
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning(System.Reflection.MethodInfo)
+  name: IsLongRunning(MethodInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_IsLongRunning_System_Reflection_MethodInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning(System.Reflection.MethodInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning(System.Reflection.MethodInfo)
+  nameWithType: ModuleInvocationBuilder.IsLongRunning(MethodInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning*
+  name: IsLongRunning
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_IsLongRunning_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.IsLongRunning
+  nameWithType: ModuleInvocationBuilder.IsLongRunning
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
   name: Modules
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Modules
@@ -440,6 +453,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.IRequestContext.SessionId
   nameWithType: IRequestContext.SessionId
+- uid: Solti.Utils.Rpc.MayRunLongAttribute
+  name: MayRunLongAttribute
+  href: Solti.Utils.Rpc.MayRunLongAttribute.html
+  commentId: T:Solti.Utils.Rpc.MayRunLongAttribute
+  fullName: Solti.Utils.Rpc.MayRunLongAttribute
+  nameWithType: MayRunLongAttribute
 - uid: Solti.Utils.Rpc.RpcClient`1
   name: RpcClient<TInterface>
   href: Solti.Utils.Rpc.RpcClient-1.html
