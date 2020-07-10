@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Internals
 {
@@ -20,7 +21,7 @@ namespace Solti.Utils.Rpc.Internals
     /// </summary>
     /// <param name="injector">The <see cref="IInjector"/> in which the module was registered.</param>
     /// <param name="context">The context which describes the invocation.</param>
-    public delegate object ModuleInvocation(IInjector injector, IRequestContext context);
+    public delegate Task<object?> ModuleInvocation(IInjector injector, IRequestContext context);
 
     /// <summary>
     /// Builds <see cref="ModuleInvocation"/> instances.
@@ -38,7 +39,7 @@ namespace Solti.Utils.Rpc.Internals
 
         private static Expression Throw<TException>(Type[] argTypes, params Expression[] args) where TException: Exception => Expression.Block
         (
-            typeof(object),
+            typeof(Task<object?>),
             Expression.Throw
             (
                 Expression.New
@@ -47,7 +48,7 @@ namespace Solti.Utils.Rpc.Internals
                     args
                 )
             ),
-            Expression.Default(typeof(object))
+            Expression.Default(typeof(Task<object?>))
         );
 
         private Expression CreateSwitch(Expression value, IEnumerable<(MemberInfo Member, Expression Body)> cases, Expression defaultBody) => Expression.Switch
@@ -83,6 +84,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 .Distinct();
 
+        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private Expression<ModuleInvocation> BuildExpression(IEnumerable<Type> interfaces) 
         {
             ParameterExpression
@@ -128,7 +130,6 @@ namespace Solti.Utils.Rpc.Internals
                 injector,
                 context
             );
-
 
             Expression InvokeModule(Type iface, MethodInfo method)
             {
@@ -209,7 +210,19 @@ namespace Solti.Utils.Rpc.Internals
                     block.Add(Expression.Default(typeof(object)));
                 }
 
-                return Expression.Block(block);
+                //
+                // new Task<object?>(() => ..., TaskCreationOptions.xXx)
+                //
+
+                return Expression.Invoke
+                (
+                    Expression.Constant((Func<Func<object?>, TaskCreationOptions, Task<object?>>) CreateTask),
+                    Expression.Lambda<Func<object?>>
+                    (
+                       Expression.Block(block)
+                    ),                
+                    Expression.Constant(IsLongRunning(method) ? TaskCreationOptions.LongRunning : TaskCreationOptions.None)
+                );
             }
 
             MemberExpression GetFromContext(string name) => Expression.Property
@@ -217,6 +230,8 @@ namespace Solti.Utils.Rpc.Internals
                 context,
                 typeof(IRequestContext).GetProperty(name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
             );
+
+            static Task<object?> CreateTask(Func<object?> invocation, TaskCreationOptions opts) => Task.Factory.StartNew(invocation, opts);
         }
         #endregion
 
@@ -224,21 +239,39 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Gets the member name to be used in the execution process.
         /// </summary>
-        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'member' is never null")]
-        protected virtual string GetMemberId(MemberInfo member) => member.GetCustomAttribute<AliasAttribute>(inherit: false)?.Name ?? member.Name;
+        protected virtual string GetMemberId(MemberInfo member)
+        {
+            if (member == null)
+                throw new ArgumentNullException(nameof(member));
+
+            return member.GetCustomAttribute<AliasAttribute>(inherit: false)?.Name ?? member.Name;
+        }
 
         /// <summary>
         /// Gets the deserializer for the given method.
         /// </summary>
-        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'ifaceMethod' is never null")]
         protected virtual Func<string, object[]> GetDeserializerFor(MethodInfo ifaceMethod) 
         {
+            if (ifaceMethod == null)
+                throw new ArgumentNullException(nameof(ifaceMethod));
+
             Type[] argTypes = ifaceMethod
                 .GetParameters()
                 .Select(param => param.ParameterType)
                 .ToArray();
 
             return jsonString => MultiTypeArraySerializer.Deserialize(jsonString, argTypes);
+        }
+
+        /// <summary>
+        /// Returns true if the given method may run long.
+        /// </summary>
+        protected virtual bool IsLongRunning(MethodInfo ifaceMethod)
+        {
+            if (ifaceMethod == null)
+                throw new ArgumentNullException(nameof(ifaceMethod));
+
+            return ifaceMethod.GetCustomAttribute<MayRunLongAttribute>() != null;
         }
         #endregion
 

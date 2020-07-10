@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 using Moq;
 using NUnit.Framework;
@@ -40,20 +41,20 @@ namespace Solti.Utils.Rpc.Tests
         public void SetupFixture() => Invocation = GetModuleInvocation();
 
         [Test]
-        public void ModuleInvocation_ShouldQueryTheService() 
+        public async Task ModuleInvocation_ShouldQueryTheService() 
         {
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
             mockInjector
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(new Mock<IService>().Object);
 
-            Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }), null));
+            await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }), null));
 
             mockInjector.Verify(i => i.Get(It.IsAny<Type>(), null), Times.Once);
         }
 
         [Test]
-        public void ModuleInvocation_ShouldCallTheDesiredMethod() 
+        public async Task ModuleInvocation_ShouldCallTheDesiredMethod() 
         {
             var mockService = new Mock<IService>(MockBehavior.Strict);
             mockService
@@ -65,7 +66,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.That(Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }), null)), Is.EqualTo(3));
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }), null)), Is.EqualTo(3));
             mockService.Verify(svc => svc.Add(1, 2), Times.Once);
         }
 
@@ -74,7 +75,7 @@ namespace Solti.Utils.Rpc.Tests
         {
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
-            Assert.Throws<ServiceNotFoundException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, "Invalid", nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }), null)));
+            Assert.ThrowsAsync<ServiceNotFoundException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, "Invalid", nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, 2 }), null)));
         }
 
         [Test]
@@ -87,7 +88,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Invalid", null, null)));
+            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Invalid", null, null)));
         }
 
         [Test]
@@ -100,11 +101,11 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<JsonException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, }), null)));
+            Assert.ThrowsAsync<JsonException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), JsonSerializer.Serialize(new object[] { 1, }), null)));
         }
 
         [Test]
-        public void ModuleInvocation_ShouldWorkWithVoidMethods() 
+        public async Task ModuleInvocation_ShouldWorkWithVoidMethods() 
         {
             var mockService = new Mock<IService>(MockBehavior.Strict);
             mockService
@@ -115,7 +116,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.IsNull(Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Void), JsonSerializer.Serialize(new object[0]), null)));
+            Assert.IsNull(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Void), JsonSerializer.Serialize(new object[0]), null)));
             mockService.Verify(svc => svc.Void(), Times.Once);
         }
 
@@ -131,8 +132,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Bar), JsonSerializer.Serialize(new object[0]), null)));
-            Assert.DoesNotThrow(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Cica", JsonSerializer.Serialize(new object[0]), null)));
+            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Bar), JsonSerializer.Serialize(new object[0]), null)));
+            Assert.DoesNotThrowAsync(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Cica", JsonSerializer.Serialize(new object[0]), null)));
         }
 
         [Test]
@@ -145,7 +146,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.Throws<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Ignored), JsonSerializer.Serialize(new object[0]), null)));
+            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Ignored), JsonSerializer.Serialize(new object[0]), null)));
         }
     }
 }

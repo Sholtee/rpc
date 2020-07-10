@@ -9,16 +9,12 @@
     <LangVersion>8</LangVersion>
     <Configurations>Debug</Configurations>
     <OutputType>Library</OutputType>
-    <Configurations>Debug</Configurations>
+    <OutputPath>..\BIN\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <!--OpenCover requires .NET Core 2.2 while Test Explorer needs 3.X-->
   <PropertyGroup Condition="'$(CI)'==''">
     <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\BIN\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

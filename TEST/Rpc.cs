@@ -24,6 +24,7 @@ namespace Solti.Utils.Rpc.Tests
         public interface IModule 
         {
             void Dummy();
+            [MayRunLong]
             void Faulty();
             int Add(int a, int b);
             Task<int> AddAsync(int a, int b);
@@ -245,6 +246,7 @@ namespace Solti.Utils.Rpc.Tests
 
         public interface IDummy 
         {
+            [MayRunLong]
             void Method_1();
             void Method_2();
         }

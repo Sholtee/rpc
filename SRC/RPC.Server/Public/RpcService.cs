@@ -148,10 +148,10 @@ namespace Solti.Utils.Rpc
             injector.UnderlyingContainer.Instance(context);
 
             //
-            // A modul megszolitas is aszinkron legyen h az idotullepes kezeles megfeleloen mukodjon (lasd WebService.SafeCallContextProcessor()).
+            // A modul megszolitas aszinkron h az idotullepes kezeles megfeleloen mukodjon (lasd WebService.SafeCallContextProcessor()).
             //
 
-            object? result = await Task.Factory.StartNew(() => FModuleInvocation(injector, context), TaskCreationOptions.LongRunning);
+            object? result = await FModuleInvocation(injector, context);
 
             //
             // Ha a modul metodusnak Task a visszaterese akkor meg meg kell varni az eredmenyt (es addig
