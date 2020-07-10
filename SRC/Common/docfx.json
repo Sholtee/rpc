@@ -20,7 +20,7 @@
 				"files": ["index.md"]
 			}
 		],
-		"dest": "../Artifacts/DOC",
+		"dest": "../../Artifacts/DOC",
 		"resource": [{
 			"files": ["icon.png"],
 			"src": "../../"
