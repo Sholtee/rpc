@@ -290,8 +290,10 @@ namespace Solti.Utils.Rpc.Internals
 
                 Type taskType = task.GetType();
 
-                if (!taskType.IsGenericType) 
-                    return task.ContinueWith(_ => default(object?), null);
+                if (!taskType.IsGenericType) return task.ContinueWith
+                (
+                    _ => default(object?)
+                );
 
                 //
                 // Kulomben konvertaljuk Task<object?> tipusura.

@@ -43,8 +43,7 @@ namespace Solti.Utils.Rpc.Internals
                 getContext = FListener!.GetContextAsync();
                 getContext.ContinueWith
                 (
-                    (t, _) => SafeCallContextProcessor(t.Result), 
-                    null, 
+                    t => SafeCallContextProcessor(t.Result),  
                     TaskContinuationOptions.OnlyOnRanToCompletion
                 );
             } while (Task.WaitAny(isTerminated, getContext) == 1);

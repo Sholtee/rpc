@@ -70,7 +70,7 @@ namespace Solti.Utils.Rpc
             .ToStaticDelegate()
             .Invoke(new object[] { this });
 
-        private static Type GenerateTypeResponseTo(MethodInfo method) 
+        private static Type GenerateTypedResponseTo(MethodInfo method) 
         {
             Type returnType = method.ReturnType;
 
@@ -156,7 +156,7 @@ namespace Solti.Utils.Rpc
                     IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
                     (
                         await response.Content.ReadAsStringAsync(),
-                        GenerateTypeResponseTo(method)
+                        GenerateTypedResponseTo(method)
                     );
                     if (result.Exception != null) ProcessRemoteError(result.Exception);
                     return result.Result;
