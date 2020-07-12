@@ -3,6 +3,8 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System.Threading.Tasks;
+
 using BenchmarkDotNet.Attributes;
 
 namespace Solti.Utils.Rpc.Perf
@@ -15,11 +17,13 @@ namespace Solti.Utils.Rpc.Perf
         public interface ICalculator 
         {
             int Add(int a, int b);
+            Task<int> AddAsync(int a, int b);
         }
 
         public class CalculatorModule : ICalculator 
         {
             public int Add(int a, int b) => a + b;
+            public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
         }
 
         private RpcService Service { get; set; }
@@ -56,6 +60,17 @@ namespace Solti.Utils.Rpc.Perf
             for (int i = 0; i < OperationsPerInvoke; i++)
             {
                 calculator.Add(1, 1);
+            }
+        }
+
+        [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
+        public void AddAsync()
+        {
+            ICalculator calculator = Client.Proxy;
+
+            for (int i = 0; i < OperationsPerInvoke; i++)
+            {
+                calculator.AddAsync(1, 1).GetAwaiter().GetResult();
             }
         }
     }
