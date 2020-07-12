@@ -42,7 +42,7 @@
   
   <h1 id="Solti_Utils_Rpc_RpcClient_1" data-uid="Solti.Utils.Rpc.RpcClient`1" class="text-break">Class RpcClient&lt;TInterface&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Contains the logic related to RPC service invocation</p>
+  <div class="markdown level0 summary"><p>Invokes a remote module created by RPC.NET.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -154,7 +154,7 @@
   </h3>
   <a id="Solti_Utils_Rpc_RpcClient_1_CustomHeaders_" data-uid="Solti.Utils.Rpc.RpcClient`1.CustomHeaders*"></a>
   <h4 id="Solti_Utils_Rpc_RpcClient_1_CustomHeaders" data-uid="Solti.Utils.Rpc.RpcClient`1.CustomHeaders">CustomHeaders</h4>
-  <div class="markdown level1 summary"><p>Custom headers</p>
+  <div class="markdown level1 summary"><p>Headers sent along with each request.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -176,6 +176,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_RpcClient_1_CustomHeaders_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>You should not set &quot;content-type&quot;, it is done by te system automatically.</p>
+</div>
   <a id="Solti_Utils_Rpc_RpcClient_1_Host_" data-uid="Solti.Utils.Rpc.RpcClient`1.Host*"></a>
   <h4 id="Solti_Utils_Rpc_RpcClient_1_Host" data-uid="Solti.Utils.Rpc.RpcClient`1.Host">Host</h4>
   <div class="markdown level1 summary"><p>The address of the remote host (e.g.: &quot;www.mysite.com:1986/api&quot;).</p>
@@ -226,7 +229,7 @@
   </table>
   <a id="Solti_Utils_Rpc_RpcClient_1_SessionId_" data-uid="Solti.Utils.Rpc.RpcClient`1.SessionId*"></a>
   <h4 id="Solti_Utils_Rpc_RpcClient_1_SessionId" data-uid="Solti.Utils.Rpc.RpcClient`1.SessionId">SessionId</h4>
-  <div class="markdown level1 summary"><p>The session ID related to this instance.</p>
+  <div class="markdown level1 summary"><p>The (optional) session ID related to this instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -436,8 +439,8 @@
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_" data-uid="Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_Solti_Utils_Rpc_ExceptionInfo_" data-uid="Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.ExceptionInfo)">ProcessRemoteError(ExceptionInfo)</h4>
-  <div class="markdown level1 summary"><p>Processes the <a class="xref" href="Solti.Utils.Rpc.ExceptionInfo.html">ExceptionInfo</a> returned by the remote host.</p>
+  <h4 id="Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_Solti_Utils_Rpc_Internals_ExceptionInfo_" data-uid="Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.Internals.ExceptionInfo)">ProcessRemoteError(ExceptionInfo)</h4>
+  <div class="markdown level1 summary"><p>Processes the <a class="xref" href="Solti.Utils.Rpc.Internals.ExceptionInfo.html">ExceptionInfo</a> returned by the remote host.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -455,7 +458,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.ExceptionInfo.html">ExceptionInfo</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ExceptionInfo.html">ExceptionInfo</a></td>
         <td><span class="parametername">exception</span></td>
         <td></td>
       </tr>
