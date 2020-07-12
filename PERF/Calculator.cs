@@ -42,6 +42,7 @@ namespace Solti.Utils.Rpc.Perf
         public void Cleanup() 
         {
             Client?.Dispose();
+            Service?.Container?.Dispose();
             Service?.Dispose();
         }
 
