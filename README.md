@@ -1,6 +1,7 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master)
-> W.I.P.
-
+|**RPC.NET.Attributes|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.attributes)](https://www.nuget.org/packages/rpc.net.attributes )|
+|**RPC.NET.Client|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.client)](https://www.nuget.org/packages/rpc.net.client )|
+|**RPC.NET.Server|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.server)](https://www.nuget.org/packages/rpc.net.server )|
 ## How it works
 1. The client sends a *HTTP POST* to the server where 
    - The request *URI*
@@ -32,7 +33,7 @@
      ```	 
    - If the remote method has a `Stream` return value (and the invocation was successful) then the *content-type* is `application/octet-stream` and the *response body* contains the raw data.
 ## Server example
-1. Install the [RPC.NET.Server]() package. Since modules are stored in a `IServiceContainer` you may need to install the [Injector.NET](https://www.nuget.org/packages/injector.net/ ) package as well.
+1. Install the [RPC.NET.Server](https://www.nuget.org/packages/rpc.net.server ) package. Since modules are stored in a `IServiceContainer` you may need to install the [Injector.NET](https://www.nuget.org/packages/injector.net/ ) package as well.
 2. Define an interface and implementation for your module:
    ```csharp
    public interface ICalculator // Since clients may want to use it as well, it may be worth to put this interface into a common assembly
@@ -51,13 +52,15 @@
    ```csharp
    using System;
    using Solti.Utils.DI;
-   using Solti.Utils.RPC;
+   using Solti.Utils.Rpc;
    
    class Program
    {
      static void Main(string[] args)
      {
-       using var service = new RpcService(new ServiceContainer());
+       using var container = new ServiceContainer();
+       using var service = new RpcService(service);
+	   
        service.Register<ICalculator, Calculator>();
        service.Start("http://127.0.0.1:1986/api/");
 	   
@@ -67,11 +70,11 @@
    }
    ```
 ## Client example
-1. Install the [RPC.NET.Client]() package.
+1. Install the [RPC.NET.Client](https://www.nuget.org/packages/rpc.net.client) package.
 2. Reference the assembly that contains the interface of the module you want to use.
 3. Create the client:
    ```csharp
-   using Solti.Utils.RPC;
+   using Solti.Utils.Rpc;
    ...
    using var client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
    try
