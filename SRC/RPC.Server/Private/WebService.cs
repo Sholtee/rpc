@@ -208,7 +208,7 @@ namespace Solti.Utils.Rpc.Internals
             {
                 FListener.Start();
             }
-            catch (HttpListenerException ex) 
+            catch (Exception ex) 
             {
                 //
                 // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
@@ -217,7 +217,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 FListener = null;
 
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
                 {
                     AddUrlReservation(url);
                     FNeedToRemoveUrlReservation = true;
