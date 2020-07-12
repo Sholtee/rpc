@@ -6,7 +6,7 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Solti.Utils.Rpc
+namespace Solti.Utils.Rpc.Internals
 {
     /// <summary>
     /// Describes a remote exception.
@@ -15,17 +15,17 @@ namespace Solti.Utils.Rpc
     public class ExceptionInfo 
     {
         /// <summary>
-        /// The full name of the exception type.
+        /// The assembly-qualified name of the exception type.
         /// </summary>
         public string TypeName { get; set; }
 
         /// <summary>
-        /// The textual description of the error.
+        /// The message of the remote exception.
         /// </summary>
         public string Message { get; set; }
 
         /// <summary>
-        /// Custom user data related to this error.
+        /// Custom data associated with the exception.
         /// </summary>
         [SuppressMessage("Usage", "CA2227:Collection properties should be read only")]
         public IDictionary Data { get; set; }

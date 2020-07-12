@@ -4,14 +4,13 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Runtime.Serialization;
 
 namespace Solti.Utils.Rpc
 {
     /// <summary>
     /// The exception that descibes an RPC error.
     /// </summary>
-    [Serializable]
+    /// <remarks>The inner exception contains the actual remote error.</remarks>
     public class RpcException : Exception
     {
         /// <summary>
@@ -32,13 +31,6 @@ namespace Solti.Utils.Rpc
         /// Creates a new <see cref="RpcException"/> instance.
         /// </summary>
         public RpcException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="RpcException"/> instance.
-        /// </summary>
-        protected RpcException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

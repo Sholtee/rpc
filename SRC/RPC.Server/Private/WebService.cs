@@ -128,7 +128,7 @@ namespace Solti.Utils.Rpc.Internals
         }
 
         /// <summary>
-        /// Writes the given string into a <see cref="HttpListenerResponse"/>.
+        /// Writes the given <paramref name="responseString"/> to the <paramref name="response"/>.
         /// </summary>
         protected async static Task WriteResponseString(HttpListenerResponse response, string responseString) 
         {
@@ -172,7 +172,7 @@ namespace Solti.Utils.Rpc.Internals
 
         #region Public
         /// <summary>
-        /// Returns true if the Web Service has already been started (that does not mean that it is listening).
+        /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
         /// </summary>
         public bool IsStarted => FListenerThread != null;
 

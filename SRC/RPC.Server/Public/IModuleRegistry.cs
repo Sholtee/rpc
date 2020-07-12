@@ -10,7 +10,7 @@ namespace Solti.Utils.Rpc
     using DI.Interfaces;
 
     /// <summary>
-    /// Defines an abstract module registry.
+    /// Describes an abstract module registry.
     /// </summary>
     public interface IModuleRegistry
     {

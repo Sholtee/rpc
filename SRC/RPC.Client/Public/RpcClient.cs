@@ -17,7 +17,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Solti.Utils.Rpc
-{   
+{
+    using Internals;
     using Primitives;
     using Primitives.Patterns;
     using Primitives.Threading;
@@ -26,7 +27,7 @@ namespace Solti.Utils.Rpc
     using Proxy.Generators;
     
     /// <summary>
-    /// Contains the logic related to RPC service invocation
+    /// Invokes a remote module created by RPC.NET.
     /// </summary>
     public class RpcClient<TInterface>: Disposable where TInterface: class
     {
@@ -242,7 +243,7 @@ namespace Solti.Utils.Rpc
 
         #region Public
         /// <summary>
-        /// The session ID related to this instance.
+        /// The (optional) session ID related to this instance.
         /// </summary>
         public string? SessionId { get; }
 
@@ -261,8 +262,9 @@ namespace Solti.Utils.Rpc
         }
         
         /// <summary>
-        /// Custom headers
+        /// Headers sent along with each request.
         /// </summary>
+        /// <remarks>You should not set "content-type", it is done by te system automatically.</remarks>
         public IDictionary<string, string> CustomHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>

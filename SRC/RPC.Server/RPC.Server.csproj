@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
-    <Compile Include="..\Common\ExceptionInfo.cs" Link="Public\ExceptionInfo.cs" />
+    <Compile Include="..\Common\ExceptionInfo.cs" Link="Private\ExceptionInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>

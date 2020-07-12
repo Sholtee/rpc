@@ -9,12 +9,12 @@ using System.Diagnostics.CodeAnalysis;
 namespace Solti.Utils.Rpc
 {
     /// <summary>
-    /// Describes a request context.
+    /// Describes an abstract request context.
     /// </summary>
     public interface IRequestContext 
     {
         /// <summary>
-        /// The (optional) session ID related to the caller.
+        /// The (optional) session ID.
         /// </summary>
         public string? SessionId { get; }
 
@@ -27,7 +27,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// The module method.
         /// </summary>
-        /// <remarks>It must not use by ref parameters.</remarks>
+        /// <remarks>The module being invoked must not use by ref parameters.</remarks>
         public string Method { get;  }
 
         /// <summary>

@@ -10,8 +10,8 @@ namespace Solti.Utils.Rpc
     /// <summary>
     /// Adds a new alias to a member.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
-    public sealed class AliasAttribute: Attribute // TODO: move to a common interfaces project
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method, AllowMultiple = false)]
+    public sealed class AliasAttribute: Attribute
     {
         /// <summary>
         /// The new name.

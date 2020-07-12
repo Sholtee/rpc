@@ -20,7 +20,7 @@ namespace Solti.Utils.Rpc
     using Internals;
 
     /// <summary>
-    /// RPC service
+    /// Implements the core RPC service functionality.
     /// </summary>
     public class RpcService : WebService, IModuleRegistry
     {

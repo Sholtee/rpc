@@ -1,17 +1,15 @@
 ﻿/********************************************************************************
-* IgnoreAttribute.cs                                                            *
+* IRpcResonse.cs                                                                *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System;
 
-namespace Solti.Utils.Rpc
+namespace Solti.Utils.Rpc.Internals
 {
-    /// <summary>
-    /// Ignores a member.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class IgnoreAttribute: Attribute
+    internal interface IRpcResonse 
     {
+        public object? Result { get; }
+
+        public ExceptionInfo? Exception { get; }
     }
 }
