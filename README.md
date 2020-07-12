@@ -10,9 +10,9 @@
    
      For example: `http://www.example.org:1986/api?module=IMyModule&method=ModuleMethod&sessionid=xXx`. 
    - The *content-type* is `application/json`
-   - The *body* is an (UTF-8) *JSON* stringified array that contains the method arguments. For example: `["cica", 10]`.
+   - The *request body* is an (UTF-8) *JSON* stringified array that contains the method arguments. For example: `["cica", 10]`.
 2. The type of response depends on the kind of the result:
-   - If the remote method has a non `Stream` return value then the *content-type* is `application/json` and the response body contains the (UTF-8) *JSON* stringified result. The result is a wrapped object that contains the actual outcome of the method or the error description:
+   - If the remote method has a non `Stream` return value then the *content-type* is `application/json` and the *response body* contains the (UTF-8) *JSON* stringified result. The result is a wrapped object that contains the actual outcome of the method or the error description:
      ```js
      {
        "Result": 12,
@@ -30,8 +30,45 @@
        }
      }
      ```	 
-   - If the remote method has a `Stream` return value (and the invocation was successful) then the *content-type* is `application/octet-stream` and the response body contains the raw data.   
- ## Resources
+   - If the remote method has a `Stream` return value (and the invocation was successful) then the *content-type* is `application/octet-stream` and the *response body* contains the raw data.
+## Server example
+1. Install the [RPC.NET.Server]() package. Since modules are stored in a `IServiceContainer` you may need to install the [Injector.NET](https://www.nuget.org/packages/injector.net/ ) package as well.
+2. Define an interface and implementation for your module:
+   ```csharp
+   public interface ICalculator 
+   {
+     int Add(int a, int b);
+     Task<int> AddAsync(int a, int b); // async methods also supported
+   }
+   ...
+   public class Calculator : ICalculator 
+   {
+     public int Add(int a, int b) => a + b;
+     public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
+   }
+   ```
+3. Create the service `exe`:
+   ```csharp
+   using System;
+   using Solti.Utils.DI;
+   using Solti.Utils.RPC;
+   
+   class Program
+   {
+     static void Main(string[] args)
+     {
+       using var service = new RpcService(new ServiceContainer());
+       service.Register<ICalculator, Calculator>();
+       service.Start("http://127.0.0.1:1986/api/");
+	   
+       Console.WriteLine("Press any key to terminate the server... ");
+	   Console.ReadLine();
+     }
+   }
+   ```
+
+
+## Resources
 [API docs](https://sholtee.github.io/rpc )
 
 [Benchmark results](https://sholtee.github.io/rpc/perf/ )
