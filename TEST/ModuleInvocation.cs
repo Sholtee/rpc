@@ -28,6 +28,8 @@ namespace Solti.Utils.Rpc.Tests
             void Ignored();
             Task Async();
             Task<int> AsyncHavingRetVal();
+            [MayRunLong]
+            void LongRunning();
         }
 
         private static ModuleInvocation GetModuleInvocation() 
@@ -183,6 +185,21 @@ namespace Solti.Utils.Rpc.Tests
 
             Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.AsyncHavingRetVal), JsonSerializer.Serialize(new object[0]), null)), Is.EqualTo(1));
             mockService.Verify(i => i.AsyncHavingRetVal(), Times.Once);
+        }
+
+        [Test]
+        public void ModuleInvocation_ShouldCreateALongRunningTaskIfNecessary() 
+        {
+            var mockService = new Mock<IService>(MockBehavior.Strict);
+            mockService.Setup(i => i.LongRunning());
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.Get(typeof(IService), null))
+                .Returns(mockService.Object);
+
+            Task result = Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.LongRunning), JsonSerializer.Serialize(new object[0]), null));
+            Assert.That(result.CreationOptions.HasFlag(TaskCreationOptions.LongRunning));
         }
     }
 }
