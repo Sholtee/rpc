@@ -35,7 +35,7 @@
 1. Install the [RPC.NET.Server]() package. Since modules are stored in a `IServiceContainer` you may need to install the [Injector.NET](https://www.nuget.org/packages/injector.net/ ) package as well.
 2. Define an interface and implementation for your module:
    ```csharp
-   public interface ICalculator 
+   public interface ICalculator // Since clients may want to use it as well, it may be worth to put this interface into a common assembly
    {
      int Add(int a, int b);
      Task<int> AddAsync(int a, int b); // async methods also supported
@@ -66,9 +66,24 @@
      }
    }
    ```
-
-
+## Client example
+1. Install the [RPC.NET.Client]() package.
+2. Reference the assembly that contains the interface of the module you want to use.
+3. Create the client:
+   ```csharp
+   using Solti.Utils.RPC;
+   ...
+   using var client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
+   try
+   {
+     int result = await client.Proxy.AddAsync(1, 2));
+   } catch(RpcException ex) {
+     // ex.InnerException will contain the original exception
+   }
+   ```
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
+
+[Examples](https://github.com/Sholtee/rpc/blob/master/TEST/Rpc.cs )
 
 [Benchmark results](https://sholtee.github.io/rpc/perf/ )
