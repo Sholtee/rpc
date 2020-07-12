@@ -210,14 +210,20 @@ namespace Solti.Utils.Rpc.Internals
             }
             catch (HttpListenerException ex) 
             {
+                //
+                // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
+                // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
+                //
+
+                FListener = null;
+
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
                 {
                     AddUrlReservation(url);
                     FNeedToRemoveUrlReservation = true;
 
                     //
-                    // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
-                    // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
+                    // Megprobaljuk ujra letrehozni.
                     //
 
                     goto createcore;
@@ -227,7 +233,6 @@ namespace Solti.Utils.Rpc.Internals
                 // Ha nem URL rezervacios gondunk volt akkor tovabb dobjuk a kivetelt
                 //
 
-                FListener = null;
                 throw;
             }
 
