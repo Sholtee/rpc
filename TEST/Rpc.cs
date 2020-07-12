@@ -63,7 +63,10 @@ namespace Solti.Utils.Rpc.Tests
             });
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host, "cica");
+            using var client = new RpcClient<IModule>(Host) 
+            {
+                SessionId = "cica"
+            };
             client.Proxy.Dummy();
 
             Assert.That(context, Is.Not.Null);

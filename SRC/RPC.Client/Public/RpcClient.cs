@@ -245,7 +245,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// The (optional) session ID related to this instance.
         /// </summary>
-        public string? SessionId { get; }
+        public string? SessionId { get; set; }
 
         /// <summary>
         /// The address of the remote host (e.g.: "www.mysite.com:1986/api").
@@ -270,10 +270,9 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="RpcClient{TInterface}"/> instance.
         /// </summary>
-        public RpcClient(string host, string? sessionId = null)
+        public RpcClient(string host)
         {
             Host        = host ?? throw new ArgumentNullException(nameof(host));
-            SessionId   = sessionId;
             FHttpClient = new HttpClient();
             Timeout     = TimeSpan.FromSeconds(10);
             Proxy       = CreateProxy();
