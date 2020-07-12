@@ -471,14 +471,14 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface)
   nameWithType: RpcClient<TInterface>
   nameWithType.vb: RpcClient(Of TInterface)
-- uid: Solti.Utils.Rpc.RpcClient`1.#ctor(System.String,System.String)
-  name: RpcClient(String, String)
-  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1__ctor_System_String_System_String_
-  commentId: M:Solti.Utils.Rpc.RpcClient`1.#ctor(System.String,System.String)
-  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.RpcClient(System.String, System.String)
-  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).RpcClient(System.String, System.String)
-  nameWithType: RpcClient<TInterface>.RpcClient(String, String)
-  nameWithType.vb: RpcClient(Of TInterface).RpcClient(String, String)
+- uid: Solti.Utils.Rpc.RpcClient`1.#ctor(System.String)
+  name: RpcClient(String)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1__ctor_System_String_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.#ctor(System.String)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.RpcClient(System.String)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).RpcClient(System.String)
+  nameWithType: RpcClient<TInterface>.RpcClient(String)
+  nameWithType.vb: RpcClient(Of TInterface).RpcClient(String)
 - uid: Solti.Utils.Rpc.RpcClient`1.#ctor*
   name: RpcClient
   href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1__ctor_
