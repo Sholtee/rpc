@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Configurations>Debug;Perf</Configurations>
+    <!--BenchmarkDotNet requires the exe and csproj name to be equal-->
+    <AssemblyName>RPC.Perf</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc.Perf</RootNamespace>
+    <OutputPath>..\BIN\$(Configuration)\</OutputPath>
+    <LangVersion>8</LangVersion>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="docfx.json" />
+    <None Remove="index.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.*" />
+    <PackageReference Include="Injector.NET" Version="3.*" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(LibVersion)' != ''">
+    <PackageReference Include="RPC.NET.Client" Version="$(LibVersion)"></PackageReference>
+    <PackageReference Include="RPC.NET.Server" Version="$(LibVersion)"></PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SRC\RPC.Client\RPC.Client.csproj" />
+    <ProjectReference Include="..\SRC\RPC.Server\RPC.Server.csproj" />
+  </ItemGroup>
+  
+</Project>

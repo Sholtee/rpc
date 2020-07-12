@@ -1,15 +1,13 @@
 {
-  "bin": "\\BIN\\Release",
+  "bin": "\\BIN",
   "solution": "\\RPC.sln",
   "commonprops": "\\SRC\\Common\\Common.targets",
   "app": "\\SRC\\Common\\Common.targets",
   "vendor": "\\Vendor",
   "tests": "\\Test\\*.Tests.csproj",
-  "testtarget": "netcoreapp2.2",
   "artifacts": "\\Artifacts",
   "coveragefilter": "+[Solti.Utils.RPC*]* -[Solti.Utils.RPC*Tests]*",
   "perftests": "\\PERF\\RPC.Perf.csproj",
-  "perftarget": "netcoreapp3.1",
   "docsbranch": "gh-pages",
   "CI": "AppVeyor"
 }
