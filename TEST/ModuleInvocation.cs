@@ -26,6 +26,8 @@ namespace Solti.Utils.Rpc.Tests
             void Bar();
             [Ignore]
             void Ignored();
+            Task Async();
+            Task<int> AsyncHavingRetVal();
         }
 
         private static ModuleInvocation GetModuleInvocation() 
@@ -147,6 +149,40 @@ namespace Solti.Utils.Rpc.Tests
                 .Returns(mockService.Object);
 
             Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Ignored), JsonSerializer.Serialize(new object[0]), null)));
+        }
+
+        [Test]
+        public async Task ModuleInvocation_ShouldHandleTasks() 
+        {
+            var mockService = new Mock<IService>(MockBehavior.Strict);
+            mockService
+                .Setup(i => i.Async())
+                .Returns(Task.CompletedTask);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.Get(typeof(IService), null))
+                .Returns(mockService.Object);
+
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Async), JsonSerializer.Serialize(new object[0]), null)), Is.Null);
+            mockService.Verify(i => i.Async(), Times.Once);
+        }
+
+        [Test]
+        public async Task ModuleInvocation_ShouldHandleTasksHavingRetVal()
+        {
+            var mockService = new Mock<IService>(MockBehavior.Strict);
+            mockService
+                .Setup(i => i.AsyncHavingRetVal())
+                .Returns(Task.FromResult(1));
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.Get(typeof(IService), null))
+                .Returns(mockService.Object);
+
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.AsyncHavingRetVal), JsonSerializer.Serialize(new object[0]), null)), Is.EqualTo(1));
+            mockService.Verify(i => i.AsyncHavingRetVal(), Times.Once);
         }
     }
 }
