@@ -26,8 +26,12 @@ namespace Solti.Utils.Rpc.Tests
         {
             protected override Task ProcessRequestContext(HttpListenerContext context)
             {
-                OnRequest.Invoke(context);
-                return Task.CompletedTask;
+                if (OnRequest != null)
+                {
+                    OnRequest.Invoke(context);
+                    return Task.CompletedTask;
+                }
+                return base.ProcessRequestContext(context);
             }
 
             public Action<HttpListenerContext> OnRequest { get; set; }
@@ -57,8 +61,7 @@ namespace Solti.Utils.Rpc.Tests
         [TearDown]
         public void TeardownFixture() 
         {
-            Svc.Stop();
-            Svc.Dispose();
+            Svc?.Dispose();
             Svc = null;
         }
 
@@ -118,6 +121,26 @@ namespace Solti.Utils.Rpc.Tests
             //
 
             await Service_ShouldHandleRequests();
+        }
+
+        [Test]
+        public void Start_ShouldValidateTheUrl() 
+        {
+            using var svc = new WebService();
+            Assert.Throws<ArgumentException>(() => svc.Start("invalid"));
+        }
+
+        [Test]
+        public async Task Service_ShouldReturnHttp200ByDefault() 
+        {
+            Svc.OnRequest = null;
+
+            using var client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync(TestUrl);
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That((await response.Content.ReadAsStreamAsync()).Length, Is.EqualTo(0));
         }
     }
 }

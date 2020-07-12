@@ -51,9 +51,10 @@ namespace Solti.Utils.Rpc.Internals
 
         private static HttpListener CreateCore(string url) 
         {
-            var result = new HttpListener();
-
-            result.IgnoreWriteExceptions = true;
+            var result = new HttpListener
+            {
+                IgnoreWriteExceptions = true
+            };
 
             try
             {
