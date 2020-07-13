@@ -250,7 +250,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Gets the deserializer for the given method.
         /// </summary>
-        protected virtual Func<string, object[]> GetDeserializerFor(MethodInfo ifaceMethod) 
+        protected virtual Func<string, object?[]> GetDeserializerFor(MethodInfo ifaceMethod) 
         {
             if (ifaceMethod == null)
                 throw new ArgumentNullException(nameof(ifaceMethod));

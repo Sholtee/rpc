@@ -14,12 +14,12 @@ namespace Solti.Utils.Rpc.Internals
 
     internal static class MultiTypeArraySerializer
     {
-        public static object[] Deserialize(string jsonString, params Type[] elementTypes) 
+        public static object?[] Deserialize(string jsonString, params Type[] elementTypes) 
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new MultiTypeArrayConverter(elementTypes));
 
-            return JsonSerializer.Deserialize<object[]>(jsonString, options);
+            return JsonSerializer.Deserialize<object?[]>(jsonString, options);
         }
 
         private sealed class MultiTypeArrayConverter : JsonConverter<object[]>
