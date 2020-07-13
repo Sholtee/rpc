@@ -342,7 +342,7 @@ namespace Solti.Utils.Rpc.Internals
 
             MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface).Where
             (
-                method => method.GetParameters().Any(para => para.ParameterType.IsByRef)
+                method => method.ReturnType.IsByRef || method.GetParameters().Any(para => para.ParameterType.IsByRef)
             ).ToArray();
 
             if (methodsHavingByRefParam.Any())
