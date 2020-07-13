@@ -91,18 +91,16 @@ namespace Solti.Utils.Rpc.Internals
         {
             ParameterExpression
                 injector  = Expression.Parameter(typeof(IInjector), nameof(injector)),
-                context   = Expression.Parameter(typeof(IRequestContext), nameof(context)),
-                argsArray = Expression.Variable(typeof(object?[]), nameof(argsArray));
+                context   = Expression.Parameter(typeof(IRequestContext), nameof(context));
 
             Expression
-                ifaceId  = GetFromContext(ctx => ctx.Module),
-                methodId = GetFromContext(ctx => ctx.Method);
+                ifaceId  = GetFromContext(context, context => context.Module),
+                methodId = GetFromContext(context, context => context.Method);
 
             return Expression.Lambda<ModuleInvocation>
             (
                 Expression.Block
                 (
-                    variables: new[] { argsArray },
                     CreateSwitch
                     (
                         value: ifaceId,
@@ -135,9 +133,22 @@ namespace Solti.Utils.Rpc.Internals
 
             Expression InvokeModule(Type module, MethodInfo ifaceMethod)
             {
-                Expression 
+                ParameterExpression
                     //
-                    // argsArray = deserializer(context.Args);
+                    // A localXxX valtozok workaround-ok mivel (gozom nincs miert) ha switch esetek szama eler egy szamot
+                    // akkor a lambda fordito elvesziti a scope-ot es elszall InvalidOperationException-el. NE modositsd!
+                    //
+
+                    localInjector = Expression.Variable(typeof(IInjector), nameof(localInjector)),
+                    localContext  = Expression.Variable(typeof(IRequestContext), nameof(localContext)),
+                    argsArray     = Expression.Variable(typeof(object?[]), nameof(argsArray));
+
+                Expression
+                    assignLocalInjector = Expression.Assign(localInjector, injector),
+                    assignLocalContext = Expression.Assign(localContext, context),
+
+                    //
+                    // object?[] argsArray = deserializer(context.Args);
                     //
 
                     assignArgs = Expression.Assign
@@ -146,7 +157,7 @@ namespace Solti.Utils.Rpc.Internals
                         Expression.Invoke
                         (
                             Expression.Constant(GetDeserializerFor(ifaceMethod)),
-                            GetFromContext(ctx => ctx.Args)
+                            GetFromContext(localContext, localContext => localContext.Args)
                         )
                     ),
 
@@ -164,7 +175,7 @@ namespace Solti.Utils.Rpc.Internals
                         (
                             Expression.Call
                             (
-                                injector,
+                                localInjector,
                                 InjectorGet,
                                 Expression.Constant(module),
                                 Expression.Constant(null, typeof(string))
@@ -212,22 +223,34 @@ namespace Solti.Utils.Rpc.Internals
                     block.Add(Expression.Default(typeof(object)));
                 }
 
-                //
-                // AsTask(() => ...)
-                //
-
-                return Expression.Invoke
+                return Expression.Block
                 (
-                    Expression.Constant((Func<Func<object?>, MethodInfo, Task<object?>>) AsTask),
-                    Expression.Lambda<Func<object?>>
+                    //
+                    // Parameterek lokalizalasa egy workaround (lasd metodus teteje), NE modositsd!
+                    //
+
+                    new[] { localInjector, localContext },
+
+                    assignLocalInjector,
+                    assignLocalContext,
+
+                    //
+                    // AsTask(() => ...)
+                    //
+
+                    Expression.Invoke
                     (
-                       Expression.Block(block)
-                    ),                
-                    Expression.Constant(ifaceMethod)
+                        Expression.Constant((Func<Func<object?>, MethodInfo, Task<object?>>) AsTask),
+                        Expression.Lambda<Func<object?>>
+                        (
+                           Expression.Block(new[] { argsArray }, block)
+                        ),                
+                        Expression.Constant(ifaceMethod)   
+                    )
                 );
             }
 
-            MemberExpression GetFromContext(Expression<Func<IRequestContext, object?>> ctx) => Expression.Property
+            static MemberExpression GetFromContext(ParameterExpression context, Expression<Func<IRequestContext, object?>> ctx) => Expression.Property
             (
                 context,
                 typeof(IRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
@@ -262,7 +285,6 @@ namespace Solti.Utils.Rpc.Internals
 
             return jsonString => MultiTypeArraySerializer.Deserialize(jsonString, argTypes);
         }
-
 
         /// <summary>
         /// Creates a new task for an invocation.
