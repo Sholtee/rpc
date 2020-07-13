@@ -28,6 +28,7 @@ namespace Solti.Utils.Rpc.Tests
             void Faulty();
             int Add(int a, int b);
             Task<int> AddAsync(int a, int b);
+            Task Async();
             Stream GetStream();
             Task<Stream> GetStreamAsync();
         }
@@ -137,6 +138,22 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(await client.Proxy.AddAsync(1, 2), Is.EqualTo(3));
 
             mockModule.Verify(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        }
+
+        [Test]
+        public void RemoteAsync_ShouldWork()
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule.Setup(i => i.Async());
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+
+            Assert.DoesNotThrowAsync(client.Proxy.Async);
+
+            mockModule.Verify(i => i.Async(), Times.Once);
         }
 
         [Test]

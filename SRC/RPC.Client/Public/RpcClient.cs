@@ -191,14 +191,23 @@ namespace Solti.Utils.Rpc
 
             if (!typeof(Task).IsAssignableFrom(method.ReturnType))
                 //
-                // A "GetAwaiter().GetResult()" miatt kivetel eseten nem AggregateException-t kapunk vissza,
-                // hanem az eredeti kivetelt.
+                // Ha a metodus visszaterese nem Task akkor meg kell varni az eredmenyt.
+                //
+                // A "GetAwaiter().GetResult()" miatt kivetel eseten nem AggregateException-t kapunk vissza.
                 //
 
                 return getResult.GetAwaiter().GetResult();
             else
             {
-                if (method.ReturnType == typeof(Task)) return getResult;
+                //
+                // Ha a metodus visszaterese Task akkor nincs dolgunk (Task<object?> maga is Task).
+                //
+
+                if (!method.ReturnType.IsGenericType) return getResult;
+
+                //
+                // Kulomben a konvertaljuk a metodus visszateresenek megfelelo formara: Task<object?> -> Task<int> pl
+                //
 
                 return getResult.Cast
                 (
