@@ -144,7 +144,9 @@ namespace Solti.Utils.Rpc.Tests
         public void RemoteAsync_ShouldWork()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
-            mockModule.Setup(i => i.Async());
+            mockModule
+                .Setup(i => i.Async())
+                .Returns(Task.CompletedTask);
 
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
