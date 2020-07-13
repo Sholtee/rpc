@@ -139,6 +139,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
   nameWithType: ModuleInvocationBuilder
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
+  name: AddModule(Type)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_System_Type_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
+  nameWithType: ModuleInvocationBuilder.AddModule(Type)
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule*
   name: AddModule
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_
