@@ -9,6 +9,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Solti.Utils.Rpc.Perf
 {
+    using static Consts;
     using DI;
 
     [MemoryDiagnoser]
@@ -49,8 +50,6 @@ namespace Solti.Utils.Rpc.Perf
             Service?.Container?.Dispose();
             Service?.Dispose();
         }
-
-        const int OperationsPerInvoke = 50;
 
         [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
         public void Add()
