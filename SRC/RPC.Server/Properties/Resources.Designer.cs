@@ -61,6 +61,24 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ByRef parameters are not supported..
+        /// </summary>
+        internal static string BYREF_PARAMETER {
+            get {
+                return ResourceManager.GetString("BYREF_PARAMETER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generic interfaces are not supported..
+        /// </summary>
+        internal static string GENERIC_IFACE {
+            get {
+                return ResourceManager.GetString("GENERIC_IFACE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The length of the args array does not match with the parameter count..
         /// </summary>
         internal static string INAPPROPRIATE_ARRAY_LENGTH {

@@ -4,6 +4,9 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -201,5 +204,31 @@ namespace Solti.Utils.Rpc.Tests
             Task result = Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.LongRunning), JsonSerializer.Serialize(new object[0]), null));
             Assert.That(result.CreationOptions.HasFlag(TaskCreationOptions.LongRunning));
         }
+
+        public static IEnumerable<Type> RandomInterfaces => typeof(object)
+            .Assembly
+            .GetExportedTypes()
+            .Where
+            (
+                t => t.IsInterface && !t.ContainsGenericParameters && !ModuleInvocationBuilder.GetAllInterfaceMethods(t).Any
+                (
+                    m => m.GetParameters().Any(p => p.ParameterType.IsByRef)
+                )
+            );
+
+        [TestCaseSource(nameof(RandomInterfaces))]
+        public void ModuleInvocationBuilder_ShouldWorkWith(Type iface) => Assert.DoesNotThrow(() =>
+        {
+            var bldr = new ModuleInvocationBuilder();
+            bldr.AddModule(iface);
+            bldr.Build();
+        });
+
+        [Test]
+        public void ModuleInvocationBuilder_ShouldThrowOnByRefParameter() => Assert.Throws<ArgumentException>(() => 
+        {
+            var bldr = new ModuleInvocationBuilder();
+            bldr.AddModule<IDictionary<string, string>>();
+        });
     }
 }

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BYREF_PARAMETER" xml:space="preserve">
+    <value>ByRef parameters are not supported.</value>
+  </data>
+  <data name="GENERIC_IFACE" xml:space="preserve">
+    <value>Generic interfaces are not supported.</value>
+  </data>
   <data name="INAPPROPRIATE_ARRAY_LENGTH" xml:space="preserve">
     <value>The length of the args array does not match with the parameter count.</value>
   </data>

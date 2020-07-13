@@ -205,7 +205,6 @@ namespace Solti.Utils.Rpc.Tests
             Assert.Throws<ObjectDisposedException>(() => stm.Seek(0, SeekOrigin.Begin));
         }
 
-
         [Test]
         public void GetStreamAsync_ShouldWork()
         {

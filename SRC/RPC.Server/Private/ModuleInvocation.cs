@@ -68,7 +68,7 @@ namespace Solti.Utils.Rpc.Internals
             )
         );
 
-        private static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type iface) =>
+        internal static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type iface) =>
             //
             // A "BindingFlags.FlattenHierarchy" interface-ekre nem mukodik
             //
@@ -95,8 +95,8 @@ namespace Solti.Utils.Rpc.Internals
                 argsArray = Expression.Variable(typeof(object?[]), nameof(argsArray));
 
             Expression
-                ifaceId  = GetFromContext(nameof(IRequestContext.Module)),
-                methodId = GetFromContext(nameof(IRequestContext.Method));
+                ifaceId  = GetFromContext(ctx => ctx.Module),
+                methodId = GetFromContext(ctx => ctx.Method);
 
             return Expression.Lambda<ModuleInvocation>
             (
@@ -146,7 +146,7 @@ namespace Solti.Utils.Rpc.Internals
                         Expression.Invoke
                         (
                             Expression.Constant(GetDeserializerFor(ifaceMethod)),
-                            GetFromContext(nameof(IRequestContext.Args))
+                            GetFromContext(ctx => ctx.Args)
                         )
                     ),
 
@@ -227,10 +227,10 @@ namespace Solti.Utils.Rpc.Internals
                 );
             }
 
-            MemberExpression GetFromContext(string name) => Expression.Property
+            MemberExpression GetFromContext(Expression<Func<IRequestContext, object?>> ctx) => Expression.Property
             (
                 context,
-                typeof(IRequestContext).GetProperty(name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
+                typeof(IRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
             );
         }
         #endregion
@@ -324,12 +324,35 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Adds a module to this builder.
         /// </summary>
-        public void AddModule<TInterface>() where TInterface : class 
-        {
-            if (!typeof(TInterface).IsInterface)
-                throw new ArgumentException(Resources.NOT_AN_INTERFACE);
+        public void AddModule<TInterface>() where TInterface : class => AddModule(typeof(TInterface));
 
-            FModules.Add(typeof(TInterface));
+        /// <summary>
+        /// Adds a module to this builder.
+        /// </summary>
+        public void AddModule(Type iface)
+        {
+            if (iface == null)
+                throw new ArgumentNullException(nameof(iface));
+
+            if (!iface.IsInterface)
+                throw new ArgumentException(Resources.NOT_AN_INTERFACE, nameof(iface));
+
+            if (iface.IsGenericTypeDefinition)
+                throw new ArgumentException(Resources.GENERIC_IFACE, nameof(iface));
+
+            MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface).Where
+            (
+                method => method.GetParameters().Any(para => para.ParameterType.IsByRef)
+            ).ToArray();
+
+            if (methodsHavingByRefParam.Any())
+            {
+                var ex = new ArgumentException(Resources.BYREF_PARAMETER, nameof(iface));
+                ex.Data["methods"] = methodsHavingByRefParam;
+                throw ex;
+            }
+
+            FModules.Add(iface);
         }
 
         /// <summary>
