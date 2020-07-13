@@ -225,6 +225,14 @@ namespace Solti.Utils.Rpc.Tests
         });
 
         [Test]
+        public void ModuleInvocationBuilder_ShouldHandleMultipleModules() => Assert.DoesNotThrow(() =>
+        {
+            var bldr = new ModuleInvocationBuilder();
+            foreach(Type iface in RandomInterfaces) bldr.AddModule(iface);
+            bldr.Build();
+        });
+
+        [Test]
         public void ModuleInvocationBuilder_ShouldThrowOnByRefParameter() => Assert.Throws<ArgumentException>(() => 
         {
             var bldr = new ModuleInvocationBuilder();
