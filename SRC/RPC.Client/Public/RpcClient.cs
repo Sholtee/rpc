@@ -93,9 +93,8 @@ namespace Solti.Utils.Rpc
             if (member == null)
                 throw new ArgumentNullException(nameof(member));
 
-            return member.GetCustomAttribute<AliasAttribute>(inherit: false)?.Name ?? member.Name;
+            return member.GetId();
         }
-
 
         /// <summary>
         /// Does the actual remote module invocation.

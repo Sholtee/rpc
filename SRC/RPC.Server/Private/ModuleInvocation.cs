@@ -244,7 +244,7 @@ namespace Solti.Utils.Rpc.Internals
             if (member == null)
                 throw new ArgumentNullException(nameof(member));
 
-            return member.GetCustomAttribute<AliasAttribute>(inherit: false)?.Name ?? member.Name;
+            return member.GetId();
         }
 
         /// <summary>
@@ -340,7 +340,11 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Builds a <see cref="ModuleInvocation"/> instance.
         /// </summary>
-        public virtual ModuleInvocation Build() => BuildExpression(FModules).Compile();
+        public virtual ModuleInvocation Build()
+        {
+            Expression<ModuleInvocation> result = BuildExpression(FModules);
+            return result.Compile();
+        }
         #endregion
     }
 }
