@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -24,6 +25,19 @@ namespace Solti.Utils.Rpc.Internals
     /// <param name="injector">The <see cref="IInjector"/> in which the module was registered.</param>
     /// <param name="context">The context which describes the invocation.</param>
     public delegate Task<object?> ModuleInvocation(IInjector injector, IRequestContext context);
+
+    /// <summary>
+    /// Defines some extensions to the <see cref="ModuleInvocation"/> delegate.
+    /// </summary>
+    public static class ModuleInvocationExtensions // "delegate"-bol nem szarmazhatunk ezert ez a megoldas
+    {
+        internal static IDictionary<ModuleInvocation, IReadOnlyList<Type>> RelatedModules { get; } = new ConcurrentDictionary<ModuleInvocation, IReadOnlyList<Type>>();
+
+        /// <summary>
+        /// Gets the registered modules related to this <see cref="ModuleInvocation"/> instance.
+        /// </summary>
+        public static IReadOnlyList<Type> GetRelatedModules(this ModuleInvocation src) => RelatedModules[src ?? throw new ArgumentNullException(nameof(src))];
+    }
 
     /// <summary>
     /// Builds <see cref="ModuleInvocation"/> instances.
@@ -385,10 +399,16 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Builds a <see cref="ModuleInvocation"/> instance.
         /// </summary>
-        public virtual ModuleInvocation Build()
+        public ModuleInvocation Build()
         {
-            Expression<ModuleInvocation> result = BuildExpression(FModules);
-            return result.Compile();
+            ModuleInvocation result = BuildExpression(FModules).Compile();
+
+            //
+            // A this.Modules bejegyzesek ertekei valtozhatnak, ezert a ToArray() hivas.
+            //
+
+            ModuleInvocationExtensions.RelatedModules.Add(result, FModules.ToArray());
+            return result;
         }
         #endregion
     }

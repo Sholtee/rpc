@@ -238,5 +238,8 @@ namespace Solti.Utils.Rpc.Tests
             var bldr = new ModuleInvocationBuilder();
             bldr.AddModule<IDictionary<string, string>>();
         });
+
+        [Test]
+        public void GetRelatedModules_ShouldDoWhatItsNameSuggests() => Assert.That(Invocation.GetRelatedModules().Single(), Is.EqualTo(typeof(IService)));
     }
 }
