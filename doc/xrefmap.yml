@@ -229,6 +229,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules
   nameWithType: ModuleInvocationBuilder.Modules
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions
+  name: ModuleInvocationExtensions
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.html
+  commentId: T:Solti.Utils.Rpc.Internals.ModuleInvocationExtensions
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions
+  nameWithType: ModuleInvocationExtensions
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules(Solti.Utils.Rpc.Internals.ModuleInvocation)
+  name: GetRelatedModules(ModuleInvocation)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.html#Solti_Utils_Rpc_Internals_ModuleInvocationExtensions_GetRelatedModules_Solti_Utils_Rpc_Internals_ModuleInvocation_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules(Solti.Utils.Rpc.Internals.ModuleInvocation)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules(Solti.Utils.Rpc.Internals.ModuleInvocation)
+  nameWithType: ModuleInvocationExtensions.GetRelatedModules(ModuleInvocation)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules*
+  name: GetRelatedModules
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.html#Solti_Utils_Rpc_Internals_ModuleInvocationExtensions_GetRelatedModules_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules
+  nameWithType: ModuleInvocationExtensions.GetRelatedModules
 - uid: Solti.Utils.Rpc.Internals.WebService
   name: WebService
   href: Solti.Utils.Rpc.Internals.WebService.html
