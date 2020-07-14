@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using BenchmarkDotNet.Attributes;
@@ -11,7 +12,7 @@ namespace Solti.Utils.Rpc.Perf
 {
     using static Consts;
     using DI;
-
+    
     [MemoryDiagnoser]
     public class Calculator
     {
@@ -23,7 +24,9 @@ namespace Solti.Utils.Rpc.Perf
 
         public class CalculatorModule : ICalculator 
         {
+            [MethodImpl(MethodImplOptions.NoInlining)]
             public int Add(int a, int b) => a + b;
+            [MethodImpl(MethodImplOptions.NoInlining)]
             public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
         }
 

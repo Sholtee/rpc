@@ -3,7 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System.Text.Json;
+using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Attributes;
 
@@ -21,12 +21,13 @@ namespace Solti.Utils.Rpc.Perf
     {
         public interface IModule 
         {
-            int Add(int a, int b);
+            void Foo();
         }
 
         public class Module : IModule 
         {
-            public int Add(int a, int b) => a + b;
+            [MethodImpl(MethodImplOptions.NoInlining)]
+            public void Foo() { }
         }
 
         private IServiceContainer Container { get; set; }
@@ -43,10 +44,9 @@ namespace Solti.Utils.Rpc.Perf
 
             var bldr = new ModuleInvocationBuilder();
             bldr.AddModule<IModule>();
+            Invoke = bldr.Build();
 
-            Invoke = new ModuleInvocationBuilder().Build();
-
-            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Add), JsonSerializer.Serialize(new object[] { 1, 1 }), null);
+            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), "[]", null);
         }
 
         [GlobalCleanup]
@@ -55,24 +55,22 @@ namespace Solti.Utils.Rpc.Perf
         [Benchmark(Baseline = true, OperationsPerInvoke = OperationsPerInvoke)]
         public void DirectInvocation()
         {
-            using (IInjector injector = Container.CreateInjector())
+            using IInjector injector = Container.CreateInjector();
+
+            for (int i = 0; i < OperationsPerInvoke; i++)
             {
-                for (int i = 0; i < OperationsPerInvoke; i++)
-                {
-                    int sum = injector.Get<IModule>().Add(1, 1);
-                }
+                injector.Get<IModule>().Foo();
             }
         }
 
         [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
         public void UsingTheBuiltDelegate() 
         {
-            using (IInjector injector = Container.CreateInjector())
+            using IInjector injector = Container.CreateInjector();
+
+            for (int i = 0; i < OperationsPerInvoke; i++)
             {
-                for (int i = 0; i < OperationsPerInvoke; i++)
-                {
-                    object sum = Invoke(injector, Context);
-                }
+                Invoke(injector, Context).GetAwaiter().GetResult();
             }
         }
     }
