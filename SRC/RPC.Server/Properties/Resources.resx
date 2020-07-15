@@ -120,6 +120,9 @@
   <data name="BYREF_PARAMETER" xml:space="preserve">
     <value>ByRef parameters are not supported.</value>
   </data>
+  <data name="DEPENDENCY_NOT_AVAILABLE" xml:space="preserve">
+    <value>One or more dependencies are not available: {0}</value>
+  </data>
   <data name="GENERIC_IFACE" xml:space="preserve">
     <value>Generic interfaces are not supported.</value>
   </data>
@@ -135,10 +138,19 @@
   <data name="NOT_AN_INTERFACE" xml:space="preserve">
     <value>The module must be an interface.</value>
   </data>
+  <data name="NO_HOSTING" xml:space="preserve">
+    <value>Compatible hosting not found.</value>
+  </data>
   <data name="NO_METHOD" xml:space="preserve">
     <value>Request must specify a method.</value>
   </data>
   <data name="NO_MODULE" xml:space="preserve">
     <value>Request must specify a module.</value>
+  </data>
+  <data name="RUNNING" xml:space="preserve">
+    <value>Server is running... Press Ctrl+C to terminate</value>
+  </data>
+  <data name="SC_INVOCATION_FAILED" xml:space="preserve">
+    <value>Service Control Manager invocation failed. Error {0}</value>
   </data>
 </root>
