@@ -126,6 +126,9 @@
   <data name="INAPPROPRIATE_ARRAY_LENGTH" xml:space="preserve">
     <value>The length of the args array does not match with the parameter count.</value>
   </data>
+  <data name="NETSH_INVOCATION_FAILED" xml:space="preserve">
+    <value>"netsh" invocation failed.</value>
+  </data>
   <data name="NOT_AN_ARRAY" xml:space="preserve">
     <value>The JSON string must represent an array.</value>
   </data>

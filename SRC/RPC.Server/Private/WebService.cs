@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
+    using Properties;
     
     /// <summary>
     /// Implements a general Web Service over HTTP. 
@@ -82,7 +83,11 @@ namespace Solti.Utils.Rpc.Internals
                 UseShellExecute = true
             };
 
-            Process.Start(psi)?.WaitForExit();
+            Process netsh = Process.Start(psi);
+            
+            netsh.WaitForExit();
+            if (netsh.ExitCode != 0)
+                throw new Exception(Resources.NETSH_INVOCATION_FAILED);
         }
         #endregion
 
@@ -272,13 +277,13 @@ namespace Solti.Utils.Rpc.Internals
         /// Adds an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-        public static void AddUrlReservation(string url) => InvokeNetsh($"http add urlacl url={url} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes");
+        public static void AddUrlReservation(string url) => InvokeNetsh($"http add urlacl url={url ?? throw new ArgumentNullException(nameof(url))} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes");
 
         /// <summary>
         /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-        public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url}");
+        public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url ?? throw new ArgumentNullException(nameof(url))}");
         #endregion
     }
 }

@@ -88,6 +88,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;netsh&quot; invocation failed..
+        /// </summary>
+        internal static string NETSH_INVOCATION_FAILED {
+            get {
+                return ResourceManager.GetString("NETSH_INVOCATION_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request must specify a method..
         /// </summary>
         internal static string NO_METHOD {
