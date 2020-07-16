@@ -13,7 +13,7 @@ namespace Solti.Utils.Rpc.Hosting
     /// <summary>
     /// Defines an abstract host runner.
     /// </summary>
-    public abstract class HostRunner: Disposable
+    public abstract class HostRunner: Disposable, IHostRunner
     {
         /// <summary>
         /// The host related to this runner.
