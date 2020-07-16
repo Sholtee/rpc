@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -27,9 +28,8 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(string name)
+        protected AppHostBase()
         {
-            Name        = name ?? throw new ArgumentNullException(nameof(name));
             Runner      = HostRunner.GetFor(this);
             FContainer  = new ServiceContainer();
             FRpcService = new RpcService(FContainer);
@@ -38,7 +38,13 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// The name of the host.
         /// </summary>
-        public string Name { get; }
+        public abstract string Name { get; }
+
+        /// <summary>
+        /// The URL on which the RPC service will listen.
+        /// </summary>
+        [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
+        public abstract string Url { get; }
 
         /// <summary>
         /// The related <see cref="IHostRunner"/>.
@@ -100,17 +106,17 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service startup.
         /// </summary>
-        public virtual void OnStart() {}
+        public virtual void OnStart() => FRpcService.Start(Url);
 
         /// <summary>
         /// Invoked on service termination.
         /// </summary>
-        public virtual void OnStop() { }
+        public virtual void OnStop() => FRpcService.Stop();
 
         /// <summary>
         /// Initializes this instance to be ready to run.
         /// </summary>
-        public virtual void Prepare() 
+        public void Prepare() 
         {
             if (FInitialized)
                 throw new InvalidOperationException();
