@@ -4,8 +4,9 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Solti.Utils.Rpc.Hosting
 {
@@ -21,12 +22,21 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(string name) => Name = name ?? throw new ArgumentNullException(nameof(name));
+        protected AppHostBase(string name)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Runner = HostRunner.GetFor(this);
+        }
 
         /// <summary>
         /// The name of the host.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// The related <see cref="IHostRunner"/>.
+        /// </summary>
+        public IHostRunner Runner { get; }
 
         /// <summary>
         /// The description of the host.
@@ -65,7 +75,17 @@ namespace Solti.Utils.Rpc.Hosting
         {
             container
                 .Instance<IReadOnlyList<string>>("CommandLineArgs", Environment.GetCommandLineArgs())
-                .Instance("EnvironmentVariables", Environment.GetEnvironmentVariables()); // TODO: to readonly
+                .Instance("EnvironmentVariables", GetEnvironmentVariables())
+                .Instance(Runner);
+
+            IReadOnlyDictionary<object, object> GetEnvironmentVariables() 
+            {
+                IDictionary variables = Environment.GetEnvironmentVariables();
+                return variables
+                    .Keys
+                    .Cast<object>()
+                    .ToDictionary(key => key, key => variables[key]);
+            }
         }
 
         /// <summary>
@@ -77,5 +97,14 @@ namespace Solti.Utils.Rpc.Hosting
         /// Invoked on service termination.
         /// </summary>
         public virtual void OnStop() { }
+
+        /// <summary>
+        /// See <see cref="IDisposable.Dispose"/>.
+        /// </summary>
+        protected override void Dispose(bool disposeManaged)
+        {
+            if (disposeManaged) Runner.Dispose();
+            base.Dispose(disposeManaged);
+        }
     }
 }

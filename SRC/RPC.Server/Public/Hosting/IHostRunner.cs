@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Solti.Utils.Rpc.Hosting
@@ -10,7 +11,7 @@ namespace Solti.Utils.Rpc.Hosting
     /// <summary>
     /// Defines an abstract host runner.
     /// </summary>
-    public interface IHostRunner
+    public interface IHostRunner: IDisposable
     {
         /// <summary>
         /// The host related to this runner.

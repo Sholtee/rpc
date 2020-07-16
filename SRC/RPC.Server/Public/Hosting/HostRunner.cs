@@ -4,10 +4,14 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Solti.Utils.Rpc.Hosting
 {
+    using Internals;
+    using Primitives;
     using Primitives.Patterns;
 
     /// <summary>
@@ -40,5 +44,45 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
         public abstract void Stop();
+
+        //
+        // A legutoljara regisztralt futtatot vizsgaljuk eloszor kompatibilitasi szempontbol.
+        //
+
+        private static Stack<Func<object[], object>> RunnerCtors { get; } = new Stack<Func<object[], object>>();
+
+        /// <summary>
+        /// Extends the set of available host runners.
+        /// </summary>
+        public static void Extend<THostRunner>() where THostRunner : HostRunner 
+        {
+            Func<object[], object>? ctor = typeof(THostRunner)
+                .GetConstructor(new[] { typeof(IHost) })
+                ?.ToStaticDelegate();
+
+            if (ctor != null) RunnerCtors.Push(ctor);
+        }
+
+        static HostRunner() 
+        {
+            Extend<DefaultHostRunner>();
+            Extend<ConsoleHostRunner>();
+            Extend<InstallHostRunner_WinNT>();
+            Extend<ServiceHostRunner_WinNT>();
+        }
+
+        /// <summary>
+        /// Gets the compatible runner for the given <paramref name="host"/>.
+        /// </summary>
+        public static IHostRunner GetFor(IHost host) 
+        {
+            if (host == null)
+                throw new ArgumentNullException(nameof(host));
+
+            return RunnerCtors
+                .Select(ctor => (HostRunner) ctor.Invoke(new object[] { host }))
+                .Where(runner => runner.ShouldUse())
+                .First();
+        }
     }
 }
