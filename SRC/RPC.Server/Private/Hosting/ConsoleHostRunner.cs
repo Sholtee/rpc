@@ -4,10 +4,12 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
@@ -25,6 +27,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
         public ConsoleHostRunner(IHost host) : base(host) { }
 
+        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         protected override void Start()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -43,13 +46,26 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 }
             }
 
-            Console.CancelKeyPress += (s, e) => Stop();
+            Console.CancelKeyPress += (s, e) =>
+            {
+                Stop();
+
+                //
+                // E nelkul parhuzamosan ket modon probalnank leallitani az app-ot
+                //
+
+                e.Cancel = true;
+            };
 
             try
             {
                 Host.OnStart();
 
-                Console.WriteLine(Resources.RUNNING);
+                Task.Factory.StartNew(() =>
+                {
+                    Console.WriteLine(Resources.RUNNING);
+                    while (true) Console.ReadKey(true);
+                }, TaskCreationOptions.LongRunning);
 
                 FTerminate.Wait();
             }
