@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Solti.Utils.Rpc.Hosting
 {
@@ -19,13 +20,19 @@ namespace Solti.Utils.Rpc.Hosting
     /// </summary>
     public abstract class AppHostBase: Disposable, IHost
     {
+        private readonly IServiceContainer FContainer;
+        private readonly RpcService FRpcService;
+        private bool FInitialized;
+
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         protected AppHostBase(string name)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Runner = HostRunner.GetFor(this);
+            Name        = name ?? throw new ArgumentNullException(nameof(name));
+            Runner      = HostRunner.GetFor(this);
+            FContainer  = new ServiceContainer();
+            FRpcService = new RpcService(FContainer);
         }
 
         /// <summary>
@@ -51,7 +58,9 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Services that must run.
         /// </summary>
-        public ICollection<string> Dependencies { get; } = new HashSet<string>();
+        public ICollection<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+            ? (ICollection<string>) new HashSet<string>()
+            : (ICollection<string>) Array.Empty<string>();
 
         /// <summary>
         /// Invoked on service installation.
@@ -91,7 +100,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service startup.
         /// </summary>
-        public virtual void OnStart() { }
+        public virtual void OnStart() {}
 
         /// <summary>
         /// Invoked on service termination.
@@ -99,11 +108,29 @@ namespace Solti.Utils.Rpc.Hosting
         public virtual void OnStop() { }
 
         /// <summary>
+        /// Initializes this instance to be ready to run.
+        /// </summary>
+        public virtual void Prepare() 
+        {
+            if (FInitialized)
+                throw new InvalidOperationException();
+
+            OnRegisterServices(FContainer);
+            OnRegisterModules(FRpcService);
+            FInitialized = true;
+        }
+
+        /// <summary>
         /// See <see cref="IDisposable.Dispose"/>.
         /// </summary>
         protected override void Dispose(bool disposeManaged)
         {
-            if (disposeManaged) Runner.Dispose();
+            if (disposeManaged)
+            {
+                Runner.Dispose();
+                FRpcService.Dispose();
+                FContainer.Dispose();
+            }
             base.Dispose(disposeManaged);
         }
     }
