@@ -23,7 +23,6 @@ namespace Solti.Utils.Rpc.Hosting
     {
         private readonly IServiceContainer FContainer;
         private readonly RpcService FRpcService;
-        private bool FInitialized;
 
         /// <summary>
         /// Creates a new instance.
@@ -50,6 +49,11 @@ namespace Solti.Utils.Rpc.Hosting
         /// The related <see cref="IHostRunner"/>.
         /// </summary>
         public IHostRunner Runner { get; }
+
+        /// <summary>
+        /// Indicates whether this host was initialized or not.
+        /// </summary>
+        public bool Initialized { get; private set; }
 
         /// <summary>
         /// The description of the host.
@@ -108,11 +112,11 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart()
         {
-            if (!FInitialized)
+            if (!Initialized)
             {
                 OnRegisterServices(FContainer);
                 OnRegisterModules(FRpcService);
-                FInitialized = true;
+                Initialized = true;
             }
             FRpcService.Start(Url);
         }
