@@ -50,7 +50,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             static bool ArgSet(string name) => Environment.GetCommandLineArgs().Any(arg => arg.ToLower(Resources.Culture) == name);
         }
 
-        public override void Start()
+        protected override void Start()
         {
             if (Install)
             {
@@ -74,10 +74,10 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             string GetSafeServiceName() => Host.Name.Replace(' ', '_');
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
         }
 
-        public override bool ShouldUse() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
+        public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
     }
 }

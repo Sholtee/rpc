@@ -13,15 +13,15 @@ namespace Solti.Utils.Rpc.Hosting.Internals
     {
         public DefaultHostRunner(IHost host) : base(host) { }
 
-        public override bool ShouldUse() => true;
+        public override bool ShouldUse => true;
 
-        public override void Start() 
+        protected override void Start() 
         {
             Console.Error.WriteLine(Resources.NO_HOSTING);
             Environment.Exit(-1);
         }
 
-        public override void Stop()
+        protected override void Stop()
         {
         }
     }

@@ -45,15 +45,15 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
         public ServiceHostRunner_WinNT(IHost host) : base(host) => FServiceImpl = new ServiceImpl(host);
 
-        public override void Start() => 
+        protected override void Start() => 
             //
             // Blokkolodik
             //
 
             ServiceBase.Run(FServiceImpl);
 
-        public override void Stop() => FServiceImpl.Stop();
+        protected override void Stop() => FServiceImpl.Stop();
 
-        public override bool ShouldUse() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.UserInteractive;
+        public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.UserInteractive;
     }
 }

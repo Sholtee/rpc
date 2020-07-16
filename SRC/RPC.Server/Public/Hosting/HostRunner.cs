@@ -32,18 +32,37 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// If overridden in the derived class it should determines whether the runner should be used.
         /// </summary>
-        public abstract bool ShouldUse();
+        public abstract bool ShouldUse { get; }
+
+        /// <summary>
+        /// See <see cref="IHostRunner.IsStarted"/>.
+        /// </summary>
+        public bool IsStarted { get; private set; }
+
+        void IHostRunner.Start() 
+        {
+            if (IsStarted) throw new InvalidOperationException();
+            Start();
+            IsStarted = true;
+        }
+
+        void IHostRunner.Stop() 
+        {
+            if (!IsStarted) throw new InvalidOperationException();
+            Stop();
+            IsStarted = false;
+        }
 
         /// <summary>
         /// Starts the host.
         /// </summary>
-        public abstract void Start();
+        protected abstract void Start();
 
         /// <summary>
         /// Stops the host.
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        public abstract void Stop();
+        protected abstract void Stop();
 
         //
         // A legutoljara regisztralt futtatot vizsgaljuk eloszor kompatibilitasi szempontbol.
@@ -81,7 +100,7 @@ namespace Solti.Utils.Rpc.Hosting
 
             return RunnerCtors
                 .Select(ctor => (HostRunner) ctor.Invoke(new object[] { host }))
-                .Where(runner => runner.ShouldUse())
+                .Where(runner => runner.ShouldUse)
                 .First();
         }
     }

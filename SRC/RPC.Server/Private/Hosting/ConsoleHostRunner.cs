@@ -25,7 +25,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
         public ConsoleHostRunner(IHost host) : base(host) { }
 
-        public override void Start()
+        protected override void Start()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -59,8 +59,8 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             }
         }
 
-        public override bool ShouldUse() => Environment.UserInteractive;
+        public override bool ShouldUse => Environment.UserInteractive;
 
-        public override void Stop() => FTerminate.Set();
+        protected override void Stop() => FTerminate.Set();
     }
 }

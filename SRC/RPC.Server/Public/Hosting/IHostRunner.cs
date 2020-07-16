@@ -19,6 +19,11 @@ namespace Solti.Utils.Rpc.Hosting
         IHost Host { get; }
 
         /// <summary>
+        /// Indicates whether the runner was started.
+        /// </summary>
+        bool IsStarted { get; }
+
+        /// <summary>
         /// Starts the host.
         /// </summary>
         void Start();
