@@ -106,25 +106,21 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service startup.
         /// </summary>
-        public virtual void OnStart() => FRpcService.Start(Url);
+        public virtual void OnStart()
+        {
+            if (!FInitialized)
+            {
+                OnRegisterServices(FContainer);
+                OnRegisterModules(FRpcService);
+                FInitialized = true;
+            }
+            FRpcService.Start(Url);
+        }
 
         /// <summary>
         /// Invoked on service termination.
         /// </summary>
         public virtual void OnStop() => FRpcService.Stop();
-
-        /// <summary>
-        /// Initializes this instance to be ready to run.
-        /// </summary>
-        public void Prepare() 
-        {
-            if (FInitialized)
-                throw new InvalidOperationException();
-
-            OnRegisterServices(FContainer);
-            OnRegisterModules(FRpcService);
-            FInitialized = true;
-        }
 
         /// <summary>
         /// See <see cref="IDisposable.Dispose"/>.

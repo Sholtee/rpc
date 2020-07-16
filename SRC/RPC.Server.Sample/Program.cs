@@ -10,7 +10,6 @@ namespace Solti.Utils.Rpc.Server.Sample
         static void Main()
         {
             using AppHost appHost = new AppHost();
-            appHost.Prepare();
             appHost.Runner.Start();
         }
     }

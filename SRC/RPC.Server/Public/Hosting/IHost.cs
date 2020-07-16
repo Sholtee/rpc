@@ -53,10 +53,5 @@ namespace Solti.Utils.Rpc.Hosting
         /// Invoked on service termination.
         /// </summary>
         void OnStop();
-
-        /// <summary>
-        /// Initializes this instance to be ready to run.
-        /// </summary>
-        void Prepare();
     }
 }
