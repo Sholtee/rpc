@@ -42,7 +42,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         private bool Uninstall { get; }
         #endregion
 
-        public InstallHostRunner_WinNT() 
+        public InstallHostRunner_WinNT(IHost host): base(host) 
         {
             Install = ArgSet("-install");
             Uninstall = ArgSet("-uninstall");
@@ -50,28 +50,32 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             static bool ArgSet(string name) => Environment.GetCommandLineArgs().Any(arg => arg.ToLower(Resources.Culture) == name);
         }
 
-        public override void Run(AppHostBase appHost)
+        public override void Start()
         {
             if (Install)
             {
-                var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{appHost.GetType().Assembly.Location}\" start= {(appHost.AutoStart ? "auto" : "demand")}");
+                var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{Host.GetType().Assembly.Location}\" start= {(Host.AutoStart ? "auto" : "demand")}");
                 
-                if (appHost.Description != null)
-                    sb.Append($" displayname= \"{appHost.Description ?? string.Empty}\"");
-                if (appHost.Dependencies.Any())
-                    sb.Append($" depend= {string.Join("/", appHost.Dependencies)}");
+                if (Host.Description != null)
+                    sb.Append($" displayname= \"{Host.Description ?? string.Empty}\"");
+                if (Host.Dependencies.Any())
+                    sb.Append($" depend= {string.Join("/", Host.Dependencies)}");
 
                 InvokeScm(sb.ToString());
-                appHost.OnInstall();
+                Host.OnInstall();
             }
 
             if (Uninstall) 
             {
                 InvokeScm($"delete {GetSafeServiceName()}");
-                appHost.OnUninstall();
+                Host.OnUninstall();
             }
 
-            string GetSafeServiceName() => appHost.Name.Replace(' ', '_');
+            string GetSafeServiceName() => Host.Name.Replace(' ', '_');
+        }
+
+        public override void Stop()
+        {
         }
 
         public override bool ShouldUse() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;

@@ -15,13 +15,23 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
     internal class ConsoleHostRunner : HostRunner
     {
-        public override void Run(AppHostBase appHost)
+        private readonly ManualResetEventSlim FTerminate = new ManualResetEventSlim();
+
+        protected override void Dispose(bool disposeManaged)
+        {
+            if (disposeManaged) FTerminate.Dispose();
+            base.Dispose(disposeManaged);
+        }
+
+        public ConsoleHostRunner(IHost host) : base(host) { }
+
+        public override void Start()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 ServiceController[] services = ServiceController.GetServices();
 
-                string[] missingServices = appHost
+                string[] missingServices = Host
                     .Dependencies
                     .Where(dep => services.SingleOrDefault(svc => svc.ServiceName == dep)?.Status != ServiceControllerStatus.Running)
                     .ToArray();
@@ -33,24 +43,24 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 }
             }
 
-            using var terminateEvt = new ManualResetEventSlim();
-
-            Console.CancelKeyPress += (s, e) => terminateEvt.Set();
+            Console.CancelKeyPress += (s, e) => Stop();
 
             try
             {
-                appHost.OnStart();
+                Host.OnStart();
 
                 Console.WriteLine(Resources.RUNNING);
 
-                terminateEvt.Wait();
+                FTerminate.Wait();
             }
             finally 
             {
-                appHost.OnStop();
+                Host.OnStop();
             }
         }
 
         public override bool ShouldUse() => Environment.UserInteractive;
+
+        public override void Stop() => FTerminate.Set();
     }
 }

@@ -4,7 +4,6 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 
@@ -14,9 +13,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
     {
         private sealed class ServiceImpl : ServiceBase 
         {
-            public AppHostBase Owner { get; }
+            public IHost Owner { get; }
 
-            public ServiceImpl(AppHostBase owner) : base()
+            public ServiceImpl(IHost owner) : base()
             {
                 ServiceName = owner.Name;
                 Owner = owner;
@@ -24,19 +23,31 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
             protected override void OnStart(string[] args)
             {
-                Owner.OnStart();
                 base.OnStart(args);
+                Owner.OnStart();
+                
             }
 
             protected override void OnStop()
             {
-                Owner.OnStop();
                 base.OnStop();
+                Owner.OnStop();
             }
         }
 
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
-        public override void Run(AppHostBase appHost) => ServiceBase.Run(new ServiceImpl(appHost));
+        private readonly ServiceImpl FServiceImpl;
+
+        protected override void Dispose(bool disposeManaged)
+        {
+            if (disposeManaged) FServiceImpl.Dispose();
+            base.Dispose(disposeManaged);
+        }
+
+        public ServiceHostRunner_WinNT(IHost host) : base(host) => FServiceImpl = new ServiceImpl(host);
+
+        public override void Start() => ServiceBase.Run(FServiceImpl);
+
+        public override void Stop() => FServiceImpl.Stop();
 
         public override bool ShouldUse() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.UserInteractive;
     }

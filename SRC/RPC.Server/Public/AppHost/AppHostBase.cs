@@ -5,13 +5,18 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Solti.Utils.Rpc.Hosting
 {
+    using DI;
+    using DI.Interfaces;
+    using Primitives.Patterns;
+
     /// <summary>
-    /// Represents the base class of an app host.
+    /// Represents the an app host that can be invoked by RPC
     /// </summary>
-    public abstract class AppHostBase
+    public abstract class AppHostBase: Disposable, IHost
     {
         /// <summary>
         /// Creates a new instance.
@@ -49,6 +54,21 @@ namespace Solti.Utils.Rpc.Hosting
         public virtual void OnUninstall() { }
 
         /// <summary>
+        /// Place of module registration routines.
+        /// </summary>
+        public virtual void OnRegisterModules(IModuleRegistry registry) { }
+
+        /// <summary>
+        /// Place of service registration routines.
+        /// </summary>
+        public virtual void OnRegisterServices(IServiceContainer container) 
+        {
+            container
+                .Instance<IReadOnlyList<string>>("CommandLineArgs", Environment.GetCommandLineArgs())
+                .Instance("EnvironmentVariables", Environment.GetEnvironmentVariables()); // TODO: to readonly
+        }
+
+        /// <summary>
         /// Invoked on service startup.
         /// </summary>
         public virtual void OnStart() { }
@@ -57,6 +77,5 @@ namespace Solti.Utils.Rpc.Hosting
         /// Invoked on service termination.
         /// </summary>
         public virtual void OnStop() { }
-
     }
 }
