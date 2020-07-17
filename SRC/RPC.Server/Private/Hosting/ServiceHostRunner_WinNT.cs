@@ -35,24 +35,36 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             }
         }
 
-        private readonly ServiceImpl FServiceImpl;
+        private readonly ServiceImpl? FServiceImpl;
 
         protected override void Dispose(bool disposeManaged)
         {
-            if (disposeManaged) FServiceImpl.Dispose();
+            if (disposeManaged) FServiceImpl?.Dispose();
             base.Dispose(disposeManaged);
         }
 
-        public ServiceHostRunner_WinNT(IHost host) : base(host) => FServiceImpl = new ServiceImpl(host);
+        public ServiceHostRunner_WinNT(IHost host) : base(host)
+        {
+            if (ShouldUse)
+                //
+                // Ez dobhat PlatformNotSupportedException-t nem Win alatt -> ShouldUse
+                //
+
+                FServiceImpl = new ServiceImpl(host);
+        }
 
         protected override void Start() => 
             //
             // Blokkolodik
             //
 
-            ServiceBase.Run(FServiceImpl);
+            ServiceBase.Run(FServiceImpl ?? throw new PlatformNotSupportedException());
 
-        protected override void Stop() => FServiceImpl.Stop();
+        protected override void Stop()
+        {
+            if (FServiceImpl == null) throw new PlatformNotSupportedException();
+            FServiceImpl.Stop();
+        }
 
         public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.UserInteractive;
     }
