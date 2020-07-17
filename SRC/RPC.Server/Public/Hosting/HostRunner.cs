@@ -100,7 +100,14 @@ namespace Solti.Utils.Rpc.Hosting
 
             return RunnerCtors
                 .Select(ctor => (HostRunner) ctor.Invoke(new object[] { host }))
-                .Where(runner => runner.ShouldUse)
+                .Where(runner =>
+                {
+                    bool shouldUse = runner.ShouldUse;
+                    if (!shouldUse) 
+                        runner.Dispose();
+
+                    return shouldUse;
+                })
                 .First();
         }
     }
