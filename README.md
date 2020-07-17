@@ -61,7 +61,7 @@
      static void Main(string[] args)
      {
        using var container = new ServiceContainer();
-       using var service = new RpcService(service);
+       using var service = new RpcService(container);
 	   
        service.Register<ICalculator, Calculator>();
        service.Start("http://127.0.0.1:1986/api/");
