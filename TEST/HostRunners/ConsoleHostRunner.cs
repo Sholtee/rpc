@@ -18,9 +18,9 @@ namespace Solti.Utils.Rpc.Hosting.Tests
     {
         private class BadDependencyAppHost : AppHostBase
         {
-            public override string Name => throw new System.NotImplementedException();
+            public override string Name => throw new NotImplementedException();
 
-            public override string Url => throw new System.NotImplementedException();
+            public override string Url => throw new NotImplementedException();
 
             public BadDependencyAppHost() : base() 
             {
@@ -29,12 +29,13 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
-        public void Start_ShouldValidateTheDependencies() => Assert.Throws<Exception>(() =>
+        public void Start_ShouldValidateTheDependencies()
         {
             using IHost appHost = new BadDependencyAppHost();
             using IHostRunner hostRunner = new ConsoleHostRunner(appHost);
-            hostRunner.Start();
-        });
+
+            Assert.Throws<Exception>(hostRunner.Start);
+        }
 
         private class ConsoleAppHost : AppHostBase
         {
