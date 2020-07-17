@@ -86,6 +86,49 @@
      // ex.InnerException will contain the original exception
    }
    ```
+## Hosting the server
+1. Create a console project that will host your app:
+   ```csharp
+   using Solti.Utils.Rpc;
+   using Solti.Utils.Rpc.Hosting;
+   using Solti.Utils.DI.Interfaces;
+   ...
+   public class CalculatorAppHost : AppHostBase
+   {
+     // There are several properties to set (check the documentation out). This two is the obligatory:
+	 
+     public override string Name => "Calculator";
+
+     public override string Url => "http://127.0.0.1:1986/api/";
+
+     public override void OnRegisterModules(IModuleRegistry registry)
+     {
+       base.OnRegisterModules(registry);
+       registry.Register<ICalculator, Calculator>();
+     }
+	 
+     public override void OnRegisterServices(IServiceCOntainer container)
+     {
+       base.OnRegisterServices(container);
+	   // Register app dependencies here. For more information about DI see: https://github.com/Sholtee/injector
+     }
+   }
+   ```
+2. Into `Program.cs` simply put the followings:
+   ```csharp
+   class Program
+   {
+     static void Main()
+     {
+       using CalculatorAppHost appHost = new CalculatorAppHost();
+       appHost.Runner.Start(); // blocks until your app terminates
+     }
+   }
+   ```
+3. The compiled executable can be used in several ways:
+   - You can simply run it to debug your app (Ctrl-C terminates the server)
+   - You can invoke it with `-install` to install your app as a service (`-uninstall` does the opposite)
+   - It can be ran by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager ) (if it was installed previously)
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
 
