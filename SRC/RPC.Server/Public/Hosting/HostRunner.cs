@@ -35,34 +35,15 @@ namespace Solti.Utils.Rpc.Hosting
         public abstract bool ShouldUse { get; }
 
         /// <summary>
-        /// See <see cref="IHostRunner.IsStarted"/>.
-        /// </summary>
-        public bool IsStarted { get; private set; }
-
-        void IHostRunner.Start() 
-        {
-            if (IsStarted) throw new InvalidOperationException();
-            Start();
-            IsStarted = true;
-        }
-
-        void IHostRunner.Stop() 
-        {
-            if (!IsStarted) throw new InvalidOperationException();
-            Stop();
-            IsStarted = false;
-        }
-
-        /// <summary>
         /// Starts the host.
         /// </summary>
-        protected abstract void Start();
+        public abstract void Start();
 
         /// <summary>
         /// Stops the host.
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        protected abstract void Stop();
+        public abstract void Stop();
 
         //
         // A legutoljara regisztralt futtatot vizsgaljuk eloszor kompatibilitasi szempontbol.

@@ -15,13 +15,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
         public override bool ShouldUse => true;
 
-        protected override void Start() 
-        {
-            Console.Error.WriteLine(Resources.NO_HOSTING);
-            Environment.Exit(-1);
-        }
+        public override void Start() => throw new Exception(Resources.NO_HOSTING);
 
-        protected override void Stop()
+        public override void Stop()
         {
         }
     }

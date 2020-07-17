@@ -3,16 +3,15 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 
 namespace Solti.Utils.Rpc.Hosting
 {
     /// <summary>
     /// Represents an abstract service host.
     /// </summary>
-    public interface IHost
+    public interface IHost: IDisposable
     {
         /// <summary>
         /// The name of the host.

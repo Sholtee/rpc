@@ -106,7 +106,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compatible hosting not found..
+        ///   Looks up a localized string similar to No compatible hosting found..
         /// </summary>
         internal static string NO_HOSTING {
             get {

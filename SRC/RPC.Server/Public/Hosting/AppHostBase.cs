@@ -28,10 +28,10 @@ namespace Solti.Utils.Rpc.Hosting
         /// Creates a new instance.
         /// </summary>
         protected AppHostBase()
-        {
-            Runner      = HostRunner.GetFor(this);
+        {     
             FContainer  = new ServiceContainer();
             FRpcService = new RpcService(FContainer);
+            Runner      = HostRunner.GetFor(this);
         }
 
         /// <summary>

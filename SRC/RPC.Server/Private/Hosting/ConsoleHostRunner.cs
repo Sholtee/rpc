@@ -28,7 +28,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         public ConsoleHostRunner(IHost host) : base(host) { }
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        protected override void Start()
+        public override void Start()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -40,22 +40,11 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                     .ToArray();
 
                 if (missingServices.Any())
-                {
-                    Console.Error.WriteLine(string.Format(Resources.Culture, Resources.DEPENDENCY_NOT_AVAILABLE, missingServices));
-                    Environment.Exit(-1);
-                }
+                    throw new Exception(string.Format(Resources.Culture, Resources.DEPENDENCY_NOT_AVAILABLE, string.Join(",", missingServices)));
             }
 
-            Console.CancelKeyPress += (s, e) =>
-            {
-                Stop();
-
-                //
-                // E nelkul parhuzamosan ket modon probalnank leallitani az app-ot
-                //
-
-                e.Cancel = true;
-            };
+            Console.Title = Host.Name;
+            Console.CancelKeyPress += OnConsoleCancel;
 
             try
             {
@@ -75,8 +64,21 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             }
         }
 
+        internal void OnConsoleCancel(object sender, ConsoleCancelEventArgs e) 
+        {
+            Stop();
+
+            //
+            // E nelkul parhuzamosan ket modon probalnank leallitani az app-ot
+            //
+#if DEBUG
+            if (e != null)
+#endif
+                e.Cancel = true;
+        }
+
         public override bool ShouldUse => Environment.UserInteractive;
 
-        protected override void Stop() => FTerminate.Set();
+        public override void Stop() => FTerminate.Set();
     }
 }

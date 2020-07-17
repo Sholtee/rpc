@@ -50,7 +50,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             static bool ArgSet(string name) => Environment.GetCommandLineArgs().Any(arg => arg.ToLower(Resources.Culture) == name);
         }
 
-        protected override void Start()
+        public override void Start()
         {
             if (Install)
             {
@@ -74,7 +74,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             string GetSafeServiceName() => Host.Name.Replace(' ', '_');
         }
 
-        protected override void Stop()
+        public override void Stop()
         {
         }
 

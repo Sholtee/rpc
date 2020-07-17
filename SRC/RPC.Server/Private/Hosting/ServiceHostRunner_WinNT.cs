@@ -53,14 +53,14 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 FServiceImpl = new ServiceImpl(host);
         }
 
-        protected override void Start() => 
+        public override void Start() => 
             //
             // Blokkolodik
             //
 
             ServiceBase.Run(FServiceImpl ?? throw new PlatformNotSupportedException());
 
-        protected override void Stop()
+        public override void Stop()
         {
             if (FServiceImpl == null) throw new PlatformNotSupportedException();
             FServiceImpl.Stop();

@@ -139,7 +139,7 @@
     <value>The module must be an interface.</value>
   </data>
   <data name="NO_HOSTING" xml:space="preserve">
-    <value>Compatible hosting not found.</value>
+    <value>No compatible hosting found.</value>
   </data>
   <data name="NO_METHOD" xml:space="preserve">
     <value>Request must specify a method.</value>
