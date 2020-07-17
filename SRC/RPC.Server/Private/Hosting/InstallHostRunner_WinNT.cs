@@ -46,7 +46,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             Install = ArgSet("-install");
             Uninstall = ArgSet("-uninstall");
 
-            bool ArgSet(string name) => args.Any(arg => arg.ToLower(Resources.Culture) == name);
+            bool ArgSet(string name) => args.Any(arg => arg?.ToLower(Resources.Culture) == name);
         }
 
         public override void Start()
