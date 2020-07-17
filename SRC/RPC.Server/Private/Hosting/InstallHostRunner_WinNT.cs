@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -46,7 +47,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             Install = ArgSet("-install");
             Uninstall = ArgSet("-uninstall");
 
-            bool ArgSet(string name) => args.Any(arg => arg?.ToLower(Resources.Culture) == name);
+            bool ArgSet(string name) => args.Any(arg => arg.ToLower(Resources.Culture ?? CultureInfo.CurrentCulture) == name);
         }
 
         public override void Start()
