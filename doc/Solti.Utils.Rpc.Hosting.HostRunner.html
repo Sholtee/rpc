@@ -48,18 +48,63 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">HostRunner</span></div>
+    <div class="level1"><span class="xref">Solti.Utils.Primitives.Patterns.Disposable</span></div>
+    <div class="level2"><span class="xref">HostRunner</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
+    <div><span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
     <div><a class="xref" href="Solti.Utils.Rpc.Hosting.IHostRunner.html">IHostRunner</a></div>
-    <div><span class="xref">IDisposable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.AsyncDispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.CheckNotDisposed()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.DisposeAsync()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Disposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Hosting.html">Solti.Utils.Rpc.Hosting</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Hosting_HostRunner_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class HostRunner : Disposable, IHostRunner, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class HostRunner : Disposable, IDisposableEx, IAsyncDisposable, IHostRunner, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -227,10 +272,16 @@
   </div>
   <h3 id="implements">Implements</h3>
   <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">System.IAsyncDisposable</a>
+  </div>
+  <div>
       <a class="xref" href="Solti.Utils.Rpc.Hosting.IHostRunner.html">IHostRunner</a>
   </div>
   <div>
-      <span class="xref">IDisposable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
 </article>
           </div>

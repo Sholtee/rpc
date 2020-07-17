@@ -168,11 +168,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterModules
   nameWithType: AppHostBase.OnRegisterModules
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(IServiceContainer)
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(Solti.Utils.DI.Interfaces.IServiceContainer)
   name: OnRegisterServices(IServiceContainer)
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnRegisterServices_IServiceContainer_
-  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(IServiceContainer)
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(IServiceContainer)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnRegisterServices_Solti_Utils_DI_Interfaces_IServiceContainer_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(Solti.Utils.DI.Interfaces.IServiceContainer)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(Solti.Utils.DI.Interfaces.IServiceContainer)
   nameWithType: AppHostBase.OnRegisterServices(IServiceContainer)
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices*
   name: OnRegisterServices
@@ -520,13 +520,13 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.IModuleRegistry.Register
   nameWithType: IModuleRegistry.Register
-- uid: Solti.Utils.Rpc.IModuleRegistry.Register``1(Func{IInjector,``0})
+- uid: Solti.Utils.Rpc.IModuleRegistry.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
   name: Register<TInterface>(Func<IInjector, TInterface>)
-  href: Solti.Utils.Rpc.IModuleRegistry.html#Solti_Utils_Rpc_IModuleRegistry_Register__1_Func_IInjector___0__
-  commentId: M:Solti.Utils.Rpc.IModuleRegistry.Register``1(Func{IInjector,``0})
+  href: Solti.Utils.Rpc.IModuleRegistry.html#Solti_Utils_Rpc_IModuleRegistry_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__
+  commentId: M:Solti.Utils.Rpc.IModuleRegistry.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
   name.vb: Register(Of TInterface)(Func(Of IInjector, TInterface))
-  fullName: Solti.Utils.Rpc.IModuleRegistry.Register<TInterface>(Func<IInjector, TInterface>)
-  fullName.vb: Solti.Utils.Rpc.IModuleRegistry.Register(Of TInterface)(Func(Of IInjector, TInterface))
+  fullName: Solti.Utils.Rpc.IModuleRegistry.Register<TInterface>(System.Func<Solti.Utils.DI.Interfaces.IInjector, TInterface>)
+  fullName.vb: Solti.Utils.Rpc.IModuleRegistry.Register(Of TInterface)(System.Func(Of Solti.Utils.DI.Interfaces.IInjector, TInterface))
   nameWithType: IModuleRegistry.Register<TInterface>(Func<IInjector, TInterface>)
   nameWithType.vb: IModuleRegistry.Register(Of TInterface)(Func(Of IInjector, TInterface))
 - uid: Solti.Utils.Rpc.IModuleRegistry.Register``2
@@ -601,11 +601,11 @@ references:
   commentId: T:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
   nameWithType: ModuleInvocationBuilder
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Type)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
   name: AddModule(Type)
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_Type_
-  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Type)
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Type)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_System_Type_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
   nameWithType: ModuleInvocationBuilder.AddModule(Type)
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule*
   name: AddModule
@@ -623,15 +623,15 @@ references:
   fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Of TInterface)()
   nameWithType: ModuleInvocationBuilder.AddModule<TInterface>()
   nameWithType.vb: ModuleInvocationBuilder.AddModule(Of TInterface)()
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(Func{System.Nullable{System.Object}},MethodInfo)
-  name: AsTask(Func<Nullable<Object>>, MethodInfo)
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_Func_System_Nullable_System_Object___MethodInfo_
-  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(Func{System.Nullable{System.Object}},MethodInfo)
-  name.vb: AsTask(Func(Of Nullable(Of Object)), MethodInfo)
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(Func<System.Nullable<System.Object>>, MethodInfo)
-  fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(Func(Of System.Nullable(Of System.Object)), MethodInfo)
-  nameWithType: ModuleInvocationBuilder.AsTask(Func<Nullable<Object>>, MethodInfo)
-  nameWithType.vb: ModuleInvocationBuilder.AsTask(Func(Of Nullable(Of Object)), MethodInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func{System.Object},System.Reflection.MethodInfo)
+  name: AsTask(Func<Object>, MethodInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_System_Func_System_Object__System_Reflection_MethodInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func{System.Object},System.Reflection.MethodInfo)
+  name.vb: AsTask(Func(Of Object), MethodInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func<System.Object>, System.Reflection.MethodInfo)
+  fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func(Of System.Object), System.Reflection.MethodInfo)
+  nameWithType: ModuleInvocationBuilder.AsTask(Func<Object>, MethodInfo)
+  nameWithType.vb: ModuleInvocationBuilder.AsTask(Func(Of Object), MethodInfo)
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask*
   name: AsTask
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_
@@ -652,11 +652,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
   nameWithType: ModuleInvocationBuilder.Build
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(MethodInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)
   name: GetDeserializerFor(MethodInfo)
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetDeserializerFor_MethodInfo_
-  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(MethodInfo)
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(MethodInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetDeserializerFor_System_Reflection_MethodInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo)
   nameWithType: ModuleInvocationBuilder.GetDeserializerFor(MethodInfo)
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor*
   name: GetDeserializerFor
@@ -665,11 +665,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor
   nameWithType: ModuleInvocationBuilder.GetDeserializerFor
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(MemberInfo)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)
   name: GetMemberId(MemberInfo)
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetMemberId_MemberInfo_
-  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(MemberInfo)
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(MemberInfo)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_GetMemberId_System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo)
   nameWithType: ModuleInvocationBuilder.GetMemberId(MemberInfo)
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId*
   name: GetMemberId
@@ -768,11 +768,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.IsStarted
   nameWithType: WebService.IsStarted
-- uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
   name: ProcessRequestContext(HttpListenerContext)
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(HttpListenerContext)
-  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
   nameWithType: WebService.ProcessRequestContext(HttpListenerContext)
 - uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext*
   name: ProcessRequestContext
@@ -794,11 +794,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation
   nameWithType: WebService.RemoveUrlReservation
-- uid: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)
   name: SafeCallContextProcessor(HttpListenerContext)
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(HttpListenerContext)
-  fullName: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)
   nameWithType: WebService.SafeCallContextProcessor(HttpListenerContext)
 - uid: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor*
   name: SafeCallContextProcessor
@@ -859,11 +859,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.Url
   nameWithType: WebService.Url
-- uid: Solti.Utils.Rpc.Internals.WebService.WriteResponseString(HttpListenerResponse,System.String)
+- uid: Solti.Utils.Rpc.Internals.WebService.WriteResponseString(System.Net.HttpListenerResponse,System.String)
   name: WriteResponseString(HttpListenerResponse, String)
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_WriteResponseString_HttpListenerResponse_System_String_
-  commentId: M:Solti.Utils.Rpc.Internals.WebService.WriteResponseString(HttpListenerResponse,System.String)
-  fullName: Solti.Utils.Rpc.Internals.WebService.WriteResponseString(HttpListenerResponse, System.String)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_WriteResponseString_System_Net_HttpListenerResponse_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.WriteResponseString(System.Net.HttpListenerResponse,System.String)
+  fullName: Solti.Utils.Rpc.Internals.WebService.WriteResponseString(System.Net.HttpListenerResponse, System.String)
   nameWithType: WebService.WriteResponseString(HttpListenerResponse, String)
 - uid: Solti.Utils.Rpc.Internals.WebService.WriteResponseString*
   name: WriteResponseString
@@ -1009,12 +1009,12 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Dispose
   nameWithType: RpcClient<TInterface>.Dispose
   nameWithType.vb: RpcClient(Of TInterface).Dispose
-- uid: Solti.Utils.Rpc.RpcClient`1.GetMemberId(MemberInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.GetMemberId(System.Reflection.MemberInfo)
   name: GetMemberId(MemberInfo)
-  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_GetMemberId_MemberInfo_
-  commentId: M:Solti.Utils.Rpc.RpcClient`1.GetMemberId(MemberInfo)
-  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.GetMemberId(MemberInfo)
-  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetMemberId(MemberInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_GetMemberId_System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.GetMemberId(System.Reflection.MemberInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.GetMemberId(System.Reflection.MemberInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetMemberId(System.Reflection.MemberInfo)
   nameWithType: RpcClient<TInterface>.GetMemberId(MemberInfo)
   nameWithType.vb: RpcClient(Of TInterface).GetMemberId(MemberInfo)
 - uid: Solti.Utils.Rpc.RpcClient`1.GetMemberId*
@@ -1043,13 +1043,13 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).Host
   nameWithType: RpcClient<TInterface>.Host
   nameWithType.vb: RpcClient(Of TInterface).Host
-- uid: Solti.Utils.Rpc.RpcClient`1.InvokeService(MethodInfo,System.Object[])
+- uid: Solti.Utils.Rpc.RpcClient`1.InvokeService(System.Reflection.MethodInfo,System.Object[])
   name: InvokeService(MethodInfo, Object[])
-  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeService_MethodInfo_System_Object___
-  commentId: M:Solti.Utils.Rpc.RpcClient`1.InvokeService(MethodInfo,System.Object[])
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeService_System_Reflection_MethodInfo_System_Object___
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.InvokeService(System.Reflection.MethodInfo,System.Object[])
   name.vb: InvokeService(MethodInfo, Object())
-  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeService(MethodInfo, System.Object[])
-  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeService(MethodInfo, System.Object())
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeService(System.Reflection.MethodInfo, System.Object[])
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeService(System.Reflection.MethodInfo, System.Object())
   nameWithType: RpcClient<TInterface>.InvokeService(MethodInfo, Object[])
   nameWithType.vb: RpcClient(Of TInterface).InvokeService(MethodInfo, Object())
 - uid: Solti.Utils.Rpc.RpcClient`1.InvokeService*
@@ -1061,13 +1061,13 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeService
   nameWithType: RpcClient<TInterface>.InvokeService
   nameWithType.vb: RpcClient(Of TInterface).InvokeService
-- uid: Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(MethodInfo,System.Object[])
+- uid: Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(System.Reflection.MethodInfo,System.Object[])
   name: InvokeServiceAsync(MethodInfo, Object[])
-  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeServiceAsync_MethodInfo_System_Object___
-  commentId: M:Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(MethodInfo,System.Object[])
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_InvokeServiceAsync_System_Reflection_MethodInfo_System_Object___
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(System.Reflection.MethodInfo,System.Object[])
   name.vb: InvokeServiceAsync(MethodInfo, Object())
-  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeServiceAsync(MethodInfo, System.Object[])
-  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeServiceAsync(MethodInfo, System.Object())
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.InvokeServiceAsync(System.Reflection.MethodInfo, System.Object[])
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).InvokeServiceAsync(System.Reflection.MethodInfo, System.Object())
   nameWithType: RpcClient<TInterface>.InvokeServiceAsync(MethodInfo, Object[])
   nameWithType.vb: RpcClient(Of TInterface).InvokeServiceAsync(MethodInfo, Object())
 - uid: Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync*
@@ -1106,13 +1106,13 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.MethodCallForwarder
   nameWithType: RpcClient<TInterface>.MethodCallForwarder.MethodCallForwarder
   nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.MethodCallForwarder
-- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke(MethodInfo,System.Object[],MemberInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
   name: Invoke(MethodInfo, Object[], MemberInfo)
-  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder_Invoke_MethodInfo_System_Object___MemberInfo_
-  commentId: M:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke(MethodInfo,System.Object[],MemberInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.MethodCallForwarder.html#Solti_Utils_Rpc_RpcClient_1_MethodCallForwarder_Invoke_System_Reflection_MethodInfo_System_Object___System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
   name.vb: Invoke(MethodInfo, Object(), MemberInfo)
-  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.Invoke(MethodInfo, System.Object[], MemberInfo)
-  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Invoke(MethodInfo, System.Object(), MemberInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.MethodCallForwarder.Invoke(System.Reflection.MethodInfo, System.Object[], System.Reflection.MemberInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Invoke(System.Reflection.MethodInfo, System.Object(), System.Reflection.MemberInfo)
   nameWithType: RpcClient<TInterface>.MethodCallForwarder.Invoke(MethodInfo, Object[], MemberInfo)
   nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.Invoke(MethodInfo, Object(), MemberInfo)
 - uid: Solti.Utils.Rpc.RpcClient`1.MethodCallForwarder.Invoke*
@@ -1227,11 +1227,11 @@ references:
   commentId: M:Solti.Utils.Rpc.RpcException.#ctor(System.String)
   fullName: Solti.Utils.Rpc.RpcException.RpcException(System.String)
   nameWithType: RpcException.RpcException(String)
-- uid: Solti.Utils.Rpc.RpcException.#ctor(System.String,Exception)
+- uid: Solti.Utils.Rpc.RpcException.#ctor(System.String,System.Exception)
   name: RpcException(String, Exception)
-  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor_System_String_Exception_
-  commentId: M:Solti.Utils.Rpc.RpcException.#ctor(System.String,Exception)
-  fullName: Solti.Utils.Rpc.RpcException.RpcException(System.String, Exception)
+  href: Solti.Utils.Rpc.RpcException.html#Solti_Utils_Rpc_RpcException__ctor_System_String_System_Exception_
+  commentId: M:Solti.Utils.Rpc.RpcException.#ctor(System.String,System.Exception)
+  fullName: Solti.Utils.Rpc.RpcException.RpcException(System.String, System.Exception)
   nameWithType: RpcException.RpcException(String, Exception)
 - uid: Solti.Utils.Rpc.RpcException.#ctor*
   name: RpcException
@@ -1246,17 +1246,17 @@ references:
   commentId: T:Solti.Utils.Rpc.RpcService
   fullName: Solti.Utils.Rpc.RpcService
   nameWithType: RpcService
-- uid: Solti.Utils.Rpc.RpcService.#ctor(IServiceContainer)
+- uid: Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)
   name: RpcService(IServiceContainer)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_IServiceContainer_
-  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(IServiceContainer)
-  fullName: Solti.Utils.Rpc.RpcService.RpcService(IServiceContainer)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_
+  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)
+  fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer)
   nameWithType: RpcService.RpcService(IServiceContainer)
-- uid: Solti.Utils.Rpc.RpcService.#ctor(IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+- uid: Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
   name: RpcService(IServiceContainer, ModuleInvocationBuilder)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_IServiceContainer_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_
-  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
-  fullName: Solti.Utils.Rpc.RpcService.RpcService(IServiceContainer, Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_
+  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer, Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
   nameWithType: RpcService.RpcService(IServiceContainer, ModuleInvocationBuilder)
 - uid: Solti.Utils.Rpc.RpcService.#ctor*
   name: RpcService
@@ -1278,15 +1278,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.Container
   nameWithType: RpcService.Container
-- uid: Solti.Utils.Rpc.RpcService.CreateResponse(System.Nullable{System.Object},HttpListenerResponse)
-  name: CreateResponse(Nullable<Object>, HttpListenerResponse)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_System_Nullable_System_Object__HttpListenerResponse_
-  commentId: M:Solti.Utils.Rpc.RpcService.CreateResponse(System.Nullable{System.Object},HttpListenerResponse)
-  name.vb: CreateResponse(Nullable(Of Object), HttpListenerResponse)
-  fullName: Solti.Utils.Rpc.RpcService.CreateResponse(System.Nullable<System.Object>, HttpListenerResponse)
-  fullName.vb: Solti.Utils.Rpc.RpcService.CreateResponse(System.Nullable(Of System.Object), HttpListenerResponse)
-  nameWithType: RpcService.CreateResponse(Nullable<Object>, HttpListenerResponse)
-  nameWithType.vb: RpcService.CreateResponse(Nullable(Of Object), HttpListenerResponse)
+- uid: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse)
+  name: CreateResponse(Object, HttpListenerResponse)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_System_Object_System_Net_HttpListenerResponse_
+  commentId: M:Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse)
+  fullName: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object, System.Net.HttpListenerResponse)
+  nameWithType: RpcService.CreateResponse(Object, HttpListenerResponse)
 - uid: Solti.Utils.Rpc.RpcService.CreateResponse*
   name: CreateResponse
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_
@@ -1294,11 +1291,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.CreateResponse
   nameWithType: RpcService.CreateResponse
-- uid: Solti.Utils.Rpc.RpcService.GetErrorCode(Exception)
+- uid: Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
   name: GetErrorCode(Exception)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_GetErrorCode_Exception_
-  commentId: M:Solti.Utils.Rpc.RpcService.GetErrorCode(Exception)
-  fullName: Solti.Utils.Rpc.RpcService.GetErrorCode(Exception)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_GetErrorCode_System_Exception_
+  commentId: M:Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
+  fullName: Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
   nameWithType: RpcService.GetErrorCode(Exception)
 - uid: Solti.Utils.Rpc.RpcService.GetErrorCode*
   name: GetErrorCode
@@ -1320,11 +1317,11 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.InvokeModule
   nameWithType: RpcService.InvokeModule
-- uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext(HttpListenerContext)
+- uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
   name: ProcessRequestContext(HttpListenerContext)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.RpcService.ProcessRequestContext(HttpListenerContext)
-  fullName: Solti.Utils.Rpc.RpcService.ProcessRequestContext(HttpListenerContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
   nameWithType: RpcService.ProcessRequestContext(HttpListenerContext)
 - uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext*
   name: ProcessRequestContext
@@ -1340,13 +1337,13 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.Register
   nameWithType: RpcService.Register
-- uid: Solti.Utils.Rpc.RpcService.Register``1(Func{IInjector,``0})
+- uid: Solti.Utils.Rpc.RpcService.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
   name: Register<TInterface>(Func<IInjector, TInterface>)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Register__1_Func_IInjector___0__
-  commentId: M:Solti.Utils.Rpc.RpcService.Register``1(Func{IInjector,``0})
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__
+  commentId: M:Solti.Utils.Rpc.RpcService.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
   name.vb: Register(Of TInterface)(Func(Of IInjector, TInterface))
-  fullName: Solti.Utils.Rpc.RpcService.Register<TInterface>(Func<IInjector, TInterface>)
-  fullName.vb: Solti.Utils.Rpc.RpcService.Register(Of TInterface)(Func(Of IInjector, TInterface))
+  fullName: Solti.Utils.Rpc.RpcService.Register<TInterface>(System.Func<Solti.Utils.DI.Interfaces.IInjector, TInterface>)
+  fullName.vb: Solti.Utils.Rpc.RpcService.Register(Of TInterface)(System.Func(Of Solti.Utils.DI.Interfaces.IInjector, TInterface))
   nameWithType: RpcService.Register<TInterface>(Func<IInjector, TInterface>)
   nameWithType.vb: RpcService.Register(Of TInterface)(Func(Of IInjector, TInterface))
 - uid: Solti.Utils.Rpc.RpcService.Register``2
