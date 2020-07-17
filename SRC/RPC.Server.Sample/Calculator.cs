@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Server.Sample
 {
-    public class Calculator : ICalculator
+    internal class Calculator : ICalculator
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
         public int Add(int a, int b) => a + b;
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
     }
