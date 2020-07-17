@@ -31,10 +31,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             netsh.WaitForExit();
 
             if (netsh.ExitCode != 0)
-            {
-                Console.Error.WriteLine(string.Format(Resources.Culture, Resources.SC_INVOCATION_FAILED, netsh.ExitCode));
-                Environment.Exit(netsh.ExitCode);
-            }
+                throw new Exception(string.Format(Resources.Culture, Resources.SC_INVOCATION_FAILED, netsh.ExitCode));
         }
 
         private bool Install { get; }
@@ -42,12 +39,14 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         private bool Uninstall { get; }
         #endregion
 
-        public InstallHostRunner_WinNT(IHost host): base(host) 
+        public InstallHostRunner_WinNT(IHost host) : this(host, Environment.GetCommandLineArgs()) { }
+
+        internal InstallHostRunner_WinNT(IHost host, string[] args): base(host) 
         {
             Install = ArgSet("-install");
             Uninstall = ArgSet("-uninstall");
 
-            static bool ArgSet(string name) => Environment.GetCommandLineArgs().Any(arg => arg.ToLower(Resources.Culture) == name);
+            bool ArgSet(string name) => args.Any(arg => arg.ToLower(Resources.Culture) == name);
         }
 
         public override void Start()
