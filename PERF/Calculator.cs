@@ -3,56 +3,23 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-
 using BenchmarkDotNet.Attributes;
 
 namespace Solti.Utils.Rpc.Perf
 {
     using static Consts;
-    using DI;
-    
+    using Server.Sample;
+
     [MemoryDiagnoser]
     public class Calculator
     {
-        public interface ICalculator 
-        {
-            int Add(int a, int b);
-            Task<int> AddAsync(int a, int b);
-        }
-
-        public class CalculatorModule : ICalculator 
-        {
-            [MethodImpl(MethodImplOptions.NoInlining)]
-            public int Add(int a, int b) => a + b;
-            [MethodImpl(MethodImplOptions.NoInlining)]
-            public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
-        }
-
-        private RpcService Service { get; set; }
-
         private RpcClient<ICalculator> Client { get; set; }
 
         [GlobalSetup]
-        public void Setup() 
-        {
-            const string host = "http://127.0.0.1:1986/api/";
-
-            Service = new RpcService(new ServiceContainer());
-            Service.Register<ICalculator, CalculatorModule>();
-            Service.Start(host);
-
-            Client = new RpcClient<ICalculator>(host);
-        }
+        public void Setup() => Client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
 
         [GlobalCleanup]
-        public void Cleanup() 
-        {
-            Client?.Dispose();
-            Service?.Container?.Dispose();
-            Service?.Dispose();
-        }
+        public void Cleanup() => Client?.Dispose();
 
         [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
         public void Add()

@@ -70,6 +70,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more dependencies are not available: {0}.
+        /// </summary>
+        internal static string DEPENDENCY_NOT_AVAILABLE {
+            get {
+                return ResourceManager.GetString("DEPENDENCY_NOT_AVAILABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generic interfaces are not supported..
         /// </summary>
         internal static string GENERIC_IFACE {
@@ -93,6 +102,15 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string NETSH_INVOCATION_FAILED {
             get {
                 return ResourceManager.GetString("NETSH_INVOCATION_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No compatible hosting found..
+        /// </summary>
+        internal static string NO_HOSTING {
+            get {
+                return ResourceManager.GetString("NO_HOSTING", resourceCulture);
             }
         }
         
@@ -129,6 +147,24 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string NOT_AN_INTERFACE {
             get {
                 return ResourceManager.GetString("NOT_AN_INTERFACE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server is running... Press Ctrl+C to terminate.
+        /// </summary>
+        internal static string RUNNING {
+            get {
+                return ResourceManager.GetString("RUNNING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Control Manager invocation failed. Error {0}.
+        /// </summary>
+        internal static string SC_INVOCATION_FAILED {
+            get {
+                return ResourceManager.GetString("SC_INVOCATION_FAILED", resourceCulture);
             }
         }
     }
