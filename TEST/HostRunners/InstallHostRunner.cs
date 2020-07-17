@@ -28,17 +28,29 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             }
         }
 
+        private static void InvokeRunner(string arg) 
+        {
+            using IHost appHost = new AppHost();
+            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost, new[] { arg });
+            hostRunner.Start();
+        }
+
         [Test]
         public void Install_ShouldInstallTheService()
         {
-            using IHost appHost = new AppHost();
-            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost, new[] { "-install" });
-            hostRunner.Start();
+            InvokeRunner("-install");
 
-            ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
+            try
+            {
+                ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
 
-            Assert.That(svc, Is.Not.Null);
-            Assert.That(svc.ServicesDependedOn.Any(svc => svc.ServiceName == "LanmanWorkstation"));
+                Assert.That(svc, Is.Not.Null);
+                Assert.That(svc.ServicesDependedOn.Any(svc => svc.ServiceName == "LanmanWorkstation"));
+            }
+            finally 
+            {
+                InvokeRunner("-uninstall");
+            }
         }
 
         [Test]
@@ -46,13 +58,16 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             try
             {
-                Install_ShouldInstallTheService();
+                InvokeRunner("-install");
             }
+
+            //
+            // Ha mar telepitve volt korabban
+            //
+
             catch { }
 
-            using IHost appHost = new AppHost();
-            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost, new[] { "-uninstall" });
-            hostRunner.Start();
+            InvokeRunner("-uninstall");
 
             ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
             Assert.That(svc, Is.Null);

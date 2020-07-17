@@ -50,6 +50,11 @@ namespace Solti.Utils.Rpc.Hosting.Tests
                 Started.Set();
             }
 
+            public ConsoleAppHost() : base()
+            {
+                Dependencies.Add("LanmanWorkstation");
+            }
+
             protected override void Dispose(bool disposeManaged)
             {
                 if (disposeManaged)
