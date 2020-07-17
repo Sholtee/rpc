@@ -4,7 +4,7 @@
   "commonprops": "\\SRC\\Common\\Common.targets",
   "app": "\\SRC\\Common\\Common.targets",
   "vendor": "\\Vendor",
-  "tests": "\\Test\\*.Tests.csproj",
+  "tests": "\\Test\\*\\*.Tests.csproj",
   "artifacts": "\\Artifacts",
   "coveragefilter": "+[Solti.Utils.Rpc.*]* -[Solti.Utils.Rpc.Tests]*",
   "perftests": "\\PERF\\RPC.Perf.csproj",
