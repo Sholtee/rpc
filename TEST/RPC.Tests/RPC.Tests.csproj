@@ -9,7 +9,7 @@
     <LangVersion>8</LangVersion>
     <Configurations>Debug</Configurations>
     <OutputType>Library</OutputType>
-    <OutputPath>..\BIN\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <!--OpenCover requires .NET Core 2.2 while Test Explorer needs 3.X-->
@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SRC\RPC.Client\RPC.Client.csproj" />
-    <ProjectReference Include="..\SRC\RPC.Server\RPC.Server.csproj" />
+    <ProjectReference Include="..\..\SRC\RPC.Client\RPC.Client.csproj" />
+    <ProjectReference Include="..\..\SRC\RPC.Server\RPC.Server.csproj" />
   </ItemGroup>
 
 </Project>

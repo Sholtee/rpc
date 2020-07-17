@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RPC.Server\RPC.Server.csproj" />
+    <ProjectReference Include="..\..\SRC\RPC.Server\RPC.Server.csproj" />
   </ItemGroup>
 
 </Project>
