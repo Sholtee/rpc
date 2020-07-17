@@ -95,7 +95,7 @@
    ...
    public class CalculatorAppHost : AppHostBase
    {
-     // There are several properties to set (check the documentation out). This two is the obligatory:
+     // There are several properties to set (check the documentation out). This two are mandatory:
 	 
      public override string Name => "Calculator";
 
