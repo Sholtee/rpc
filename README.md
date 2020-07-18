@@ -132,7 +132,7 @@
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
 
-[Examples](https://github.com/Sholtee/rpc/blob/master/TEST/Rpc.cs )
+[Examples](https://github.com/Sholtee/rpc/blob/master/TEST/RPC.Tests/Rpc.cs )
 
 [Sample server](https://github.com/Sholtee/rpc/tree/master/TEST/RPC.Server.Sample )
 
