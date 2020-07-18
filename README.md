@@ -134,4 +134,6 @@
 
 [Examples](https://github.com/Sholtee/rpc/blob/master/TEST/Rpc.cs )
 
+[Sample server](https://github.com/Sholtee/rpc/tree/master/TEST/RPC.Server.Sample )
+
 [Benchmark results](https://sholtee.github.io/rpc/perf/ )
