@@ -246,6 +246,23 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Runner
   nameWithType: AppHostBase.Runner
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Hosting#IHost#Dependencies
+  name: IHost.Dependencies
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Solti_Utils_Rpc_Hosting_IHost_Dependencies
+  commentId: P:Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Hosting#IHost#Dependencies
+  name.vb: Solti.Utils.Rpc.Hosting.IHost.Dependencies
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Solti.Utils.Rpc.Hosting.IHost.Dependencies
+  nameWithType: AppHostBase.IHost.Dependencies
+  nameWithType.vb: AppHostBase.Solti.Utils.Rpc.Hosting.IHost.Dependencies
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Hosting#IHost#Dependencies*
+  name: IHost.Dependencies
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Solti_Utils_Rpc_Hosting_IHost_Dependencies_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Hosting#IHost#Dependencies
+  isSpec: "True"
+  name.vb: Solti.Utils.Rpc.Hosting.IHost.Dependencies
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Solti.Utils.Rpc.Hosting.IHost.Dependencies
+  nameWithType: AppHostBase.IHost.Dependencies
+  nameWithType.vb: AppHostBase.Solti.Utils.Rpc.Hosting.IHost.Dependencies
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.Url
   name: Url
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Url
