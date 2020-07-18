@@ -2,7 +2,7 @@
   
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Solti.Utils.Rpc.Server.Sample</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Server.Sample</RootNamespace>
     <Authors>Denes Solti</Authors>
@@ -12,6 +12,10 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>
     <Product>RPC.NET.Server.Sample</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(CI)'==''">
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Perf|AnyCPU'">
