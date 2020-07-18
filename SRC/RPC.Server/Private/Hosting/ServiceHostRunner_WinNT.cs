@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 
@@ -11,7 +12,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 {
     internal class ServiceHostRunner_WinNT : HostRunner
     {
-        private sealed class ServiceImpl : ServiceBase 
+        private sealed class ServiceImpl : ServiceBase
         {
             public IHost Owner { get; }
 
@@ -25,7 +26,6 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             {
                 base.OnStart(args);
                 Owner.OnStart();
-                
             }
 
             protected override void OnStop()
@@ -53,7 +53,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 FServiceImpl = new ServiceImpl(host);
         }
 
-        public override void Start() => 
+        public override void Start() =>
             //
             // Blokkolodik
             //
@@ -66,6 +66,15 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             FServiceImpl.Stop();
         }
 
-        public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !Environment.UserInteractive;
+        public override bool ShouldUse 
+        {
+            get
+            {
+                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return false;
+
+                Process? parent = Process.GetCurrentProcess().GetParent();
+                return parent?.SessionId == 0 && string.Equals("services", parent.ProcessName, StringComparison.OrdinalIgnoreCase);
+            }
+        }
     }
 }

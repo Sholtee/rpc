@@ -17,6 +17,11 @@ namespace Solti.Utils.Rpc.Server.Sample
 
         public override string Url => "http://127.0.0.1:1986/api/";
 
+        public AppHost() : base() 
+        {
+            Log.WriteLine($"Host created. Runner type is: {Runner.GetType().Name}");
+        }
+
         public override void OnRegisterModules(IModuleRegistry registry)
         {
             base.OnRegisterModules(registry);
@@ -37,12 +42,6 @@ namespace Solti.Utils.Rpc.Server.Sample
             if (disposeManaged)
                 Log.Dispose();
             base.Dispose(disposeManaged);
-        }
-
-        public override void OnStart()
-        {
-            base.OnStart();
-            Log.WriteLine($"Host started. Runner type is: {Runner.GetType().Name}");
         }
 
         public override void OnUnhandledException(Exception ex) => Log.Write(ex.Message);
