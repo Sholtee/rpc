@@ -27,9 +27,12 @@
     <PackageReference Include="RPC.NET.Server" Version="$(LibVersion)"></PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(LibVersion)' == ''">
     <ProjectReference Include="..\SRC\RPC.Client\RPC.Client.csproj" />
     <ProjectReference Include="..\SRC\RPC.Server\RPC.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Test\RPC.Server.Sample\RPC.Server.Sample.csproj" />
   </ItemGroup>
   

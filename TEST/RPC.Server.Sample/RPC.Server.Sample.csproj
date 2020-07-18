@@ -18,7 +18,11 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(LibVersion)' != ''">
+    <PackageReference Include="RPC.NET.Server" Version="$(LibVersion)"></PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(LibVersion)' == ''">
     <ProjectReference Include="..\..\SRC\RPC.Server\RPC.Server.csproj" />
   </ItemGroup>
 
