@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Solti.Utils.Rpc.Hosting
@@ -99,17 +98,14 @@ namespace Solti.Utils.Rpc.Hosting
             if (host == null)
                 throw new ArgumentNullException(nameof(host));
 
-            return RunnerCtors
-                .Select(ctor => (HostRunner) ctor.Invoke(new object[] { host }))
-                .Where(runner =>
-                {
-                    bool shouldUse = runner.ShouldUse;
-                    if (!shouldUse) 
-                        runner.Dispose();
+            foreach (Func<object[], object> ctor in RunnerCtors)
+            {
+                var runner = (HostRunner) ctor.Invoke(new object[] { host });
+                if (runner.ShouldUse) return runner;
+                runner.Dispose();
+            }
 
-                    return shouldUse;
-                })
-                .First();
+            throw new NotSupportedException(); // elvileg ide sose jutunk el
         }
     }
 }
