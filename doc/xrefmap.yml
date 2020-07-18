@@ -207,6 +207,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnStop
   nameWithType: AppHostBase.OnStop
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException(System.Exception)
+  name: OnUnhandledException(Exception)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnUnhandledException_System_Exception_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException(System.Exception)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException(System.Exception)
+  nameWithType: AppHostBase.OnUnhandledException(Exception)
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException*
+  name: OnUnhandledException
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnUnhandledException_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException
+  nameWithType: AppHostBase.OnUnhandledException
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnUninstall
   name: OnUninstall()
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnUninstall
@@ -265,6 +278,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.HostRunner.HostRunner
   nameWithType: HostRunner.HostRunner
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Dispose_System_Boolean_
+  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.Dispose(System.Boolean)
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.Dispose(System.Boolean)
+  nameWithType: HostRunner.Dispose(Boolean)
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.Dispose*
+  name: Dispose
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Dispose_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.HostRunner.Dispose
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.Dispose
+  nameWithType: HostRunner.Dispose
 - uid: Solti.Utils.Rpc.Hosting.HostRunner.Extend*
   name: Extend
   href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Extend_
@@ -443,6 +469,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.IHost.OnStop
   nameWithType: IHost.OnStop
+- uid: Solti.Utils.Rpc.Hosting.IHost.OnUnhandledException(System.Exception)
+  name: OnUnhandledException(Exception)
+  href: Solti.Utils.Rpc.Hosting.IHost.html#Solti_Utils_Rpc_Hosting_IHost_OnUnhandledException_System_Exception_
+  commentId: M:Solti.Utils.Rpc.Hosting.IHost.OnUnhandledException(System.Exception)
+  fullName: Solti.Utils.Rpc.Hosting.IHost.OnUnhandledException(System.Exception)
+  nameWithType: IHost.OnUnhandledException(Exception)
+- uid: Solti.Utils.Rpc.Hosting.IHost.OnUnhandledException*
+  name: OnUnhandledException
+  href: Solti.Utils.Rpc.Hosting.IHost.html#Solti_Utils_Rpc_Hosting_IHost_OnUnhandledException_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.IHost.OnUnhandledException
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.IHost.OnUnhandledException
+  nameWithType: IHost.OnUnhandledException
 - uid: Solti.Utils.Rpc.Hosting.IHost.OnUninstall
   name: OnUninstall()
   href: Solti.Utils.Rpc.Hosting.IHost.html#Solti_Utils_Rpc_Hosting_IHost_OnUninstall
