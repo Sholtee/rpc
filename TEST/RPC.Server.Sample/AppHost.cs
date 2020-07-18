@@ -3,6 +3,10 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
+using System.Diagnostics;
+using System.IO;
+
 namespace Solti.Utils.Rpc.Server.Sample
 {
     using Hosting;
@@ -18,5 +22,16 @@ namespace Solti.Utils.Rpc.Server.Sample
             base.OnRegisterModules(registry);
             registry.Register<ICalculator, Calculator>();
         }
+
+        public StreamWriter Log { get; } = new StreamWriter
+        (
+            Path.Combine
+            (
+                Path.GetDirectoryName(typeof(AppHost).Assembly.Location)!, 
+                $"log-{Process.GetCurrentProcess().Id}.txt"
+            )
+        );
+
+        public override void OnUnhandledException(Exception ex) => Log.Write(ex.Message);
     }
 }

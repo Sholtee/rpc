@@ -127,6 +127,11 @@ namespace Solti.Utils.Rpc.Hosting
         public virtual void OnStop() => FRpcService.Stop();
 
         /// <summary>
+        /// Invoked on unhandled exception.
+        /// </summary>
+        public virtual void OnUnhandledException(Exception ex) { }
+
+        /// <summary>
         /// See <see cref="IDisposable.Dispose"/>.
         /// </summary>
         protected override void Dispose(bool disposeManaged)

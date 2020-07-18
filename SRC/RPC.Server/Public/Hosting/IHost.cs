@@ -52,5 +52,10 @@ namespace Solti.Utils.Rpc.Hosting
         /// Invoked on service termination.
         /// </summary>
         void OnStop();
+
+        /// <summary>
+        /// Invoked on unhandled exception.
+        /// </summary>
+        void OnUnhandledException(Exception ex);
     }
 }

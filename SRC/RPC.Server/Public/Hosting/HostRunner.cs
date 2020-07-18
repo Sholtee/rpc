@@ -19,6 +19,17 @@ namespace Solti.Utils.Rpc.Hosting
     /// </summary>
     public abstract class HostRunner: Disposable, IHostRunner
     {
+        private void UnhandledExceptionEventHandler(object sender, UnhandledExceptionEventArgs e) => Host.OnUnhandledException((Exception) e.ExceptionObject);
+
+        /// <summary>
+        /// See <see cref="IDisposable"/>.
+        /// </summary>
+        protected override void Dispose(bool disposeManaged)
+        {
+            AppDomain.CurrentDomain.UnhandledException -= UnhandledExceptionEventHandler;
+            base.Dispose(disposeManaged);
+        }
+
         /// <summary>
         /// The host related to this runner.
         /// </summary>
@@ -27,7 +38,11 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Creates a new <see cref="HostRunner"/> instance.
         /// </summary>
-        protected HostRunner(IHost host) => Host = host ?? throw new ArgumentNullException(nameof(host));
+        protected HostRunner(IHost host)
+        {
+            Host = host ?? throw new ArgumentNullException(nameof(host));
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
+        }
 
         /// <summary>
         /// If overridden in the derived class it should determines whether the runner should be used.
