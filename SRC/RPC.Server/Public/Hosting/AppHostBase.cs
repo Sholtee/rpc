@@ -70,9 +70,9 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Services that must run.
         /// </summary>
-        protected IList<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
-            ? (IList<string>) new List<string>()
-            : (IList<string>) Array.Empty<string>();
+        protected ICollection<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+            ? (ICollection<string>) new List<string>()
+            : (ICollection<string>) Array.Empty<string>();
 
         /// <summary>
         /// Invoked on service installation.
