@@ -14,7 +14,7 @@
     <Product>RPC.NET.Server.Sample</Product>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(CI)'==''">
+  <PropertyGroup Condition="'$(CI)'=='' Or '$(Configuration)'=='Perf'">
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   
