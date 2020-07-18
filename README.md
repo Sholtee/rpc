@@ -95,7 +95,7 @@
    ...
    public class CalculatorHost : AppHostBase
    {
-     // There are several properties to set (check the documentation out). This two are mandatory:
+     // You may need to set more properties (see documentation). This two are mandatory:
 	 
      public override string Name => "Calculator";
 
@@ -127,7 +127,7 @@
    ```
 3. The compiled executable can be used in several ways:
    - You can simply run it to debug your app (Ctrl-C terminates the server)
-   - You can invoke it with `-install` to install your app as a service (`-uninstall` does the opposite)
+   - You can invoke it with `-install` to install your app as a local service (`-uninstall` does the opposite)
    - It can run as a local service (started by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager )) - if it was installed previously
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
