@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Solti.Utils.Rpc.Hosting
 {
@@ -82,8 +83,12 @@ namespace Solti.Utils.Rpc.Hosting
         {
             Extend<DefaultHostRunner>();
             Extend<ConsoleHostRunner>();
-            Extend<InstallHostRunner_WinNT>();
-            Extend<ServiceHostRunner_WinNT>();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Extend<InstallHostRunner_WinNT>();
+                Extend<ServiceHostRunner_WinNT>();
+            }
         }
 
         /// <summary>
