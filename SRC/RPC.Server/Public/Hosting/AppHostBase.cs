@@ -65,12 +65,14 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public bool AutoStart { get; protected set; }
 
+        IEnumerable<string> IHost.Dependencies => Dependencies;
+
         /// <summary>
         /// Services that must run.
         /// </summary>
-        public ICollection<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
-            ? (ICollection<string>) new HashSet<string>()
-            : (ICollection<string>) Array.Empty<string>();
+        protected IList<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+            ? (IList<string>) new List<string>()
+            : (IList<string>) Array.Empty<string>();
 
         /// <summary>
         /// Invoked on service installation.

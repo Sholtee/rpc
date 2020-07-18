@@ -31,7 +31,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Services that must run.
         /// </summary>
-        ICollection<string> Dependencies { get; }
+        IEnumerable<string> Dependencies { get; }
 
         /// <summary>
         /// Invoked on service installation.
