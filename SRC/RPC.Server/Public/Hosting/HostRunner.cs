@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
@@ -101,7 +102,11 @@ namespace Solti.Utils.Rpc.Hosting
             foreach (Func<object[], object> ctor in RunnerCtors)
             {
                 var runner = (HostRunner) ctor.Invoke(new object[] { host });
-                if (runner.ShouldUse) return runner;
+                if (runner.ShouldUse)
+                {
+                    Trace.WriteLine($"Running host with {runner.GetType().Name}");
+                    return runner;
+                }
                 runner.Dispose();
             }
 

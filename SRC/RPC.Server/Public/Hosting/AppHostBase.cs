@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -77,12 +78,12 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service installation.
         /// </summary>
-        public virtual void OnInstall() { }
+        public virtual void OnInstall() => Trace.WriteLine($"Installing {GetType().Name}");
 
         /// <summary>
         /// Invoked on service removal.
         /// </summary>
-        public virtual void OnUninstall() { }
+        public virtual void OnUninstall() => Trace.WriteLine($"Uninstalling {GetType().Name}");
 
         /// <summary>
         /// Place of module registration routines.
@@ -114,6 +115,8 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart()
         {
+            Trace.WriteLine($"Starting {GetType().Name}");
+
             if (!Initialized)
             {
                 OnRegisterServices(FContainer);
@@ -126,12 +129,23 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service termination.
         /// </summary>
-        public virtual void OnStop() => FRpcService.Stop();
+        public virtual void OnStop()
+        {
+            Trace.WriteLine($"Stopping {GetType().Name}");
+
+            FRpcService.Stop();
+        }
 
         /// <summary>
         /// Invoked on unhandled exception.
         /// </summary>
-        public virtual void OnUnhandledException(Exception ex) { }
+        public virtual void OnUnhandledException(Exception ex)
+        {
+            if (ex == null)
+                throw new ArgumentNullException(nameof(ex));
+
+            Trace.WriteLine($"Unhandled exception: {ex.Message}");
+        }
 
         /// <summary>
         /// See <see cref="IDisposable.Dispose"/>.
