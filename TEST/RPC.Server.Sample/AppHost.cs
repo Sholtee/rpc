@@ -32,6 +32,19 @@ namespace Solti.Utils.Rpc.Server.Sample
             )
         );
 
+        protected override void Dispose(bool disposeManaged)
+        {
+            if (disposeManaged)
+                Log.Dispose();
+            base.Dispose(disposeManaged);
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            Log.WriteLine($"Host started. Runner type is: {Runner.GetType().Name}");
+        }
+
         public override void OnUnhandledException(Exception ex) => Log.Write(ex.Message);
     }
 }
