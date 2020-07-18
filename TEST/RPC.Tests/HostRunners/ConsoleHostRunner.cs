@@ -31,6 +31,8 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         [Test]
         public void Start_ShouldValidateTheDependencies()
         {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
+
             using IHost appHost = new BadDependencyAppHost();
             using IHostRunner hostRunner = new ConsoleHostRunner(appHost);
 

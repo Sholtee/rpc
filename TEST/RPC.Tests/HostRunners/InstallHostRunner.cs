@@ -38,6 +38,8 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         [Test]
         public void Install_ShouldInstallTheService()
         {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
+
             InvokeRunner("-install");
 
             try
@@ -56,6 +58,8 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         [Test]
         public void Uninstall_ShouldUninstallTheService()
         {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
+
             try
             {
                 InvokeRunner("-install");
