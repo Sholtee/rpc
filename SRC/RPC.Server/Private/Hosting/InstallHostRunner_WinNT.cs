@@ -54,7 +54,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         {
             if (Install)
             {
-                var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{Host.GetType().Assembly.Location}\" start= {(Host.AutoStart ? "auto" : "demand")}");
+                var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{Process.GetCurrentProcess().MainModule.FileName}\" start= {(Host.AutoStart ? "auto" : "demand")}");
                 
                 if (Host.Description != null)
                     sb.Append($" displayname= \"{Host.Description ?? string.Empty}\"");
