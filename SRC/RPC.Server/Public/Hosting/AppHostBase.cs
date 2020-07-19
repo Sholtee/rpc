@@ -29,12 +29,26 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase()
+        protected AppHostBase(IServiceContainer container, RpcService rpcService)
         {     
-            FContainer     = new ServiceContainer();
-            FRpcService    = new RpcService(FContainer);           
+            FContainer     = container ?? throw new ArgumentNullException(nameof(container));
+            FRpcService    = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
             FTraceCategory = $"[{GetType().Name}]";
             Runner         = HostRunner.GetFor(this);
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        protected AppHostBase(IServiceContainer container) : this(container, new RpcService(container ?? throw new ArgumentNullException(nameof(container))))
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        protected AppHostBase(): this(new ServiceContainer())
+        {
         }
 
         /// <summary>
