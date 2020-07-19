@@ -1,5 +1,5 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master)
-> W.I.P.
+> Simple, lightweight RPC implementation for .NET
 
 |Package name|NuGet link|
 |:--:|:--:|
@@ -57,7 +57,7 @@
    - `IgnoreAttribute`: Marks the method "remotely invisible".
    - `MayRunLongAttribute`: Marks a method as long running. Using this attribute makes sense only if the method has non `Task` return value.
    
-   These attributes are provided by the [RPC.NET.Attribute](https://www.nuget.org/packages/rpc.net.attributes ) package.
+   These attributes are provided by the [RPC.NET.Attributes](https://www.nuget.org/packages/rpc.net.attributes ) package.
 3. Create the service `exe`:
    ```csharp
    using System;
