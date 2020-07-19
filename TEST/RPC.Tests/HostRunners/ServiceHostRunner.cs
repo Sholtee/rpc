@@ -3,8 +3,8 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Diagnostics;
-using System.IO;
 
 using NUnit.Framework;
 
@@ -18,28 +18,30 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            InvokeExe(Path.ChangeExtension(typeof(ICalculator).Assembly.Location, "exe"), "-install");
-            InvokeExe("sc", "start Calculator");
+            InvokeSc($"create Calculator binPath= \"%ProgramFiles%\\dotnet\\dotnet.exe {typeof(ICalculator).Assembly.Location}\"");
+            InvokeSc("start Calculator");
         }
 
         [OneTimeTearDown]
         public void Teardown()
         {
-            InvokeExe("sc", "stop Calculator");
-            InvokeExe(Path.ChangeExtension(typeof(ICalculator).Assembly.Location, "exe"), "-uninstall");
+            InvokeSc("stop Calculator");
+            InvokeSc("delete Calculator");
         }
 
         [Test]
         public void InstalledService_ShouldRun() 
         {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
+
             using var client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
 
             Assert.That(client.Proxy.Add(1, 1), Is.EqualTo(2));
         }
 
-        private static void InvokeExe(string exe, string args)
+        private static void InvokeSc(string args)
         {
-            var psi = new ProcessStartInfo(exe)
+            var psi = new ProcessStartInfo("sc")
             {
                 Verb = "runas",
                 Arguments = args,
