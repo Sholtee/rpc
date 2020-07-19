@@ -52,6 +52,12 @@
      public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
    }
    ```
+   There are some control attributes that can be applied on (module) interface methods:
+   - `AliasAttribute`: Specifies the alias of the method. Useful if your module has overloaded methods.
+   - `IgnoreAttribute`: Marks the method "remotely invisible".
+   - `MayRunLongAttribute`: Marks a method as long running. Using this attribute makes sense only if the method has non `Task` return value.
+   
+   These attributes are provided by the [RPC.NET.Attribute](https://www.nuget.org/packages/rpc.net.attributes ) package.
 3. Create the service `exe`:
    ```csharp
    using System;
