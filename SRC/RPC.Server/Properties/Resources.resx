@@ -127,7 +127,7 @@
     <value>Generic interfaces are not supported.</value>
   </data>
   <data name="INAPPROPRIATE_ARRAY_LENGTH" xml:space="preserve">
-    <value>The length of the args array does not match with the parameter count.</value>
+    <value>The length of the args array does not match the parameter count.</value>
   </data>
   <data name="NETSH_INVOCATION_FAILED" xml:space="preserve">
     <value>"netsh" invocation failed.</value>

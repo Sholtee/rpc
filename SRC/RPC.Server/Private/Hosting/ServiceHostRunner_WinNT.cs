@@ -3,7 +3,6 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 
@@ -34,37 +33,34 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             }
         }
 
-        private readonly ServiceImpl? FServiceImpl;
+        private readonly ServiceImpl FServiceImpl;
 
         protected override void Dispose(bool disposeManaged)
         {
-            if (disposeManaged) FServiceImpl?.Dispose();
+            if (disposeManaged) FServiceImpl.Dispose();
             base.Dispose(disposeManaged);
         }
 
-        public ServiceHostRunner_WinNT(IHost host) : base(host)
-        {
-            if (ShouldUse)
-                //
-                // Ez dobhat PlatformNotSupportedException-t nem Win alatt -> ShouldUse
-                //
-
-                FServiceImpl = new ServiceImpl(host);
-        }
+        internal ServiceHostRunner_WinNT(IHost host) : base(host) => FServiceImpl = new ServiceImpl(host);
 
         public override void Start() =>
             //
             // Blokkolodik
             //
 
-            ServiceBase.Run(FServiceImpl ?? throw new PlatformNotSupportedException());
+            ServiceBase.Run(FServiceImpl);
 
-        public override void Stop()
+        public override void Stop() => FServiceImpl.Stop();
+
+        #region Factory
+        private class FactoryImpl : IHostRunnerFactory
         {
-            if (FServiceImpl == null) throw new PlatformNotSupportedException();
-            FServiceImpl.Stop();
+            public bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && ProcessExtensions.IsService;
+
+            public IHostRunner CreateRunner(IHost host) => new ServiceHostRunner_WinNT(host);
         }
 
-        public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && ProcessExtensions.IsService;
+        public static IHostRunnerFactory Factory { get; } = new FactoryImpl();
+        #endregion
     }
 }

@@ -35,20 +35,12 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 throw new Exception(string.Format(Resources.Culture, Resources.SC_INVOCATION_FAILED, netsh.ExitCode));
         }
 
-        private bool Install { get; }
+        internal bool Install { get; set; }
 
-        private bool Uninstall { get; }
+        internal bool Uninstall { get; set; }
+
+        internal InstallHostRunner_WinNT(IHost host) : base(host) { }
         #endregion
-
-        public InstallHostRunner_WinNT(IHost host) : this(host, Environment.GetCommandLineArgs()) { }
-
-        internal InstallHostRunner_WinNT(IHost host, string[] args): base(host) 
-        {
-            Install = ArgSet("-install");
-            Uninstall = ArgSet("-uninstall");
-
-            bool ArgSet(string name) => args.Any(arg => arg.ToLower(Resources.Culture ?? CultureInfo.CurrentCulture) == name);
-        }
 
         public override void Start()
         {
@@ -78,6 +70,27 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         {
         }
 
-        public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
+        #region Factory
+        private class FactoryImpl : IHostRunnerFactory
+        {
+            private bool Install { get; } = ArgSet("-install");
+
+            private bool Uninstall { get; } = ArgSet("-uninstall");
+
+            private static bool ArgSet(string name) => Environment
+                .GetCommandLineArgs()
+                .Any(arg => arg.ToLower(Resources.Culture ?? CultureInfo.CurrentCulture) == name);
+
+            public bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
+
+            public IHostRunner CreateRunner(IHost host) => new InstallHostRunner_WinNT(host) 
+            {
+                Install   = Install,
+                Uninstall = Uninstall
+            };
+        }
+
+        public static IHostRunnerFactory Factory { get; } = new FactoryImpl();
+        #endregion
     }
 }

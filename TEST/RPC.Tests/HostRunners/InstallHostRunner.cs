@@ -22,16 +22,17 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             public override string Url => throw new NotImplementedException();
 
-            public AppHost() : base() 
-            {
-                Dependencies.Add("LanmanWorkstation");
-            }
+            public AppHost() : base() => Dependencies.Add("LanmanWorkstation");
         }
 
-        private static void InvokeRunner(string arg) 
+        private static void InvokeRunner(bool install = false, bool uninstall = false) 
         {
             using IHost appHost = new AppHost();
-            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost, new[] { arg });
+            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost) 
+            {
+                Install = install,
+                Uninstall = uninstall
+            };
             hostRunner.Start();
         }
 
@@ -40,7 +41,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            InvokeRunner("-install");
+            InvokeRunner(install: true);
 
             try
             {
@@ -51,7 +52,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             }
             finally 
             {
-                InvokeRunner("-uninstall");
+                InvokeRunner(uninstall: true);
             }
         }
 
@@ -62,7 +63,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             try
             {
-                InvokeRunner("-install");
+                InvokeRunner(install: true);
             }
 
             //
@@ -71,7 +72,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             catch { }
 
-            InvokeRunner("-uninstall");
+            InvokeRunner(uninstall: true);
 
             ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
             Assert.That(svc, Is.Null);

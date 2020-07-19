@@ -25,7 +25,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             base.Dispose(disposeManaged);
         }
 
-        public ConsoleHostRunner(IHost host) : base(host) { }
+        internal ConsoleHostRunner(IHost host) : base(host) { }
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         public override void Start()
@@ -77,8 +77,17 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 e.Cancel = true;
         }
 
-        public override bool ShouldUse => Environment.UserInteractive;
-
         public override void Stop() => FTerminate.Set();
+
+        #region Factory
+        private class FactoryImpl : IHostRunnerFactory
+        {
+            public bool ShouldUse => Environment.UserInteractive;
+
+            public IHostRunner CreateRunner(IHost host) => new ConsoleHostRunner(host);
+        }
+
+        public static IHostRunnerFactory Factory { get; } = new FactoryImpl();
+        #endregion
     }
 }

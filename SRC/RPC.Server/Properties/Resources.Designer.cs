@@ -88,7 +88,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The length of the args array does not match with the parameter count..
+        ///   Looks up a localized string similar to The length of the args array does not match the parameter count..
         /// </summary>
         internal static string INAPPROPRIATE_ARRAY_LENGTH {
             get {

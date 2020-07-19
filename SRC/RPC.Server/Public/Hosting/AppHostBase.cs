@@ -31,10 +31,10 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         protected AppHostBase(IServiceContainer container, RpcService rpcService)
         {     
-            FContainer     = container ?? throw new ArgumentNullException(nameof(container));
+            FContainer     = container  ?? throw new ArgumentNullException(nameof(container));
             FRpcService    = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
             FTraceCategory = $"[{GetType().Name}]";
-            Runner         = HostRunner.GetFor(this);
+            Runner         = HostRunner.GetCompatibleRunner(this);
         }
 
         /// <summary>

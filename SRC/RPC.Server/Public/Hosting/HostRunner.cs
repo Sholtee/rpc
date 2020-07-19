@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 namespace Solti.Utils.Rpc.Hosting
 {
     using Internals;
-    using Primitives;
     using Primitives.Patterns;
 
     /// <summary>
@@ -46,11 +45,6 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
-        /// If overridden in the derived class it should determines whether the runner should be used.
-        /// </summary>
-        public abstract bool ShouldUse { get; }
-
-        /// <summary>
         /// Starts the host.
         /// </summary>
         public abstract void Start();
@@ -62,55 +56,58 @@ namespace Solti.Utils.Rpc.Hosting
         public abstract void Stop();
 
         //
-        // A legutoljara regisztralt futtatot vizsgaljuk eloszor kompatibilitasi szempontbol.
+        // A legutoljara regisztralt gyarat vizsgaljuk eloszor kompatibilitasi szempontbol.
         //
 
-        private static Stack<Func<object[], object>> RunnerCtors { get; } = new Stack<Func<object[], object>>();
+        private static Stack<IHostRunnerFactory> RunnerFactories { get; } = new Stack<IHostRunnerFactory>();
 
         /// <summary>
-        /// Extends the set of available host runners.
+        /// Extends the set of the available <see cref="IHostRunnerFactory"/>s.
         /// </summary>
-        public static void Extend<THostRunner>() where THostRunner : HostRunner 
-        {
-            Func<object[], object>? ctor = typeof(THostRunner)
-                .GetConstructor(new[] { typeof(IHost) })
-                ?.ToStaticDelegate();
-
-            if (ctor != null) RunnerCtors.Push(ctor);
-        }
+        public static void RegisterFactory(IHostRunnerFactory factory) => RunnerFactories.Push(factory);
 
         static HostRunner() 
         {
-            Extend<DefaultHostRunner>();
-            Extend<ConsoleHostRunner>();
+            RegisterFactory(DefaultHostRunner.Factory);
+            RegisterFactory(ConsoleHostRunner.Factory);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Extend<InstallHostRunner_WinNT>();
-                Extend<ServiceHostRunner_WinNT>();
+                RegisterFactory(InstallHostRunner_WinNT.Factory);
+                RegisterFactory(ServiceHostRunner_WinNT.Factory);
             }
         }
 
         /// <summary>
         /// Gets the compatible runner for the given <paramref name="host"/>.
         /// </summary>
-        public static IHostRunner GetFor(IHost host) 
+        public static IHostRunner GetCompatibleRunner(IHost host) 
         {
             if (host == null)
                 throw new ArgumentNullException(nameof(host));
 
-            foreach (Func<object[], object> ctor in RunnerCtors)
+            foreach (IHostRunnerFactory factory in RunnerFactories)
             {
-                var runner = (HostRunner) ctor.Invoke(new object[] { host });
-                if (runner.ShouldUse)
+                if (factory.ShouldUse)
                 {
+                    IHostRunner runner = factory.CreateRunner(host);
+
                     Trace.WriteLine($"Running host with {runner.GetType().Name}", $"[{nameof(HostRunner)}]");
                     return runner;
                 }
-                runner.Dispose();
             }
 
             throw new NotSupportedException(); // elvileg ide sose jutunk el
+        }
+
+        /// <summary>
+        /// Runs the given host.
+        /// </summary>
+        public static void Run<THost>() where THost : IHost, new()
+        {
+            using IHost host = new THost();
+            using IHostRunner runner = GetCompatibleRunner(host);
+                runner.Start();
         }
     }
 }
