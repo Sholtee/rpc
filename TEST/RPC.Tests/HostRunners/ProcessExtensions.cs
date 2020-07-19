@@ -20,12 +20,10 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            Process 
-                process = Process.GetCurrentProcess(),
-                parent  = process.GetParent();
+            Process parent = ProcessExtensions.GetParent();
 
             Assert.That(parent, Is.Not.Null);
-            Assert.That(parent.MainModule.FileName, Is.Not.EqualTo(process.MainModule.FileName));
+            Assert.That(parent.MainModule.FileName, Is.Not.EqualTo(Process.GetCurrentProcess().MainModule.FileName));
         }
     }
 }

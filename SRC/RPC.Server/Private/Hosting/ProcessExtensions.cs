@@ -11,13 +11,13 @@ using System.Runtime.InteropServices;
 
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
+    [SuppressMessage("Design", "CA1060:Move pinvokes to native methods class")]
     internal static class ProcessExtensions
     {
         /// <summary>
         /// https://stackoverflow.com/questions/394816/how-to-get-parent-process-in-net-in-managed-way
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        [SuppressMessage("Design", "CA1060:Move pinvokes to native methods class")]
+        [StructLayout(LayoutKind.Sequential)]    
         [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types")]
         private struct ProcessBasicInformation
         {
@@ -35,32 +35,45 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             [DllImport("ntdll.dll")]
             private static extern int NtQueryInformationProcess(IntPtr processHandle, int processInformationClass, ref ProcessBasicInformation processInformation, int processInformationLength, out int returnLength);
 
-            public static Process? GetParentProcess(IntPtr handle)
+            public static int GetParentPid()
             {
                 ProcessBasicInformation pbi = new ProcessBasicInformation();
 
-                int status = NtQueryInformationProcess(handle, 0, ref pbi, Marshal.SizeOf(pbi), out _);
+                int status = NtQueryInformationProcess(Process.GetCurrentProcess().Handle, 0, ref pbi, Marshal.SizeOf(pbi), out _);
                 if (status != 0)
                     throw new Win32Exception(status);
 
-                try
-                {
-                    return Process.GetProcessById(pbi.InheritedFromUniqueProcessId.ToInt32());
-                }
-                catch (ArgumentException)
-                {
-                    // not found
-                    return null;
-                }
+                return pbi.InheritedFromUniqueProcessId.ToInt32();
             }
         }
 
-        public static Process? GetParent(this Process src) 
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return null;
+        [DllImport("libc", EntryPoint = "getppid")]
+        private static extern int GetParentPid();
 
-            return ProcessBasicInformation.GetParentProcess(src.Handle);
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
+        public static Process? GetParent() 
+        {
+            int parentPid;
+            
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Win32NT:
+                    parentPid = ProcessBasicInformation.GetParentPid();
+                    break;
+                case PlatformID.Unix:
+                    parentPid = GetParentPid();
+                    break;
+                default: return null;
+            };
+
+            try
+            {
+                return Process.GetProcessById(parentPid);
+            }
+            catch 
+            {
+                return null;
+            }
         }
     }
 }

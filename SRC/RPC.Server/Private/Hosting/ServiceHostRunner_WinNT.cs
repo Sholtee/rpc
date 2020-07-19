@@ -72,7 +72,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             {
                 if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return false;
 
-                Process? parent = Process.GetCurrentProcess().GetParent();
+                Process? parent = ProcessExtensions.GetParent();
                 return parent?.SessionId == 0 && string.Equals("services", parent.ProcessName, StringComparison.OrdinalIgnoreCase);
             }
         }
