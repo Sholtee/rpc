@@ -57,6 +57,18 @@ references:
   commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.#ctor
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.AppHostBase()
   nameWithType: AppHostBase.AppHostBase()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)
+  name: AppHostBase(IServiceContainer)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.AppHostBase(Solti.Utils.DI.Interfaces.IServiceContainer)
+  nameWithType: AppHostBase.AppHostBase(IServiceContainer)
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.RpcService)
+  name: AppHostBase(IServiceContainer, RpcService)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_Solti_Utils_Rpc_RpcService_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.RpcService)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.AppHostBase(Solti.Utils.DI.Interfaces.IServiceContainer, Solti.Utils.Rpc.RpcService)
+  nameWithType: AppHostBase.AppHostBase(IServiceContainer, RpcService)
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.#ctor*
   name: AppHostBase
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase__ctor_
