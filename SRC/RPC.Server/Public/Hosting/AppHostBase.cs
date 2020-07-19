@@ -24,15 +24,17 @@ namespace Solti.Utils.Rpc.Hosting
     {
         private readonly IServiceContainer FContainer;
         private readonly RpcService FRpcService;
+        private readonly string FTraceCategory;
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         protected AppHostBase()
         {     
-            FContainer  = new ServiceContainer();
-            FRpcService = new RpcService(FContainer);
-            Runner      = HostRunner.GetFor(this);
+            FContainer     = new ServiceContainer();
+            FRpcService    = new RpcService(FContainer);           
+            FTraceCategory = $"[{GetType().Name}]";
+            Runner         = HostRunner.GetFor(this);
         }
 
         /// <summary>
@@ -78,12 +80,12 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service installation.
         /// </summary>
-        public virtual void OnInstall() => Trace.WriteLine($"Installing {GetType().Name}");
+        public virtual void OnInstall() => Trace.WriteLine(nameof(OnInstall), FTraceCategory);
 
         /// <summary>
         /// Invoked on service removal.
         /// </summary>
-        public virtual void OnUninstall() => Trace.WriteLine($"Uninstalling {GetType().Name}");
+        public virtual void OnUninstall() => Trace.WriteLine(nameof(OnUninstall), FTraceCategory);
 
         /// <summary>
         /// Place of module registration routines.
@@ -115,7 +117,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart()
         {
-            Trace.WriteLine($"Starting {GetType().Name}");
+            Trace.WriteLine(nameof(OnStart), FTraceCategory);
 
             if (!Initialized)
             {
@@ -131,7 +133,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStop()
         {
-            Trace.WriteLine($"Stopping {GetType().Name}");
+            Trace.WriteLine(nameof(OnStop), FTraceCategory);
 
             FRpcService.Stop();
         }
@@ -144,7 +146,7 @@ namespace Solti.Utils.Rpc.Hosting
             if (ex == null)
                 throw new ArgumentNullException(nameof(ex));
 
-            Trace.WriteLine($"Unhandled exception: {ex.Message}");
+            Trace.WriteLine($"Unhandled exception: {ex.Message}", FTraceCategory);
         }
 
         /// <summary>

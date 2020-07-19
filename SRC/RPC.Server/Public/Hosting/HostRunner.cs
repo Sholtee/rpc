@@ -104,7 +104,7 @@ namespace Solti.Utils.Rpc.Hosting
                 var runner = (HostRunner) ctor.Invoke(new object[] { host });
                 if (runner.ShouldUse)
                 {
-                    Trace.WriteLine($"Running host with {runner.GetType().Name}");
+                    Trace.WriteLine($"Running host with {runner.GetType().Name}", $"[{nameof(HostRunner)}]");
                     return runner;
                 }
                 runner.Dispose();

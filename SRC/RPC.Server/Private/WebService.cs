@@ -33,7 +33,9 @@ namespace Solti.Utils.Rpc.Internals
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
-            Trace.WriteLine($"Listener started on {Url}");
+            string category = $"[{nameof(HttpListener)}]";
+
+            Trace.WriteLine($"Started on {Url}", category);
 
             Task isTerminated = Task.Factory.StartNew(FTerminated.Wait, TaskCreationOptions.LongRunning);
 
@@ -49,7 +51,7 @@ namespace Solti.Utils.Rpc.Internals
                 );
             } while (Task.WaitAny(isTerminated, getContext) == 1);
 
-            Trace.WriteLine($"Listener terminated on {Url}");
+            Trace.WriteLine($"Terminated on {Url}", category);
         }
 
         private static HttpListener CreateCore(string url) 
@@ -103,7 +105,7 @@ namespace Solti.Utils.Rpc.Internals
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            string category = $"HTTP request: {context.Request.RemoteEndPoint}";
+            string category = $"[HTTP session {context.Request.RemoteEndPoint}]";
 
             Trace.WriteLine($"Incoming request", category);
 
@@ -114,11 +116,11 @@ namespace Solti.Utils.Rpc.Internals
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     throw new TimeoutException();
 
-                Trace.WriteLine($"{nameof(ProcessRequestContext)}() succeeded", category);
+                Trace.WriteLine($"Request processed successfully", category);
             }
             catch(Exception ex)
             {
-                Trace.WriteLine($"{nameof(ProcessRequestContext)}() failed with error: {ex.Message}", category);
+                Trace.WriteLine($"Request processing failed: {ex.Message}", category);
 
                 try
                 {
