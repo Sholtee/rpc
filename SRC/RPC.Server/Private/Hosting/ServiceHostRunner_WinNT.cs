@@ -66,15 +66,6 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             FServiceImpl.Stop();
         }
 
-        public override bool ShouldUse 
-        {
-            get
-            {
-                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return false;
-
-                Process? parent = ProcessExtensions.GetParent();
-                return parent?.SessionId == 0 && string.Equals("services", parent.ProcessName, StringComparison.OrdinalIgnoreCase);
-            }
-        }
+        public override bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && ProcessExtensions.IsService;
     }
 }

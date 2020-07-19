@@ -17,7 +17,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         /// <summary>
         /// https://stackoverflow.com/questions/394816/how-to-get-parent-process-in-net-in-managed-way
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]    
+        [StructLayout(LayoutKind.Sequential)]
         [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types")]
         private struct ProcessBasicInformation
         {
@@ -51,28 +51,48 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         private static extern int GetParentPid();
 
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        public static Process? GetParent() 
+        public static Process? Parent
         {
-            int parentPid;
-            
-            switch (Environment.OSVersion.Platform)
+            get
             {
-                case PlatformID.Win32NT:
-                    parentPid = ProcessBasicInformation.GetParentPid();
-                    break;
-                case PlatformID.Unix:
-                    parentPid = GetParentPid();
-                    break;
-                default: return null;
-            };
+                int parentPid;
 
-            try
-            {
-                return Process.GetProcessById(parentPid);
+                switch (Environment.OSVersion.Platform)
+                {
+                    case PlatformID.Win32NT:
+                        parentPid = ProcessBasicInformation.GetParentPid();
+                        break;
+                    case PlatformID.Unix:
+                        parentPid = GetParentPid();
+                        break;
+                    default: return null;
+                };
+
+                try
+                {
+                    return Process.GetProcessById(parentPid);
+                }
+                catch
+                {
+                    return null;
+                }
             }
-            catch 
+        }
+
+        public static bool IsService 
+        {
+            get 
             {
-                return null;
+                Process? parent = Parent;
+                if (parent == null) 
+                    return false;
+
+                return Environment.OSVersion.Platform switch
+                {
+                    PlatformID.Win32NT => parent.SessionId == 0 && string.Equals("services", parent.ProcessName, StringComparison.OrdinalIgnoreCase),
+                    PlatformID.Unix => string.Equals("systemd", parent.ProcessName.TrimEnd('\n'), StringComparison.OrdinalIgnoreCase),
+                    _ => false
+                };
             }
         }
     }
