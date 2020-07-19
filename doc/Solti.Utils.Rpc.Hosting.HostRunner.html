@@ -157,30 +157,6 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Hosting_HostRunner_ShouldUse_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.ShouldUse*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_HostRunner_ShouldUse" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.ShouldUse">ShouldUse</h4>
-  <div class="markdown level1 summary"><p>If overridden in the derived class it should determines whether the runner should be used.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract bool ShouldUse { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Hosting_HostRunner_Dispose_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.Dispose*"></a>
@@ -211,39 +187,14 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
-  <a id="Solti_Utils_Rpc_Hosting_HostRunner_Extend_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.Extend*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_HostRunner_Extend__1" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.Extend``1">Extend&lt;THostRunner&gt;()</h4>
-  <div class="markdown level1 summary"><p>Extends the set of available host runners.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void Extend&lt;THostRunner&gt;()
-    where THostRunner : HostRunner</code></pre>
-  </div>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">THostRunner</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_HostRunner_GetFor_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.GetFor*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_HostRunner_GetFor_Solti_Utils_Rpc_Hosting_IHost_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.GetFor(Solti.Utils.Rpc.Hosting.IHost)">GetFor(IHost)</h4>
+  <a id="Solti_Utils_Rpc_Hosting_HostRunner_GetCompatibleRunner_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_HostRunner_GetCompatibleRunner_Solti_Utils_Rpc_Hosting_IHost_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner(Solti.Utils.Rpc.Hosting.IHost)">GetCompatibleRunner(IHost)</h4>
   <div class="markdown level1 summary"><p>Gets the compatible runner for the given <code data-dev-comment-type="paramref" class="paramref">host</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IHostRunner GetFor(IHost host)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IHostRunner GetCompatibleRunner(IHost host)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -273,6 +224,57 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Solti.Utils.Rpc.Hosting.IHostRunner.html">IHostRunner</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Hosting_HostRunner_RegisterFactory_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.RegisterFactory*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_HostRunner_RegisterFactory_Solti_Utils_Rpc_Hosting_IHostRunnerFactory_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.RegisterFactory(Solti.Utils.Rpc.Hosting.IHostRunnerFactory)">RegisterFactory(IHostRunnerFactory)</h4>
+  <div class="markdown level1 summary"><p>Extends the set of the available <a class="xref" href="Solti.Utils.Rpc.Hosting.IHostRunnerFactory.html">IHostRunnerFactory</a>s.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RegisterFactory(IHostRunnerFactory factory)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Hosting.IHostRunnerFactory.html">IHostRunnerFactory</a></td>
+        <td><span class="parametername">factory</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Hosting_HostRunner_Run_" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.Run*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_HostRunner_Run__1" data-uid="Solti.Utils.Rpc.Hosting.HostRunner.Run``1">Run&lt;THost&gt;()</h4>
+  <div class="markdown level1 summary"><p>Runs the given host.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Run&lt;THost&gt;()
+    where THost : IHost, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">THost</span></td>
         <td></td>
       </tr>
     </tbody>
