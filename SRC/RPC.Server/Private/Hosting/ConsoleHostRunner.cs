@@ -80,7 +80,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         public override void Stop() => FTerminate.Set();
 
         #region Factory
-        private class FactoryImpl : IHostRunnerFactory
+        private sealed class FactoryImpl : IHostRunnerFactory
         {
             public bool ShouldUse => Environment.UserInteractive;
 

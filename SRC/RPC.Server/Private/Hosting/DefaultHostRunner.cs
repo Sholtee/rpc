@@ -20,7 +20,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         }
 
         #region Factory
-        private class FactoryImpl : IHostRunnerFactory
+        private sealed class FactoryImpl : IHostRunnerFactory
         {
             public bool ShouldUse => true;
 
