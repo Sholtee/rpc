@@ -247,3 +247,5 @@ Coverage Report
 gh-pages
 [Dd][Oo][Cc]/
 Artifacts
+*idea
+package-lock.json
