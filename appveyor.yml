@@ -32,10 +32,13 @@ clone_script:
       git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
       git checkout -qf %APPVEYOR_REPO_COMMIT%
 
+install:
+  - ps: Start-Process -FilePath "npm" -ArgumentList "install" -WorkingDirectory ".\WEB"
+
 # "before_test" runs after repo cloning so use it instead of "init"
 before_test:
   - ps: |
-      Set-Location -path ".\scripts"
+      Set-Location -Path ".\SCRIPTS"
       .(".\includes.ps1")
       Update-AppveyorBuild -Version "$($PROJECT.version).$($Env:APPVEYOR_BUILD_NUMBER)-$($Env:APPVEYOR_REPO_BRANCH)"
       Get-SysInfo
