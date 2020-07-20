@@ -1,0 +1,18 @@
+{
+  "extends": "./eslint-base.json",
+
+  "env": {
+    "browser": false,
+    "node": true,
+    "jasmine": true
+  },
+
+  "plugins": [
+    "jasmine"
+  ],
+
+  "globals": {
+    "window": false,
+    "Promise": true
+  }
+}

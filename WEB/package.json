@@ -1,5 +1,5 @@
 {
-  "name": "RPC.NET",
+  "name": "rpc.net.connector",
   "description": "JS connector for RPC.NET",
   "version": "1.0.0-preview1",
   "repository": {
@@ -12,6 +12,10 @@
     "grunt": "^1.2.1",
     "jasmine-core": "^3.5.0",
     "grunt-eslint": "^23.0.0",
+    "grunt-contrib-uglify-es": "^3.3.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jasmine": "^2.2.0",
+    "grunt-contrib-clean": "^2.0.0",
     "eslint": "^7.5.0",
     "eslint-plugin-jasmine": "^4.1.1",
     "matchdep": "^2.0.0"

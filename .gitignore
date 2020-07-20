@@ -17,7 +17,6 @@
 [Rr]eleases/
 [Xx]64/
 [Xx]86/
-[Bb]uild/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -249,3 +248,6 @@ gh-pages
 Artifacts
 *idea
 package-lock.json
+dist
+_SpecRunner.html
+.grunt
