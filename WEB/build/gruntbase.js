@@ -114,7 +114,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         'jasmine'
     ]));
 
-    registerTask('pushresults', () => task.run([ // grunt push --target=./artifacts/testresult.xml
+    registerTask('pushresults', () => task.run([ // grunt pushresults
         'init',
         'http_upload:testresults'
     ]));
