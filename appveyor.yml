@@ -35,8 +35,8 @@ clone_script:
       git checkout -qf %APPVEYOR_REPO_COMMIT%
       
 # enable RDP
-init:
-  - ps: IEX ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#init:
+#  - ps: IEX ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # "before_test" runs after repo cloning so use it instead of "init"
 before_test:
