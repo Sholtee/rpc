@@ -1,8 +1,7 @@
-import 'jasmine';
-import {foo} from 'dummy';
+const Foo = window.Foo;
 
-describe('Dummy module', () => {
-    describe('foo()', () => {
-        it('should return true', () => expect(foo()).toBeTruthy());
+describe('Foo class', () => {
+    describe('isTrue()', () => {
+        it('should return true', () => expect(Foo.isTrue()).toBeTruthy());
     });
 });

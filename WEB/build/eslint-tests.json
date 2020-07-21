@@ -12,7 +12,7 @@
   ],
 
   "globals": {
-    "window": false,
+    "window": true,
     "Promise": true
   }
 }

@@ -27,7 +27,8 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                 force: true
             },
             dist: ['<%= project.dirs.dist %>'],
-            tmp: ['<%= project.dirs.tmp %>']
+            tmp: ['<%= project.dirs.tmp %>'],
+            artifacts: ['<%= project.dirs.artifacts %>']
         },
         uglify: {
             dist: {
@@ -61,8 +62,8 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
         },
         babel: {
             options: {
-                sourceMap: true,
-                sourceType: 'module',
+                //sourceMap: true,
+                sourceType: 'script',
                 presets: ['@babel/preset-env']
             },
             tests: {
@@ -81,9 +82,10 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
             src: '<%= project.dirs.tmp %>/app.js',
             options: {
                 specs: '<%= project.dirs.tmp %>/specs.js',
-                outfile: '<%= project.dirs.tmp %>/_SpecRunner.html',
+                outfile: '.tmp/_SpecRunner.html', // nem lehet abszolut utvonal -> "<%= project.dirs.tmp %>/_SpecRunner.html" kilove
                 junit: {
-                    path: '<%= project.dirs.artifacts %>'
+                   path: '<%= project.dirs.artifacts %>',
+                    consolidate: true
                 }
             }
         }
@@ -92,6 +94,7 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
     registerTask('test', () => task.run([ // grunt test [--target=xXx.spec.js]
         'init',
         'clean:tmp',
+        'clean:artifacts',
         'eslint:app',
         'eslint:tests',
         'babel:tests',

@@ -1,1 +1,3 @@
-export function foo() { return true; }
+window.Foo = class Foo {
+    static isTrue() {return true;}
+};
