@@ -1,5 +1,5 @@
 import 'jasmine';
-import foo from  '../src/dummy';
+import {foo} from 'dummy';
 
 describe('Dummy module', () => {
     describe('foo()', () => {

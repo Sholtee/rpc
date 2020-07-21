@@ -249,5 +249,4 @@ Artifacts
 *idea
 package-lock.json
 dist
-_SpecRunner.html
 .grunt
