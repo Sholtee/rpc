@@ -6,10 +6,11 @@
 
 (function(module, require) {
 
-module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
+module.exports = ({task, registerTask, initConfig, file: {readJSON, expand}, option}, dir) => {
     const
-        pkg    = file.readJSON('./package.json'),
-        target = option('target');
+        pkg = readJSON('./package.json'),
+        target = option('target'),
+        {basename} = require('path');
 
     registerTask('init', () => initConfig({
         project: {
@@ -88,6 +89,15 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     consolidate: true
                 }
             }
+        },
+        http_upload: {
+            testresults: {
+                options: {
+                    url: `https://ci.appveyor.com/api/testresults/junit/${process.env.APPVEYOR_JOB_ID}`,
+                    method: 'PUT'
+                },
+                files: getTestResults()
+            },
         }
     }));
 
@@ -99,6 +109,11 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
         'eslint:tests',
         'babel:tests',
         'jasmine'
+    ]));
+
+    registerTask('push', () => task.run([ // grunt push --target=./artifacts/testresult.xml
+        'init',
+        'http_upload:testresults'
     ]));
 
     registerTask('build', () => task.run([ // grunt build
@@ -113,5 +128,14 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
         'init',
         `eslint:${target}`
     ]));
+
+    function getTestResults() {
+        return !target
+            ? []
+            : expand(target).map(file => ({
+                src: file,
+                dest: basename(file)
+            }));
+    }
 };
 })(module, require);
