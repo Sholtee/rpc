@@ -11,7 +11,7 @@
   "devDependencies": {
     "grunt": "^1.2.1",
     "jasmine-core": "^3.5.0",
-    "grunt-eslint": "^23.0.0",
+    "grunt-eslint": "^22.0.0",
     "grunt-babel": " ^8.0.0",
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
