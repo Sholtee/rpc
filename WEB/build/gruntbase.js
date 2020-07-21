@@ -6,11 +6,11 @@
 
 (function(module, require) {
 
-module.exports = ({task, registerTask, initConfig, file: {readJSON, expand}, option}, dir) => {
+module.exports = ({task, registerTask, initConfig, file, template, option}, dir) => {
     const
-        pkg = readJSON('./package.json'),
+        pkg    = file.readJSON('./package.json'),
         target = option('target'),
-        {basename} = require('path');
+        path   = require('path');
 
     registerTask('init', () => initConfig({
         project: {
@@ -96,7 +96,10 @@ module.exports = ({task, registerTask, initConfig, file: {readJSON, expand}, opt
                     url: `https://ci.appveyor.com/api/testresults/junit/${process.env.APPVEYOR_JOB_ID}`,
                     method: 'PUT'
                 },
-                files: getTestResults()
+                filter: '<%= project.dirs.artifacts %>/*.xml', // hack h hasznalhassunk sablont a getTestResults() hivasakor
+                get files() {
+                    return getTestResults(this.filter);
+                }
             },
         }
     }));
@@ -111,7 +114,7 @@ module.exports = ({task, registerTask, initConfig, file: {readJSON, expand}, opt
         'jasmine'
     ]));
 
-    registerTask('push', () => task.run([ // grunt push --target=./artifacts/testresult.xml
+    registerTask('pushresults', () => task.run([ // grunt push --target=./artifacts/testresult.xml
         'init',
         'http_upload:testresults'
     ]));
@@ -129,13 +132,13 @@ module.exports = ({task, registerTask, initConfig, file: {readJSON, expand}, opt
         `eslint:${target}`
     ]));
 
-    function getTestResults() {
-        return !target
-            ? []
-            : expand(target).map(file => ({
-                src: file,
-                dest: basename(file)
-            }));
+    function getTestResults(filter) {
+        filter = template.process(filter);
+
+        return file.expand(filter).map(file => ({
+            src: file,
+            dest: path.basename(file)
+        }));
     }
 };
 })(module, require);
