@@ -94,7 +94,10 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             testresults: {
                 options: {
                     url: `https://ci.appveyor.com/api/testresults/junit/${process.env.APPVEYOR_JOB_ID}`,
-                    method: 'PUT'
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'text/xml'
+                    }
                 },
                 filter: '<%= project.dirs.artifacts %>/*.xml', // hack h hasznalhassunk sablont a getTestResults() hivasakor
                 get files() {
