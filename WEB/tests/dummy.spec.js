@@ -1,3 +1,5 @@
+'use strict';
+
 const Foo = window.Foo;
 
 describe('Foo class', () => {
