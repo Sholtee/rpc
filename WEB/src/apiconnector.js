@@ -4,7 +4,10 @@
 ********************************************************************************/
 'use strict';
 
-window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new window.XMLHttpRequest()) {
+(function(window) {
+const RESPONSE_NOT_VALID = 'Server response could not be processed';
+
+/*class*/ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new window.XMLHttpRequest()) {
     Object.assign(this, {
         sessionId: null,
         headers: {},
@@ -50,7 +53,7 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
                 }
                 // eslint-disable-next-line no-fallthrough
                 default: {
-                    reject('Server response could not be processed');
+                    reject(RESPONSE_NOT_VALID);
                     break;
                 }
             }
@@ -116,4 +119,14 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
             }
         }
     });
-};
+}
+
+//
+// Exports
+//
+
+Object.assign(window, {
+    RESPONSE_NOT_VALID,
+    ApiConnectionFactory
+});
+})(window);

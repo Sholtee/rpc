@@ -15,6 +15,7 @@
     "window": true,
     "Promise": true,
     "ApiConnectionFactory": true,
+    "RESPONSE_NOT_VALID": true,
     "sinon": true
   }
 }

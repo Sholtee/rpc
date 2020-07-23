@@ -31,5 +31,32 @@ describe('ApiConnectionFactory', () => {
             });
             server.respond();
         });
+
+        it('should handle malformed result', done => {
+            server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '1986']);
+            factory.post(api, [1, 1]).catch(e => {
+                expect(e).toEqual(RESPONSE_NOT_VALID);
+                done();
+            });
+            server.respond();
+        });
+
+        it('should handle invalid content type',  done => {
+            server.respondWith('POST', api, [200, { 'Content-Type': 'cica' }, '{"Exception": null, "Result": 2}']);
+            factory.post(api, [1, 1]).catch(e => {
+                expect(e).toEqual(RESPONSE_NOT_VALID);
+                done();
+            });
+            server.respond();
+        });
+
+        it('should handle text result',  done => {
+            server.respondWith('POST', api, [200, { 'Content-Type': 'text/html' }, 'akarmi']);
+            factory.post(api, [1, 1]).catch(e => {
+                expect(e).toEqual('akarmi');
+                done();
+            });
+            server.respond();
+        });
     });
 });
