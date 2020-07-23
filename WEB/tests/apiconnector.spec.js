@@ -5,21 +5,22 @@
 'use strict';
 
 describe('ApiConnectionFactory', () => {
+    const api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add';
+
+    var server, factory;
+
+    beforeEach(function() {
+        server = sinon.createFakeServer();
+        server.autoRespond = false;
+
+        factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
+    });
+
+    afterEach(function() {
+        server.restore();
+    });
+
     describe('post()', () => {
-        const api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add';
-
-        var server, factory;
-
-        beforeEach(function () {
-            server = sinon.createFakeServer();
-            server.autoRespond = false;
-
-            factory = new ApiConnectionFactory(api);
-        });
-
-        afterEach(function () {
-            server.restore();
-        });
 
         it('should return a Promise', () => expect(factory.post(api, [1, 1])).toBeInstanceOf(Promise));
 
@@ -56,6 +57,42 @@ describe('ApiConnectionFactory', () => {
                 expect(e).toEqual('akarmi');
                 done();
             });
+            server.respond();
+        });
+    });
+
+    describe('createConnection()', () => {
+        it('should return a configurable connection', () => {
+            const calculator = factory.createConnection('ICalculator');
+
+            expect(typeof calculator).toBe('function');
+            expect(calculator.module).toBe('ICalculator');
+
+            calculator.registerMethod('Add', 'add');
+
+            const inst = new calculator();
+            expect(inst.hasOwnProperty('add')).toBeTrue();
+        });
+
+        it('should return a connection that invokes the server', done => {
+            server.respondWith('POST', api, xhr => {
+                const args = JSON.parse(xhr.requestBody);
+
+                xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({
+                    Result: args[0] + args[1]
+                }));
+            });
+
+            const calculator = factory
+                .createConnection('ICalculator')
+                .registerMethod('Add', 'add');
+
+            const inst = new calculator();
+            inst.add(1, 2).then(result => {
+                expect(result).toEqual(3);
+                done();
+            });
+
             server.respond();
         });
     });

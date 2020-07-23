@@ -7,7 +7,8 @@
 (function(window) {
 const RESPONSE_NOT_VALID = 'Server response could not be processed';
 
-/*class*/ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new window.XMLHttpRequest()) {
+// class
+function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new window.XMLHttpRequest()) {
     Object.assign(this, {
         sessionId: null,
         headers: {},
@@ -84,8 +85,8 @@ const RESPONSE_NOT_VALID = 'Server response could not be processed';
             });
         },
         invoke: function(module, method, args) {
-            let url = `${urlBase}?module=${module}&method=${name}`;
-            if (this.sessionId) url += `&${this.sessionId}`;
+            let url = `${urlBase}?module=${module}&method=${method}`;
+            if (this.sessionId) url += `&sessionid=${this.sessionId}`;
 
             return this.post(url, args);
         },
