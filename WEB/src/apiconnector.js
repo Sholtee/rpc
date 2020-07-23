@@ -51,12 +51,14 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
                 xhr.open('POST', url, true);
                 xhr.timeout = this.timeout;
 
+                const headers = Object.assign({
+                    'Content-Type': 'application/json',
+                    'Content-Length:': body.length
+                }, this.headers);
+
                 Object
-                    .keys(Object.assign({
-                        'Content-Type': 'application/json',
-                        'Content-Length:': body.length
-                    }, this.headers))
-                    .forEach(key => xhr.setRequestHeader(key, this.headers[key]));
+                    .keys(headers)
+                    .forEach(key => xhr.setRequestHeader(key, headers));
 
                 xhr.onload = this.onResponse.apply(xhr, [resolve, reject]);
 
