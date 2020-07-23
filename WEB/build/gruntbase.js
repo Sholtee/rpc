@@ -83,7 +83,9 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             src: '<%= project.dirs.tmp %>/app.js',
             options: {
                 specs: '<%= project.dirs.tmp %>/specs.js',
+                vendor: './node_modules/sinon/pkg/sinon.js',
                 outfile: '.tmp/_SpecRunner.html', // nem lehet abszolut utvonal -> "<%= project.dirs.tmp %>/_SpecRunner.html" kilove
+                keepRunner: true,
                 junit: {
                    path: '<%= project.dirs.artifacts %>',
                     consolidate: true

@@ -13,6 +13,8 @@
 
   "globals": {
     "window": true,
-    "Promise": true
+    "Promise": true,
+    "ApiConnectionFactory": true,
+    "sinon": true
   }
 }

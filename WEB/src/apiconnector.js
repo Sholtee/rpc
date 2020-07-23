@@ -10,7 +10,7 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
         headers: {},
         timeout: 0,
         onResponse(resolve, reject) {
-            const response = this.respone || this.responeText;
+            const response = this.response || this.responseText;
 
             //
             // Statusz itt most nem erdekes, csak a valasz tipusa
@@ -22,19 +22,33 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
                     break;
                 }
                 case 'application/json': {
-                    const {Exception, Result} = JSON.parse(response);
+                    const parsed = JSON.parse(response);
+
+                    if (typeof parsed === 'object') {
+                        //
+                        // Ne hasOwnProperty()-vel vizsgaljuk mert lehet jelen van, csak NULL
+                        //
+
+                        if (parsed.Exception) {
+                            reject(parsed.Exception.Message);
+                            break;
+                        }
+
+                        //
+                        // Viszont itt mar NULL is jo ertek -> hasOwnProperty()
+                        //
+
+                        if (parsed.hasOwnProperty('Result')) {
+                            resolve(parsed.Result);
+                            break;
+                        }
+                    }
 
                     //
-                    // res.Result lehet NULL sikeres visszateres eseten is -> eloszor hibara vizsgalunk
+                    // Nem kell break, tudatos
                     //
-
-                    if (Exception)
-                        reject(Exception.Message);
-                    else
-                        resolve(Result);
-
-                    break;
                 }
+                // eslint-disable-next-line no-fallthrough
                 default: {
                     reject('Server response could not be processed');
                     break;
@@ -44,7 +58,7 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
         onError(reject) {
             reject(this.statusText);
         },
-        post(url, body) {
+        post(url, args) {
             return new Promise((resolve, reject) => {
                 const xhr = xhrFactory();
 
@@ -52,26 +66,25 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
                 xhr.timeout = this.timeout;
 
                 const headers = Object.assign({
-                    'Content-Type': 'application/json',
-                    'Content-Length:': body.length
+                    'Content-Type': 'application/json'
                 }, this.headers);
 
                 Object
                     .keys(headers)
-                    .forEach(key => xhr.setRequestHeader(key, headers));
+                    .forEach(key => xhr.setRequestHeader(key, headers[key].toString()));
 
-                xhr.onload = this.onResponse.apply(xhr, [resolve, reject]);
+                xhr.onload = this.onResponse.bind(xhr, resolve, reject);
 
-                xhr.onerror = xhr.ontimeout = this.onError.apply(xhr, [reject]);
+                xhr.onerror = xhr.ontimeout = this.onError.bind(xhr, reject);
 
-                xhr.send(body);
+                xhr.send(JSON.stringify(args));
             });
         },
         invoke: function(module, method, args) {
             let url = `${urlBase}?module=${module}&method=${name}`;
             if (this.sessionId) url += `&${this.sessionId}`;
 
-            return this.post(url, JSON.stringify(args));
+            return this.post(url, args);
         },
         createConnection: function(module) {
             const
@@ -80,13 +93,7 @@ window.ApiConnectionFactory = /*class*/ function ApiConnectionFactory(urlBase, /
 
             return Object.assign(ApiConnection, {
                 registerMethod: function(name, alias) {
-                    //
-                    // Ne arrow fn legyen h "arguments" letezzen
-                    //
-
-                    methods[alias || name] = function() {
-                        return owner.invoke(module, name, Array.from(arguments));
-                    };
+                    methods[alias || name] = (...args) => owner.invoke(module, name, args);
 
                     //
                     // A hivasok lancba fuzhetoek legyenek
