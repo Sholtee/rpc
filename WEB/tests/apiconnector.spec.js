@@ -91,14 +91,14 @@ describe('ApiConnectionFactory', () => {
 
     describe('createConnection()', () => {
         it('should return a configurable connection', () => {
-            const calculator = factory.createConnection('ICalculator');
+            const Calculator = factory.createConnection('ICalculator');
 
-            expect(typeof calculator).toBe('function');
-            expect(calculator.module).toBe('ICalculator');
+            expect(typeof Calculator).toBe('function');
+            expect(Calculator.module).toBe('ICalculator');
 
-            calculator.registerMethod('Add', 'add');
+            Calculator.registerMethod('Add', 'add');
 
-            const inst = new calculator();
+            const inst = new Calculator();
             expect(inst.hasOwnProperty('add')).toBeTrue();
         });
 
@@ -111,11 +111,11 @@ describe('ApiConnectionFactory', () => {
                 }));
             });
 
-            const calculator = factory
+            const Calculator = factory
                 .createConnection('ICalculator')
                 .registerMethod('Add', 'add');
 
-            const inst = new calculator();
+            const inst = new Calculator();
             inst.add(1, 2).then(result => {
                 expect(result).toEqual(3);
                 done();
