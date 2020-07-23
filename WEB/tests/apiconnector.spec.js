@@ -59,6 +59,34 @@ describe('ApiConnectionFactory', () => {
             });
             server.respond();
         });
+
+        it('should set the content type', () => {
+            var headers;
+
+            server.respondWith('POST', api, xhr => {
+                headers = xhr.requestHeaders;
+            });
+
+            factory.post(api, [1, 1]);
+            server.respond();
+
+            expect(headers['Content-Type']).toBe('application/json;charset=utf-8');
+        });
+
+        it('should handle custom headers', () => {
+            factory.headers['my-header'] = 'value';
+
+            var headers;
+
+            server.respondWith('POST', api, xhr => {
+                headers = xhr.requestHeaders;
+            });
+
+            factory.post(api, [1, 1]);
+            server.respond();
+
+            expect(headers['my-header']).toBe('value');
+        });
     });
 
     describe('createConnection()', () => {
