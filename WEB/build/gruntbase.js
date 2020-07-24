@@ -19,6 +19,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             dirs: {
                 app:       `${dir}/src`,
                 artifacts: `${dir}/artifacts`,
+                coverage:  `${dir}/artifacts/coverage`,
                 dist:      `${dir}/dist/${pkg.version}`,
                 tests:     `${dir}/tests`,
                 tmp:       `${dir}/.tmp`
@@ -102,10 +103,10 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 basePath: '',
                 frameworks: ['jasmine', 'sinon'],
                 files: [
-                    { src: ['<%= project.dirs.tmp %>/**/*.js'], served: true }
+                    {src: ['<%= project.dirs.tmp %>/**/*.js'], served: true}
                 ],
                 exclude: [],
-                reporters: ['junit'],
+                reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
                 singleRun: true,
                 browsers: ['Chrome'],
@@ -114,10 +115,21 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     'karma-chrome-launcher',
                     'karma-jasmine',
                     'karma-sinon',
-                    'karma-junit-reporter'
+                    'karma-junit-reporter',
+                    'karma-coverage-istanbul-reporter'
                 ],
                 junitReporter: {
                     outputDir: '<%= project.dirs.artifacts %>'
+                },
+                coverageIstanbulReporter: {
+                    reports: ['json', 'html'],
+                    dir: '<%= project.dirs.coverage %>',
+                    skipFilesWithNoCoverage: true,
+                    'report-config': {
+                        html: {
+                            subdir: 'html'
+                        }
+                    }
                 }
             }
         },
