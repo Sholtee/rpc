@@ -19,7 +19,6 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             dirs: {
                 app:       `${dir}/src`,
                 artifacts: `${dir}/artifacts`,
-                coverage:  `${dir}/artifacts/coverage`,
                 dist:      `${dir}/dist/${pkg.version}`,
                 tests:     `${dir}/tests`,
                 tmp:       `${dir}/.tmp`
@@ -122,14 +121,9 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     outputDir: '<%= project.dirs.artifacts %>'
                 },
                 coverageIstanbulReporter: {
-                    reports: ['json', 'html'],
-                    dir: '<%= project.dirs.coverage %>',
-                    skipFilesWithNoCoverage: true,
-                    'report-config': {
-                        html: {
-                            subdir: 'html'
-                        }
-                    }
+                    reports: ['json'],
+                    dir: '<%= project.dirs.artifacts %>',
+                    skipFilesWithNoCoverage: true
                 }
             }
         },
