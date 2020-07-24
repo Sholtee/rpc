@@ -102,7 +102,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 basePath: '',
                 frameworks: ['jasmine', 'sinon'],
                 files: [
-                    { src: ['.tmp/**/*.js'], served: true }
+                    { src: ['<%= project.dirs.tmp %>/**/*.js'], served: true }
                 ],
                 exclude: [],
                 reporters: ['junit'],
