@@ -68,10 +68,20 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 presets: ['@babel/preset-env']
             },
             tests: {
-                files: {
-                    '<%= project.dirs.tmp %>/specs.js': `<%= project.dirs.tests %>/${target || "**/*.spec.js"}`,
-                    '<%= project.dirs.tmp %>/app.js': '<%= project.dirs.app %>/**/*.js'
-                }
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= project.dirs.app %>',
+                        src: ['**/*.js'],
+                        dest: '<%= project.dirs.tmp %>'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= project.dirs.tests %>',
+                        src: [target || "**/*.spec.js"],
+                        dest: '<%= project.dirs.tmp %>'
+                    }
+                ]
             },
             dist: {
                 files: {
@@ -80,9 +90,9 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             }
         },
         jasmine: {
-            src: '<%= project.dirs.tmp %>/app.js',
+            src: ['<%= project.dirs.tmp %>/**/*.js', '!<%= project.dirs.tmp %>/**/*.spec.js'],
             options: {
-                specs: '<%= project.dirs.tmp %>/specs.js',
+                specs: '<%= project.dirs.tmp %>/**/*.spec.js',
                 vendor: './node_modules/sinon/pkg/sinon.js',
                 outfile: '.tmp/_SpecRunner.html', // nem lehet abszolut utvonal -> "<%= project.dirs.tmp %>/_SpecRunner.html" kilove
                 keepRunner: true,
