@@ -12,7 +12,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         target = option('target'),
         path   = require('path');
 
-    registerTask('init', () => initConfig({
+    initConfig({
         project: {
             name:  pkg.name.toLowerCase(),
             version: pkg.version,
@@ -74,6 +74,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             },
             app: {
                 options: {
+                    plugins: ['istanbul']
                 },
                 files: [{
                     expand: true,
@@ -96,16 +97,27 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 }
             }
         },
-        jasmine: {
-            src: ['<%= project.dirs.tmp %>/**/*.js', '!<%= project.dirs.tmp %>/**/*.spec.js'],
-            options: {
-                specs: '<%= project.dirs.tmp %>/**/*.spec.js',
-                vendor: './node_modules/sinon/pkg/sinon.js',
-                outfile: '.tmp/_SpecRunner.html', // nem lehet abszolut utvonal -> "<%= project.dirs.tmp %>/_SpecRunner.html" kilove
-                keepRunner: true,
-                junit: {
-                   path: '<%= project.dirs.artifacts %>',
-                    consolidate: true
+        karma: {
+            test: {
+                basePath: '',
+                frameworks: ['jasmine', 'sinon'],
+                files: [
+                    { src: ['.tmp/**/*.js'], served: true }
+                ],
+                exclude: [],
+                reporters: ['junit'],
+                port: 1986,
+                singleRun: true,
+                browsers: ['Chrome'],
+                logLevel: 'ERROR',
+                plugins: [
+                    'karma-chrome-launcher',
+                    'karma-jasmine',
+                    'karma-sinon',
+                    'karma-junit-reporter'
+                ],
+                junitReporter: {
+                    outputDir: '<%= project.dirs.artifacts %>'
                 }
             }
         },
@@ -125,26 +137,23 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 }
             },
         }
-    }));
+    });
 
     registerTask('test', () => task.run([ // grunt test [--target=xXx.spec.js]
-        'init',
         'clean:tmp',
         'clean:artifacts',
         'eslint:app',
         'eslint:tests',
         'babel:app',
         'babel:tests',
-        'jasmine'
+        'karma:test'
     ]));
 
     registerTask('pushresults', () => task.run([ // grunt pushresults
-        'init',
         'http_upload:testresults'
     ]));
 
     registerTask('build', () => task.run([ // grunt build
-        'init',
         'clean:dist',
         'eslint:app',
         'babel:dist',
@@ -152,7 +161,6 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
     ]));
 
     registerTask('lint', () => task.run([ // grunt lint --target=[tests|app]
-        'init',
         `eslint:${target}`
     ]));
 

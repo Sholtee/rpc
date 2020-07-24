@@ -1,5 +1,5 @@
 {
-  "name": "rpc.net.connector",
+  "name": "rpcdotnet-connector",
   "description": "JS connector for RPC.NET",
   "version": "1.0.0-preview1",
   "repository": {
@@ -14,14 +14,20 @@
     "sinon": "^9.0.2",
     "grunt-eslint": "^22.0.0",
     "grunt-babel": " ^8.0.0",
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
     "grunt-contrib-uglify-es": "^3.3.0",
-    "grunt-contrib-jasmine": "^2.2.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-http-upload": "^0.3.2",
+    "grunt-karma": "^4.0.0",
     "eslint": "^7.5.0",
     "eslint-plugin-jasmine": "^4.1.1",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-plugin-istanbul": "^6.0.0",
+    "karma": "^5.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.3.1",
+    "karma-sinon": "^1.0.5",
+    "karma-junit-reporter": "^2.0.1",
     "matchdep": "^2.0.0"
   },
   "engines": {
