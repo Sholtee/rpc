@@ -15,6 +15,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
     registerTask('init', () => initConfig({
         project: {
             name:  pkg.name.toLowerCase(),
+            version: pkg.version,
             dirs: {
                 app:       `${dir}/src`,
                 artifacts: `${dir}/artifacts`,
@@ -33,9 +34,13 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         },
         uglify: {
             dist: {
-                files: {
-                    '<%= project.dirs.dist %>/<%= project.name %>.min.js': '<%= project.dirs.dist %>/<%= project.name %>.js'
-                }
+                files: [{
+                    expand: true,
+                    cwd: '<%= project.dirs.dist %>',
+                    src: ['*.js', '!*.min.js'],
+                    dest: '<%= project.dirs.dist %>',
+                    rename: (dst, src) => `${dst}/${src.replace('.js', '.min.js')}`
+                }]
             }
         },
         eslint: {
@@ -67,25 +72,27 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 sourceType: 'script',
                 presets: ['@babel/preset-env']
             },
+            app: {
+                options: {
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= project.dirs.app %>',
+                    src: ['**/*.js'],
+                    dest: '<%= project.dirs.tmp %>'
+                }]
+            },
             tests: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= project.dirs.app %>',
-                        src: ['**/*.js'],
-                        dest: '<%= project.dirs.tmp %>'
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= project.dirs.tests %>',
-                        src: [target || "**/*.spec.js"],
-                        dest: '<%= project.dirs.tmp %>'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: '<%= project.dirs.tests %>',
+                    src: [target || "**/*.spec.js"],
+                    dest: '<%= project.dirs.tmp %>'
+                }]
             },
             dist: {
                 files: {
-                    '<%= project.dirs.dist %>/<%= project.name %>.js': '<%= project.dirs.app %>/**/*.js'
+                    '<%= project.dirs.dist %>/<%= project.name %>-<%= project.version %>.js': '<%= project.dirs.app %>/**/*.js'
                 }
             }
         },
@@ -111,8 +118,9 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                         'Content-Type': 'text/xml'
                     }
                 },
-                filter: '<%= project.dirs.artifacts %>/*.xml', // hack h hasznalhassunk sablont a getTestResults() hivasakor
+                filter: '<%= project.dirs.artifacts %>/*.xml',
                 get files() {
+                    // a "files" property nem tartalmazhat kifejteseket (pl.: *.xml) -> "filter" hack
                     return getTestResults(this.filter);
                 }
             },
@@ -125,6 +133,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         'clean:artifacts',
         'eslint:app',
         'eslint:tests',
+        'babel:app',
         'babel:tests',
         'jasmine'
     ]));
