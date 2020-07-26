@@ -157,7 +157,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 options: {
                     patterns: [{
                         match: /^SF:([\w\\/.]+)$/gm,
-                        replacement: (m, path) => `SF:.\\WEB\\${path}`
+                        replacement: (m, path) => `SF:..\\${path}`
                     }]
                 },
                 files: [{
