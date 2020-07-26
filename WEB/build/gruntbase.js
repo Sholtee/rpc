@@ -126,16 +126,6 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 }
             }
         },
-        env: {
-            coveralls: {
-                COVERALLS_SERVICE_NAME: 'AppVeyor',
-                COVERALLS_GIT_BRANCH: () => process.env.APPVEYOR_REPO_BRANCH
-
-            }
-        },
-        coveralls: {
-            src: '<%= project.dirs.artifacts %>/lcov.info'
-        },
         http_upload: {
             testresults: {
                 options: {
@@ -151,6 +141,27 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     return getTestResults(this.filter);
                 }
             },
+        },
+        env: {
+            coveralls: {
+                COVERALLS_SERVICE_NAME: 'appveyor',
+                COVERALLS_GIT_BRANCH: () => process.env.APPVEYOR_REPO_BRANCH
+            }
+        },
+        coveralls: {
+            src: '<%= project.dirs.artifacts %>/lcov.info'
+        },
+        replace: { // coveralls.io a repo gyokerebol keres
+            lcov: {
+                options: {
+                    patterns: [{
+                        match: /^SF:([\w\\/.]+)$/gm,
+                        replacement: (m, path) => `SF:WEB\\${path}`
+                    }]
+                },
+                files: [{expand: true, src: '<%= project.dirs.artifacts %>/lcov.info', dest: '.'
+                }]
+            }
         }
     });
 
@@ -170,6 +181,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
 
     registerTask('pushcoverage', () => task.run([ // grunt pushcoverage
         'env:coveralls',
+        'replace:lcov',
         'coveralls'
     ]));
 
