@@ -5,7 +5,9 @@
 'use strict';
 
 describe('ApiConnectionFactory', () => {
-    const api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add';
+    const
+        api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add',
+        noop = function() {};
 
     var server, factory;
 
@@ -16,12 +18,9 @@ describe('ApiConnectionFactory', () => {
         factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
     });
 
-    afterEach(function() {
-        server.restore();
-    });
+    afterEach(() => server.restore());
 
     describe('post()', () => {
-
         it('should return a Promise', () => expect(factory.post(api, [1, 1])).toBeInstanceOf(Promise));
 
         it('should deserialize the result', done => {
@@ -67,7 +66,7 @@ describe('ApiConnectionFactory', () => {
                 headers = xhr.requestHeaders;
             });
 
-            factory.post(api, [1, 1]);
+            factory.post(api, [1, 1]).catch(noop);
             server.respond();
 
             expect(headers['Content-Type']).toBe('application/json;charset=utf-8');
@@ -82,7 +81,7 @@ describe('ApiConnectionFactory', () => {
                 headers = xhr.requestHeaders;
             });
 
-            factory.post(api, [1, 1]);
+            factory.post(api, [1, 1]).catch(noop);
             server.respond();
 
             expect(headers['my-header']).toBe('value');
