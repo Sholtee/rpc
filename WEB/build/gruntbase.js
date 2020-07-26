@@ -8,9 +8,10 @@
 
 module.exports = ({task, registerTask, initConfig, file, template, option}, dir) => {
     const
-        pkg    = file.readJSON('./package.json'),
-        target = option('target'),
-        path   = require('path');
+        pkg     = file.readJSON('./package.json'),
+        target  = option('target'),
+        path    = require('path'),
+        process = require('process');
 
     initConfig({
         project: {
@@ -61,9 +62,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 options: {
                     configFile: './build/eslint-tests.json'
                 },
-                src: [
-                    '<%= project.dirs.tests %>/**/*.spec.js'
-                ]
+                src: '<%= project.dirs.tests %>/**/*.spec.js'
             }
         },
         babel: {
@@ -121,11 +120,21 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     outputDir: '<%= project.dirs.artifacts %>'
                 },
                 coverageIstanbulReporter: {
-                    reports: ['json'],
+                    reports: ['lcov'],
                     dir: '<%= project.dirs.artifacts %>',
                     skipFilesWithNoCoverage: true
                 }
             }
+        },
+        env: {
+            coveralls: {
+                COVERALLS_SERVICE_NAME: 'AppVeyor',
+                COVERALLS_GIT_BRANCH: () => process.env.APPVEYOR_REPO_BRANCH
+
+            }
+        },
+        coveralls: {
+            src: '<%= project.dirs.artifacts %>/lcov.info'
         },
         http_upload: {
             testresults: {
@@ -157,6 +166,11 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
 
     registerTask('pushresults', () => task.run([ // grunt pushresults
         'http_upload:testresults'
+    ]));
+
+    registerTask('pushcoverage', () => task.run([ // grunt pushcoverage
+        'env:coveralls',
+        'coveralls'
     ]));
 
     registerTask('build', () => task.run([ // grunt build

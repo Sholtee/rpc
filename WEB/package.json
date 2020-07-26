@@ -10,13 +10,14 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "^1.2.1",
-    "sinon": "^9.0.2",
     "grunt-eslint": "^22.0.0",
     "grunt-babel": " ^8.0.0",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-http-upload": "^0.3.2",
     "grunt-karma": "^4.0.0",
+    "grunt-env": "^1.0.1",
+    "grunt-coveralls": "^2.0.0",
     "eslint": "^7.5.0",
     "eslint-plugin-jasmine": "^4.1.1",
     "@babel/core": "^7.10.5",
@@ -28,7 +29,8 @@
     "karma-sinon": "^1.0.5",
     "karma-junit-reporter": "^2.0.1",
     "karma-coverage-istanbul-reporter": "^3.0.3",
-    "matchdep": "^2.0.0"
+    "matchdep": "^2.0.0",
+    "sinon": "^9.0.2"
   },
   "engines": {
     "node": ">=0.8.0"
@@ -36,6 +38,7 @@
   "scripts": {
     "test": "grunt test",
     "build": "grunt build",
-    "pushresults": "grunt pushresults"
+    "pushresults": "grunt pushresults",
+    "pushcoverage": "grunt pushcoverage"
   }
 }
