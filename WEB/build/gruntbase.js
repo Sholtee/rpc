@@ -185,7 +185,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
 
     registerTask('pushcoverage', () => task.run([ // grunt pushcoverage
         'env:coveralls',
-        'replace:lcov',
+       // 'replace:lcov',
         'coveralls'
     ]));
 
