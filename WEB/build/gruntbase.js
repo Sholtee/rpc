@@ -157,10 +157,13 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 options: {
                     patterns: [{
                         match: /^SF:([\w\\/.]+)$/gm,
-                        replacement: (m, path) => `SF:WEB\\${path}`
+                        replacement: (m, path) => `SF:.\\WEB\\${path}`
                     }]
                 },
-                files: [{expand: true, src: '<%= project.dirs.artifacts %>/lcov.info', dest: '.'
+                files: [{
+                    expand: true,
+                    src: '<%= project.dirs.artifacts %>/lcov.info',
+                    dest: '.'
                 }]
             }
         }
