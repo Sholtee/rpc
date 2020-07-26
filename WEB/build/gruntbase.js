@@ -150,14 +150,14 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             }
         },
         coveralls: {
-            src: '<%= project.dirs.artifacts %>/lcov.info'
+            src: 'WEB/artifacts/lcov.info'
         },
         replace: { // coveralls.io a repo gyokerebol keres
             lcov: {
                 options: {
                     patterns: [{
                         match: /^SF:([\w\\/.]+)$/gm,
-                        replacement: (m, path) => `SF:..\\${path}`
+                        replacement: (m, path) => `SF:WEB\\${path}`
                     }]
                 },
                 files: [{
@@ -183,11 +183,15 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         'http_upload:testresults'
     ]));
 
-    registerTask('pushcoverage', () => task.run([ // grunt pushcoverage
-        'env:coveralls',
-       // 'replace:lcov',
-        'coveralls'
-    ]));
+    registerTask('pushcoverage', () => {  // grunt pushcoverage
+        process.chdir('../');
+
+        task.run([
+            'env:coveralls',
+            'replace:lcov',
+            'coveralls'
+        ]);
+    });
 
     registerTask('build', () => task.run([ // grunt build
         'clean:dist',
