@@ -175,7 +175,10 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         },
         run: {
             server: {
-                cmd: file.expand(`${dir}/../BIN/**/Solti.Utils.Rpc.Server.Sample.exe`)[0],
+                cmd: 'dotnet',
+                args: [
+                    file.expand(`${dir}/../BIN/**/Solti.Utils.Rpc.Server.Sample.dll`)[0]
+                ],
                 options: {
                     wait: false
                 }
