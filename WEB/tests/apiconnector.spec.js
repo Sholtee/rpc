@@ -5,22 +5,26 @@
 'use strict';
 
 describe('ApiConnectionFactory', () => {
-    const
-        api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add',
-        noop = function() {};
+    const noop = function() {};
 
-    var server, factory;
+    var factory;
 
-    beforeEach(function() {
-        server = sinon.createFakeServer();
-        server.autoRespond = false;
-
+    beforeEach(() => {
         factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
     });
 
-    afterEach(() => server.restore());
-
     describe('post()', () => {
+        const api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add';
+
+        var server;
+
+        beforeEach(function() {
+            server = sinon.createFakeServer();
+            server.autoRespond = false;
+        });
+
+        afterEach(() => server.restore());
+
         it('should return a Promise', () => expect(factory.post(api, [1, 1])).toBeInstanceOf(Promise));
 
         it('should deserialize the result', done => {
@@ -102,14 +106,6 @@ describe('ApiConnectionFactory', () => {
         });
 
         it('should return a connection that invokes the server', done => {
-            server.respondWith('POST', api, xhr => {
-                const args = JSON.parse(xhr.requestBody);
-
-                xhr.respond(200, { 'Content-Type': 'application/json' }, JSON.stringify({
-                    Result: args[0] + args[1]
-                }));
-            });
-
             const Calculator = factory
                 .createConnection('ICalculator')
                 .registerMethod('Add', 'add');
@@ -119,8 +115,6 @@ describe('ApiConnectionFactory', () => {
                 expect(result).toEqual(3);
                 done();
             });
-
-            server.respond();
         });
     });
 });

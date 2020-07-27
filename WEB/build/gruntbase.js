@@ -107,7 +107,13 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
                 singleRun: true,
-                browsers: ['Chrome'],
+                browsers: ['Chrome_without_security'],
+                customLaunchers: {
+                    Chrome_without_security: {
+                        base: 'Chrome',
+                        flags: ['--disable-web-security']
+                    }
+                },
                 logLevel: 'ERROR',
                 plugins: [
                     'karma-chrome-launcher',
@@ -166,6 +172,14 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     dest: '.'
                 }]
             }
+        },
+        run: {
+            server: {
+                cmd: file.expand(`${dir}/../BIN/**/Solti.Utils.Rpc.Server.Sample.exe`)[0],
+                options: {
+                    wait: false
+                }
+            }
         }
     });
 
@@ -176,6 +190,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         'eslint:tests',
         'babel:app',
         'babel:tests',
+        'run:server', // a szulo process terminalasaval o is eltavozik
         'karma:test'
     ]));
 

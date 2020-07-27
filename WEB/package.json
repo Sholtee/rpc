@@ -19,6 +19,7 @@
     "grunt-env": "^1.0.1",
     "grunt-coveralls": "^2.0.0",
     "grunt-replace-regex": "^1.0.3",
+    "grunt-run": "^0.8.1",
     "eslint": "^7.5.0",
     "eslint-plugin-jasmine": "^4.1.1",
     "@babel/core": "^7.10.5",
