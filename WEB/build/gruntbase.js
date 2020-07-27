@@ -150,7 +150,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             }
         },
         coveralls: {
-            src: 'WEB/artifacts/lcov.info'
+            src: '<%= project.dirs.artifacts %>/lcov.info'
         },
         replace: { // coveralls.io a repo gyokerebol keres
             lcov: {
@@ -184,7 +184,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
     ]));
 
     registerTask('pushcoverage', () => {  // grunt pushcoverage
-        process.chdir('../');
+        process.chdir('../'); // kell h a "coveralls" task megfeleloen mukodjon
 
         task.run([
             'env:coveralls',
