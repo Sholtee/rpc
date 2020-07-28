@@ -94,6 +94,23 @@
      // ex.InnerException will contain the original exception
    }
    ```
+## JS client example
+1. Reference the [rpcdotnet-connector]( )  package: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/rpcdotnet-connector-1.x.x.min.js"></script>`
+2. Create a connection factory:
+   ```js
+   let factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
+   ```
+3. Create and set up an API connection:
+   ```js
+   const Calculator = factory.createConnection('ICalculator');
+   Calculator.registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/);
+   ```
+4. Invoke the API:
+   ```js
+   const calculator = new Calculator();
+   // every method invocations are async
+   calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
+   ```
 ## Hosting the server
 1. Create a console project that will host your app:
    ```csharp
