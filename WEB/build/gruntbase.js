@@ -20,7 +20,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             dirs: {
                 app:       `${dir}/src`,
                 artifacts: `${dir}/artifacts`,
-                dist:      `${dir}/dist/${pkg.version}`,
+                dist:      `${dir}/dist`,
                 tests:     `${dir}/tests`,
                 tmp:       `${dir}/.tmp`
             }
@@ -92,7 +92,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             },
             dist: {
                 files: {
-                    '<%= project.dirs.dist %>/<%= project.name %>-<%= project.version %>.js': '<%= project.dirs.app %>/**/*.js'
+                    '<%= project.dirs.dist %>/<%= project.name %>.js': '<%= project.dirs.app %>/**/*.js'
                 }
             }
         },
