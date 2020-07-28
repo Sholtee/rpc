@@ -100,7 +100,7 @@
    ```js
    let factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
-3. Create and set up an API connection:
+3. Set up the API connection:
    ```js
    const Calculator = factory.createConnection('ICalculator');
    Calculator.registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/);
