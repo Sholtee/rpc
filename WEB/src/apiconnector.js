@@ -91,13 +91,11 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
             return this.post(url, args);
         },
         createConnection: function(module) {
-            const
-                methods = {},
-                owner = this;
+            const owner = this;
 
-            return Object.assign(ApiConnection, {
+            return Object.assign(function ApiConnection() {}, {
                 registerMethod: function(name, alias) {
-                    methods[alias || name] = (...args) => owner.invoke(module, name, args);
+                    this.prototype[alias || name] = (...args) => owner.invoke(module, name, args);
 
                     //
                     // A hivasok lancba fuzhetoek legyenek
@@ -107,17 +105,6 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
                 },
                 module
             });
-
-            // class
-            function ApiConnection() {
-                Object.keys(methods).forEach(name => {
-                    //
-                    // "arrow" fv-ben nincs this u h jo helyre hivatkozunk
-                    //
-
-                    this[name] = methods[name];
-                });
-            }
         }
     });
 }

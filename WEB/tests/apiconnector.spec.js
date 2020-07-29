@@ -101,20 +101,19 @@ describe('ApiConnectionFactory', () => {
 
             Calculator.registerMethod('Add', 'add');
 
-            const inst = new Calculator();
-            expect(inst.hasOwnProperty('add')).toBeTrue();
+            expect(typeof Calculator.prototype.add).toBe('function');
         });
 
-        it('should return a connection that invokes the server', done => {
+        ['Add', 'AddAsync'].forEach(method => it(`should return a connection that invokes the server (${method})`, done => {
             const Calculator = factory
                 .createConnection('ICalculator')
-                .registerMethod('Add', 'add');
+                .registerMethod(method, 'add');
 
             const inst = new Calculator();
             inst.add(1, 2).then(result => {
                 expect(result).toEqual(3);
                 done();
             });
-        });
+        }));
     });
 });
