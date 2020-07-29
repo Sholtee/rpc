@@ -16,8 +16,12 @@ environment:
     secure: qJEufJv866eebR/Boe1UnV3p1arOIX9BTyqAQnAVY49h4Ks40Sr0rHb3iN70e7BZ
   NUGET_REPO_TOKEN:
     secure: ZuEDRRTkWs7MykjAL2l/1eE0t0iilg3L4Eu1bu/EswIeaTytjUiPsqo8BTeMofd8
+  NPM_REPO_TOKEN:
+    secure: 5JEbZItF4sSo0ihrBBttxGMha+4fWENCM7vbJ1oankymasHVzxNp6iEKPIwtFnwM
   GITHUB_EMAIL:
     secure: Z6F+xZzdZzc5DMYB/4J0KUhyoTzTlXH75ciGl7hFH9s=
+  APPVEYOR_RDP_PASSWORD:
+    secure: IvxSZoWD+DpqNjUP7mFjPA==
 
 branches:
   # blacklist
@@ -31,11 +35,15 @@ clone_script:
   - cmd: |
       git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
       git checkout -qf %APPVEYOR_REPO_COMMIT%
+      
+# enable RDP
+#init:
+#  - ps: IEX ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # "before_test" runs after repo cloning so use it instead of "init"
 before_test:
   - ps: |
-      Set-Location -path ".\scripts"
+      Set-Location -Path ".\SCRIPTS"
       .(".\includes.ps1")
       Update-AppveyorBuild -Version "$($PROJECT.version).$($Env:APPVEYOR_BUILD_NUMBER)-$($Env:APPVEYOR_REPO_BRANCH)"
       Get-SysInfo
@@ -50,7 +58,8 @@ after_test:
 on_finish:
   - ps: |
       Push-Artifact "*.txt"
-      Push-Artifact "BenchmarkDotNet.Artifacts\BenchmarkRun-*.log"    
+      Push-Artifact "BenchmarkDotNet.Artifacts\BenchmarkRun-*.log"
+#     $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # override settings for `master` branch
 for:

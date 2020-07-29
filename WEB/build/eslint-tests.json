@@ -1,0 +1,21 @@
+{
+  "extends": "./eslint-base.json",
+
+  "env": {
+    "browser": false,
+    "node": true,
+    "jasmine": true
+  },
+
+  "plugins": [
+    "jasmine"
+  ],
+
+  "globals": {
+    "window": true,
+    "Promise": true,
+    "ApiConnectionFactory": true,
+    "RESPONSE_NOT_VALID": true,
+    "sinon": true
+  }
+}

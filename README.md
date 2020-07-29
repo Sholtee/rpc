@@ -1,11 +1,12 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc/master) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master)
 > Simple, lightweight RPC implementation for .NET
 
-|Package name|NuGet link|
+|Name|Package|
 |:--:|:--:|
 |**RPC.NET.Attributes**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.attributes)](https://www.nuget.org/packages/rpc.net.attributes )|
 |**RPC.NET.Client**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.client)](https://www.nuget.org/packages/rpc.net.client )|
 |**RPC.NET.Server**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.server)](https://www.nuget.org/packages/rpc.net.server )|
+|**RPC.NET-Connector**|[![npm version](https://badge.fury.io/js/rpcdotnet-connector.svg)](https://badge.fury.io/js/rpcdotnet-connector)|
 ## How it works
 1. The client sends a *HTTP POST* to the server where 
    - The request *URI*
@@ -93,6 +94,23 @@
    } catch(RpcException ex) {
      // ex.InnerException will contain the original exception
    }
+   ```
+## JS client example
+1. Reference the [rpcdotnet-connector](https://www.npmjs.com/package/rpcdotnet-connector )  package: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/rpcdotnet-connector.min.js"></script>`
+2. Create a connection factory:
+   ```js
+   let factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
+   ```
+3. Set up the API connection:
+   ```js
+   const Calculator = factory.createConnection('ICalculator');
+   Calculator.registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/);
+   ```
+4. Invoke the API:
+   ```js
+   const calculator = new Calculator();
+   // every method invocations are async
+   calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
    ```
 ## Hosting the server
 1. Create a console project that will host your app:
