@@ -868,6 +868,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.IsStarted
   nameWithType: WebService.IsStarted
+- uid: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
+  name: PreCheckRequestContext(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
+  nameWithType: WebService.PreCheckRequestContext(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext*
+  name: PreCheckRequestContext
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext
+  nameWithType: WebService.PreCheckRequestContext
 - uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
   name: ProcessRequestContext(HttpListenerContext)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_
@@ -1417,6 +1430,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.InvokeModule
   nameWithType: RpcService.InvokeModule
+- uid: Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)
+  name: PreCheckRequestContext(HttpListenerContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_PreCheckRequestContext_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)
+  nameWithType: RpcService.PreCheckRequestContext(HttpListenerContext)
+- uid: Solti.Utils.Rpc.RpcService.PreCheckRequestContext*
+  name: PreCheckRequestContext
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_PreCheckRequestContext_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.PreCheckRequestContext
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.PreCheckRequestContext
+  nameWithType: RpcService.PreCheckRequestContext
 - uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
   name: ProcessRequestContext(HttpListenerContext)
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_System_Net_HttpListenerContext_
