@@ -6,3 +6,5 @@
   - *added:* App hosting support
 - 1.0.0:
   - *added:* `IHostRunnerFactory` interface
+- 1.1.0:
+  - *done:* Enhanced request validation in `RpcService`
