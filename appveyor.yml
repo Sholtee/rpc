@@ -53,6 +53,9 @@ test_script:
 
 after_test:
   - ps: Push-Test-Results
+  
+deploy_script:
+  - ps: Deploy
 
 # after build failure or success
 on_finish:
@@ -74,5 +77,4 @@ for:
   deploy_script: 
     # update documentation & publish nuget package
     - ps: |
-        GH-Pages
-        Deploy
+        GH-Pages   
