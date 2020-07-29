@@ -118,7 +118,7 @@ namespace Solti.Utils.Rpc.Internals
             {
                 if (!PreCheck(context))
                 {
-                    Trace.WriteLine($"Incoming request", category);
+                    Trace.WriteLine($"Bad request", category);
 
                     context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                     context.Response.Close();
