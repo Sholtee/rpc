@@ -102,7 +102,7 @@ namespace Solti.Utils.Rpc
 
         #region Protected
         /// <inheritdoc/>
-        protected override bool PreCheck(HttpListenerContext context)
+        protected override bool PreCheckRequestContext(HttpListenerContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));

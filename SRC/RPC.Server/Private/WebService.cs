@@ -99,7 +99,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Returns true if the request fits the requirements.
         /// </summary>
-        protected virtual bool PreCheck(HttpListenerContext context) => true;
+        protected virtual bool PreCheckRequestContext(HttpListenerContext context) => true;
 
         /// <summary>
         /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
@@ -116,7 +116,7 @@ namespace Solti.Utils.Rpc.Internals
 
             try
             {
-                if (!PreCheck(context))
+                if (!PreCheckRequestContext(context))
                 {
                     Trace.WriteLine($"Bad request", category);
 
