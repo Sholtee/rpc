@@ -109,15 +109,18 @@ namespace Solti.Utils.Rpc
 
             bool success = true;
 
-            if (context.Request.HttpMethod != "POST")
+            HttpListenerRequest request = context.Request;
+            HttpListenerResponse response = context.Response;
+
+            if (request.HttpMethod.ToUpperInvariant() != "POST")
             {
-                context.Response.Headers[HttpResponseHeader.Allow] = "POST";
+                response.Headers[HttpResponseHeader.Allow] = "POST";
                 success = false;
             }
 
-            if (context.Request.ContentType != "application/json; charset=utf-8")
+            if (!request.ContentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) || request.ContentEncoding != Encoding.UTF8)
             {
-                context.Response.Headers[HttpResponseHeader.ContentType] = "application/json";
+                response.Headers[HttpResponseHeader.ContentType] = "application/json; charset=utf-8";
                 success = false;
             }
 
