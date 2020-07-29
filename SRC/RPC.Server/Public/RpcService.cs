@@ -107,7 +107,7 @@ namespace Solti.Utils.Rpc
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            bool success = true;
+            bool success = base.PreCheckRequestContext(context);
 
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
@@ -118,7 +118,7 @@ namespace Solti.Utils.Rpc
                 success = false;
             }
 
-            if (!request.ContentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) || request.ContentEncoding != Encoding.UTF8)
+            if (!request.ContentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) || request.ContentEncoding.WebName != "utf-8")
             {
                 response.Headers[HttpResponseHeader.ContentType] = "application/json; charset=utf-8";
                 success = false;
