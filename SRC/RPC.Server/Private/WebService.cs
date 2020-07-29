@@ -97,6 +97,11 @@ namespace Solti.Utils.Rpc.Internals
 
         #region Protected
         /// <summary>
+        /// Returns true if the request fits the requirements.
+        /// </summary>
+        protected virtual bool PreCheck(HttpListenerContext context) => true;
+
+        /// <summary>
         /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
@@ -111,6 +116,15 @@ namespace Solti.Utils.Rpc.Internals
 
             try
             {
+                if (!PreCheck(context))
+                {
+                    Trace.WriteLine($"Incoming request", category);
+
+                    context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    context.Response.Close();
+                    return;
+                }
+
                 Task processor = ProcessRequestContext(context);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
@@ -162,7 +176,7 @@ namespace Solti.Utils.Rpc.Internals
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null")]
         protected virtual Task ProcessRequestContext(HttpListenerContext context)
         {
-            context.Response.StatusCode = (int) HttpStatusCode.OK;
+            context.Response.StatusCode = (int) HttpStatusCode.NoContent;
             context.Response.Close();
 
             return Task.CompletedTask;

@@ -101,6 +101,29 @@ namespace Solti.Utils.Rpc
         #endregion
 
         #region Protected
+        /// <inheritdoc/>
+        protected override bool PreCheck(HttpListenerContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            bool success = true;
+
+            if (context.Request.HttpMethod != "POST")
+            {
+                context.Response.Headers[HttpResponseHeader.Allow] = "POST";
+                success = false;
+            }
+
+            if (context.Request.ContentType != "application/json; charset=utf-8")
+            {
+                context.Response.Headers[HttpResponseHeader.ContentType] = "application/json";
+                success = false;
+            }
+
+            return success;
+        }
+
         /// <summary>
         /// Processes HTTP requests asynchronously.
         /// </summary>

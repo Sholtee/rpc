@@ -139,7 +139,7 @@ namespace Solti.Utils.Rpc.Tests
 
             HttpResponseMessage response = await client.GetAsync(TestUrl);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
             Assert.That((await response.Content.ReadAsStreamAsync()).Length, Is.EqualTo(0));
         }
     }
