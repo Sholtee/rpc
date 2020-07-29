@@ -7,6 +7,9 @@
     "url": "https://github.com/Sholtee/rpc.git"
   },
   "license": "MIT",
+  "files": [
+    "dist/*"
+  ],
   "dependencies": {},
   "devDependencies": {
     "grunt": "^1.2.1",
