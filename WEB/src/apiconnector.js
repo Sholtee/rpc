@@ -16,9 +16,10 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
         onResponse(resolve, reject) {
             const response = this.response || this.responseText;
 
-            //
-            // Statusz itt most nem erdekes, csak a valasz tipusa
-            //
+            if (this.status !== 200) {
+                reject(`Status inappropriate: ${this.status} (${this.statusText})`);
+                return;
+            }
 
             switch (this.getResponseHeader('Content-Type')) {
                 case 'text/html': {

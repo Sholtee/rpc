@@ -196,13 +196,11 @@ namespace Solti.Utils.Rpc
                 switch (result)
                 {
                     case Stream stream:
-                        response.StatusCode = (int) HttpStatusCode.OK;
                         response.ContentType = "application/octet-stream";
                         response.ContentEncoding = null;
                         outputStream = stream;
                         break;
                     case Exception ex:
-                        response.StatusCode = (int) GetErrorCode(ex);
                         response.ContentType = "application/json";
                         response.ContentEncoding = Encoding.UTF8;
                         await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
@@ -216,7 +214,6 @@ namespace Solti.Utils.Rpc
                         });
                         break;
                     default:
-                        response.StatusCode = (int) HttpStatusCode.OK;
                         response.ContentType = "application/json";
                         response.ContentEncoding = Encoding.UTF8;
                         await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
@@ -225,6 +222,8 @@ namespace Solti.Utils.Rpc
                         });
                         break;
                 }
+
+                response.StatusCode = (int) HttpStatusCode.OK;
 
                 //
                 // A "response.ContentLength64 = response.OutputStream.Length" nem mukodne
@@ -242,17 +241,6 @@ namespace Solti.Utils.Rpc
             finally { outputStream?.Dispose(); }
 
             response.Close();
-        }
-
-        /// <summary>
-        /// Gets the HTTP status code associated with the given exception.
-        /// </summary>
-        protected virtual HttpStatusCode GetErrorCode(Exception ex) 
-        {
-            if (ex is InvalidCredentialException) return HttpStatusCode.Forbidden;
-            if (ex is UnauthorizedAccessException) return HttpStatusCode.Unauthorized;
-
-            return HttpStatusCode.InternalServerError;
         }
         #endregion
     }

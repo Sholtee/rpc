@@ -142,6 +142,12 @@ namespace Solti.Utils.Rpc
             }
 
             //
+            // Status megfelelo?
+            //
+
+            response.EnsureSuccessStatusCode();
+
+            //
             // Eredmeny feldolgozas.
             //
 
@@ -161,19 +167,8 @@ namespace Solti.Utils.Rpc
                     if (result.Exception != null) ProcessRemoteError(result.Exception);
                     return result.Result;
                 case "application/octet-stream":
-                    response.EnsureSuccessStatusCode();
                     return await response.Content.ReadAsStreamAsync();
                 default:
-                    //
-                    // Status megfelelo?
-                    //
-
-                    response.EnsureSuccessStatusCode();
-
-                    //
-                    // Ha igen akkor csak a tartalom tipusa nem jo
-                    //
-
                     throw new RpcException(Resources.CONTENT_TYPE_NOT_SUPPORTED);
             }
         }
