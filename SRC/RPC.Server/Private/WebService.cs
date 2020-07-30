@@ -99,7 +99,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Returns true if the request fits the requirements.
         /// </summary>
-        protected virtual bool PreCheckRequestContext(HttpListenerContext context) => true;
+        protected virtual void PreCheckRequestContext(HttpListenerContext context) { }
 
         /// <summary>
         /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
@@ -112,25 +112,18 @@ namespace Solti.Utils.Rpc.Internals
 
             string category = $"[HTTP session {context.Request.RemoteEndPoint}]";
 
-            Trace.WriteLine($"Incoming request", category);
+            Trace.WriteLine("Incoming request", category);
 
             try
             {
-                if (!PreCheckRequestContext(context))
-                {
-                    Trace.WriteLine($"Bad request", category);
-
-                    context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                    context.Response.Close();
-                    return;
-                }
+                PreCheckRequestContext(context);
 
                 Task processor = ProcessRequestContext(context);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     throw new TimeoutException();
 
-                Trace.WriteLine($"Request processed successfully", category);
+                Trace.WriteLine("Request processed successfully", category);
             }
             catch(Exception ex)
             {
@@ -140,10 +133,13 @@ namespace Solti.Utils.Rpc.Internals
                 {
                     HttpListenerResponse response = context.Response;
 
-                    response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                    response.ContentType = "text/html";
+                    response.StatusCode = (int) ((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
 
-                    await WriteResponseString(response, ex.Message);
+                    if (!string.IsNullOrEmpty(ex.Message))
+                    {
+                        response.ContentType = "text/html";
+                        await WriteResponseString(response, ex.Message);
+                    }
 
                     response.Close();
                 }

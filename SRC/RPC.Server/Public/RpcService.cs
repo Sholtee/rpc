@@ -102,12 +102,10 @@ namespace Solti.Utils.Rpc
 
         #region Protected
         /// <inheritdoc/>
-        protected override bool PreCheckRequestContext(HttpListenerContext context)
+        protected override void PreCheckRequestContext(HttpListenerContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
-
-            bool success = base.PreCheckRequestContext(context);
 
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
@@ -115,16 +113,24 @@ namespace Solti.Utils.Rpc
             if (request.HttpMethod.ToUpperInvariant() != "POST")
             {
                 response.Headers[HttpResponseHeader.Allow] = "POST";
-                success = false;
+
+                throw new HttpException
+                {
+                    Status = HttpStatusCode.MethodNotAllowed
+                };
             }
 
-            if (!request.ContentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) || request.ContentEncoding.WebName != "utf-8")
+            //
+            // Content-Type lehet NULL a kodolas viszont nem
+            //
+
+            if (request.ContentType?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) != true || request.ContentEncoding.WebName != "utf-8")
             {
-                response.Headers[HttpResponseHeader.ContentType] = "application/json; charset=utf-8";
-                success = false;
+                throw new HttpException
+                {
+                    Status = HttpStatusCode.BadRequest
+                };
             }
-
-            return success;
         }
 
         /// <summary>
@@ -142,13 +148,14 @@ namespace Solti.Utils.Rpc
             {
                 result = await InvokeModule(await RequestContext.Create(context.Request));
             }
-            
+
             //
-            // A "catch" blokk ne az InvokeModule()-ban legyen h pl a RequestContext.Create() altal dobott
-            // hibakat is el tudjuk kapni
+            // - A "catch" blokk ne az InvokeModule()-ban legyen h pl a RequestContext.Create() altal dobott
+            //   hibakat is el tudjuk kapni
+            // - A Http kiveteleket tovabb dobjuk h az os kezelje
             //
 
-            catch (Exception ex)
+            catch (Exception ex) when (!(ex is HttpException))
             {
                 result = ex;
             }

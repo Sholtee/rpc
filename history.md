@@ -7,4 +7,5 @@
 - 1.0.0:
   - *added:* `IHostRunnerFactory` interface
 - 1.1.0:
+  - *added:* `HttpException` class
   - *done:* Enhanced request validation in `RpcService`

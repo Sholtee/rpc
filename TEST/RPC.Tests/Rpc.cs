@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -244,6 +245,22 @@ namespace Solti.Utils.Rpc.Tests
             using var client = new RpcClient<IModule>(Host);
 
             Assert.Throws<HttpRequestException>(client.Proxy.Faulty);
+        }
+
+        [Test]
+        public async Task Server_ShouldValidateTheRequest() 
+        {
+            Server.Register(i => new Mock<IModule>(MockBehavior.Strict).Object);
+            Server.Start(Host);
+
+            using var client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync(Host);
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.MethodNotAllowed));
+
+            response = await client.PostAsync(Host, new StringContent(string.Empty));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [Test]
