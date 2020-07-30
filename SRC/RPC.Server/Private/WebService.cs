@@ -4,9 +4,11 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -16,7 +18,7 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
     using Properties;
-    
+
     /// <summary>
     /// Implements a general Web Service over HTTP. 
     /// </summary>
@@ -87,7 +89,7 @@ namespace Solti.Utils.Rpc.Internals
                 UseShellExecute = true
             };
 
-            Process netsh = Process.Start(psi);
+            Process netsh = System.Diagnostics.Process.Start(psi);
             
             netsh.WaitForExit();
             if (netsh.ExitCode != 0)
@@ -99,10 +101,35 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Returns true if the request fits the requirements.
         /// </summary>
-        protected virtual void PreCheckRequestContext(HttpListenerContext context) { }
+        protected virtual void PreCheck(HttpListenerContext context) { }
 
         /// <summary>
-        /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
+        /// Determines whether the request is a preflight request or not.
+        /// </summary>
+        protected virtual bool IsPreflight(HttpListenerContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            if (context.Request.HttpMethod.Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase))
+            {
+                string? origin = context.Request.Headers.Get("Origin");
+
+                if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
+                {
+                    context.Response.Headers["Access-Control-Allow-Origin"] = origin;
+                }
+
+                context.Response.Close();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Calls the <see cref="Process(HttpListenerContext)"/> method in a safe manner.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
@@ -116,9 +143,15 @@ namespace Solti.Utils.Rpc.Internals
 
             try
             {
-                PreCheckRequestContext(context);
+                if (IsPreflight(context)) 
+                {
+                    Trace.WriteLine("Preflight request, processor won't be called", category);
+                    return;
+                }
 
-                Task processor = ProcessRequestContext(context);
+                PreCheck(context);
+
+                Task processor = Process(context);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     throw new TimeoutException();
@@ -170,7 +203,7 @@ namespace Solti.Utils.Rpc.Internals
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null")]
-        protected virtual Task ProcessRequestContext(HttpListenerContext context)
+        protected virtual Task Process(HttpListenerContext context)
         {
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;
             context.Response.Close();
@@ -210,6 +243,11 @@ namespace Solti.Utils.Rpc.Internals
         /// The maximum amount of time that is available for the service to serve the request.
         /// </summary>
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        /// See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+        /// </summary>
+        public ICollection<string> AllowedOrigins { get; } = new List<string>();
 
         /// <summary>
         /// The URL on which the Web Service is listening.

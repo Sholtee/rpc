@@ -24,14 +24,14 @@ namespace Solti.Utils.Rpc.Tests
 
         private class DummyWebService : WebService 
         {
-            protected override Task ProcessRequestContext(HttpListenerContext context)
+            protected override Task Process(HttpListenerContext context)
             {
                 if (OnRequest != null)
                 {
                     OnRequest.Invoke(context);
                     return Task.CompletedTask;
                 }
-                return base.ProcessRequestContext(context);
+                return base.Process(context);
             }
 
             public Action<HttpListenerContext> OnRequest { get; set; }

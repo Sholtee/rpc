@@ -101,7 +101,7 @@ namespace Solti.Utils.Rpc
 
         #region Protected
         /// <inheritdoc/>
-        protected override void PreCheckRequestContext(HttpListenerContext context)
+        protected override void PreCheck(HttpListenerContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -136,7 +136,7 @@ namespace Solti.Utils.Rpc
         /// Processes HTTP requests asynchronously.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected override async Task ProcessRequestContext(HttpListenerContext context) 
+        protected override async Task Process(HttpListenerContext context) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));

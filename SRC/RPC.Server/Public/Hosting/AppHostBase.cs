@@ -23,7 +23,6 @@ namespace Solti.Utils.Rpc.Hosting
     public abstract class AppHostBase: Disposable, IHost
     {
         private readonly IServiceContainer FContainer;
-        private readonly RpcService FRpcService;
         private readonly string FTraceCategory;
 
         /// <summary>
@@ -32,9 +31,10 @@ namespace Solti.Utils.Rpc.Hosting
         protected AppHostBase(IServiceContainer container, RpcService rpcService)
         {     
             FContainer     = container  ?? throw new ArgumentNullException(nameof(container));
-            FRpcService    = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
             FTraceCategory = $"[{GetType().Name}]";
-            Runner         = HostRunner.GetCompatibleRunner(this);
+
+            RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
+            Runner     = HostRunner.GetCompatibleRunner(this);
         }
 
         /// <summary>
@@ -66,6 +66,11 @@ namespace Solti.Utils.Rpc.Hosting
         /// The related <see cref="IHostRunner"/>.
         /// </summary>
         public IHostRunner Runner { get; }
+
+        /// <summary>
+        /// The related <see cref="RpcService"/>.
+        /// </summary>
+        public RpcService RpcService { get; }
 
         /// <summary>
         /// Indicates whether this host was initialized or not.
@@ -136,10 +141,11 @@ namespace Solti.Utils.Rpc.Hosting
             if (!Initialized)
             {
                 OnRegisterServices(FContainer);
-                OnRegisterModules(FRpcService);
+                OnRegisterModules(RpcService);
                 Initialized = true;
             }
-            FRpcService.Start(Url);
+
+            RpcService.Start(Url);
         }
 
         /// <summary>
@@ -149,7 +155,7 @@ namespace Solti.Utils.Rpc.Hosting
         {
             Trace.WriteLine(nameof(OnStop), FTraceCategory);
 
-            FRpcService.Stop();
+            RpcService.Stop();
         }
 
         /// <summary>
@@ -171,7 +177,7 @@ namespace Solti.Utils.Rpc.Hosting
             if (disposeManaged)
             {
                 Runner.Dispose();
-                FRpcService.Dispose();
+                RpcService.Dispose();
                 FContainer.Dispose();
             }
             base.Dispose(disposeManaged);
