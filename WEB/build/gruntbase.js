@@ -207,7 +207,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         task.run([
             'env:coveralls',
             'replace:lcov',
-            //'coveralls'
+            'coveralls'
         ]);
     });
 
