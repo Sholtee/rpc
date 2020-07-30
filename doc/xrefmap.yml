@@ -1448,19 +1448,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.CreateResponse
   nameWithType: RpcService.CreateResponse
-- uid: Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
-  name: GetErrorCode(Exception)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_GetErrorCode_System_Exception_
-  commentId: M:Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
-  fullName: Solti.Utils.Rpc.RpcService.GetErrorCode(System.Exception)
-  nameWithType: RpcService.GetErrorCode(Exception)
-- uid: Solti.Utils.Rpc.RpcService.GetErrorCode*
-  name: GetErrorCode
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_GetErrorCode_
-  commentId: Overload:Solti.Utils.Rpc.RpcService.GetErrorCode
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.RpcService.GetErrorCode
-  nameWithType: RpcService.GetErrorCode
 - uid: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
   name: InvokeModule(IRequestContext)
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_IRequestContext_
