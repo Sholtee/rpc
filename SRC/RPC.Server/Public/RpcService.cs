@@ -109,6 +109,7 @@ namespace Solti.Utils.Rpc
             if (base.IsPreflight(context)) 
             {
                 context.Response.Headers["Access-Control-Allow-Methods"] = "POST";
+                context.Response.Headers["Access-Control-Allow-Headers"] = "application/json";
                 return true;
             }
 
