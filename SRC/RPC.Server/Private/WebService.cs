@@ -12,6 +12,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Logging;
+
 namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
@@ -33,25 +35,20 @@ namespace Solti.Utils.Rpc.Internals
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
-            string category = $"[{nameof(HttpListener)}]";
-
-            Trace.WriteLine($"Started on {Url}", category);
+            Logger?.LogInformation($"Started on {Url}");
 
             Task isTerminated = Task.Factory.StartNew(FTerminated.Wait, TaskCreationOptions.LongRunning);
 
-            Task<HttpListenerContext> getContext;
-
-            do
+            for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;) 
             {
-                getContext = FListener!.GetContextAsync();
                 getContext.ContinueWith
                 (
-                    t => SafeCallContextProcessor(t.Result),  
+                    t => SafeCallContextProcessor(t.Result),
                     TaskContinuationOptions.OnlyOnRanToCompletion
                 );
-            } while (Task.WaitAny(isTerminated, getContext) == 1);
+            }
 
-            Trace.WriteLine($"Terminated on {Url}", category);
+            Logger?.LogInformation($"Terminated on {Url}");
         }
 
         private static HttpListener CreateCore(string url) 
@@ -110,12 +107,12 @@ namespace Solti.Utils.Rpc.Internals
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            string category = $"[HTTP session {context.Request.RemoteEndPoint}]";
-
-            Trace.WriteLine("Incoming request", category);
+            IPEndPoint remoteEndPoint = context.Request.RemoteEndPoint;
 
             try
             {
+                Logger?.LogInformation($"[{remoteEndPoint}] Incoming request");
+
                 PreCheckRequestContext(context);
 
                 Task processor = ProcessRequestContext(context);
@@ -123,11 +120,11 @@ namespace Solti.Utils.Rpc.Internals
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     throw new TimeoutException();
 
-                Trace.WriteLine("Request processed successfully", category);
+                Logger?.LogInformation($"[{remoteEndPoint}] Request processed successfully");
             }
             catch(Exception ex)
             {
-                Trace.WriteLine($"Request processing failed: {ex.Message}", category);
+                Logger?.LogError(ex, $"[{remoteEndPoint}] Request processing failed");
 
                 try
                 {
@@ -216,6 +213,11 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
         public string? Url { get; private set; }
+
+        /// <summary>
+        /// Specifies the logger of this instance.
+        /// </summary>
+        public ILogger<WebService>? Logger { get; set; }
 
         /// <summary>
         /// Starts the Web Service.

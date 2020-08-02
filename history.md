@@ -8,4 +8,5 @@
   - *added:* `IHostRunnerFactory` interface
 - 1.1.0:
   - *added:* `HttpException` class
+  - *added:* `WebService.Logger` property
   - *done:* Enhanced request validation in `RpcService`
