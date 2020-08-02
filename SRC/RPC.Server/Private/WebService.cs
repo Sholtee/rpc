@@ -169,27 +169,42 @@ namespace Solti.Utils.Rpc.Internals
             {
                 Trace.WriteLine($"Request processing failed: {ex.Message}", category);
 
-                try
+                await ProcessUnhandledException(ex, context);
+            }
+        }
+
+        /// <summary>
+        /// Processes exceptions unhandled by user code.
+        /// </summary>
+        protected virtual async Task ProcessUnhandledException(Exception ex, HttpListenerContext context) 
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            try
+            {
+                HttpListenerResponse response = context.Response;
+
+                //
+                // Http kivetelek megadhatjak a hiba kodjat.
+                //
+
+                response.StatusCode = (int)((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
+
+                if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    HttpListenerResponse response = context.Response;
-
-                    response.StatusCode = (int) ((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
-
-                    if (!string.IsNullOrEmpty(ex.Message))
-                    {
-                        response.ContentType = "text/html";
-                        await WriteResponseString(response, ex.Message);
-                    }
-
-                    response.Close();
+                    response.ContentType = "text/html";
+                    await WriteResponseString(response, ex.Message);
                 }
 
-                //
-                // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
-                //
-
-                catch (ObjectDisposedException) { }
+                response.Close();
             }
+
+            //
+            // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
+            //
+
+            catch (ObjectDisposedException) { }
         }
 
         /// <summary>
