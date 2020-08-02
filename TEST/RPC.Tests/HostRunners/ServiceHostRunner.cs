@@ -34,7 +34,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            using var client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
+            using var client = new RpcClient<ICalculator>("http://localhost:1986/api/");
 
             Assert.That(client.Proxy.Add(1, 1), Is.EqualTo(2));
         }

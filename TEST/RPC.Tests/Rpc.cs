@@ -34,7 +34,7 @@ namespace Solti.Utils.Rpc.Tests
             Task<Stream> GetStreamAsync();
         }
 
-        const string Host = "http://127.0.0.1:1986/test/";
+        const string Host = "http://localhost:1986/test/";
 
         public RpcService Server { get; set; }
 

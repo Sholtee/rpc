@@ -15,9 +15,13 @@ namespace Solti.Utils.Rpc.Server.Sample
     {
         public override string Name => "Calculator";
 
-        public override string Url => "http://127.0.0.1:1986/api/";
+        public override string Url => "http://localhost:1986/api/";
 
-        public AppHost() : base() => Log.WriteLine($"Host created. Runner type is: {Runner.GetType().Name}");
+        public AppHost() : base()
+        {
+            Log.WriteLine($"Host created. Runner type is: {Runner.GetType().Name}");
+            RpcService.AllowedOrigins.Add("http://localhost:1987");
+        }
 
         public override void OnRegisterModules(IModuleRegistry registry)
         {

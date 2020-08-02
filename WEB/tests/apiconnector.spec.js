@@ -10,11 +10,11 @@ describe('ApiConnectionFactory', () => {
     var factory;
 
     beforeEach(() => {
-        factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
+        factory = new ApiConnectionFactory('http://localhost:1986/api');
     });
 
     describe('post()', () => {
-        const api = 'http://127.0.0.1:1986/api?module=ICalculator&method=Add';
+        const api = 'http://localhost:1986/api?module=ICalculator&method=Add';
 
         var server;
 

@@ -4,9 +4,11 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -18,7 +20,7 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
     using Properties;
-    
+
     /// <summary>
     /// Implements a general Web Service over HTTP. 
     /// </summary>
@@ -84,7 +86,7 @@ namespace Solti.Utils.Rpc.Internals
                 UseShellExecute = true
             };
 
-            Process netsh = Process.Start(psi);
+            Process netsh = System.Diagnostics.Process.Start(psi);
             
             netsh.WaitForExit();
             if (netsh.ExitCode != 0)
@@ -94,12 +96,43 @@ namespace Solti.Utils.Rpc.Internals
 
         #region Protected
         /// <summary>
-        /// Returns true if the request fits the requirements.
+        /// Sets the "Access-Control-XxX" headers.
         /// </summary>
-        protected virtual void PreCheckRequestContext(HttpListenerContext context) { }
+        protected virtual void SetAcHeaders(HttpListenerContext context) 
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            HttpListenerResponse response = context.Response;
+
+            string? origin = context.Request.Headers.Get("Origin");
+
+            if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
+            {
+                response.Headers["Access-Control-Allow-Origin"] = origin;
+                response.Headers["Vary"] = "Origin";
+            }
+
+            response.Headers["Access-Control-Allow-Methods"] = "*";
+            response.Headers["Access-Control-Allow-Headers"] = "*";
+        }
 
         /// <summary>
-        /// Calls the <see cref="ProcessRequestContext(HttpListenerContext)"/> method in a safe manner.
+        /// Determines whether the request is a preflight request or not.
+        /// </summary>
+        protected static bool IsPreflight(HttpListenerContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            return context
+                .Request
+                .HttpMethod
+                .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="Process(HttpListenerContext)"/> method in a safe manner.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
@@ -112,13 +145,26 @@ namespace Solti.Utils.Rpc.Internals
             try
             {
                 Logger?.LogInformation($"[{remoteEndPoint}] Incoming request");
+                
+                SetAcHeaders(context);
 
-                PreCheckRequestContext(context);
+                if (IsPreflight(context)) 
+                {
+                    Logger?.LogInformation($"[{remoteEndPoint}] Preflight request, processor won't be called");
+                    context.Response.Close();
+                    return;
+                }
 
-                Task processor = ProcessRequestContext(context);
+                Task processor = Process(context);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     throw new TimeoutException();
+
+                //
+                // Ha kivetel volt a feldolgozoban akkor azt dobjuk tovabb
+                //
+
+                processor.GetAwaiter().GetResult();
 
                 Logger?.LogInformation($"[{remoteEndPoint}] Request processed successfully");
             }
@@ -126,27 +172,42 @@ namespace Solti.Utils.Rpc.Internals
             {
                 Logger?.LogError(ex, $"[{remoteEndPoint}] Request processing failed");
 
-                try
+                await ProcessUnhandledException(ex, context);
+            }
+        }
+
+        /// <summary>
+        /// Processes exceptions unhandled by user code.
+        /// </summary>
+        protected virtual async Task ProcessUnhandledException(Exception ex, HttpListenerContext context) 
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            try
+            {
+                HttpListenerResponse response = context.Response;
+
+                //
+                // Http kivetelek megadhatjak a hiba kodjat.
+                //
+
+                response.StatusCode = (int)((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
+
+                if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    HttpListenerResponse response = context.Response;
-
-                    response.StatusCode = (int) ((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
-
-                    if (!string.IsNullOrEmpty(ex.Message))
-                    {
-                        response.ContentType = "text/html";
-                        await WriteResponseString(response, ex.Message);
-                    }
-
-                    response.Close();
+                    response.ContentType = "text/html";
+                    await WriteResponseString(response, ex.Message);
                 }
 
-                //
-                // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
-                //
-
-                catch (ObjectDisposedException) { }
+                response.Close();
             }
+
+            //
+            // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
+            //
+
+            catch (ObjectDisposedException) { }
         }
 
         /// <summary>
@@ -167,7 +228,7 @@ namespace Solti.Utils.Rpc.Internals
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null")]
-        protected virtual Task ProcessRequestContext(HttpListenerContext context)
+        protected virtual Task Process(HttpListenerContext context)
         {
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;
             context.Response.Close();
@@ -207,6 +268,11 @@ namespace Solti.Utils.Rpc.Internals
         /// The maximum amount of time that is available for the service to serve the request.
         /// </summary>
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        /// See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+        /// </summary>
+        public ICollection<string> AllowedOrigins { get; } = new List<string>();
 
         /// <summary>
         /// The URL on which the Web Service is listening.
