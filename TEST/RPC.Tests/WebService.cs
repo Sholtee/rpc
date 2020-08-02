@@ -166,5 +166,26 @@ namespace Solti.Utils.Rpc.Tests
             
             mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>()), Times.Never);
         }
+
+        private async Task Service_ShouldAllowAnyXxXByDefault(string headerName) 
+        {
+            var mockProcessor = new Mock<Action<HttpListenerContext>>(MockBehavior.Strict);
+
+            Svc.OnRequest = mockProcessor.Object;
+
+            using var client = new HttpClient();
+
+            HttpResponseMessage response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Options, TestUrl));
+
+            Assert.That(response.Headers.GetValues(headerName).Single(), Is.EqualTo("*"));
+
+            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>()), Times.Never);
+        }
+
+        [Test]
+        public async Task Service_ShouldAllowAnyHeaderByDefault() => await Service_ShouldAllowAnyXxXByDefault("Access-Control-Allow-Headers");
+
+        [Test]
+        public async Task Service_ShouldAllowAnyMethodByDefault() => await Service_ShouldAllowAnyXxXByDefault("Access-Control-Allow-Methods");
     }
 }

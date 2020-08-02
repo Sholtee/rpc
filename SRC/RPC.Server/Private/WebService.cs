@@ -115,15 +115,18 @@ namespace Solti.Utils.Rpc.Internals
 
             if (request.HttpMethod.Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase))
             {
-                string? origin = request.Headers.Get("Origin");
-
                 HttpListenerResponse response = context.Response;
+
+                string? origin = request.Headers.Get("Origin");
 
                 if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
                 {
                     response.Headers["Access-Control-Allow-Origin"] = origin;
                     response.Headers["Vary"] = "Origin";
                 }
+
+                response.Headers["Access-Control-Allow-Methods"] = "*";
+                response.Headers["Access-Control-Allow-Headers"] = "*";
 
                 return true;
             }
