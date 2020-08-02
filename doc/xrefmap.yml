@@ -912,6 +912,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.IsStarted
   nameWithType: WebService.IsStarted
+- uid: Solti.Utils.Rpc.Internals.WebService.Logger
+  name: Logger
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Logger
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.Logger
+  fullName: Solti.Utils.Rpc.Internals.WebService.Logger
+  nameWithType: WebService.Logger
+- uid: Solti.Utils.Rpc.Internals.WebService.Logger*
+  name: Logger
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Logger_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Logger
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.Logger
+  nameWithType: WebService.Logger
 - uid: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
   name: PreCheckRequestContext(HttpListenerContext)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_System_Net_HttpListenerContext_
