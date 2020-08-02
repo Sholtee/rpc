@@ -163,6 +163,12 @@ namespace Solti.Utils.Rpc.Internals
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     throw new TimeoutException();
 
+                //
+                // Ha kivetel volt a feldolgozoban akkor azt dobjuk tovabb
+                //
+
+                processor.GetAwaiter().GetResult();
+
                 Trace.WriteLine("Request processed successfully", category);
             }
             catch(Exception ex)
