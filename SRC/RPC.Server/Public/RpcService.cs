@@ -101,6 +101,21 @@ namespace Solti.Utils.Rpc
 
         #region Protected
         /// <inheritdoc/>
+        protected override bool IsPreflight(HttpListenerContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            if (base.IsPreflight(context)) 
+            {
+                context.Response.Headers["Access-Control-Allow-Methods"] = "POST";
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
         protected override void PreCheck(HttpListenerContext context)
         {
             if (context == null)

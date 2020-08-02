@@ -111,16 +111,19 @@ namespace Solti.Utils.Rpc.Internals
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            if (context.Request.HttpMethod.Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase))
+            HttpListenerRequest request = context.Request;
+
+            if (request.HttpMethod.Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase))
             {
-                string? origin = context.Request.Headers.Get("Origin");
+                string? origin = request.Headers.Get("Origin");
+
+                HttpListenerResponse response = context.Response;
 
                 if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
                 {
-                    context.Response.Headers["Access-Control-Allow-Origin"] = origin;
+                    response.Headers["Access-Control-Allow-Origin"] = origin;
+                    response.Headers["Vary"] = "Origin";
                 }
-
-                context.Response.Close();
 
                 return true;
             }
@@ -146,6 +149,7 @@ namespace Solti.Utils.Rpc.Internals
                 if (IsPreflight(context)) 
                 {
                     Trace.WriteLine("Preflight request, processor won't be called", category);
+                    context.Response.Close();
                     return;
                 }
 

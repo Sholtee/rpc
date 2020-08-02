@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+using Moq;
 using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Tests
@@ -141,6 +142,29 @@ namespace Solti.Utils.Rpc.Tests
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
             Assert.That((await response.Content.ReadAsStreamAsync()).Length, Is.EqualTo(0));
+        }
+
+        [Test]
+        public async Task Service_ShouldHandlePreflightRequests()
+        {
+            const string origin = "http://cica.hu";
+
+            var mockProcessor = new Mock<Action<HttpListenerContext>>(MockBehavior.Strict);
+
+            Svc.OnRequest = mockProcessor.Object;
+            Svc.AllowedOrigins.Add(origin);
+
+            using var client = new HttpClient();
+
+            var req = new HttpRequestMessage(HttpMethod.Options, TestUrl);
+            req.Headers.Add("Origin", origin);
+
+            HttpResponseMessage response = await client.SendAsync(req);
+
+            Assert.That(response.Headers.GetValues("Access-Control-Allow-Origin").Single(), Is.EqualTo(origin));
+            Assert.That(response.Headers.GetValues("Vary").Single(), Is.EqualTo("Origin"));
+            
+            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>()), Times.Never);
         }
     }
 }
