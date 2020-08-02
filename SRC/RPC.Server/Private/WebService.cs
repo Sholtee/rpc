@@ -99,39 +99,39 @@ namespace Solti.Utils.Rpc.Internals
 
         #region Protected
         /// <summary>
-        /// Returns true if the request fits the requirements.
+        /// Sets the "Access-Control-XxX" headers.
         /// </summary>
-        protected virtual void PreCheck(HttpListenerContext context) { }
-
-        /// <summary>
-        /// Determines whether the request is a preflight request or not.
-        /// </summary>
-        protected virtual bool IsPreflight(HttpListenerContext context)
+        protected virtual void SetAcHeaders(HttpListenerContext context) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            HttpListenerRequest request = context.Request;
+            HttpListenerResponse response = context.Response;
 
-            if (request.HttpMethod.Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase))
+            string? origin = context.Request.Headers.Get("Origin");
+
+            if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
             {
-                HttpListenerResponse response = context.Response;
-
-                string? origin = request.Headers.Get("Origin");
-
-                if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
-                {
-                    response.Headers["Access-Control-Allow-Origin"] = origin;
-                    response.Headers["Vary"] = "Origin";
-                }
-
-                response.Headers["Access-Control-Allow-Methods"] = "*";
-                response.Headers["Access-Control-Allow-Headers"] = "*";
-
-                return true;
+                response.Headers["Access-Control-Allow-Origin"] = origin;
+                response.Headers["Vary"] = "Origin";
             }
 
-            return false;
+            response.Headers["Access-Control-Allow-Methods"] = "*";
+            response.Headers["Access-Control-Allow-Headers"] = "*";
+        }
+
+        /// <summary>
+        /// Determines whether the request is a preflight request or not.
+        /// </summary>
+        protected static bool IsPreflight(HttpListenerContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            return context
+                .Request
+                .HttpMethod
+                .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -149,14 +149,14 @@ namespace Solti.Utils.Rpc.Internals
 
             try
             {
+                SetAcHeaders(context);
+
                 if (IsPreflight(context)) 
                 {
                     Trace.WriteLine("Preflight request, processor won't be called", category);
                     context.Response.Close();
                     return;
                 }
-
-                PreCheck(context);
 
                 Task processor = Process(context);
 

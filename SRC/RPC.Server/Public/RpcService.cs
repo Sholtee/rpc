@@ -100,24 +100,11 @@ namespace Solti.Utils.Rpc
         #endregion
 
         #region Protected
-        /// <inheritdoc/>
-        protected override bool IsPreflight(HttpListenerContext context)
-        {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
-
-            if (base.IsPreflight(context)) 
-            {
-                context.Response.Headers["Access-Control-Allow-Methods"] = "POST";
-                context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type";
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <inheritdoc/>
-        protected override void PreCheck(HttpListenerContext context)
+        /// <summary>
+        /// Processes HTTP requests asynchronously.
+        /// </summary>
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
+        protected override async Task Process(HttpListenerContext context) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -125,10 +112,12 @@ namespace Solti.Utils.Rpc
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
 
+            //
+            // Eloellenorzesek HTTP hibat generalnak -> NE a try-catch blokkban legyenek
+            //
+
             if (request.HttpMethod.ToUpperInvariant() != "POST")
             {
-                response.Headers[HttpResponseHeader.Allow] = "POST";
-
                 throw new HttpException
                 {
                     Status = HttpStatusCode.MethodNotAllowed
@@ -146,28 +135,19 @@ namespace Solti.Utils.Rpc
                     Status = HttpStatusCode.BadRequest
                 };
             }
-        }
-
-        /// <summary>
-        /// Processes HTTP requests asynchronously.
-        /// </summary>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected override async Task Process(HttpListenerContext context) 
-        {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
 
             object? result;
 
             try
             {
-                result = await InvokeModule(await RequestContext.Create(context.Request));
+                result = await InvokeModule(await RequestContext.Create(request));
             }
 
             //
             // - A "catch" blokk ne az InvokeModule()-ban legyen h pl a RequestContext.Create() altal dobott
             //   hibakat is el tudjuk kapni
-            // - A Http kiveteleket tovabb dobjuk h az os kezelje
+            // - Ha az InvokeModule()-bol jon HttpException akkor azt tovabbdobjuk (igy modul is tud HTTP hibat
+            //   generalni)
             //
 
             catch (Exception ex) when (!(ex is HttpException))
@@ -175,7 +155,7 @@ namespace Solti.Utils.Rpc
                 result = ex;
             }
 
-            await CreateResponse(result, context.Response);
+            await CreateResponse(result, response);
         }
 
         /// <summary>
