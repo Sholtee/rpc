@@ -62,7 +62,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SetAcHeaders_System_Net_HttpListenerContext_">WebService.SetAcHeaders(HttpListenerContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsPreflight_System_Net_HttpListenerContext_">WebService.IsPreflight(HttpListenerContext)</a>
+    </div>
+    <div>
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_System_Net_HttpListenerContext_">WebService.SafeCallContextProcessor(HttpListenerContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_System_Exception_System_Net_HttpListenerContext_">WebService.ProcessUnhandledException(Exception, HttpListenerContext)</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_WriteResponseString_System_Net_HttpListenerResponse_System_String_">WebService.WriteResponseString(HttpListenerResponse, String)</a>
@@ -78,6 +87,9 @@
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Timeout">WebService.Timeout</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AllowedOrigins">WebService.AllowedOrigins</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Url">WebService.Url</a>
@@ -308,42 +320,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_RpcService_PreCheckRequestContext_" data-uid="Solti.Utils.Rpc.RpcService.PreCheckRequestContext*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_PreCheckRequestContext_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)">PreCheckRequestContext(HttpListenerContext)</h4>
-  <div class="markdown level1 summary"><p>Returns true if the request fits the requirements.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void PreCheckRequestContext(HttpListenerContext context)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenercontext">HttpListenerContext</a></td>
-        <td><span class="parametername">context</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_System_Net_HttpListenerContext_">WebService.PreCheckRequestContext(HttpListenerContext)</a></div>
-  <a id="Solti_Utils_Rpc_RpcService_ProcessRequestContext_" data-uid="Solti.Utils.Rpc.RpcService.ProcessRequestContext*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_ProcessRequestContext_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)">ProcessRequestContext(HttpListenerContext)</h4>
+  <a id="Solti_Utils_Rpc_RpcService_Process_" data-uid="Solti.Utils.Rpc.RpcService.Process*"></a>
+  <h4 id="Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext)">Process(HttpListenerContext)</h4>
   <div class="markdown level1 summary"><p>Processes HTTP requests asynchronously.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override Task ProcessRequestContext(HttpListenerContext context)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override Task Process(HttpListenerContext context)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -378,7 +362,7 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_">WebService.ProcessRequestContext(HttpListenerContext)</a></div>
+  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_">WebService.Process(HttpListenerContext)</a></div>
   <a id="Solti_Utils_Rpc_RpcService_Register_" data-uid="Solti.Utils.Rpc.RpcService.Register*"></a>
   <h4 id="Solti_Utils_Rpc_RpcService_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__" data-uid="Solti.Utils.Rpc.RpcService.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</h4>
   <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.IModuleRegistry.html#Solti_Utils_Rpc_IModuleRegistry_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</a>.</p>

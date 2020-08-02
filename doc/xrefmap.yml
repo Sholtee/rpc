@@ -245,6 +245,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnUninstall
   nameWithType: AppHostBase.OnUninstall
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
+  name: RpcService
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_RpcService
+  commentId: P:Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
+  nameWithType: AppHostBase.RpcService
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.RpcService*
+  name: RpcService
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_RpcService_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
+  nameWithType: AppHostBase.RpcService
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.Runner
   name: Runner
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Runner
@@ -873,6 +886,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.AddUrlReservation
   nameWithType: WebService.AddUrlReservation
+- uid: Solti.Utils.Rpc.Internals.WebService.AllowedOrigins
+  name: AllowedOrigins
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AllowedOrigins
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.AllowedOrigins
+  fullName: Solti.Utils.Rpc.Internals.WebService.AllowedOrigins
+  nameWithType: WebService.AllowedOrigins
+- uid: Solti.Utils.Rpc.Internals.WebService.AllowedOrigins*
+  name: AllowedOrigins
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AllowedOrigins_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.AllowedOrigins
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.AllowedOrigins
+  nameWithType: WebService.AllowedOrigins
 - uid: Solti.Utils.Rpc.Internals.WebService.Dispose(System.Boolean)
   name: Dispose(Boolean)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Dispose_System_Boolean_
@@ -899,6 +925,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.IsListening
   nameWithType: WebService.IsListening
+- uid: Solti.Utils.Rpc.Internals.WebService.IsPreflight(System.Net.HttpListenerContext)
+  name: IsPreflight(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsPreflight_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.IsPreflight(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.IsPreflight(System.Net.HttpListenerContext)
+  nameWithType: WebService.IsPreflight(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.IsPreflight*
+  name: IsPreflight
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsPreflight_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.IsPreflight
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.IsPreflight
+  nameWithType: WebService.IsPreflight
 - uid: Solti.Utils.Rpc.Internals.WebService.IsStarted
   name: IsStarted
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsStarted
@@ -925,32 +964,32 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.Logger
   nameWithType: WebService.Logger
-- uid: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
-  name: PreCheckRequestContext(HttpListenerContext)
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_System_Net_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
-  fullName: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)
-  nameWithType: WebService.PreCheckRequestContext(HttpListenerContext)
-- uid: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext*
-  name: PreCheckRequestContext
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_
-  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext
+- uid: Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext)
+  name: Process(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext)
+  nameWithType: WebService.Process(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.Process*
+  name: Process
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Process
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext
-  nameWithType: WebService.PreCheckRequestContext
-- uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
-  name: ProcessRequestContext(HttpListenerContext)
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
-  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)
-  nameWithType: WebService.ProcessRequestContext(HttpListenerContext)
-- uid: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext*
-  name: ProcessRequestContext
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_
-  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext
+  fullName: Solti.Utils.Rpc.Internals.WebService.Process
+  nameWithType: WebService.Process
+- uid: Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException(System.Exception,System.Net.HttpListenerContext)
+  name: ProcessUnhandledException(Exception, HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_System_Exception_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException(System.Exception,System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException(System.Exception, System.Net.HttpListenerContext)
+  nameWithType: WebService.ProcessUnhandledException(Exception, HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException*
+  name: ProcessUnhandledException
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext
-  nameWithType: WebService.ProcessRequestContext
+  fullName: Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException
+  nameWithType: WebService.ProcessUnhandledException
 - uid: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation(System.String)
   name: RemoveUrlReservation(String)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_RemoveUrlReservation_System_String_
@@ -977,6 +1016,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor
   nameWithType: WebService.SafeCallContextProcessor
+- uid: Solti.Utils.Rpc.Internals.WebService.SetAcHeaders(System.Net.HttpListenerContext)
+  name: SetAcHeaders(HttpListenerContext)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SetAcHeaders_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.SetAcHeaders(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.Internals.WebService.SetAcHeaders(System.Net.HttpListenerContext)
+  nameWithType: WebService.SetAcHeaders(HttpListenerContext)
+- uid: Solti.Utils.Rpc.Internals.WebService.SetAcHeaders*
+  name: SetAcHeaders
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SetAcHeaders_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.SetAcHeaders
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.SetAcHeaders
+  nameWithType: WebService.SetAcHeaders
 - uid: Solti.Utils.Rpc.Internals.WebService.Start(System.String)
   name: Start(String)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Start_System_String_
@@ -1474,32 +1526,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.InvokeModule
   nameWithType: RpcService.InvokeModule
-- uid: Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)
-  name: PreCheckRequestContext(HttpListenerContext)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_PreCheckRequestContext_System_Net_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)
-  fullName: Solti.Utils.Rpc.RpcService.PreCheckRequestContext(System.Net.HttpListenerContext)
-  nameWithType: RpcService.PreCheckRequestContext(HttpListenerContext)
-- uid: Solti.Utils.Rpc.RpcService.PreCheckRequestContext*
-  name: PreCheckRequestContext
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_PreCheckRequestContext_
-  commentId: Overload:Solti.Utils.Rpc.RpcService.PreCheckRequestContext
+- uid: Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext)
+  name: Process(HttpListenerContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext)
+  nameWithType: RpcService.Process(HttpListenerContext)
+- uid: Solti.Utils.Rpc.RpcService.Process*
+  name: Process
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Process_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.Process
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.RpcService.PreCheckRequestContext
-  nameWithType: RpcService.PreCheckRequestContext
-- uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
-  name: ProcessRequestContext(HttpListenerContext)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_System_Net_HttpListenerContext_
-  commentId: M:Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
-  fullName: Solti.Utils.Rpc.RpcService.ProcessRequestContext(System.Net.HttpListenerContext)
-  nameWithType: RpcService.ProcessRequestContext(HttpListenerContext)
-- uid: Solti.Utils.Rpc.RpcService.ProcessRequestContext*
-  name: ProcessRequestContext
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_ProcessRequestContext_
-  commentId: Overload:Solti.Utils.Rpc.RpcService.ProcessRequestContext
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.RpcService.ProcessRequestContext
-  nameWithType: RpcService.ProcessRequestContext
+  fullName: Solti.Utils.Rpc.RpcService.Process
+  nameWithType: RpcService.Process
 - uid: Solti.Utils.Rpc.RpcService.Register*
   name: Register
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Register_

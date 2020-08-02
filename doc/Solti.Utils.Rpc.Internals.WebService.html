@@ -105,6 +105,30 @@
   </div>
   <h3 id="properties">Properties
   </h3>
+  <a id="Solti_Utils_Rpc_Internals_WebService_AllowedOrigins_" data-uid="Solti.Utils.Rpc.Internals.WebService.AllowedOrigins*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_AllowedOrigins" data-uid="Solti.Utils.Rpc.Internals.WebService.AllowedOrigins">AllowedOrigins</h4>
+  <div class="markdown level1 summary"><p>See <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">https://en.wikipedia.org/wiki/Cross-origin_resource_sharing</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICollection&lt;string&gt; AllowedOrigins { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Internals_WebService_IsListening_" data-uid="Solti.Utils.Rpc.Internals.WebService.IsListening*"></a>
   <h4 id="Solti_Utils_Rpc_Internals_WebService_IsListening" data-uid="Solti.Utils.Rpc.Internals.WebService.IsListening">IsListening</h4>
   <div class="markdown level1 summary"><p>Returns true if the Web Service is listening.</p>
@@ -281,14 +305,14 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
-  <a id="Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext*"></a>
-  <h4 id="Solti_Utils_Rpc_Internals_WebService_PreCheckRequestContext_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.PreCheckRequestContext(System.Net.HttpListenerContext)">PreCheckRequestContext(HttpListenerContext)</h4>
-  <div class="markdown level1 summary"><p>Returns true if the request fits the requirements.</p>
+  <a id="Solti_Utils_Rpc_Internals_WebService_IsPreflight_" data-uid="Solti.Utils.Rpc.Internals.WebService.IsPreflight*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_IsPreflight_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.IsPreflight(System.Net.HttpListenerContext)">IsPreflight(HttpListenerContext)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the request is a preflight request or not.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual void PreCheckRequestContext(HttpListenerContext context)</code></pre>
+    <pre><code class="lang-csharp hljs">protected static bool IsPreflight(HttpListenerContext context)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -307,14 +331,29 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext*"></a>
-  <h4 id="Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.ProcessRequestContext(System.Net.HttpListenerContext)">ProcessRequestContext(HttpListenerContext)</h4>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_WebService_Process_" data-uid="Solti.Utils.Rpc.Internals.WebService.Process*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext)">Process(HttpListenerContext)</h4>
   <div class="markdown level1 summary"><p>When overridden in the derived class it processes the incoming HTTP request.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual Task ProcessRequestContext(HttpListenerContext context)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual Task Process(HttpListenerContext context)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -326,6 +365,52 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenercontext">HttpListenerContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_" data-uid="Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_System_Exception_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException(System.Exception,System.Net.HttpListenerContext)">ProcessUnhandledException(Exception, HttpListenerContext)</h4>
+  <div class="markdown level1 summary"><p>Processes exceptions unhandled by user code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual Task ProcessUnhandledException(Exception ex, HttpListenerContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></td>
+        <td><span class="parametername">ex</span></td>
+        <td></td>
+      </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenercontext">HttpListenerContext</a></td>
         <td><span class="parametername">context</span></td>
@@ -376,7 +461,7 @@
   </table>
   <a id="Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_" data-uid="Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor*"></a>
   <h4 id="Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.SafeCallContextProcessor(System.Net.HttpListenerContext)">SafeCallContextProcessor(HttpListenerContext)</h4>
-  <div class="markdown level1 summary"><p>Calls the <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessRequestContext_System_Net_HttpListenerContext_">ProcessRequestContext(HttpListenerContext)</a> method in a safe manner.</p>
+  <div class="markdown level1 summary"><p>Calls the <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_">Process(HttpListenerContext)</a> method in a safe manner.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -411,6 +496,32 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_WebService_SetAcHeaders_" data-uid="Solti.Utils.Rpc.Internals.WebService.SetAcHeaders*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_SetAcHeaders_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.Internals.WebService.SetAcHeaders(System.Net.HttpListenerContext)">SetAcHeaders(HttpListenerContext)</h4>
+  <div class="markdown level1 summary"><p>Sets the &quot;Access-Control-XxX&quot; headers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void SetAcHeaders(HttpListenerContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenercontext">HttpListenerContext</a></td>
+        <td><span class="parametername">context</span></td>
         <td></td>
       </tr>
     </tbody>
