@@ -6,7 +6,10 @@
   - *added:* App hosting support
 - 1.0.0:
   - *added:* `IHostRunnerFactory` interface
-- 1.1.0:
-  - *added:* `HttpException` class
+- 2.0.0-preview1:
+  - *breaking:* removed `WebService.PreCheck()`, `RpcService.GetErrorCode()` method, renamed `WebService.ProcessRequest()` -> `Process()`
+  - *breaking:* introduced `HttpException` class to set the status code returned by the `RpcService`. Previously it was done via the `RpcService.GetErrorCode()` method.
+  - *added:* `WebService.IsPreflight()` method
   - *added:* `WebService.Logger` property
+  - *added:* `WebService.AllowedOrigins` property
   - *done:* Enhanced request validation in `RpcService`
