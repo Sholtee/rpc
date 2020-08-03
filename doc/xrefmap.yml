@@ -1564,6 +1564,19 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcService.Register(Of TInterface, TImplementation)()
   nameWithType: RpcService.Register<TInterface, TImplementation>()
   nameWithType.vb: RpcService.Register(Of TInterface, TImplementation)()
+- uid: Solti.Utils.Rpc.RpcService.SetAcHeaders(System.Net.HttpListenerContext)
+  name: SetAcHeaders(HttpListenerContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_SetAcHeaders_System_Net_HttpListenerContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.SetAcHeaders(System.Net.HttpListenerContext)
+  fullName: Solti.Utils.Rpc.RpcService.SetAcHeaders(System.Net.HttpListenerContext)
+  nameWithType: RpcService.SetAcHeaders(HttpListenerContext)
+- uid: Solti.Utils.Rpc.RpcService.SetAcHeaders*
+  name: SetAcHeaders
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_SetAcHeaders_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.SetAcHeaders
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.SetAcHeaders
+  nameWithType: RpcService.SetAcHeaders
 - uid: Solti.Utils.Rpc.RpcService.Start(System.String)
   name: Start(String)
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Start_System_String_
