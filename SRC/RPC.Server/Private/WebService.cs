@@ -155,6 +155,10 @@ namespace Solti.Utils.Rpc.Internals
                     return;
                 }
 
+                //
+                // TODO: timeout eseten a processor task megszakitasa
+                //
+
                 Task processor = Process(context);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
@@ -164,7 +168,8 @@ namespace Solti.Utils.Rpc.Internals
                 // Ha kivetel volt a feldolgozoban akkor azt dobjuk tovabb
                 //
 
-                processor.GetAwaiter().GetResult();
+                if (processor.IsFaulted)
+                    throw processor.Exception.InnerExceptions[0];
 
                 Logger?.LogInformation($"[{remoteEndPoint}] Request processed successfully");
             }
