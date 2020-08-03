@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc
@@ -116,10 +117,12 @@ namespace Solti.Utils.Rpc
         /// Processes HTTP requests asynchronously.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected override async Task Process(HttpListenerContext context) 
+        protected override async Task Process(HttpListenerContext context, CancellationToken cancellation) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
+
+            cancellation.ThrowIfCancellationRequested();
 
             HttpListenerRequest request = context.Request;
             HttpListenerResponse response = context.Response;
@@ -152,7 +155,7 @@ namespace Solti.Utils.Rpc
 
             try
             {
-                result = await InvokeModule(await RequestContext.Create(request));
+                result = await InvokeModule(await RequestContext.Create(request), cancellation);
             }
 
             //
@@ -174,7 +177,7 @@ namespace Solti.Utils.Rpc
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        protected async virtual Task<object?> InvokeModule(IRequestContext context) 
+        protected async virtual Task<object?> InvokeModule(IRequestContext context, CancellationToken cancellation) 
         {
             if (context == null) 
                 throw new ArgumentNullException(nameof(context));
@@ -184,7 +187,12 @@ namespace Solti.Utils.Rpc
 
             await using IInjector injector = Container.CreateInjector();
 
-            injector.UnderlyingContainer.Instance(context);
+            //
+            // A kontextust es a megszakitas kerelmet is elerhetik a modulok fuggosegkent.
+            //
+
+            injector.UnderlyingContainer
+                .Instance(context);
 
             return await FModuleInvocation(injector, context);
         }

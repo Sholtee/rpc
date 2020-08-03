@@ -12,3 +12,6 @@
   - *added:* `WebService.[AllowedOrigins, Logger]` properties
   - *added:* `WebService.[SetAcHeaders(), IsPreflight(),ProcessUnhandledException()]` methods
   - *done:* Enhanced request validation in `RpcService`
+- 2.0.0-preview2:
+  - *breaking:* changed `WebService.Process()` layout
+  - *added:* cancellable request processors

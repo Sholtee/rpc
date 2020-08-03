@@ -32,14 +32,15 @@ namespace Solti.Utils.Rpc.Internals
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#System_Net_HttpListener_System_IDisposable_Dispose")]
         private HttpListener? FListener;
         private Thread? FListenerThread;
-        private readonly ManualResetEventSlim FTerminated = new ManualResetEventSlim(false);
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "This field is disposed correctly, see Stop() method")]
+        private CancellationTokenSource? FListenerCancellation;
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
             Logger?.LogInformation($"Started on {Url}");
 
-            Task isTerminated = Task.Factory.StartNew(FTerminated.Wait, TaskCreationOptions.LongRunning);
+            Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
 
             for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;) 
             {
@@ -132,7 +133,7 @@ namespace Solti.Utils.Rpc.Internals
         }
 
         /// <summary>
-        /// Calls the <see cref="Process(HttpListenerContext)"/> method in a safe manner.
+        /// Calls the <see cref="Process(HttpListenerContext, CancellationToken)"/> method in a safe manner.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
@@ -156,13 +157,22 @@ namespace Solti.Utils.Rpc.Internals
                 }
 
                 //
-                // TODO: timeout eseten a processor task megszakitasa
+                // A feldolgozonak ket esetben kell leallnia:
+                //   1) Adott idointervallumon belul nem sikerult a feladatat elvegeznie
+                //   2) Maga a WebService kerul leallitasra
                 //
 
-                Task processor = Process(context);
+                using CancellationTokenSource
+                    processorCancellation = new CancellationTokenSource(),
+                    cancel = CancellationTokenSource.CreateLinkedTokenSource(processorCancellation.Token, FListenerCancellation!.Token);
+
+                Task processor = Process(context, cancel.Token);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
+                {
+                    processorCancellation.Cancel();
                     throw new TimeoutException();
+                }
 
                 //
                 // Ha kivetel volt a feldolgozoban akkor azt dobjuk tovabb
@@ -233,7 +243,7 @@ namespace Solti.Utils.Rpc.Internals
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null")]
-        protected virtual Task Process(HttpListenerContext context)
+        protected virtual Task Process(HttpListenerContext context, CancellationToken cancellationToken)
         {
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;
             context.Response.Close();
@@ -250,8 +260,6 @@ namespace Solti.Utils.Rpc.Internals
             {
                 if (IsStarted)
                     Stop();
-
-                FTerminated.Dispose();
             }
 
             base.Dispose(disposeManaged);
@@ -335,7 +343,7 @@ namespace Solti.Utils.Rpc.Internals
                 throw;
             }
 
-            FTerminated.Reset();
+            FListenerCancellation = new CancellationTokenSource();
 
             FListenerThread = new Thread(Listen);
             FListenerThread.Start();
@@ -352,13 +360,20 @@ namespace Solti.Utils.Rpc.Internals
         {
             if (!IsStarted) return;
 
-            FTerminated.Set();
+            FListenerCancellation!.Cancel();
 
             FListenerThread!.Join();
             FListenerThread = null;
 
             FListener!.Close();
             FListener = null;
+
+            //
+            // Lehet Dispose()-olni mert a feldolgozok nem kozvetlenul hivatkozzak.
+            //
+
+            FListenerCancellation.Dispose();
+            FListenerCancellation = null;
 
             if (FNeedToRemoveUrlReservation)
                 RemoveUrlReservation(Url!);

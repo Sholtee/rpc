@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Moq;
@@ -25,19 +26,19 @@ namespace Solti.Utils.Rpc.Tests
 
         private class DummyWebService : WebService 
         {
-            protected override Task Process(HttpListenerContext context)
+            protected override Task Process(HttpListenerContext context, CancellationToken cancellation)
             {
                 if (OnRequest != null)
                 {
-                    OnRequest.Invoke(context);
-                    return Task.CompletedTask;
+                    return OnRequest.Invoke(context, cancellation);
                 }
-                return base.Process(context);
+
+                return base.Process(context, cancellation);
             }
 
-            public Action<HttpListenerContext> OnRequest { get; set; }
+            public Func<HttpListenerContext, CancellationToken, Task> OnRequest { get; set; }
 
-            public DummyWebService() => OnRequest = context =>
+            public DummyWebService() => OnRequest = (context, _) =>
             {
                 HttpListenerResponse response = context.Response;
 
@@ -47,6 +48,8 @@ namespace Solti.Utils.Rpc.Tests
                 WriteResponseString(response, Hello).Wait();
 
                 response.Close();
+
+                return Task.CompletedTask;
             };
         }
 
@@ -89,7 +92,7 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_ShouldHandleExceptions() 
         {
-            Svc.OnRequest = _ => throw new Exception();
+            Svc.OnRequest = (_, __) => throw new Exception();
 
             using var client = new HttpClient();
 
@@ -149,7 +152,7 @@ namespace Solti.Utils.Rpc.Tests
         {
             const string origin = "http://cica.hu";
 
-            var mockProcessor = new Mock<Action<HttpListenerContext>>(MockBehavior.Strict);
+            var mockProcessor = new Mock<Func<HttpListenerContext, CancellationToken, Task>>(MockBehavior.Strict);
 
             Svc.OnRequest = mockProcessor.Object;
             Svc.AllowedOrigins.Add(origin);
@@ -164,12 +167,12 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(response.Headers.GetValues("Access-Control-Allow-Origin").Single(), Is.EqualTo(origin));
             Assert.That(response.Headers.GetValues("Vary").Single(), Is.EqualTo("Origin"));
             
-            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>()), Times.Never);
+            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         private async Task Service_ShouldAllowAnyXxXByDefault(string headerName) 
         {
-            var mockProcessor = new Mock<Action<HttpListenerContext>>(MockBehavior.Strict);
+            var mockProcessor = new Mock<Func<HttpListenerContext, CancellationToken, Task>>(MockBehavior.Strict);
 
             Svc.OnRequest = mockProcessor.Object;
 
@@ -179,7 +182,7 @@ namespace Solti.Utils.Rpc.Tests
 
             Assert.That(response.Headers.GetValues(headerName).Single(), Is.EqualTo("*"));
 
-            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>()), Times.Never);
+            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -187,5 +190,26 @@ namespace Solti.Utils.Rpc.Tests
 
         [Test]
         public async Task Service_ShouldAllowAnyMethodByDefault() => await Service_ShouldAllowAnyXxXByDefault("Access-Control-Allow-Methods");
+
+        [Test]
+        public async Task Service_ShouldTimeout()
+        {
+            Task processor = null;
+
+            Svc.OnRequest = (context, cancellation) => processor = Task.Factory.StartNew(() => 
+            {
+                using var evt = new ManualResetEventSlim();
+                evt.Wait(cancellation);
+            }, TaskCreationOptions.LongRunning);
+            Svc.Timeout = TimeSpan.FromSeconds(1);
+
+            using var client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync(TestUrl);
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+            Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo(new TimeoutException().Message));
+            Assert.That(processor.IsCompleted);
+        }
     }
 }
