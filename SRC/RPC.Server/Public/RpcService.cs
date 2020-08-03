@@ -100,6 +100,18 @@ namespace Solti.Utils.Rpc
         #endregion
 
         #region Protected
+        /// <inheritdoc/>
+        protected override void SetAcHeaders(HttpListenerContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            base.SetAcHeaders(context);
+
+            context.Response.Headers["Access-Control-Allow-Methods"] = "POST";
+            context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Content-Length";
+        }
+
         /// <summary>
         /// Processes HTTP requests asynchronously.
         /// </summary>
