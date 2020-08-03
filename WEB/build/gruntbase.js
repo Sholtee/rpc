@@ -107,11 +107,12 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
                 singleRun: true,
-                browsers: ['Chrome', 'Firefox'],
+                browsers: ['Chrome', 'Firefox', 'Edge'],
                 logLevel: 'ERROR',
                 plugins: [
                     'karma-chrome-launcher',
                     'karma-firefox-launcher',
+                    '@chiragrupani/karma-chromium-edge-launcher',
                     'karma-jasmine',
                     'karma-sinon',
                     'karma-junit-reporter',
