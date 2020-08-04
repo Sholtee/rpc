@@ -155,7 +155,7 @@ namespace Solti.Utils.Rpc
 
             try
             {
-                result = await InvokeModule(await RequestContext.Create(request), cancellation);
+                result = await InvokeModule(new RequestContext(request, cancellation));
             }
 
             //
@@ -177,7 +177,7 @@ namespace Solti.Utils.Rpc
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        protected async virtual Task<object?> InvokeModule(IRequestContext context, CancellationToken cancellation) 
+        protected async virtual Task<object?> InvokeModule(IRequestContext context) 
         {
             if (context == null) 
                 throw new ArgumentNullException(nameof(context));
@@ -188,11 +188,10 @@ namespace Solti.Utils.Rpc
             await using IInjector injector = Container.CreateInjector();
 
             //
-            // A kontextust es a megszakitas kerelmet is elerhetik a modulok fuggosegkent.
+            // A kontextust elerhetik a modulok fuggosegkent.
             //
 
-            injector.UnderlyingContainer
-                .Instance(context);
+            injector.UnderlyingContainer.Instance(context);
 
             return await FModuleInvocation(injector, context);
         }

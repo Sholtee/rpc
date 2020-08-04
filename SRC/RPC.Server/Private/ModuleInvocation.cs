@@ -7,9 +7,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Internals
@@ -81,6 +83,24 @@ namespace Solti.Utils.Rpc.Internals
                 )
             )
         );
+
+        private static async Task<object?> DoInvoke(Task<object?[]> getArgs, Func<object?[], object> invocation)
+        {
+            object result = invocation(await getArgs);
+
+            if (result is Task task)
+            {
+                await task;
+
+                Type taskType = task.GetType();
+
+                return taskType.IsGenericType
+                    ? taskType.GetProperty(nameof(Task<object?>.Result)).ToGetter().Invoke(task)
+                    : null;
+            }
+
+            return result;
+        }
 
         internal static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type iface) =>
             //
@@ -155,31 +175,28 @@ namespace Solti.Utils.Rpc.Internals
 
                     localInjector = Expression.Variable(typeof(IInjector), nameof(localInjector)),
                     localContext  = Expression.Variable(typeof(IRequestContext), nameof(localContext)),
-                    argsArray     = Expression.Variable(typeof(object?[]), nameof(argsArray));
+                    args          = Expression.Parameter(typeof(object?[]), nameof(args));
 
                 Expression
                     assignLocalInjector = Expression.Assign(localInjector, injector),
-                    assignLocalContext = Expression.Assign(localContext, context),
+                    assignLocalContext  = Expression.Assign(localContext, context),
 
                     //
-                    // object?[] argsArray = deserializer(context.Args);
+                    // deserializer(context.Payload, context.Cancellation);
                     //
 
-                    assignArgs = Expression.Assign
+                    getArgs = Expression.Invoke
                     (
-                        argsArray,
-                        Expression.Invoke
-                        (
-                            Expression.Constant(GetDeserializerFor(ifaceMethod)),
-                            GetFromContext(localContext, localContext => localContext.Args)
-                        )
+                        Expression.Constant(GetDeserializerFor(ifaceMethod)),
+                        GetFromContext(localContext, localContext => localContext.Payload),
+                        GetFromContext(localContext, localContext => localContext.Cancellation)
                     ),
 
                     //
-                    // ((TInterface) injector.Get(typeof(TInterface), null)).Method((T0) argsArray[0], ..., (TN) argsArray[N])
+                    // args => ((TInterface) injector.Get(typeof(TInterface), null)).Method((T0) args[0], ..., (TN) args[N])
                     //
 
-                    callModule = Expression.Call
+                    invokeModule = Expression.Call
                     (
                         //
                         // (TInterface) injector.Get(typeof(TInterface), null)
@@ -198,7 +215,7 @@ namespace Solti.Utils.Rpc.Internals
                         ),
 
                         //
-                        // .Method((T0) argsArray[0], ..., (TN) argsArray[N])
+                        // .Method((T0) args[0], ..., (TN) args[N])
                         //
 
                         ifaceMethod,
@@ -206,25 +223,22 @@ namespace Solti.Utils.Rpc.Internals
                         (
                             (para, i) => Expression.Convert
                             (
-                                Expression.ArrayAccess(argsArray, Expression.Constant(i)),
+                                Expression.ArrayAccess(args, Expression.Constant(i)),
                                 para.ParameterType
                             )
                         )
                     );
 
-                List<Expression> block = new List<Expression> 
-                { 
-                    assignArgs
-                };
+                List<Expression> invocationBlock = new List<Expression>();
 
                 if (ifaceMethod.ReturnType != typeof(void))
                     //
                     // return (object) ...;
                     //
 
-                    block.Add
+                    invocationBlock.Add
                     (
-                        Expression.Convert(callModule, typeof(object))
+                        Expression.Convert(invokeModule, typeof(object))
                     );
                 else
                 {
@@ -233,8 +247,8 @@ namespace Solti.Utils.Rpc.Internals
                     // return null;
                     //
 
-                    block.Add(callModule);
-                    block.Add(Expression.Default(typeof(object)));
+                    invocationBlock.Add(invokeModule);
+                    invocationBlock.Add(Expression.Default(typeof(object)));
                 }
 
                 return Expression.Block
@@ -249,25 +263,26 @@ namespace Solti.Utils.Rpc.Internals
                     assignLocalContext,
 
                     //
-                    // AsTask(() => ...)
+                    // DoInvoke(deserializer(context.Payload, context.Cancellation), args => {...})
                     //
 
                     Expression.Invoke
                     (
-                        Expression.Constant((Func<Func<object?>, MethodInfo, Task<object?>>) AsTask),
-                        Expression.Lambda<Func<object?>>
+                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Task<object?>>) DoInvoke),
+                        getArgs,
+                        Expression.Lambda<Func<object?[], object?>>
                         (
-                           Expression.Block(new[] { argsArray }, block)
-                        ),                
-                        Expression.Constant(ifaceMethod)   
+                           Expression.Block(invocationBlock),
+                           args
+                        )
                     )
                 );
             }
 
-            static MemberExpression GetFromContext(ParameterExpression context, Expression<Func<IRequestContext, object?>> ctx) => Expression.Property
+            static MemberExpression GetFromContext<T>(ParameterExpression context, Expression<Func<IRequestContext, T>> ctx) => Expression.Property
             (
                 context,
-                typeof(IRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name) ?? throw new MissingMemberException(nameof(IRequestContext), nameof(IRequestContext.Args))
+                typeof(IRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name)
             );
         }
         #endregion
@@ -287,7 +302,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Gets the deserializer for the given method.
         /// </summary>
-        protected virtual Func<string, object?[]> GetDeserializerFor(MethodInfo ifaceMethod) 
+        protected virtual Func<Stream, CancellationToken, Task<object?[]>> GetDeserializerFor(MethodInfo ifaceMethod)
         {
             if (ifaceMethod == null)
                 throw new ArgumentNullException(nameof(ifaceMethod));
@@ -297,62 +312,21 @@ namespace Solti.Utils.Rpc.Internals
                 .Select(param => param.ParameterType)
                 .ToArray();
 
-            return jsonString => MultiTypeArraySerializer.Deserialize(jsonString, argTypes);
-        }
-
-        /// <summary>
-        /// Creates a new task for an invocation.
-        /// </summary>
-        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        protected virtual Task<object?> AsTask(Func<object?> invoke, MethodInfo ifaceMethod) 
-        {
-            if (invoke == null)
-                throw new ArgumentNullException(nameof(invoke));
-
-            if (ifaceMethod == null)
-                throw new ArgumentNullException(nameof(ifaceMethod));
-
-            //
-            // 1) Ha a metodus visszaterese Task akkor azt hasznaljuk.
-            //
-
-            if (typeof(Task).IsAssignableFrom(ifaceMethod.ReturnType)) 
+            return (json, cancellation) =>
             {
-                Task task = (Task) invoke()!;
+                try
+                {
+                    return MultiTypeArraySerializer.Deserialize(json, cancellation, argTypes);
+                }
+                finally
+                {
+                    //
+                    // Forrast alaphelyzetbe kene allitani de nem lehet (NotSupported)
+                    //
 
-                //
-                // Ha a Task-nak nincs eredmenye akkor NULL-t adunk vissza.
-                //
-
-                Type taskType = task.GetType();
-
-                if (!taskType.IsGenericType) return task.ContinueWith
-                (
-                    _ => default(object?)
-                );
-
-                //
-                // Kulomben konvertaljuk Task<object?> tipusura.
-                //
-
-                return task.ContinueWith
-                (
-                    taskType.GetProperty(nameof(Task<object?>.Result)).ToGetter()
-                );
-            }
-
-            //
-            // 2) Ha rendelkezik MayRunLong attributummal akkor hosszan futo Task-ot kell letrehozzunk hozza
-            //
-
-            if (ifaceMethod.GetCustomAttribute<MayRunLongAttribute>() != null)
-                return Task.Factory.StartNew(invoke, TaskCreationOptions.LongRunning);
-
-            //
-            // 3) Kulomben hivjuk a metodust es nincs tenyleges worker
-            //
-
-            return Task.FromResult(invoke());
+                  //  json.Seek(0, SeekOrigin.Begin);
+                }
+            };
         }
         #endregion
 

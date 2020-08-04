@@ -14,4 +14,5 @@
   - *done:* Enhanced request validation in `RpcService`
 - 2.0.0-preview2:
   - *breaking:* changed `WebService.Process()` layout
+  - *breaking:* removed `MayRunLongAttribute`
   - *added:* cancellable request processors

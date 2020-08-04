@@ -5,11 +5,10 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Solti.Utils.Rpc.Internals
 {
@@ -17,35 +16,25 @@ namespace Solti.Utils.Rpc.Internals
 
     internal class RequestContext : IRequestContext
     {
-        internal RequestContext(string? sessionId, string module, string method, string args, IReadOnlyDictionary<string, string> headers)
+        internal RequestContext(string? sessionId, string module, string method, Stream payload, IReadOnlyDictionary<string, string> headers, CancellationToken cancellation)
         {
-            SessionId = sessionId;
-            Module    = module;
-            Method    = method;
-            Args      = args;
-            Headers   = headers;
+            SessionId    = sessionId;
+            Module       = module;
+            Method       = method;
+            Payload      = payload;
+            Cancellation = cancellation;
+            Headers      = headers;
         }
 
-        public static async Task<RequestContext> Create(HttpListenerRequest request) 
-        {
-            NameValueCollection queryString = request.QueryString;
-
-            return new RequestContext
-            (
-                queryString.Get("sessionid"),
-                queryString.Get("module") ?? throw new InvalidOperationException(Resources.NO_MODULE),
-                queryString.Get("method") ?? throw new InvalidOperationException(Resources.NO_METHOD),
-                await ReadBody(),
-                request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key])
-
-            );
-
-            async Task<string> ReadBody()
-            {
-                using var reader = new StreamReader(request.InputStream, request.ContentEncoding);
-                return await reader.ReadToEndAsync();
-            }
-        }
+        public RequestContext(HttpListenerRequest request, CancellationToken cancellation): this
+        (
+            request.QueryString.Get("sessionid"),
+            request.QueryString.Get("module") ?? throw new InvalidOperationException(Resources.NO_MODULE),
+            request.QueryString.Get("method") ?? throw new InvalidOperationException(Resources.NO_METHOD),
+            request.InputStream,
+            request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key]),
+            cancellation
+        ) {}
 
         public string? SessionId { get; }
 
@@ -53,7 +42,9 @@ namespace Solti.Utils.Rpc.Internals
 
         public string Method { get; }
 
-        public string Args { get; }
+        public Stream Payload { get; }
+
+        public CancellationToken Cancellation { get; }
 
         public IReadOnlyDictionary<string, string> Headers { get; }
     }

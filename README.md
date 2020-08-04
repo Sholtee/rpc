@@ -1,6 +1,8 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc/master) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master)
 > Simple, lightweight RPC implementation for .NET
 
+**This documentation refers the version 2.X of the library**
+
 |Name|Package|
 |:--:|:--:|
 |**RPC.NET.Attributes**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.attributes)](https://www.nuget.org/packages/rpc.net.attributes )|
@@ -56,7 +58,6 @@
    There are some control attributes that can be applied on (module) interface methods:
    - `AliasAttribute`: Specifies the alias of the method. Useful if your module has overloaded methods.
    - `IgnoreAttribute`: Marks the method "remotely invisible".
-   - `MayRunLongAttribute`: Marks a method as long running. Using this attribute makes sense only if the method has non `Task` return value.
    
    These attributes are provided by the [RPC.NET.Attributes](https://www.nuget.org/packages/rpc.net.attributes ) package.
 3. Create the service `exe`:

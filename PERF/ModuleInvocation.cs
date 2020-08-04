@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System.IO;
 using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Attributes;
@@ -32,6 +33,8 @@ namespace Solti.Utils.Rpc.Perf
 
         private IServiceContainer Container { get; set; }
 
+        private Stream Payload { get; set; }
+
         private Internals.ModuleInvocation Invoke { get; set; }
 
         private IRequestContext Context { get; set; }
@@ -46,11 +49,21 @@ namespace Solti.Utils.Rpc.Perf
             bldr.AddModule<IModule>();
             Invoke = bldr.Build();
 
-            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), "[]", null);
+
+            using var sw = new StreamWriter(Payload = new MemoryStream());
+
+            sw.Write("[]");
+            Payload.Seek(0, SeekOrigin.Begin);
+
+            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload, null, default);
         }
 
         [GlobalCleanup]
-        public void GlobalCleanup() => Container.Dispose();
+        public void GlobalCleanup()
+        {
+            Container.Dispose();
+            Payload.Dispose();
+        }
 
         [Benchmark(Baseline = true, OperationsPerInvoke = OperationsPerInvoke)]
         public void DirectInvocation()

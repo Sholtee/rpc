@@ -5,11 +5,13 @@
 ********************************************************************************/
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Threading;
 
 namespace Solti.Utils.Rpc
 {
     /// <summary>
-    /// Describes an abstract request context.
+    /// Encapsulates all the informations related to a request.
     /// </summary>
     public interface IRequestContext 
     {
@@ -31,9 +33,14 @@ namespace Solti.Utils.Rpc
         public string Method { get;  }
 
         /// <summary>
-        /// The serialized arguments of the request.
+        /// The payload of the request. It may contain serialized method parameters or raw data related to the method invocation.
         /// </summary>
-        public string Args { get; }
+        public Stream Payload { get; }
+
+        /// <summary>
+        /// Notifies the request processor that the operation should be canceled.
+        /// </summary>
+        public CancellationToken Cancellation { get; }
 
         /// <summary>
         /// Headers sent by the client

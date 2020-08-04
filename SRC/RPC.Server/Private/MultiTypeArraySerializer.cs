@@ -5,8 +5,11 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Internals
 {
@@ -14,14 +17,27 @@ namespace Solti.Utils.Rpc.Internals
 
     internal static class MultiTypeArraySerializer
     {
-        public static object?[] Deserialize(string jsonString, params Type[] elementTypes) 
+        public static Task<object?[]> Deserialize(Stream json, CancellationToken cancellation, params Type[] elementTypes) 
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new MultiTypeArrayConverter(elementTypes));
 
-            return JsonSerializer.Deserialize<object?[]>(jsonString, options);
+            return JsonSerializer
+                .DeserializeAsync<object?[]>(json, options, cancellation)
+                .AsTask();
         }
+#if DEBUG
+        public static object?[] Deserialize(string json, params Type[] elementTypes) 
+        {
+            using var stm = new MemoryStream();
+            using var sw = new StreamWriter(stm);
+            sw.Write(json);
+            sw.Flush();
+            stm.Seek(0, SeekOrigin.Begin);
 
+            return Deserialize(stm, default, elementTypes).GetAwaiter().GetResult();
+        }
+#endif
         private sealed class MultiTypeArrayConverter : JsonConverter<object[]>
         {
             public IReadOnlyList<Type> ElementTypes { get; }

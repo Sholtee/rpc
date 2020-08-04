@@ -25,8 +25,7 @@ namespace Solti.Utils.Rpc.Tests
         public interface IModule 
         {
             void Dummy();
-            [MayRunLong]
-            void Faulty();
+            Task Faulty();
             int Add(int a, int b);
             Task<int> AddAsync(int a, int b);
             Task Async();
@@ -75,7 +74,6 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(context.SessionId, Is.EqualTo("cica"));
             Assert.That(context.Module, Is.EqualTo(nameof(IModule)));
             Assert.That(context.Method, Is.EqualTo(nameof(IModule.Dummy)));
-            Assert.That(context.Args, Is.EqualTo("[]"));
         }
 
         [Test]
@@ -172,7 +170,7 @@ namespace Solti.Utils.Rpc.Tests
 
             using var client = new RpcClient<IModule>(Host);
 
-            var ex = Assert.Throws<RpcException>(client.Proxy.Faulty);
+            var ex = Assert.ThrowsAsync<RpcException>(() => client.Proxy.Faulty());
             Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
         }
@@ -236,7 +234,7 @@ namespace Solti.Utils.Rpc.Tests
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
                 .Setup(i => i.Faulty())
-                .Callback(new ManualResetEventSlim().Wait);
+                .Returns(Task.Factory.StartNew(new ManualResetEventSlim().Wait));
 
             Server.Timeout = TimeSpan.FromSeconds(1);
             Server.Register(i => mockModule.Object);
@@ -244,7 +242,7 @@ namespace Solti.Utils.Rpc.Tests
 
             using var client = new RpcClient<IModule>(Host);
 
-            Assert.Throws<HttpRequestException>(client.Proxy.Faulty);
+            Assert.ThrowsAsync<HttpRequestException>(() => client.Proxy.Faulty());
         }
 
         [Test]
@@ -271,21 +269,22 @@ namespace Solti.Utils.Rpc.Tests
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
                 .Setup(i => i.Faulty())
-                .Callback(evt.Wait);
+                .Returns(Task.Factory.StartNew(evt.Wait));
 
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
-            client.Timeout = TimeSpan.FromSeconds(1);
+            using var client = new RpcClient<IModule>(Host)
+            {
+                Timeout = TimeSpan.FromSeconds(1)
+            };
 
-            Assert.Throws<TaskCanceledException>(client.Proxy.Faulty);
+            Assert.ThrowsAsync<TaskCanceledException>(() => client.Proxy.Faulty());
         }
 
         public interface IDummy 
         {
-            [MayRunLong]
-            void Method_1();
+            Task Method_1();
             void Method_2();
         }
 
@@ -298,7 +297,7 @@ namespace Solti.Utils.Rpc.Tests
 
             mockModule
                 .Setup(i => i.Method_1())
-                .Callback(evt.Wait);
+                .Returns(Task.Factory.StartNew(evt.Wait));
 
             mockModule.Setup(i => i.Method_2());
 
@@ -316,7 +315,7 @@ namespace Solti.Utils.Rpc.Tests
             using var client = new RpcClient<IDummy>(Host);
 
             //
-            // Ha kiszolgalo oldalon a feldolgozas szinkron akkor ez itt deadlock
+            // Ha kiszolgalo oldalon a feldolgozas szinkron akkor ez itt timeoutolni fog
             //
 
             client.Proxy.Method_2();
