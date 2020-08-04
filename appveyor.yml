@@ -47,6 +47,7 @@ before_test:
       .(".\includes.ps1")
       Update-AppveyorBuild -Version "$($PROJECT.version).$($Env:APPVEYOR_BUILD_NUMBER)-$($Env:APPVEYOR_REPO_BRANCH)"
       Get-SysInfo
+      Web-Restore
 
 test_script:
   - ps: Test
