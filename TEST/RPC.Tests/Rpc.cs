@@ -304,24 +304,23 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            Task t1 = Task.Factory.StartNew(() => 
-            {
-                using var client = new RpcClient<IDummy>(Host);
-                client.Proxy.Method_1();
-            });
+            using var client = new RpcClient<IDummy>(Host);
+
+            Task blockingTask = client.Proxy.Method_1();
 
             Thread.Sleep(100);
-
-            using var client = new RpcClient<IDummy>(Host);
 
             //
             // Ha kiszolgalo oldalon a feldolgozas szinkron akkor ez itt timeoutolni fog
             //
 
-            client.Proxy.Method_2();
+            Assert.DoesNotThrow(client.Proxy.Method_2);
 
+            Assert.That(blockingTask.IsCompleted, Is.False);
             evt.Set();
-            t1.Wait(TimeSpan.FromSeconds(5));
+            
+            Assert.That(blockingTask.Wait(TimeSpan.FromSeconds(5)));
+            Assert.That(blockingTask.IsCompletedSuccessfully);
         }
 
         public interface IGetMyHeaderBack 
