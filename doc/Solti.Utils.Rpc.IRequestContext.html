@@ -42,7 +42,7 @@
   
   <h1 id="Solti_Utils_Rpc_IRequestContext" data-uid="Solti.Utils.Rpc.IRequestContext" class="text-break">Interface IRequestContext
   </h1>
-  <div class="markdown level0 summary"><p>Describes an abstract request context.</p>
+  <div class="markdown level0 summary"><p>Encapsulates all the informations related to a request.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.html">Solti.Utils.Rpc</a></h6>
@@ -53,14 +53,14 @@
   </div>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_IRequestContext_Args_" data-uid="Solti.Utils.Rpc.IRequestContext.Args*"></a>
-  <h4 id="Solti_Utils_Rpc_IRequestContext_Args" data-uid="Solti.Utils.Rpc.IRequestContext.Args">Args</h4>
-  <div class="markdown level1 summary"><p>The serialized arguments of the request.</p>
+  <a id="Solti_Utils_Rpc_IRequestContext_Cancellation_" data-uid="Solti.Utils.Rpc.IRequestContext.Cancellation*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_Cancellation" data-uid="Solti.Utils.Rpc.IRequestContext.Cancellation">Cancellation</h4>
+  <div class="markdown level1 summary"><p>Notifies the request processor that the operation should be canceled.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string Args { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">CancellationToken Cancellation { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -72,7 +72,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -148,6 +148,30 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_IRequestContext_Payload_" data-uid="Solti.Utils.Rpc.IRequestContext.Payload*"></a>
+  <h4 id="Solti_Utils_Rpc_IRequestContext_Payload" data-uid="Solti.Utils.Rpc.IRequestContext.Payload">Payload</h4>
+  <div class="markdown level1 summary"><p>The payload of the request. It may contain serialized method parameters or raw data related to the method invocation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Stream Payload { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
         <td></td>
       </tr>
     </tbody>

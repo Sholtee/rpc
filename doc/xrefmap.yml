@@ -780,22 +780,6 @@ references:
   fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(Of TInterface)()
   nameWithType: ModuleInvocationBuilder.AddModule<TInterface>()
   nameWithType.vb: ModuleInvocationBuilder.AddModule(Of TInterface)()
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func{System.Object},System.Reflection.MethodInfo)
-  name: AsTask(Func<Object>, MethodInfo)
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_System_Func_System_Object__System_Reflection_MethodInfo_
-  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func{System.Object},System.Reflection.MethodInfo)
-  name.vb: AsTask(Func(Of Object), MethodInfo)
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func<System.Object>, System.Reflection.MethodInfo)
-  fullName.vb: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask(System.Func(Of System.Object), System.Reflection.MethodInfo)
-  nameWithType: ModuleInvocationBuilder.AsTask(Func<Object>, MethodInfo)
-  nameWithType.vb: ModuleInvocationBuilder.AsTask(Func(Of Object), MethodInfo)
-- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask*
-  name: AsTask
-  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AsTask_
-  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AsTask
-  nameWithType: ModuleInvocationBuilder.AsTask
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build
   name: Build()
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_Build
@@ -1100,19 +1084,19 @@ references:
   commentId: T:Solti.Utils.Rpc.IRequestContext
   fullName: Solti.Utils.Rpc.IRequestContext
   nameWithType: IRequestContext
-- uid: Solti.Utils.Rpc.IRequestContext.Args
-  name: Args
-  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Args
-  commentId: P:Solti.Utils.Rpc.IRequestContext.Args
-  fullName: Solti.Utils.Rpc.IRequestContext.Args
-  nameWithType: IRequestContext.Args
-- uid: Solti.Utils.Rpc.IRequestContext.Args*
-  name: Args
-  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Args_
-  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Args
+- uid: Solti.Utils.Rpc.IRequestContext.Cancellation
+  name: Cancellation
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Cancellation
+  commentId: P:Solti.Utils.Rpc.IRequestContext.Cancellation
+  fullName: Solti.Utils.Rpc.IRequestContext.Cancellation
+  nameWithType: IRequestContext.Cancellation
+- uid: Solti.Utils.Rpc.IRequestContext.Cancellation*
+  name: Cancellation
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Cancellation_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Cancellation
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.IRequestContext.Args
-  nameWithType: IRequestContext.Args
+  fullName: Solti.Utils.Rpc.IRequestContext.Cancellation
+  nameWithType: IRequestContext.Cancellation
 - uid: Solti.Utils.Rpc.IRequestContext.Headers
   name: Headers
   href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Headers
@@ -1152,6 +1136,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.IRequestContext.Module
   nameWithType: IRequestContext.Module
+- uid: Solti.Utils.Rpc.IRequestContext.Payload
+  name: Payload
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Payload
+  commentId: P:Solti.Utils.Rpc.IRequestContext.Payload
+  fullName: Solti.Utils.Rpc.IRequestContext.Payload
+  nameWithType: IRequestContext.Payload
+- uid: Solti.Utils.Rpc.IRequestContext.Payload*
+  name: Payload
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_Payload_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.Payload
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.IRequestContext.Payload
+  nameWithType: IRequestContext.Payload
 - uid: Solti.Utils.Rpc.IRequestContext.SessionId
   name: SessionId
   href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_SessionId
@@ -1165,12 +1162,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.IRequestContext.SessionId
   nameWithType: IRequestContext.SessionId
-- uid: Solti.Utils.Rpc.MayRunLongAttribute
-  name: MayRunLongAttribute
-  href: Solti.Utils.Rpc.MayRunLongAttribute.html
-  commentId: T:Solti.Utils.Rpc.MayRunLongAttribute
-  fullName: Solti.Utils.Rpc.MayRunLongAttribute
-  nameWithType: MayRunLongAttribute
 - uid: Solti.Utils.Rpc.RpcClient`1
   name: RpcClient<TInterface>
   href: Solti.Utils.Rpc.RpcClient-1.html
@@ -1513,12 +1504,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.CreateResponse
   nameWithType: RpcService.CreateResponse
-- uid: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext,System.Threading.CancellationToken)
-  name: InvokeModule(IRequestContext, CancellationToken)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_IRequestContext_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext,System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext, System.Threading.CancellationToken)
-  nameWithType: RpcService.InvokeModule(IRequestContext, CancellationToken)
+- uid: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
+  name: InvokeModule(IRequestContext)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_IRequestContext_
+  commentId: M:Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
+  fullName: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
+  nameWithType: RpcService.InvokeModule(IRequestContext)
 - uid: Solti.Utils.Rpc.RpcService.InvokeModule*
   name: InvokeModule
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_
