@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -120,7 +119,6 @@ namespace Solti.Utils.Rpc.Internals
 
                 .Distinct();
 
-        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private Expression<ModuleInvocation> BuildExpression(IEnumerable<Type> interfaces) 
         {
             ParameterExpression
