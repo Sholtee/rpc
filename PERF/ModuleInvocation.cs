@@ -33,7 +33,21 @@ namespace Solti.Utils.Rpc.Perf
 
         private IServiceContainer Container { get; set; }
 
-        private Stream Payload { get; set; }
+        private static Stream Payload { get; } = CreatePayload();
+
+        private static Stream CreatePayload() 
+        {
+            Stream result = new MemoryStream();
+            
+            var sw = new StreamWriter(result); // ne szabaditsuk fel mert felszabaditja az eredmenyt is
+
+            sw.Write("[]");
+            sw.Flush();
+
+            result.Seek(0, SeekOrigin.Begin);
+
+            return result;
+        }
 
         private Internals.ModuleInvocation Invoke { get; set; }
 
@@ -49,21 +63,11 @@ namespace Solti.Utils.Rpc.Perf
             bldr.AddModule<IModule>();
             Invoke = bldr.Build();
 
-
-            using var sw = new StreamWriter(Payload = new MemoryStream());
-
-            sw.Write("[]");
-            Payload.Seek(0, SeekOrigin.Begin);
-
             Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload, null, default);
         }
 
         [GlobalCleanup]
-        public void GlobalCleanup()
-        {
-            Container.Dispose();
-            Payload.Dispose();
-        }
+        public void GlobalCleanup() => Container.Dispose();
 
         [Benchmark(Baseline = true, OperationsPerInvoke = OperationsPerInvoke)]
         public void DirectInvocation()

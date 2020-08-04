@@ -16,7 +16,7 @@ namespace Solti.Utils.Rpc.Perf
         private RpcClient<ICalculator> Client { get; set; }
 
         [GlobalSetup]
-        public void Setup() => Client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
+        public void Setup() => Client = new RpcClient<ICalculator>("http://localhost:1986/api/");
 
         [GlobalCleanup]
         public void Cleanup() => Client?.Dispose();
