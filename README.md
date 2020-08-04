@@ -51,8 +51,15 @@
    ...
    public class Calculator : ICalculator 
    {
+     private readonly IRequestContext FContext;
+     // You can access the request context as a dependency
+     public Calculator(IRequestContext context) => FContext = context ?? throw new ArgumentNullException(nameof(context));
      public int Add(int a, int b) => a + b;
-     public Task<int> AddAsync(int a, int b) => Task.FromResult(a + b);
+     public Task<int> AddAsync(int a, int b)
+     {
+       FContext.Cancellation.ThrowIfCancellationRequested();
+       return Task.FromResult(a + b);
+     }
    }
    ```
    There are some control attributes that can be applied on (module) interface methods:
