@@ -321,10 +321,11 @@ namespace Solti.Utils.Rpc.Internals
                 finally
                 {
                     //
-                    // Forrast alaphelyzetbe kene allitani de nem lehet (NotSupported)
+                    // Forrast alaphelyzetbe allitjuk ha lehet.
                     //
 
-                  //  json.Seek(0, SeekOrigin.Begin);
+                    if (json.CanSeek) 
+                        json.Seek(0, SeekOrigin.Begin);
                 }
             };
         }
