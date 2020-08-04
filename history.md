@@ -15,4 +15,5 @@
 - 2.0.0-preview2:
   - *breaking:* changed `WebService.Process()` layout
   - *breaking:* removed `MayRunLongAttribute`
+  - *breaking:* removed ˙IRequestContext.Args˙ property (you can access the serialized arguments via the `Payload` property)
   - *added:* cancellable request processors
