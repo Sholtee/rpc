@@ -215,11 +215,11 @@ namespace Solti.Utils.Rpc
             // Naplozzuk a metodus hivast.
             //
 
-            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object?>
+            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
             {
                 [nameof(context.Module)]    = context.Module,
                 [nameof(context.Method)]    = context.Method,
-                [nameof(context.SessionId)] = context.SessionId
+                [nameof(context.SessionId)] = context.SessionId ?? "NULL"
             });
 
             logger?.LogInformation("Begin invoke");
