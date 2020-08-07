@@ -1252,6 +1252,23 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetMemberId
   nameWithType: RpcClient<TInterface>.GetMemberId
   nameWithType.vb: RpcClient(Of TInterface).GetMemberId
+- uid: Solti.Utils.Rpc.RpcClient`1.GetRequestParameters(System.Reflection.MethodInfo)
+  name: GetRequestParameters(MethodInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_GetRequestParameters_System_Reflection_MethodInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.GetRequestParameters(System.Reflection.MethodInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.GetRequestParameters(System.Reflection.MethodInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetRequestParameters(System.Reflection.MethodInfo)
+  nameWithType: RpcClient<TInterface>.GetRequestParameters(MethodInfo)
+  nameWithType.vb: RpcClient(Of TInterface).GetRequestParameters(MethodInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.GetRequestParameters*
+  name: GetRequestParameters
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_GetRequestParameters_
+  commentId: Overload:Solti.Utils.Rpc.RpcClient`1.GetRequestParameters
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.GetRequestParameters
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).GetRequestParameters
+  nameWithType: RpcClient<TInterface>.GetRequestParameters
+  nameWithType.vb: RpcClient(Of TInterface).GetRequestParameters
 - uid: Solti.Utils.Rpc.RpcClient`1.Host
   name: Host
   href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_Host
