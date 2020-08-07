@@ -4,6 +4,8 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
@@ -11,6 +13,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc
 {
@@ -71,21 +75,34 @@ namespace Solti.Utils.Rpc
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
+
         /// <summary>
         /// See <see cref="WebService.Start(string)"/>.
         /// </summary>
+        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
         public override void Start(string url)
         {
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            //
-            // Elsonek hivjuk h ha megformed akkor a kiszolgalo el se induljon.
-            //
+            ILogger? logger = LoggerFactory?.Invoke();
+            logger?.LogInformation("Starting RPC service");
 
-            FModuleInvocation = FModuleInvocationBuilder.Build();
+            try
+            {
+                //
+                // Elsonek hivjuk h ha megformed akkor a kiszolgalo el se induljon.
+                //
 
-            base.Start(url);      
+                FModuleInvocation = FModuleInvocationBuilder.Build();
+
+                base.Start(url);
+            }
+            catch (Exception ex) 
+            {
+                logger?.LogError(ex, "Failed to start RPC service on");
+                throw;
+            }
         }
 
         /// <summary>
@@ -117,7 +134,7 @@ namespace Solti.Utils.Rpc
         /// Processes HTTP requests asynchronously.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected override async Task Process(HttpListenerContext context, CancellationToken cancellation) 
+        protected override async Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -155,7 +172,7 @@ namespace Solti.Utils.Rpc
 
             try
             {
-                result = await InvokeModule(new RequestContext(request, cancellation));
+                result = await InvokeModule(new RequestContext(request, cancellation), logger);
             }
 
             //
@@ -177,7 +194,8 @@ namespace Solti.Utils.Rpc
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        protected async virtual Task<object?> InvokeModule(IRequestContext context) 
+        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
+        protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger) 
         {
             if (context == null) 
                 throw new ArgumentNullException(nameof(context));
@@ -193,7 +211,34 @@ namespace Solti.Utils.Rpc
 
             injector.UnderlyingContainer.Instance(context);
 
-            return await FModuleInvocation(injector, context);
+            //
+            // Naplozzuk a metodus hivast.
+            //
+
+            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object?>
+            {
+                [nameof(context.Module)]    = context.Module,
+                [nameof(context.Method)]    = context.Method,
+                [nameof(context.SessionId)] = context.SessionId
+            });
+
+            logger?.LogInformation("Begin invoke");
+            var stopWatch = Stopwatch.StartNew();
+
+            try
+            {
+                object? result = await FModuleInvocation(injector, context);
+
+                logger?.LogInformation($"Invocation successful in {stopWatch.ElapsedMilliseconds}ms");
+                stopWatch.Stop();
+
+                return result;
+            }
+            catch (Exception ex) 
+            {
+                logger?.LogError(ex, "Invocation failed");
+                throw;
+            }
         }
 
         /// <summary>

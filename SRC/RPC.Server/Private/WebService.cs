@@ -36,9 +36,17 @@ namespace Solti.Utils.Rpc.Internals
         private CancellationTokenSource? FListenerCancellation;
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
+        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
         private void Listen()
         {
-            Logger?.LogInformation($"Started on {Url}");
+            ILogger? logger = LoggerFactory?.Invoke();
+
+            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
+            {
+                [nameof(Url)] = Url!
+            });
+
+            logger?.LogInformation("Service started");
 
             Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
 
@@ -51,7 +59,7 @@ namespace Solti.Utils.Rpc.Internals
                 );
             }
 
-            Logger?.LogInformation($"Terminated on {Url}");
+            logger?.LogInformation("Service terminated");
         }
 
         private static HttpListener CreateCore(string url) 
@@ -133,25 +141,33 @@ namespace Solti.Utils.Rpc.Internals
         }
 
         /// <summary>
-        /// Calls the <see cref="Process(HttpListenerContext, CancellationToken)"/> method in a safe manner.
+        /// Calls the <see cref="Process(HttpListenerContext, ILogger?, CancellationToken)"/> method in a safe manner.
         /// </summary>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
+        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
-            IPEndPoint remoteEndPoint = context.Request.RemoteEndPoint;
+            ILogger? logger = LoggerFactory?.Invoke();
+
+            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object> 
+            {
+                ["RequestId"]      = context.Request.RequestTraceIdentifier,
+                ["RemoteEndPoint"] = context.Request.RemoteEndPoint,
+                ["TimeStamp"]      = DateTime.UtcNow
+            });
 
             try
             {
-                Logger?.LogInformation($"[{remoteEndPoint}] Incoming request");
+                logger?.LogInformation("Begin request processing");
                 
                 SetAcHeaders(context);
 
                 if (IsPreflight(context)) 
                 {
-                    Logger?.LogInformation($"[{remoteEndPoint}] Preflight request, processor won't be called");
+                    logger?.LogInformation("Preflight request, processor won't be called");
                     context.Response.Close();
                     return;
                 }
@@ -166,7 +182,7 @@ namespace Solti.Utils.Rpc.Internals
                     processorCancellation = new CancellationTokenSource(),
                     cancel = CancellationTokenSource.CreateLinkedTokenSource(processorCancellation.Token, FListenerCancellation!.Token);
 
-                Task processor = Process(context, cancel.Token);
+                Task processor = Process(context, logger, cancel.Token);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                 {
@@ -181,11 +197,11 @@ namespace Solti.Utils.Rpc.Internals
                 if (processor.IsFaulted)
                     throw processor.Exception.InnerExceptions[0];
 
-                Logger?.LogInformation($"[{remoteEndPoint}] Request processed successfully");
+                logger?.LogInformation("Request processed successfully");
             }
             catch(Exception ex)
             {
-                Logger?.LogError(ex, $"[{remoteEndPoint}] Request processing failed");
+                logger?.LogError(ex, "Request processing failed");
 
                 await ProcessUnhandledException(ex, context);
             }
@@ -243,7 +259,7 @@ namespace Solti.Utils.Rpc.Internals
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
         [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null")]
-        protected virtual Task Process(HttpListenerContext context, CancellationToken cancellationToken)
+        protected virtual Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellationToken)
         {
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;
             context.Response.Close();
@@ -294,9 +310,10 @@ namespace Solti.Utils.Rpc.Internals
         public string? Url { get; private set; }
 
         /// <summary>
-        /// Specifies the logger of this instance.
+        /// If set it defines the delegate that will be used for creating logger instances. 
         /// </summary>
-        public ILogger<WebService>? Logger { get; set; }
+        /// <remarks>Every session will have its own logger instance.</remarks>
+        public Func<ILogger>? LoggerFactory { get; set; }
 
         /// <summary>
         /// Starts the Web Service.

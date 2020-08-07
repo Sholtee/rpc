@@ -25,6 +25,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.*" />
     <PackageReference Include="NunitXml.TestLogger" Version="2.*" />
     <PackageReference Include="Injector.NET.Interfaces" Version="3.*" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.*" />
