@@ -34,9 +34,13 @@ namespace Solti.Utils.Rpc.Internals
             NameValueCollection paramz = request.QueryString;
             RequestParameters = paramz.AllKeys.ToDictionary(key => key, key => paramz[key]);
 
-            SessionId = RequestParameters["sessionid"];
-            Module    = RequestParameters["module"] ?? throw new InvalidOperationException(Resources.NO_MODULE);
-            Method    = RequestParameters["method"] ?? throw new InvalidOperationException(Resources.NO_METHOD);
+            //
+            // Ne a RequestParameters-bol kerjuk le mert az kivetelt dob ha nincs elem adott kulccsal
+            //
+
+            SessionId = paramz["sessionid"];
+            Module    = paramz["module"] ?? throw new InvalidOperationException(Resources.NO_MODULE);
+            Method    = paramz["method"] ?? throw new InvalidOperationException(Resources.NO_METHOD);
 
             Payload = request.InputStream;
             Headers = request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key]);
