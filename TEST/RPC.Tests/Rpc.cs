@@ -4,10 +4,12 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -347,6 +349,43 @@ namespace Solti.Utils.Rpc.Tests
             client.CustomHeaders.Add("cica", "mica");
 
             Assert.That(client.Proxy.GetMyHeaderBack(), Is.EqualTo("mica"));
+        }
+
+        public interface IGetMyParamBack 
+        {
+            string GetMyParamBack();
+        }
+
+        public class GetMyParamBack : IGetMyParamBack
+        {
+            public IRequestContext Context { get; }
+
+            public GetMyParamBack(IRequestContext context) => Context = context;
+
+            string IGetMyParamBack.GetMyParamBack() => Context.RequestParameters["cica"];
+        }
+
+        public class MyRpcClient<TInterface> : RpcClient<TInterface> where TInterface: class
+        {
+            public MyRpcClient(string host) : base(host) { }
+
+            protected override IDictionary<string, string> GetRequestParameters(MethodInfo method)
+            {
+                IDictionary<string, string> result = base.GetRequestParameters(method);
+                result.Add("cica", "mica");
+                return result;
+            }
+        }
+
+        [Test]
+        public void Client_MaySendCustomParameters()
+        {
+            Server.Register<IGetMyParamBack, GetMyParamBack>();
+            Server.Start(Host);
+
+            using var client = new MyRpcClient<IGetMyParamBack>(Host);
+
+            Assert.That(client.Proxy.GetMyParamBack(), Is.EqualTo("mica"));
         }
     }
 }
