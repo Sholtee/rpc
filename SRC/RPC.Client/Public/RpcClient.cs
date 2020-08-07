@@ -97,6 +97,25 @@ namespace Solti.Utils.Rpc
         }
 
         /// <summary>
+        /// Gets the request parameters.
+        /// </summary>
+        protected virtual IDictionary<string, string> GetRequestParameters(MethodInfo method) 
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method));
+
+            var paramz = new Dictionary<string, string>
+            {
+                { "module", GetMemberId(method.ReflectedType) },
+                { "method", GetMemberId(method)}
+            };
+
+            if (SessionId != null) paramz.Add("sessionid", SessionId);
+
+            return paramz;
+        }
+
+        /// <summary>
         /// Does the actual remote module invocation.
         /// </summary>
         [SuppressMessage("Globalization", "CA1304:Specify CultureInfo")]
@@ -120,17 +139,6 @@ namespace Solti.Utils.Rpc
             }
 
             //
-            // Parmeter az API hivashoz.
-            //
-
-            var paramz = new Dictionary<string, string>
-            {
-                { "module", GetMemberId(method.ReflectedType) },
-                { "method", GetMemberId(method)}
-            };
-            if (SessionId != null) paramz.Add("sessionid", SessionId);
-
-            //
             // POST
             //
 
@@ -138,7 +146,11 @@ namespace Solti.Utils.Rpc
 
             using (var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json"))
             {
-                response = await FHttpClient.PostAsync(QueryHelpers.AddQueryString(Host, paramz), data);
+                response = await FHttpClient.PostAsync
+                (
+                    QueryHelpers.AddQueryString(Host, GetRequestParameters(method)),
+                    data
+                );
             }
 
             //
