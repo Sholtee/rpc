@@ -68,7 +68,7 @@ namespace Solti.Utils.Rpc.Hosting
         public IHostRunner Runner { get; }
 
         /// <summary>
-        /// The related <see cref="RpcService"/>.
+        /// The related <see cref="Rpc.RpcService"/>.
         /// </summary>
         public RpcService RpcService { get; }
 
