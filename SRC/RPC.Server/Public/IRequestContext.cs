@@ -18,33 +18,38 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// The (optional) session ID.
         /// </summary>
-        public string? SessionId { get; }
+        string? SessionId { get; }
 
         /// <summary>
         /// The module we want to invoke.
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        public string Module { get;  }
+        string Module { get; }
 
         /// <summary>
         /// The module method.
         /// </summary>
         /// <remarks>The module being invoked must not use by ref parameters.</remarks>
-        public string Method { get;  }
+        string Method { get; }
+
+        /// <summary>
+        /// All the request parameters, including custom ones.
+        /// </summary>
+        IReadOnlyDictionary<string, string> RequestParameters { get; }
 
         /// <summary>
         /// The payload of the request. It may contain serialized method parameters or raw data related to the method invocation.
         /// </summary>
-        public Stream Payload { get; }
+        Stream Payload { get; }
 
         /// <summary>
         /// Notifies the request processor that the operation should be canceled.
         /// </summary>
-        public CancellationToken Cancellation { get; }
+        CancellationToken Cancellation { get; }
 
         /// <summary>
         /// Headers sent by the client
         /// </summary>
-        public IReadOnlyDictionary<string, string> Headers { get; }
+        IReadOnlyDictionary<string, string> Headers { get; }
     }
 }

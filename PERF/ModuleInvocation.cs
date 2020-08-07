@@ -63,7 +63,7 @@ namespace Solti.Utils.Rpc.Perf
             bldr.AddModule<IModule>();
             Invoke = bldr.Build();
 
-            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload, null, default);
+            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload, default);
         }
 
         [GlobalCleanup]

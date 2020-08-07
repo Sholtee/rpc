@@ -13,7 +13,8 @@
   - *added:* `WebService.[SetAcHeaders(), IsPreflight(),ProcessUnhandledException()]` methods
   - *done:* Enhanced request validation in `RpcService`
 - 2.0.0-preview2:
-  - *breaking:* changed `WebService.Process()` layout
-  - *breaking:* removed `MayRunLongAttribute`
-  - *breaking:* removed ˙IRequestContext.Args˙ property (you can access the serialized arguments via the `Payload` property)
-  - *added:* cancellable request processors
+  - *breaking:* Changed `WebService.Process()` layout
+  - *breaking:* Removed `MayRunLongAttribute`
+  - *breaking:* Removed ˙IRequestContext.Args˙ property (you can access the serialized arguments via the `Payload` property)
+  - *added:* Cancellable request processors
+  - *added:* Custom request parameter support

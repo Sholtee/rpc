@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,25 +17,32 @@ namespace Solti.Utils.Rpc.Internals
 
     internal class RequestContext : IRequestContext
     {
-        internal RequestContext(string? sessionId, string module, string method, Stream payload, IReadOnlyDictionary<string, string> headers, CancellationToken cancellation)
+        internal RequestContext(string? sessionId, string module, string method, Stream payload, CancellationToken cancellation)
         {
             SessionId    = sessionId;
             Module       = module;
             Method       = method;
             Payload      = payload;
             Cancellation = cancellation;
-            Headers      = headers;
+
+            Headers           = new Dictionary<string, string>();
+            RequestParameters = new Dictionary<string, string>();
         }
 
-        public RequestContext(HttpListenerRequest request, CancellationToken cancellation): this
-        (
-            request.QueryString.Get("sessionid"),
-            request.QueryString.Get("module") ?? throw new InvalidOperationException(Resources.NO_MODULE),
-            request.QueryString.Get("method") ?? throw new InvalidOperationException(Resources.NO_METHOD),
-            request.InputStream,
-            request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key]),
-            cancellation
-        ) {}
+        public RequestContext(HttpListenerRequest request, CancellationToken cancellation)
+        {
+            NameValueCollection paramz = request.QueryString;
+            RequestParameters = paramz.AllKeys.ToDictionary(key => key, key => paramz[key]);
+
+            SessionId = RequestParameters["sessionid"];
+            Module    = RequestParameters["module"] ?? throw new InvalidOperationException(Resources.NO_MODULE);
+            Method    = RequestParameters["method"] ?? throw new InvalidOperationException(Resources.NO_METHOD);
+
+            Payload = request.InputStream;
+            Headers = request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key]);
+
+            Cancellation = cancellation;
+        }
 
         public string? SessionId { get; }
 
@@ -47,5 +55,7 @@ namespace Solti.Utils.Rpc.Internals
         public CancellationToken Cancellation { get; }
 
         public IReadOnlyDictionary<string, string> Headers { get; }
+
+        public IReadOnlyDictionary<string, string> RequestParameters { get; }
     }
 }
