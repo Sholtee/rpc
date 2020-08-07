@@ -1149,6 +1149,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.IRequestContext.Payload
   nameWithType: IRequestContext.Payload
+- uid: Solti.Utils.Rpc.IRequestContext.RequestParameters
+  name: RequestParameters
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_RequestParameters
+  commentId: P:Solti.Utils.Rpc.IRequestContext.RequestParameters
+  fullName: Solti.Utils.Rpc.IRequestContext.RequestParameters
+  nameWithType: IRequestContext.RequestParameters
+- uid: Solti.Utils.Rpc.IRequestContext.RequestParameters*
+  name: RequestParameters
+  href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_RequestParameters_
+  commentId: Overload:Solti.Utils.Rpc.IRequestContext.RequestParameters
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.IRequestContext.RequestParameters
+  nameWithType: IRequestContext.RequestParameters
 - uid: Solti.Utils.Rpc.IRequestContext.SessionId
   name: SessionId
   href: Solti.Utils.Rpc.IRequestContext.html#Solti_Utils_Rpc_IRequestContext_SessionId
