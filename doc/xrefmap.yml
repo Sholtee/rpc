@@ -935,25 +935,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.IsStarted
   nameWithType: WebService.IsStarted
-- uid: Solti.Utils.Rpc.Internals.WebService.Logger
-  name: Logger
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Logger
-  commentId: P:Solti.Utils.Rpc.Internals.WebService.Logger
-  fullName: Solti.Utils.Rpc.Internals.WebService.Logger
-  nameWithType: WebService.Logger
-- uid: Solti.Utils.Rpc.Internals.WebService.Logger*
-  name: Logger
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Logger_
-  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.Logger
+- uid: Solti.Utils.Rpc.Internals.WebService.LoggerFactory
+  name: LoggerFactory
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_LoggerFactory
+  commentId: P:Solti.Utils.Rpc.Internals.WebService.LoggerFactory
+  fullName: Solti.Utils.Rpc.Internals.WebService.LoggerFactory
+  nameWithType: WebService.LoggerFactory
+- uid: Solti.Utils.Rpc.Internals.WebService.LoggerFactory*
+  name: LoggerFactory
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_LoggerFactory_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.LoggerFactory
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.WebService.Logger
-  nameWithType: WebService.Logger
-- uid: Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext,System.Threading.CancellationToken)
-  name: Process(HttpListenerContext, CancellationToken)
-  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext,System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext, System.Threading.CancellationToken)
-  nameWithType: WebService.Process(HttpListenerContext, CancellationToken)
+  fullName: Solti.Utils.Rpc.Internals.WebService.LoggerFactory
+  nameWithType: WebService.LoggerFactory
+- uid: Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext,Microsoft.Extensions.Logging.ILogger,System.Threading.CancellationToken)
+  name: Process(HttpListenerContext, ILogger, CancellationToken)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_Microsoft_Extensions_Logging_ILogger_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext,Microsoft.Extensions.Logging.ILogger,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.Internals.WebService.Process(System.Net.HttpListenerContext, Microsoft.Extensions.Logging.ILogger, System.Threading.CancellationToken)
+  nameWithType: WebService.Process(HttpListenerContext, ILogger, CancellationToken)
 - uid: Solti.Utils.Rpc.Internals.WebService.Process*
   name: Process
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_
@@ -1534,12 +1534,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.CreateResponse
   nameWithType: RpcService.CreateResponse
-- uid: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
-  name: InvokeModule(IRequestContext)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_IRequestContext_
-  commentId: M:Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
-  fullName: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext)
-  nameWithType: RpcService.InvokeModule(IRequestContext)
+- uid: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext,Microsoft.Extensions.Logging.ILogger)
+  name: InvokeModule(IRequestContext, ILogger)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_IRequestContext_Microsoft_Extensions_Logging_ILogger_
+  commentId: M:Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext,Microsoft.Extensions.Logging.ILogger)
+  fullName: Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.IRequestContext, Microsoft.Extensions.Logging.ILogger)
+  nameWithType: RpcService.InvokeModule(IRequestContext, ILogger)
 - uid: Solti.Utils.Rpc.RpcService.InvokeModule*
   name: InvokeModule
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_InvokeModule_
@@ -1547,12 +1547,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.InvokeModule
   nameWithType: RpcService.InvokeModule
-- uid: Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext,System.Threading.CancellationToken)
-  name: Process(HttpListenerContext, CancellationToken)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext,System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext, System.Threading.CancellationToken)
-  nameWithType: RpcService.Process(HttpListenerContext, CancellationToken)
+- uid: Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext,Microsoft.Extensions.Logging.ILogger,System.Threading.CancellationToken)
+  name: Process(HttpListenerContext, ILogger, CancellationToken)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_Microsoft_Extensions_Logging_ILogger_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext,Microsoft.Extensions.Logging.ILogger,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext, Microsoft.Extensions.Logging.ILogger, System.Threading.CancellationToken)
+  nameWithType: RpcService.Process(HttpListenerContext, ILogger, CancellationToken)
 - uid: Solti.Utils.Rpc.RpcService.Process*
   name: Process
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_Process_
