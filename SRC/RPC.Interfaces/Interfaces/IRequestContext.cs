@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 
-namespace Solti.Utils.Rpc
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Encapsulates all the informations related to a request.

@@ -17,6 +17,7 @@ namespace Solti.Utils.Rpc.Internals
 {
     using DI.Interfaces;
 
+    using Interfaces;
     using Primitives;
     using Properties;
 

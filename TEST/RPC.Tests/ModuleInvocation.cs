@@ -17,6 +17,7 @@ namespace Solti.Utils.Rpc.Tests
 {
     using DI.Interfaces;
     using Internals;
+    using Rpc.Interfaces;
 
     [TestFixture]
     public class ModuleInvocationTests

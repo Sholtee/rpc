@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Solti.Utils.Rpc.Interfaces</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc.Interfaces</RootNamespace>
+  </PropertyGroup>
+
+  <Import Project="..\Common\Common.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.*" />
+    <PackageReference Include="Injector.NET.Interfaces" Version="3.*" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <Description>Abstractions for RPC.NET.</Description>
+    <PackageId>RPC.NET.Interfaces</PackageId>
+  </PropertyGroup>
+  
+</Project>

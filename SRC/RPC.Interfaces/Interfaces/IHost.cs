@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 using Microsoft.Extensions.Logging;
 
-namespace Solti.Utils.Rpc.Hosting
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Represents an abstract service host.

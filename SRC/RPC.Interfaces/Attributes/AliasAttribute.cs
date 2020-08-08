@@ -5,7 +5,7 @@
 ********************************************************************************/
 using System;
 
-namespace Solti.Utils.Rpc
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Adds a new alias to a member.

@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Solti.Utils.Rpc.Attributes</AssemblyName>
-    <RootNamespace>Solti.Utils.Rpc</RootNamespace>
+    <AssemblyName>Solti.Utils.Rpc.Interfaces</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc.Interfaces</RootNamespace>
   </PropertyGroup>
 
   <Import Project="..\Common\Common.targets" />
 
   <PropertyGroup>
     <Description>Provides common attributes for the RPC.NET library.</Description>
-    <PackageId>RPC.NET.Attributes</PackageId>
+    <PackageId>RPC.NET.Interfaces</PackageId>
   </PropertyGroup>
   
 </Project>

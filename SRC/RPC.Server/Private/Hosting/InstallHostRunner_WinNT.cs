@@ -12,6 +12,7 @@ using System.Text;
 
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
+    using Interfaces;
     using Properties;
 
     internal class InstallHostRunner_WinNT : HostRunner

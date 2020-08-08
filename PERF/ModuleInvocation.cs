@@ -16,6 +16,7 @@ namespace Solti.Utils.Rpc.Perf
     using DI.Interfaces;
 
     using Internals;
+    using Interfaces;
 
     [MemoryDiagnoser]
     public class ModuleInvocation

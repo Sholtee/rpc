@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Server.Sample
 {
+    using Interfaces;
+
     internal class Calculator : ICalculator
     {
         private readonly IRequestContext FContext;

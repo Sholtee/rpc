@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Hosting.Tests
 {
+    using Interfaces;
     using Internals;
     
     [TestFixture]

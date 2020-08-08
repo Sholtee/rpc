@@ -6,7 +6,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Solti.Utils.Rpc.Hosting
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Defines an abstract host runner.

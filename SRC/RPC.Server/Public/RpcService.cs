@@ -20,7 +20,8 @@ namespace Solti.Utils.Rpc
 {
     using DI;
     using DI.Interfaces;
-    
+
+    using Interfaces;
     using Internals;
 
     /// <summary>

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
+    using Interfaces;
     using Properties;
 
     internal class ConsoleHostRunner : HostRunner

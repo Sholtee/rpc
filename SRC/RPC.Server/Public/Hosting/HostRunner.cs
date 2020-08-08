@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Hosting
 {
+    using Interfaces;
     using Internals;
     using Primitives.Patterns;
 

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RPC.Attributes\RPC.Attributes.csproj" />
+    <ProjectReference Include="..\RPC.Interfaces\RPC.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

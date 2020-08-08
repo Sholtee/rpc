@@ -209,7 +209,7 @@ namespace Solti.Utils.Rpc.Tests
             HttpResponseMessage response = await client.GetAsync(TestUrl);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
-            Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo(new TimeoutException().Message));
+            Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo(new OperationCanceledException().Message));
 
             Thread.Sleep(100);
             Assert.That(processor.IsCompleted);

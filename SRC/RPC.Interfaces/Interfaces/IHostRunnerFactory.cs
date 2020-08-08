@@ -4,7 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 
-namespace Solti.Utils.Rpc.Hosting
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Describes a host runner factory.

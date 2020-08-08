@@ -18,3 +18,4 @@
   - *breaking:* Removed ˙IRequestContext.Args˙ property (you can access the serialized arguments via the `Payload` property)
   - *added:* Cancellable request processors
   - *added:* Custom request parameter support
+  - *added:* `IHost.Logger` property

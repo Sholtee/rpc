@@ -185,17 +185,20 @@ namespace Solti.Utils.Rpc.Internals
                 Task processor = Process(context, logger, cancel.Token);
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
-                {
+                    //
+                    //Elkuldjuk a megszakitas kerelmet a feldolgozonak.
+                    //
+
                     processorCancellation.Cancel();
-                    throw new TimeoutException();
-                }
 
                 //
-                // Ha kivetel volt a feldolgozoban akkor azt dobjuk tovabb
+                // Itt a kovetkezo esetek lehetnek:
+                //   1) A feldolgozo idoben befejezte a feladatat, az "await" mar nem fog varakozni, jok vagyunk
+                //   2) A feldolgozo megszakizasra kerult (a kiszolgalo leallitasa vagy idotullepes maitt) -> OperationCanceledException
+                //   3) Vmi egyeb kivetel adodott a feldolgozoban
                 //
 
-                if (processor.IsFaulted)
-                    throw processor.Exception.InnerExceptions[0];
+                await processor;
 
                 logger?.LogInformation("Request processed successfully");
             }

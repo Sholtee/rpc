@@ -13,6 +13,7 @@ using System.Threading;
 
 namespace Solti.Utils.Rpc.Internals
 {
+    using Interfaces;
     using Properties;
 
     internal class RequestContext : IRequestContext

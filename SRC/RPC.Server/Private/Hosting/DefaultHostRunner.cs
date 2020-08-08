@@ -7,6 +7,7 @@ using System;
 
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
+    using Interfaces;
     using Properties;
 
     internal class DefaultHostRunner: HostRunner

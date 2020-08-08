@@ -8,6 +8,8 @@ using System.ServiceProcess;
 
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
+    using Interfaces;
+
     internal class ServiceHostRunner_WinNT : HostRunner
     {
         private sealed class ServiceImpl : ServiceBase

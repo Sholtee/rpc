@@ -20,6 +20,7 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using DI;
+    using Interfaces;
 
     [TestFixture]
     public class RpcTests
@@ -233,18 +234,22 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public void Server_ShouldTimeout() 
         {
-            var mockModule = new Mock<IModule>(MockBehavior.Strict);
-            mockModule
-                .Setup(i => i.Faulty())
-                .Returns(Task.Factory.StartNew(new ManualResetEventSlim().Wait));
-
             Server.Timeout = TimeSpan.FromSeconds(1);
-            Server.Register(i => mockModule.Object);
+            Server.Register(i =>
+            {
+                var mockModule = new Mock<IModule>(MockBehavior.Strict);
+                mockModule
+                    .Setup(i => i.Faulty())
+                    .Returns(Task.Factory.StartNew(() => new ManualResetEventSlim().Wait(i.Get<IRequestContext>().Cancellation)));
+
+                return mockModule.Object;
+            });
             Server.Start(Host);
 
             using var client = new RpcClient<IModule>(Host);
 
-            Assert.ThrowsAsync<HttpRequestException>(() => client.Proxy.Faulty());
+            var ex = Assert.ThrowsAsync<RpcException>(() => client.Proxy.Faulty());
+            Assert.That(ex.InnerException, Is.InstanceOf<OperationCanceledException>());
         }
 
         [Test]
