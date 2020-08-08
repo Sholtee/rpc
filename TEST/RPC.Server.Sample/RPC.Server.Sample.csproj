@@ -2,6 +2,7 @@
   
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Solti.Utils.Rpc.Server.Sample</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Server.Sample</RootNamespace>
