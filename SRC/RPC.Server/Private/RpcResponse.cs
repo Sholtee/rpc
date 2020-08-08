@@ -6,6 +6,8 @@
 
 namespace Solti.Utils.Rpc.Internals
 {
+    using Interfaces;
+
     internal sealed class RpcResponse
     {
         public object? Result { get; set; }

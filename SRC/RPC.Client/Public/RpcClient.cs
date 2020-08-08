@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace Solti.Utils.Rpc
 {
+    using Interfaces;
     using Internals;
     using Primitives;
     using Primitives.Patterns;

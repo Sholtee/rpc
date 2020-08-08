@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
-    <Compile Include="..\Common\ExceptionInfo.cs" Link="Private\ExceptionInfo.cs" />
-    <Compile Include="..\Common\MemberInfoExtensions.cs" Link="Private\MemberInfoExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

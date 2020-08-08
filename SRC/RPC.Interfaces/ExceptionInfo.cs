@@ -6,7 +6,7 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Solti.Utils.Rpc.Internals
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Describes a remote exception.

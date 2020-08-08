@@ -6,6 +6,8 @@
 
 namespace Solti.Utils.Rpc.Internals
 {
+    using Interfaces;
+
     internal class TypedRpcResponse<TResult>: IRpcResonse
     {
         #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
