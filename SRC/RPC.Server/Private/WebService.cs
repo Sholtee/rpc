@@ -313,7 +313,7 @@ namespace Solti.Utils.Rpc.Internals
         /// If set it defines the delegate that will be used for creating logger instances. 
         /// </summary>
         /// <remarks>Every session will have its own logger instance.</remarks>
-        public Func<ILogger>? LoggerFactory { get; set; } = () => new TraceLogger<WebService>();
+        public Func<ILogger>? LoggerFactory { get; set; } = () => TraceLogger.Create<WebService>();
 
         /// <summary>
         /// Starts the Web Service.

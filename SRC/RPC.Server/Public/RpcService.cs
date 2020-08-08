@@ -44,6 +44,7 @@ namespace Solti.Utils.Rpc
         {
             Container = container ?? throw new ArgumentNullException(nameof(container));
             FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
+            LoggerFactory = () => TraceLogger.Create<RpcService>();
         }
 
         /// <summary>

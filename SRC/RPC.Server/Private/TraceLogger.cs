@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Microsoft.Extensions.Logging;
@@ -15,11 +16,11 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
 
-    internal class TraceLogger<TCategory> : ILogger
+    internal class TraceLogger : ILogger
     {
         private readonly Stack<string> FScopes = new Stack<string>();
 
-        private sealed class Popper : Disposable 
+        private sealed class Popper : Disposable
         {
             public string State { get; }
 
@@ -28,7 +29,7 @@ namespace Solti.Utils.Rpc.Internals
             public Popper(Stack<string> scopes)
             {
                 Scopes = scopes;
-                State  = scopes.Peek();
+                State = scopes.Peek();
             }
 
             [SuppressMessage("Usage", "CA2215:Dispose methods should call base class dispose")]
@@ -43,9 +44,15 @@ namespace Solti.Utils.Rpc.Internals
                 if (Scopes.Peek() != State)
                     throw new InvalidOperationException();
 
-                Scopes.Pop();            
+                Scopes.Pop();
             }
         }
+
+        public static ILogger Create<TCategory>() => new TraceLogger($"'{Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName)}' ({typeof(TCategory).Name})");
+
+        public TraceLogger(string category) => Category = category;
+
+        public string Category { get; }
 
         public IDisposable BeginScope<TState>(TState state)
         {
@@ -72,7 +79,7 @@ namespace Solti.Utils.Rpc.Internals
             string message = formatter(state, exception);
             if (string.IsNullOrEmpty(message)) return;
 
-            message = $"{typeof(TCategory).Name}: {string.Join(" ", FScopes.Reverse())} { logLevel }: {message}";
+            message = $"{Category}: {string.Join(" ", FScopes.Reverse())} { logLevel }: {message}";
 
             Trace.WriteLine(message);
         }
