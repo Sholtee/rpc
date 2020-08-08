@@ -14,7 +14,7 @@
    - The request *URI*
      - Must use *HTTP* or *HTTPS* scheme
      - Identifies the remote *module* and *method* (in the query component)
-     - May contain the *sessionid* (in the query component)
+     - May contain the *sessionid* and/or custom data (in the query component)
    
      For example: `http://www.example.org:1986/api?module=IMyModule&method=ModuleMethod&sessionid=xXx`. 
    - The *content-type* is `application/json`
