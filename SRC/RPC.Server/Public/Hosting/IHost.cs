@@ -6,6 +6,8 @@
 using System;
 using System.Collections.Generic;
 
+using Microsoft.Extensions.Logging;
+
 namespace Solti.Utils.Rpc.Hosting
 {
     /// <summary>
@@ -32,6 +34,11 @@ namespace Solti.Utils.Rpc.Hosting
         /// Services that must run.
         /// </summary>
         IEnumerable<string> Dependencies { get; }
+
+        /// <summary>
+        /// The <see cref="ILogger"/> related to the host.
+        /// </summary>
+        ILogger? Logger { get; }
 
         /// <summary>
         /// Invoked on service installation.

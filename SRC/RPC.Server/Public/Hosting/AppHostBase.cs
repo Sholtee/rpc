@@ -6,20 +6,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
+
+using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Hosting
 {
     using DI;
     using DI.Interfaces;
+    using Rpc.Internals;
     using Primitives.Patterns;
 
     /// <summary>
     /// Represents the an app host that can be invoked by RPC
     /// </summary>
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
     public abstract class AppHostBase: Disposable, IHost
     {
         private readonly IServiceContainer FContainer;
@@ -87,6 +90,9 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public bool AutoStart { get; protected set; }
 
+        /// <inheritdoc/>
+        public ILogger? Logger { get; protected set; } = TraceLogger.Create<AppHostBase>();
+
         IEnumerable<string> IHost.Dependencies => Dependencies;
 
         /// <summary>
@@ -96,15 +102,17 @@ namespace Solti.Utils.Rpc.Hosting
             ? (ICollection<string>) new List<string>()
             : (ICollection<string>) Array.Empty<string>();
 
+
         /// <summary>
         /// Invoked on service installation.
         /// </summary>
-        public virtual void OnInstall() => Trace.WriteLine(nameof(OnInstall), FTraceCategory);
+        
+        public virtual void OnInstall() => Logger?.LogInformation("Installing host");
 
         /// <summary>
         /// Invoked on service removal.
         /// </summary>
-        public virtual void OnUninstall() => Trace.WriteLine(nameof(OnUninstall), FTraceCategory);
+        public virtual void OnUninstall() => Logger?.LogInformation("Uninstalling host");
 
         /// <summary>
         /// Place of module registration routines.
@@ -136,7 +144,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart()
         {
-            Trace.WriteLine(nameof(OnStart), FTraceCategory);
+            Logger?.LogInformation("Starting host...");
 
             if (!Initialized)
             {
@@ -153,7 +161,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStop()
         {
-            Trace.WriteLine(nameof(OnStop), FTraceCategory);
+            Logger?.LogInformation("Terminating host");
 
             RpcService.Stop();
         }
@@ -166,7 +174,7 @@ namespace Solti.Utils.Rpc.Hosting
             if (ex == null)
                 throw new ArgumentNullException(nameof(ex));
 
-            Trace.WriteLine($"Unhandled exception: {ex.Message}", FTraceCategory);
+            Logger?.LogError(ex, "Unhandled exception in host");
         }
 
         /// <summary>

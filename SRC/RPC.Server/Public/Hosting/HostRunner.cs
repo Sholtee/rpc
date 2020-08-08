@@ -5,9 +5,10 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+
+using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Hosting
 {
@@ -41,7 +42,10 @@ namespace Solti.Utils.Rpc.Hosting
         protected HostRunner(IHost host)
         {
             Host = host ?? throw new ArgumentNullException(nameof(host));
+
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
+
+            host.Logger?.LogInformation($"Running host with {GetType().Name}");
         }
 
         /// <summary>
@@ -90,10 +94,7 @@ namespace Solti.Utils.Rpc.Hosting
             {
                 if (factory.ShouldUse)
                 {
-                    IHostRunner runner = factory.CreateRunner(host);
-
-                    Trace.WriteLine($"Running host with {runner.GetType().Name}", $"[{nameof(HostRunner)}]");
-                    return runner;
+                    return factory.CreateRunner(host);
                 }
             }
 
