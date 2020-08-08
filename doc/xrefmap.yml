@@ -433,6 +433,51 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.AliasAttribute.Name
   nameWithType: AliasAttribute.Name
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo
+  name: ExceptionInfo
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.ExceptionInfo
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo
+  nameWithType: ExceptionInfo
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Data
+  name: Data
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html#Solti_Utils_Rpc_Interfaces_ExceptionInfo_Data
+  commentId: P:Solti.Utils.Rpc.Interfaces.ExceptionInfo.Data
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Data
+  nameWithType: ExceptionInfo.Data
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Data*
+  name: Data
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html#Solti_Utils_Rpc_Interfaces_ExceptionInfo_Data_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ExceptionInfo.Data
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Data
+  nameWithType: ExceptionInfo.Data
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Message
+  name: Message
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html#Solti_Utils_Rpc_Interfaces_ExceptionInfo_Message
+  commentId: P:Solti.Utils.Rpc.Interfaces.ExceptionInfo.Message
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Message
+  nameWithType: ExceptionInfo.Message
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Message*
+  name: Message
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html#Solti_Utils_Rpc_Interfaces_ExceptionInfo_Message_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ExceptionInfo.Message
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.Message
+  nameWithType: ExceptionInfo.Message
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName
+  name: TypeName
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html#Solti_Utils_Rpc_Interfaces_ExceptionInfo_TypeName
+  commentId: P:Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName
+  nameWithType: ExceptionInfo.TypeName
+- uid: Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName*
+  name: TypeName
+  href: Solti.Utils.Rpc.Interfaces.ExceptionInfo.html#Solti_Utils_Rpc_Interfaces_ExceptionInfo_TypeName_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName
+  nameWithType: ExceptionInfo.TypeName
 - uid: Solti.Utils.Rpc.Interfaces.IgnoreAttribute
   name: IgnoreAttribute
   href: Solti.Utils.Rpc.Interfaces.IgnoreAttribute.html
@@ -780,57 +825,31 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.SessionId
   nameWithType: IRequestContext.SessionId
+- uid: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions
+  name: MemberInfoExtensions
+  href: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.MemberInfoExtensions
+  fullName: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions
+  nameWithType: MemberInfoExtensions
+- uid: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId(System.Reflection.MemberInfo)
+  name: GetId(MemberInfo)
+  href: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.html#Solti_Utils_Rpc_Interfaces_MemberInfoExtensions_GetId_System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId(System.Reflection.MemberInfo)
+  fullName: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId(System.Reflection.MemberInfo)
+  nameWithType: MemberInfoExtensions.GetId(MemberInfo)
+- uid: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId*
+  name: GetId
+  href: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.html#Solti_Utils_Rpc_Interfaces_MemberInfoExtensions_GetId_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId
+  nameWithType: MemberInfoExtensions.GetId
 - uid: Solti.Utils.Rpc.Internals
   name: Solti.Utils.Rpc.Internals
   href: Solti.Utils.Rpc.Internals.html
   commentId: N:Solti.Utils.Rpc.Internals
   fullName: Solti.Utils.Rpc.Internals
   nameWithType: Solti.Utils.Rpc.Internals
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo
-  name: ExceptionInfo
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html
-  commentId: T:Solti.Utils.Rpc.Internals.ExceptionInfo
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo
-  nameWithType: ExceptionInfo
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo.Data
-  name: Data
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html#Solti_Utils_Rpc_Internals_ExceptionInfo_Data
-  commentId: P:Solti.Utils.Rpc.Internals.ExceptionInfo.Data
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo.Data
-  nameWithType: ExceptionInfo.Data
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo.Data*
-  name: Data
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html#Solti_Utils_Rpc_Internals_ExceptionInfo_Data_
-  commentId: Overload:Solti.Utils.Rpc.Internals.ExceptionInfo.Data
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo.Data
-  nameWithType: ExceptionInfo.Data
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo.Message
-  name: Message
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html#Solti_Utils_Rpc_Internals_ExceptionInfo_Message
-  commentId: P:Solti.Utils.Rpc.Internals.ExceptionInfo.Message
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo.Message
-  nameWithType: ExceptionInfo.Message
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo.Message*
-  name: Message
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html#Solti_Utils_Rpc_Internals_ExceptionInfo_Message_
-  commentId: Overload:Solti.Utils.Rpc.Internals.ExceptionInfo.Message
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo.Message
-  nameWithType: ExceptionInfo.Message
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo.TypeName
-  name: TypeName
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html#Solti_Utils_Rpc_Internals_ExceptionInfo_TypeName
-  commentId: P:Solti.Utils.Rpc.Internals.ExceptionInfo.TypeName
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo.TypeName
-  nameWithType: ExceptionInfo.TypeName
-- uid: Solti.Utils.Rpc.Internals.ExceptionInfo.TypeName*
-  name: TypeName
-  href: Solti.Utils.Rpc.Internals.ExceptionInfo.html#Solti_Utils_Rpc_Internals_ExceptionInfo_TypeName_
-  commentId: Overload:Solti.Utils.Rpc.Internals.ExceptionInfo.TypeName
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Internals.ExceptionInfo.TypeName
-  nameWithType: ExceptionInfo.TypeName
 - uid: Solti.Utils.Rpc.Internals.HttpException
   name: HttpException
   href: Solti.Utils.Rpc.Internals.HttpException.html
@@ -1416,12 +1435,12 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).MethodCallForwarder.Owner
   nameWithType: RpcClient<TInterface>.MethodCallForwarder.Owner
   nameWithType.vb: RpcClient(Of TInterface).MethodCallForwarder.Owner
-- uid: Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.Internals.ExceptionInfo)
+- uid: Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo)
   name: ProcessRemoteError(ExceptionInfo)
-  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_Solti_Utils_Rpc_Internals_ExceptionInfo_
-  commentId: M:Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.Internals.ExceptionInfo)
-  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.ProcessRemoteError(Solti.Utils.Rpc.Internals.ExceptionInfo)
-  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).ProcessRemoteError(Solti.Utils.Rpc.Internals.ExceptionInfo)
+  href: Solti.Utils.Rpc.RpcClient-1.html#Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_Solti_Utils_Rpc_Interfaces_ExceptionInfo_
+  commentId: M:Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo)
+  fullName: Solti.Utils.Rpc.RpcClient<TInterface>.ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo)
+  fullName.vb: Solti.Utils.Rpc.RpcClient(Of TInterface).ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo)
   nameWithType: RpcClient<TInterface>.ProcessRemoteError(ExceptionInfo)
   nameWithType.vb: RpcClient(Of TInterface).ProcessRemoteError(ExceptionInfo)
 - uid: Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError*
