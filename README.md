@@ -5,7 +5,7 @@
 
 |Name|Package|
 |:--:|:--:|
-|**RPC.NET.Attributes**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.attributes)](https://www.nuget.org/packages/rpc.net.attributes )|
+|**RPC.NET.Interfaces**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.interfaces)](https://www.nuget.org/packages/rpc.net.interfaces )|
 |**RPC.NET.Client**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.client)](https://www.nuget.org/packages/rpc.net.client )|
 |**RPC.NET.Server**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.server)](https://www.nuget.org/packages/rpc.net.server )|
 |**RPC.NET-Connector**|[![npm version](https://badge.fury.io/js/rpcdotnet-connector.svg)](https://badge.fury.io/js/rpcdotnet-connector)|
@@ -66,7 +66,7 @@
    - `AliasAttribute`: Specifies the alias of the method. Useful if your module has overloaded methods.
    - `IgnoreAttribute`: Marks the method "remotely invisible".
    
-   These attributes are provided by the [RPC.NET.Attributes](https://www.nuget.org/packages/rpc.net.attributes ) package.
+   These attributes are provided by the [RPC.NET.Interfaces](https://www.nuget.org/packages/rpc.net.interfaces ) package.
 3. Create the service `exe`:
    ```csharp
    using System;
@@ -107,7 +107,7 @@
 1. Reference the [rpcdotnet-connector](https://www.npmjs.com/package/rpcdotnet-connector )  package: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/rpcdotnet-connector.min.js"></script>`
 2. Create a connection factory:
    ```js
-   let factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
+   const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
 3. Set up the API connection:
    ```js

@@ -5,7 +5,7 @@
 1. Reference this package via `jsdelivr`: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/rpcdotnet-connector.min.js"></script>`
 2. Create a connection factory:
    ```js
-   let factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
+   const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
 3. Set up the API connection:
    ```js
