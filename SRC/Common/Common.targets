@@ -12,7 +12,6 @@
     <DocumentationFile>$(OutputPath)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Product>RPC.NET</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIconUrl>https://github.com/Sholtee/rpc/raw/master/icon.png</PackageIconUrl>
     <PackageTags>RPC;remote-procedure-call</PackageTags>
     <PackageReleaseNotes>See https://github.com/Sholtee/rpc/blob/master/history.md </PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
@@ -21,6 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(CI)' == ''">
+    <None Include="..\..\icon.png" Pack="true" PackagePath=""/>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
