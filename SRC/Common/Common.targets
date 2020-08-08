@@ -20,8 +20,11 @@
     <RepositoryBranch>$(CurrentBranch)</RepositoryBranch>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(CI)' == ''">
+  <ItemGroup>
     <None Include="..\..\icon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(CI)' == ''"> 
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
