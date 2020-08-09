@@ -173,7 +173,7 @@ namespace Solti.Utils.Rpc.Tests
 
             using var client = new RpcClient<IModule>(Host);
 
-            var ex = Assert.ThrowsAsync<RpcException>(() => client.Proxy.Faulty());
+            var ex = Assert.ThrowsAsync<RpcException>(client.Proxy.Faulty);
             Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
         }

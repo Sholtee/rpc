@@ -78,6 +78,7 @@ namespace Solti.Utils.Rpc.Internals
 
             string message = formatter(state, exception);
             if (string.IsNullOrEmpty(message)) return;
+            if (exception != null) message += $" -> {Environment.NewLine}{exception}";
 
             message = $"{Category}: {string.Join(" ", FScopes.Reverse())} { logLevel }: {message}";
 
