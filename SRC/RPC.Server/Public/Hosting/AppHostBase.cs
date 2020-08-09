@@ -21,24 +21,21 @@ namespace Solti.Utils.Rpc.Hosting
     using Rpc.Internals;
 
     using Primitives.Patterns;
+    using Properties;
 
     /// <summary>
     /// Represents the an app host that can be invoked by RPC
     /// </summary>
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
     public abstract class AppHostBase: Disposable, IHost
     {
         private readonly IServiceContainer FContainer;
-        private readonly string FTraceCategory;
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         protected AppHostBase(IServiceContainer container, RpcService rpcService)
-        {     
-            FContainer     = container  ?? throw new ArgumentNullException(nameof(container));
-            FTraceCategory = $"[{GetType().Name}]";
-
+        {
+            FContainer = container ?? throw new ArgumentNullException(nameof(container));
             RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
             Runner     = HostRunner.GetCompatibleRunner(this);
         }
@@ -46,16 +43,12 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(IServiceContainer container) : this(container, new RpcService(container ?? throw new ArgumentNullException(nameof(container))))
-        {
-        }
+        protected AppHostBase(IServiceContainer container) : this(container, new RpcService(container ?? throw new ArgumentNullException(nameof(container)))) {}
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(): this(new ServiceContainer())
-        {
-        }
+        protected AppHostBase(): this(new ServiceContainer()) {}
 
         /// <summary>
         /// The name of the host.
@@ -105,17 +98,15 @@ namespace Solti.Utils.Rpc.Hosting
             ? (ICollection<string>) new List<string>()
             : (ICollection<string>) Array.Empty<string>();
 
-
         /// <summary>
         /// Invoked on service installation.
-        /// </summary>
-        
-        public virtual void OnInstall() => Logger?.LogInformation("Installing host");
+        /// </summary> 
+        public virtual void OnInstall() => Logger?.LogInformation(Trace.INSTALLING_HOST);
 
         /// <summary>
         /// Invoked on service removal.
         /// </summary>
-        public virtual void OnUninstall() => Logger?.LogInformation("Uninstalling host");
+        public virtual void OnUninstall() => Logger?.LogInformation(Trace.UNINSTALLING_HOST);
 
         /// <summary>
         /// Place of module registration routines.
@@ -147,16 +138,24 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart()
         {
-            Logger?.LogInformation("Starting host...");
+            Logger?.LogInformation(Trace.STARTING_HOST);
 
-            if (!Initialized)
+            try
             {
-                OnRegisterServices(FContainer);
-                OnRegisterModules(RpcService);
-                Initialized = true;
-            }
+                if (!Initialized)
+                {
+                    OnRegisterServices(FContainer);
+                    OnRegisterModules(RpcService);
+                    Initialized = true;
+                }
 
-            RpcService.Start(Url);
+                RpcService.Start(Url);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, Trace.STARTING_HOST_FAILED);
+                throw;
+            }
         }
 
         /// <summary>
@@ -164,7 +163,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStop()
         {
-            Logger?.LogInformation("Terminating host");
+            Logger?.LogInformation(Trace.TERMINATING_HOST);
 
             RpcService.Stop();
         }
@@ -177,7 +176,7 @@ namespace Solti.Utils.Rpc.Hosting
             if (ex == null)
                 throw new ArgumentNullException(nameof(ex));
 
-            Logger?.LogError(ex, "Unhandled exception in host");
+            Logger?.LogError(ex, Trace.UNHANDLED_EXCEPTION);
         }
 
         /// <summary>

@@ -24,6 +24,8 @@ namespace Solti.Utils.Rpc.Internals
     /// <summary>
     /// Implements a general Web Service over HTTP. 
     /// </summary>
+    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
+    [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
     public class WebService: Disposable
     {
         #region Private
@@ -36,7 +38,6 @@ namespace Solti.Utils.Rpc.Internals
         private CancellationTokenSource? FListenerCancellation;
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
         private void Listen()
         {
             ILogger? logger = LoggerFactory?.Invoke();
@@ -46,7 +47,7 @@ namespace Solti.Utils.Rpc.Internals
                 [nameof(Url)] = Url!
             });
 
-            logger?.LogInformation("Service started");
+            logger?.LogInformation(Trace.SERVICE_STARTED);
 
             Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
 
@@ -59,7 +60,7 @@ namespace Solti.Utils.Rpc.Internals
                 );
             }
 
-            logger?.LogInformation("Service terminated");
+            logger?.LogInformation(Trace.SERVICE_TERMINATED);
         }
 
         private static HttpListener CreateCore(string url) 
@@ -99,7 +100,7 @@ namespace Solti.Utils.Rpc.Internals
             
             netsh.WaitForExit();
             if (netsh.ExitCode != 0)
-                throw new Exception(Resources.NETSH_INVOCATION_FAILED);
+                throw new Exception(Errors.NETSH_INVOCATION_FAILED);
         }
         #endregion
 
@@ -143,8 +144,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Calls the <see cref="Process(HttpListenerContext, ILogger?, CancellationToken)"/> method in a safe manner.
         /// </summary>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Every type of exceptions should be caught.")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
             if (context == null)
@@ -161,13 +161,13 @@ namespace Solti.Utils.Rpc.Internals
 
             try
             {
-                logger?.LogInformation("Begin request processing");
+                logger?.LogInformation(Trace.BEGIN_REQUEST_PROCESSING);
                 
                 SetAcHeaders(context);
 
                 if (IsPreflight(context)) 
                 {
-                    logger?.LogInformation("Preflight request, processor won't be called");
+                    logger?.LogInformation(Trace.PREFLIGHT_REQUEST);
                     context.Response.Close();
                     return;
                 }
@@ -200,11 +200,11 @@ namespace Solti.Utils.Rpc.Internals
 
                 await processor;
 
-                logger?.LogInformation("Request processed successfully");
+                logger?.LogInformation(Trace.REQUEST_PROCESSED);
             }
             catch(Exception ex)
             {
-                logger?.LogError(ex, "Request processing failed");
+                logger?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
                 await ProcessUnhandledException(ex, context);
             }
@@ -261,9 +261,11 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
-        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "'context' is never null")]
         protected virtual Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellationToken)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;
             context.Response.Close();
 
@@ -308,8 +310,7 @@ namespace Solti.Utils.Rpc.Internals
 
         /// <summary>
         /// The URL on which the Web Service is listening.
-        /// </summary>
-        [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
+        /// </summary>  
         public string? Url { get; private set; }
 
         /// <summary>
@@ -321,7 +322,6 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Starts the Web Service.
         /// </summary>
-        [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
         [MethodImpl(MethodImplOptions.Synchronized)]
         public virtual void Start(string url)
         {
@@ -403,14 +403,12 @@ namespace Solti.Utils.Rpc.Internals
 
         /// <summary>
         /// Adds an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
-        /// </summary>
-        [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
+        /// </summary>        
         public static void AddUrlReservation(string url) => InvokeNetsh($"http add urlacl url={url ?? throw new ArgumentNullException(nameof(url))} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes");
 
         /// <summary>
         /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
-        [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
         public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url ?? throw new ArgumentNullException(nameof(url))}");
         #endregion
     }

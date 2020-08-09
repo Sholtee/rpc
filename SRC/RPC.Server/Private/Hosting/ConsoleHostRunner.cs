@@ -41,7 +41,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                     .ToArray();
 
                 if (missingServices.Any())
-                    throw new Exception(string.Format(Resources.Culture, Resources.DEPENDENCY_NOT_AVAILABLE, string.Join(",", missingServices)));
+                    throw new Exception(string.Format(Errors.Culture, Errors.DEPENDENCY_NOT_AVAILABLE, string.Join(",", missingServices)));
             }
 
             Console.Title = Host.Name;
@@ -53,7 +53,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
                 Task.Factory.StartNew(() =>
                 {
-                    Console.WriteLine(Resources.RUNNING);
+                    Console.WriteLine(Trace.RUNNING);
                     while (true) Console.ReadKey(true);
                 }, TaskCreationOptions.LongRunning);
 

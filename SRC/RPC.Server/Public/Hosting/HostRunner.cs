@@ -15,6 +15,7 @@ namespace Solti.Utils.Rpc.Hosting
     using Interfaces;
     using Internals;
     using Primitives.Patterns;
+    using Properties;
 
     /// <summary>
     /// Defines an abstract host runner.
@@ -46,7 +47,7 @@ namespace Solti.Utils.Rpc.Hosting
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
 
-            host.Logger?.LogInformation($"Running host with {GetType().Name}");
+            host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name));
         }
 
         /// <summary>

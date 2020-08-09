@@ -345,10 +345,10 @@ namespace Solti.Utils.Rpc.Internals
                 throw new ArgumentNullException(nameof(iface));
 
             if (!iface.IsInterface)
-                throw new ArgumentException(Resources.NOT_AN_INTERFACE, nameof(iface));
+                throw new ArgumentException(Errors.NOT_AN_INTERFACE, nameof(iface));
 
             if (iface.IsGenericTypeDefinition)
-                throw new ArgumentException(Resources.GENERIC_IFACE, nameof(iface));
+                throw new ArgumentException(Errors.GENERIC_IFACE, nameof(iface));
 
             MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface).Where
             (
@@ -357,7 +357,7 @@ namespace Solti.Utils.Rpc.Internals
 
             if (methodsHavingByRefParam.Any())
             {
-                var ex = new ArgumentException(Resources.BYREF_PARAMETER, nameof(iface));
+                var ex = new ArgumentException(Errors.BYREF_PARAMETER, nameof(iface));
                 ex.Data["methods"] = methodsHavingByRefParam;
                 throw ex;
             }

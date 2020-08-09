@@ -40,8 +40,8 @@ namespace Solti.Utils.Rpc.Internals
             //
 
             SessionId = paramz["sessionid"];
-            Module    = paramz["module"] ?? throw new InvalidOperationException(Resources.NO_MODULE);
-            Method    = paramz["method"] ?? throw new InvalidOperationException(Resources.NO_METHOD);
+            Module    = paramz["module"] ?? throw new InvalidOperationException(Errors.NO_MODULE);
+            Method    = paramz["method"] ?? throw new InvalidOperationException(Errors.NO_METHOD);
 
             Payload = request.InputStream;
             Headers = request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key]);

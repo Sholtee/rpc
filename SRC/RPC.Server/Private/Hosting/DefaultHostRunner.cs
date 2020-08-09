@@ -14,7 +14,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
     {
         internal DefaultHostRunner(IHost host) : base(host) { }
 
-        public override void Start() => throw new Exception(Resources.NO_HOSTING);
+        public override void Start() => throw new Exception(Errors.NO_HOSTING);
 
         public override void Stop()
         {

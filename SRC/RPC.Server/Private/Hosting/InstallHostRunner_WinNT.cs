@@ -5,7 +5,6 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -33,7 +32,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             netsh.WaitForExit();
 
             if (netsh.ExitCode != 0)
-                throw new Exception(string.Format(Resources.Culture, Resources.SC_INVOCATION_FAILED, netsh.ExitCode));
+                throw new Exception(string.Format(Errors.Culture, Errors.SC_INVOCATION_FAILED, netsh.ExitCode));
         }
 
         internal bool Install { get; set; }
@@ -74,13 +73,13 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         #region Factory
         private sealed class FactoryImpl : IHostRunnerFactory
         {
-            private bool Install { get; } = ArgSet("-install");
+            private bool Install { get; } = ArgSet("-INSTALL");
 
-            private bool Uninstall { get; } = ArgSet("-uninstall");
+            private bool Uninstall { get; } = ArgSet("-UNINSTALL");
 
             private static bool ArgSet(string name) => Environment
                 .GetCommandLineArgs()
-                .Any(arg => arg.ToLower(Resources.Culture ?? CultureInfo.CurrentCulture) == name);
+                .Any(arg => arg.ToUpperInvariant() == name);
 
             public bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
 

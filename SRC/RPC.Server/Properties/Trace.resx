@@ -117,40 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BYREF_PARAMETER" xml:space="preserve">
-    <value>ByRef parameters are not supported.</value>
+  <data name="BEGINNING_INVOCATION" xml:space="preserve">
+    <value>Beginning invocation...</value>
   </data>
-  <data name="DEPENDENCY_NOT_AVAILABLE" xml:space="preserve">
-    <value>One or more dependencies are not available: {0}</value>
+  <data name="BEGIN_REQUEST_PROCESSING" xml:space="preserve">
+    <value>Begin request processing.</value>
   </data>
-  <data name="GENERIC_IFACE" xml:space="preserve">
-    <value>Generic interfaces are not supported.</value>
+  <data name="INSTALLING_HOST" xml:space="preserve">
+    <value>Installing host.</value>
   </data>
-  <data name="INAPPROPRIATE_ARRAY_LENGTH" xml:space="preserve">
-    <value>The length of the args array does not match the parameter count.</value>
+  <data name="INVOCATION_FAILED" xml:space="preserve">
+    <value>Invocation failed.</value>
   </data>
-  <data name="NETSH_INVOCATION_FAILED" xml:space="preserve">
-    <value>"netsh" invocation failed.</value>
+  <data name="INVOCATION_SUCCESSFUL" xml:space="preserve">
+    <value>Invocation successful in {0}ms.</value>
   </data>
-  <data name="NOT_AN_ARRAY" xml:space="preserve">
-    <value>The JSON string must represent an array.</value>
+  <data name="PREFLIGHT_REQUEST" xml:space="preserve">
+    <value>Preflight request, processor won't be called.</value>
   </data>
-  <data name="NOT_AN_INTERFACE" xml:space="preserve">
-    <value>The module must be an interface.</value>
+  <data name="REQUEST_PROCESSED" xml:space="preserve">
+    <value>Request processed successfully.</value>
   </data>
-  <data name="NO_HOSTING" xml:space="preserve">
-    <value>No compatible hosting found.</value>
-  </data>
-  <data name="NO_METHOD" xml:space="preserve">
-    <value>Request must specify a method.</value>
-  </data>
-  <data name="NO_MODULE" xml:space="preserve">
-    <value>Request must specify a module.</value>
+  <data name="REQUEST_PROCESSING_FAILED" xml:space="preserve">
+    <value>Request processing failed.</value>
   </data>
   <data name="RUNNING" xml:space="preserve">
-    <value>Server is running... Press Ctrl+C to terminate</value>
+    <value>Server is running... Press Ctrl+C to terminate!</value>
   </data>
-  <data name="SC_INVOCATION_FAILED" xml:space="preserve">
-    <value>Service Control Manager invocation failed. Error {0}</value>
+  <data name="SERVICE_STARTED" xml:space="preserve">
+    <value>Service started.</value>
+  </data>
+  <data name="SERVICE_TERMINATED" xml:space="preserve">
+    <value>Service terminated.</value>
+  </data>
+  <data name="STARTING_HOST" xml:space="preserve">
+    <value>Starting host...</value>
+  </data>
+  <data name="STARTING_HOST_FAILED" xml:space="preserve">
+    <value>Host starting failed.</value>
+  </data>
+  <data name="STARTING_HOST_WITH" xml:space="preserve">
+    <value>Starting host with {0}.</value>
+  </data>
+  <data name="STARTING_RPC_SERVICE" xml:space="preserve">
+    <value>Starting RPC service...</value>
+  </data>
+  <data name="STARTING_RPC_SERVICE_FAILED" xml:space="preserve">
+    <value>Failed to start the RPC service.</value>
+  </data>
+  <data name="TERMINATING_HOST" xml:space="preserve">
+    <value>Terminating host.</value>
+  </data>
+  <data name="UNHANDLED_EXCEPTION" xml:space="preserve">
+    <value>Unhandled exception in host.</value>
+  </data>
+  <data name="UNINSTALLING_HOST" xml:space="preserve">
+    <value>Uninstalling host.</value>
   </data>
 </root>

@@ -23,6 +23,7 @@ namespace Solti.Utils.Rpc
 
     using Interfaces;
     using Internals;
+    using Properties;
 
     /// <summary>
     /// Implements the core RPC service functionality.
@@ -77,18 +78,16 @@ namespace Solti.Utils.Rpc
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
-
         /// <summary>
         /// See <see cref="WebService.Start(string)"/>.
         /// </summary>
-        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
         public override void Start(string url)
         {
             if (IsStarted)
                 throw new InvalidOperationException();
 
             ILogger? logger = LoggerFactory?.Invoke();
-            logger?.LogInformation("Starting RPC service");
+            logger?.LogInformation(Trace.STARTING_RPC_SERVICE);
 
             try
             {
@@ -102,7 +101,7 @@ namespace Solti.Utils.Rpc
             }
             catch (Exception ex) 
             {
-                logger?.LogError(ex, "Failed to start RPC service on");
+                logger?.LogError(ex, Trace.STARTING_RPC_SERVICE_FAILED);
                 throw;
             }
         }
@@ -196,7 +195,6 @@ namespace Solti.Utils.Rpc
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
         protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger) 
         {
             if (context == null) 
@@ -224,21 +222,21 @@ namespace Solti.Utils.Rpc
                 [nameof(context.SessionId)] = context.SessionId ?? "NULL"
             });
 
-            logger?.LogInformation("Begin invoke");
+            logger?.LogInformation(Trace.BEGINNING_INVOCATION);
             var stopWatch = Stopwatch.StartNew();
 
             try
             {
                 object? result = await FModuleInvocation(injector, context);
 
-                logger?.LogInformation($"Invocation successful in {stopWatch.ElapsedMilliseconds}ms");
+                logger?.LogInformation(string.Format(Trace.Culture, Trace.INVOCATION_SUCCESSFUL, stopWatch.ElapsedMilliseconds));
                 stopWatch.Stop();
 
                 return result;
             }
             catch (Exception ex) 
             {
-                logger?.LogError(ex, "Invocation failed");
+                logger?.LogError(ex, Trace.INVOCATION_FAILED);
                 throw;
             }
         }
