@@ -104,6 +104,14 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
 
                     return this;
                 },
+                registerProperty: function(name, alias) {
+                    Object.defineProperty(this.prototype, alias || name, {
+                        enumerable: true,
+                        get: () =>  owner.invoke(module, `get_${name}`, []),
+                        set: val => owner.invoke(module, `set_${name}`, [val])
+                    });
+                    return this;
+                },
                 module
             });
         }

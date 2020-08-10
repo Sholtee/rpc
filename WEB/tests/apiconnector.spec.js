@@ -99,12 +99,15 @@ describe('ApiConnectionFactory', () => {
             expect(typeof Calculator).toBe('function');
             expect(Calculator.module).toBe('ICalculator');
 
-            Calculator.registerMethod('Add', 'add');
+            Calculator
+                .registerMethod('Add', 'add')
+                .registerProperty('PI');
 
             expect(typeof Calculator.prototype.add).toBe('function');
+            expect(typeof Calculator.prototype.PI).toBe('object');
         });
 
-        ['Add', 'AddAsync'].forEach(method => it(`should return a connection that invokes the server (${method})`, done => {
+        ['Add', 'AddAsync'].forEach(method => it(`should return an API connection that may have methods (${method})`, done => {
             const Calculator = factory
                 .createConnection('ICalculator')
                 .registerMethod(method, 'add');
@@ -115,5 +118,17 @@ describe('ApiConnectionFactory', () => {
                 done();
             });
         }));
+
+        it('should return an API connection that may have properties', done => {
+            const Calculator = factory
+                .createConnection('ICalculator')
+                .registerProperty('PI');
+
+            const inst = new Calculator();
+            inst.PI.then(PI => {
+                expect(PI).toEqual(Math.PI);
+                done();
+            });
+        });
     });
 });

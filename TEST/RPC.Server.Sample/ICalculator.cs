@@ -11,5 +11,6 @@ namespace Solti.Utils.Rpc.Server.Sample
     {
         int Add(int a, int b);
         Task<int> AddAsync(int a, int b);
+        double PI { get; }
     }
 }

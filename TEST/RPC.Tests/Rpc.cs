@@ -34,6 +34,7 @@ namespace Solti.Utils.Rpc.Tests
             Task Async();
             Stream GetStream();
             Task<Stream> GetStreamAsync();
+            int Prop { get; set; }
         }
 
         const string Host = "http://localhost:1986/test/";
@@ -140,6 +141,30 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(await client.Proxy.AddAsync(1, 2), Is.EqualTo(3));
 
             mockModule.Verify(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        }
+
+        [Test]
+        public void UsingProperties_ShouldWork() 
+        {
+            int prop = 0;
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .SetupGet(i => i.Prop)
+                .Returns(() => prop);
+            mockModule
+                .SetupSet(i => i.Prop)
+                .Callback(val => prop = val);
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+
+            IModule module = client.Proxy;
+
+            Assert.DoesNotThrow(() => module.Prop = 1986);
+            Assert.That(module.Prop, Is.EqualTo(1986));
         }
 
         [Test]

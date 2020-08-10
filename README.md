@@ -47,6 +47,7 @@
    {
      int Add(int a, int b);
      Task<int> AddAsync(int a, int b); // async methods also supported
+     double PI { get; }
    }
    ...
    public class Calculator : ICalculator 
@@ -60,6 +61,7 @@
        FContext.Cancellation.ThrowIfCancellationRequested();
        return Task.FromResult(a + b);
      }
+     public double PI => Math.PI;
    }
    ```
    There are some control attributes that can be applied on (module) interface methods:
@@ -112,13 +114,16 @@
 3. Set up the API connection:
    ```js
    const Calculator = factory.createConnection('ICalculator');
-   Calculator.registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/);
+   Calculator
+     .registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/)
+     .registerProperty('PI');
    ```
 4. Invoke the API:
    ```js
    const calculator = new Calculator();
    // every method invocations are async
    calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
+   const PI = await calculator.PI;
    ```
 ## Hosting the server
 1. Create a console project that will host your app:

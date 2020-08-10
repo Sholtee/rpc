@@ -10,11 +10,14 @@
 3. Set up the API connection:
    ```js
    const Calculator = factory.createConnection('ICalculator');
-   Calculator.registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/);
+   Calculator
+     .registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/)
+	 .registerProperty('PI');
    ```
 4. Invoke the API:
    ```js
    const calculator = new Calculator();
    // every method invocations are async
    calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
+   const PI = await calculator.PI;
    ```
