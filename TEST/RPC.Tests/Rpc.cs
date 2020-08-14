@@ -395,9 +395,9 @@ namespace Solti.Utils.Rpc.Tests
             string IGetMyParamBack.GetMyParamBack() => Context.RequestParameters["cica"];
         }
 
-        public class MyRpcClient<TInterface> : RpcClient<TInterface> where TInterface: class
+        public class MyFactory : RpcClientFactory
         {
-            public MyRpcClient(string host) : base(host) { }
+            public MyFactory(string host) : base(host) { }
 
             protected override IDictionary<string, string> GetRequestParameters(MethodInfo method)
             {
@@ -413,9 +413,9 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register<IGetMyParamBack, GetMyParamBack>();
             Server.Start(Host);
 
-            using var client = new MyRpcClient<IGetMyParamBack>(Host);
+            using var clientFactory = new MyFactory(Host);
 
-            Assert.That(client.Proxy.GetMyParamBack(), Is.EqualTo("mica"));
+            Assert.That(clientFactory.CreateClient<IGetMyParamBack>().GetMyParamBack(), Is.EqualTo("mica"));
         }
     }
 }

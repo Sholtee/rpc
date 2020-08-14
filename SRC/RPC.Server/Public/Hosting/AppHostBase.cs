@@ -111,7 +111,13 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Place of module registration routines.
         /// </summary>
-        public virtual void OnRegisterModules(IModuleRegistry registry) { }
+        public virtual void OnRegisterModules(IModuleRegistry registry)
+        {
+            if (registry == null)
+                throw new ArgumentNullException(nameof(registry));
+
+            registry.Register<IServiceDescriptor, ServiceDescriptor>();
+        }
 
         /// <summary>
         /// Place of service registration routines.
