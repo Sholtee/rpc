@@ -100,7 +100,8 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Client.dll</h6>
   <h5 id="Solti_Utils_Rpc_RpcClient_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RpcClient&lt;TInterface&gt; : Disposable, IDisposableEx, IDisposable, IAsyncDisposable where TInterface : class</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;This type is obsolete, use RpcClientFactory instead!&quot;)]
+public sealed class RpcClient&lt;TInterface&gt; : Disposable, IDisposableEx, IDisposable, IAsyncDisposable where TInterface : class</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -274,8 +275,7 @@
   </h3>
   <a id="Solti_Utils_Rpc_RpcClient_1_Dispose_" data-uid="Solti.Utils.Rpc.RpcClient`1.Dispose*"></a>
   <h4 id="Solti_Utils_Rpc_RpcClient_1_Dispose_System_Boolean_" data-uid="Solti.Utils.Rpc.RpcClient`1.Dispose(System.Boolean)">Dispose(Boolean)</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#System_IDisposable_Dispose">Dispose()</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -300,206 +300,6 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
-  <a id="Solti_Utils_Rpc_RpcClient_1_GetMemberId_" data-uid="Solti.Utils.Rpc.RpcClient`1.GetMemberId*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcClient_1_GetMemberId_System_Reflection_MemberInfo_" data-uid="Solti.Utils.Rpc.RpcClient`1.GetMemberId(System.Reflection.MemberInfo)">GetMemberId(MemberInfo)</h4>
-  <div class="markdown level1 summary"><p>Gets the ID of a member.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual string GetMemberId(MemberInfo member)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.memberinfo">MemberInfo</a></td>
-        <td><span class="parametername">member</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcClient_1_GetRequestParameters_" data-uid="Solti.Utils.Rpc.RpcClient`1.GetRequestParameters*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcClient_1_GetRequestParameters_System_Reflection_MethodInfo_" data-uid="Solti.Utils.Rpc.RpcClient`1.GetRequestParameters(System.Reflection.MethodInfo)">GetRequestParameters(MethodInfo)</h4>
-  <div class="markdown level1 summary"><p>Gets the request parameters.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual IDictionary&lt;string, string&gt; GetRequestParameters(MethodInfo method)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
-        <td><span class="parametername">method</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcClient_1_InvokeService_" data-uid="Solti.Utils.Rpc.RpcClient`1.InvokeService*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcClient_1_InvokeService_System_Reflection_MethodInfo_System_Object___" data-uid="Solti.Utils.Rpc.RpcClient`1.InvokeService(System.Reflection.MethodInfo,System.Object[])">InvokeService(MethodInfo, Object[])</h4>
-  <div class="markdown level1 summary"><p>Does the actual remote module invocation.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual object InvokeService(MethodInfo method, object[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
-        <td><span class="parametername">method</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcClient_1_InvokeServiceAsync_" data-uid="Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcClient_1_InvokeServiceAsync_System_Reflection_MethodInfo_System_Object___" data-uid="Solti.Utils.Rpc.RpcClient`1.InvokeServiceAsync(System.Reflection.MethodInfo,System.Object[])">InvokeServiceAsync(MethodInfo, Object[])</h4>
-  <div class="markdown level1 summary"><p>Does the actual remote module invocation.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual Task&lt;object&gt; InvokeServiceAsync(MethodInfo method, object[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
-        <td><span class="parametername">method</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_" data-uid="Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcClient_1_ProcessRemoteError_Solti_Utils_Rpc_Interfaces_ExceptionInfo_" data-uid="Solti.Utils.Rpc.RpcClient`1.ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo)">ProcessRemoteError(ExceptionInfo)</h4>
-  <div class="markdown level1 summary"><p>Processes the <a class="xref" href="Solti.Utils.Rpc.Interfaces.ExceptionInfo.html">ExceptionInfo</a> returned by the remote host.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual void ProcessRemoteError(ExceptionInfo exception)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.ExceptionInfo.html">ExceptionInfo</a></td>
-        <td><span class="parametername">exception</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span>
