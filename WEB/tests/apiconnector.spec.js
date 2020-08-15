@@ -13,7 +13,7 @@ describe('ApiConnectionFactory', () => {
         factory = new ApiConnectionFactory('http://localhost:1986/api');
     });
 
-    describe('post()', () => {
+    describe('invoke()', () => {
         const api = 'http://localhost:1986/api?module=ICalculator&method=Add';
 
         var server;
@@ -25,11 +25,11 @@ describe('ApiConnectionFactory', () => {
 
         afterEach(() => server.restore());
 
-        it('should return a Promise', () => expect(factory.post(api, [1, 1])).toBeInstanceOf(Promise));
+        it('should return a Promise', () => expect(factory.invoke('ICalculator', 'Add', [1, 1])).toBeInstanceOf(Promise));
 
         it('should deserialize the result', done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            factory.post(api, [1, 1]).then(result => {
+            factory.invoke('ICalculator', 'Add', [1, 1]).then(result => {
                 expect(result).toBe(2);
                 done();
             });
@@ -38,7 +38,7 @@ describe('ApiConnectionFactory', () => {
 
         it('should handle malformed result', done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '1986']);
-            factory.post(api, [1, 1]).catch(e => {
+            factory.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
                 done();
             });
@@ -47,7 +47,7 @@ describe('ApiConnectionFactory', () => {
 
         it('should handle invalid content type',  done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'cica' }, '{"Exception": null, "Result": 2}']);
-            factory.post(api, [1, 1]).catch(e => {
+            factory.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
                 done();
             });
@@ -56,7 +56,7 @@ describe('ApiConnectionFactory', () => {
 
         it('should handle text result',  done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'text/html' }, 'akarmi']);
-            factory.post(api, [1, 1]).catch(e => {
+            factory.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
                 expect(e).toEqual('akarmi');
                 done();
             });
@@ -70,7 +70,7 @@ describe('ApiConnectionFactory', () => {
                 headers = xhr.requestHeaders;
             });
 
-            factory.post(api, [1, 1]).catch(noop);
+            factory.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
             server.respond();
 
             expect(headers['Content-Type']).toBe('application/json;charset=utf-8');
@@ -85,7 +85,7 @@ describe('ApiConnectionFactory', () => {
                 headers = xhr.requestHeaders;
             });
 
-            factory.post(api, [1, 1]).catch(noop);
+            factory.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
             server.respond();
 
             expect(headers['my-header']).toBe('value');

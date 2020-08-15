@@ -9,113 +9,118 @@ const RESPONSE_NOT_VALID = 'Server response could not be processed';
 
 // class
 function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new window.XMLHttpRequest()) {
-    Object.assign(this, {
-        sessionId: null,
-        headers: {},
-        timeout: 0,
-        onResponse(resolve, reject) {
-            const response = this.response || this.responseText;
+  Object.assign(this, {
+    sessionId: null,
+    headers: {},
+    timeout: 0,
+    invoke: function(module, method, args) {
+      let url = `${urlBase}?module=${module}&method=${method}`;
+      if (this.sessionId) url += `&sessionid=${this.sessionId}`;
 
-            if (this.status !== 200) {
-                reject(`Status inappropriate: ${this.status} (${this.statusText})`);
-                return;
-            }
+      return post(url, args, this.headers, this.timeout);
+    },
+    createConnection: function(module) {
+      const owner = this;
 
-            switch (this.getResponseHeader('Content-Type')) {
-                case 'text/html': {
-                    reject(response);
-                    break;
-                }
-                case 'application/json': {
-                    const parsed = JSON.parse(response);
+      return Object.assign(function ApiConnection() {}, {
+        registerMethod: function(name, alias) {
+          this.prototype[alias || name] = (...args) => owner.invoke(module, name, args);
 
-                    if (typeof parsed === 'object') {
-                        //
-                        // Ne hasOwnProperty()-vel vizsgaljuk mert lehet jelen van, csak NULL
-                        //
+          //
+          // A hivasok lancba fuzhetoek legyenek
+          //
 
-                        if (parsed.Exception) {
-                            reject(parsed.Exception.Message);
-                            break;
-                        }
-
-                        //
-                        // Viszont itt mar NULL is jo ertek -> hasOwnProperty()
-                        //
-
-                        if (parsed.hasOwnProperty('Result')) {
-                            resolve(parsed.Result);
-                            break;
-                        }
-                    }
-
-                    //
-                    // Nem kell break, tudatos
-                    //
-                }
-                // eslint-disable-next-line no-fallthrough
-                default: {
-                    reject(RESPONSE_NOT_VALID);
-                    break;
-                }
-            }
+          return this;
         },
-        onError(reject) {
-            reject(this.statusText);
+        registerProperty: function(name, alias) {
+          Object.defineProperty(this.prototype, alias || name, {
+            enumerable: true,
+            get: () =>  owner.invoke(module, `get_${name}`, []),
+            set: val => owner.invoke(module, `set_${name}`, [val])
+          });
+          return this;
         },
-        post(url, args) {
-            return new Promise((resolve, reject) => {
-                const xhr = xhrFactory();
+        module
+      });
+    }
+  });
 
-                xhr.open('POST', url, true);
-                xhr.timeout = this.timeout;
+  /* eslint-disable no-invalid-this */
+  function onError(reject) {
+    reject(this.statusText);
+  }
 
-                const headers = Object.assign({
-                    'Content-Type': 'application/json'
-                }, this.headers);
+  function onResponse(resolve, reject) {
+    const response = this.response || this.responseText;
 
-                Object
-                    .keys(headers)
-                    .forEach(key => xhr.setRequestHeader(key, headers[key].toString()));
+    if (this.status !== 200) {
+      reject(`Status inappropriate: ${this.status} (${this.statusText})`);
+      return;
+    }
 
-                xhr.onload = this.onResponse.bind(xhr, resolve, reject);
+    switch (this.getResponseHeader('Content-Type')) {
+      case 'text/html': {
+        reject(response);
+        break;
+      }
+      case 'application/json': {
+        const parsed = JSON.parse(response);
 
-                xhr.onerror = xhr.ontimeout = this.onError.bind(xhr, reject);
+        if (typeof parsed === 'object') {
+          //
+          // Ne hasOwnProperty()-vel vizsgaljuk mert lehet jelen van, csak NULL
+          //
 
-                xhr.send(JSON.stringify(args));
-            });
-        },
-        invoke: function(module, method, args) {
-            let url = `${urlBase}?module=${module}&method=${method}`;
-            if (this.sessionId) url += `&sessionid=${this.sessionId}`;
+          if (parsed.Exception) {
+            reject(parsed.Exception.Message);
+            break;
+          }
 
-            return this.post(url, args);
-        },
-        createConnection: function(module) {
-            const owner = this;
+          //
+          // Viszont itt mar NULL is jo ertek -> hasOwnProperty()
+          //
 
-            return Object.assign(function ApiConnection() {}, {
-                registerMethod: function(name, alias) {
-                    this.prototype[alias || name] = (...args) => owner.invoke(module, name, args);
-
-                    //
-                    // A hivasok lancba fuzhetoek legyenek
-                    //
-
-                    return this;
-                },
-                registerProperty: function(name, alias) {
-                    Object.defineProperty(this.prototype, alias || name, {
-                        enumerable: true,
-                        get: () =>  owner.invoke(module, `get_${name}`, []),
-                        set: val => owner.invoke(module, `set_${name}`, [val])
-                    });
-                    return this;
-                },
-                module
-            });
+          if (parsed.hasOwnProperty('Result')) {
+            resolve(parsed.Result);
+            break;
+          }
         }
+
+        //
+        // Nem kell break, tudatos
+        //
+      }
+      // eslint-disable-next-line no-fallthrough
+      default: {
+        reject(RESPONSE_NOT_VALID);
+        break;
+      }
+    }
+  }
+  /* eslint-enable no-invalid-this */
+
+  function post(url, args, headers, timeout) {
+    return new Promise((resolve, reject) => {
+      const xhr = xhrFactory();
+
+      xhr.open('POST', url, true);
+      xhr.timeout = timeout;
+
+      headers = Object.assign({
+        'Content-Type': 'application/json'
+      }, headers);
+
+      Object
+        .keys(headers)
+        .forEach(key => xhr.setRequestHeader(key, headers[key].toString()));
+
+      xhr.onload = onResponse.bind(xhr, resolve, reject);
+
+      xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
+
+      xhr.send(JSON.stringify(args));
     });
+  }
 }
 
 //
