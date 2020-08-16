@@ -21,6 +21,7 @@ namespace Solti.Utils.Rpc.Tests
 {
     using DI;
     using Interfaces;
+    using Internals;
 
     [TestFixture]
     public class RpcTests
@@ -292,6 +293,26 @@ namespace Solti.Utils.Rpc.Tests
             response = await client.PostAsync(Host, new StringContent(string.Empty));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
+
+        [Test]
+        public void Module_MaySendArbitraryErrorCode() 
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.Faulty())
+                .Callback(() => throw new HttpException
+                {
+                    Status = HttpStatusCode.Unauthorized
+                });
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IModule>(Host);
+
+            var ex = Assert.ThrowsAsync<HttpRequestException>(client.Proxy.Faulty);
+            Assert.That(ex.Message.Contains("401"));
+        } 
 
         [Test]
         public void Client_ShouldTimeout() 
