@@ -1812,12 +1812,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcService.Container
   nameWithType: RpcService.Container
-- uid: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse)
-  name: CreateResponse(Object, HttpListenerResponse)
-  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_System_Object_System_Net_HttpListenerResponse_
-  commentId: M:Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse)
-  fullName: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object, System.Net.HttpListenerResponse)
-  nameWithType: RpcService.CreateResponse(Object, HttpListenerResponse)
+- uid: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse,System.Threading.CancellationToken)
+  name: CreateResponse(Object, HttpListenerResponse, CancellationToken)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_System_Object_System_Net_HttpListenerResponse_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.RpcService.CreateResponse(System.Object,System.Net.HttpListenerResponse,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.RpcService.CreateResponse(System.Object, System.Net.HttpListenerResponse, System.Threading.CancellationToken)
+  nameWithType: RpcService.CreateResponse(Object, HttpListenerResponse, CancellationToken)
 - uid: Solti.Utils.Rpc.RpcService.CreateResponse*
   name: CreateResponse
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_CreateResponse_
