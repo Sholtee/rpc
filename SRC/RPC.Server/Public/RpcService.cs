@@ -176,19 +176,37 @@ namespace Solti.Utils.Rpc
                 result = await InvokeModule(new RequestContext(request, cancellation), logger);
             }
 
-            //
-            // - A "catch" blokk ne az InvokeModule()-ban legyen h pl a RequestContext.Create() altal dobott
-            //   hibakat is el tudjuk kapni
-            // - Ha az InvokeModule()-bol jon HttpException akkor azt tovabbdobjuk (igy modul is tud HTTP hibat
-            //   generalni)
-            //
-
-            catch (Exception ex) when (!(ex is HttpException))
+            catch (OperationCanceledException ex)
             {
+                //
+                // Mivel itt mar "cancellation.IsCancellationRequested" jo esellyel igaz ezert h a CreateResponse() ne 
+                // dobjon egybol TaskCanceledException-t (ami HTTP 500-at generalna) ne az eredeti "cancellation"-t 
+                // adjuk at.
+                //
+
+                cancellation = default;
                 result = ex;
             }
 
-            await CreateResponse(result, response);
+            catch (HttpException)
+            {
+                //
+                // Egyedi HTTP hibakod is megadhato, ekkor nem szerializalunk.
+                //
+
+                throw;
+            }
+
+            catch (Exception ex)
+            {
+                //
+                // Kulomben valid valasz fogja tartalmazni a hibat.
+                //
+
+                result = ex;
+            }
+
+            await CreateResponse(result, response, cancellation);
         }
 
         /// <summary>
@@ -244,60 +262,47 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Sets the HTTP response.
         /// </summary>
-        protected virtual async Task CreateResponse(object? result, HttpListenerResponse response)
+        protected virtual async Task CreateResponse(object? result, HttpListenerResponse response, CancellationToken cancellation)
         {
             if (response == null) 
                 throw new ArgumentNullException(nameof(response));
 
-            Stream? outputStream = null; // Ertekadas azert h ne reklamaljon a fordito
-            try
+            switch (result)
             {
-                switch (result)
-                {
-                    case Stream stream:
-                        response.ContentType = "application/octet-stream";
-                        response.ContentEncoding = null;
-                        outputStream = stream;
-                        break;
-                    case Exception ex:
-                        response.ContentType = "application/json";
-                        response.ContentEncoding = Encoding.UTF8;
-                        await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
+                case Stream stream:
+                    response.ContentType = "application/octet-stream";
+                    response.ContentEncoding = null;
+                    if (stream.CanSeek)
+                        stream.Seek(0, SeekOrigin.Begin);
+                    await stream.CopyToAsync(response.OutputStream);      
+                    stream.Dispose();
+                    break;
+                case Exception ex:
+                    response.ContentType = "application/json";
+                    response.ContentEncoding = Encoding.UTF8;
+                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse
+                    {
+                        Exception = new ExceptionInfo
                         {
-                            Exception = new ExceptionInfo
-                            {
-                                TypeName = ex.GetType().AssemblyQualifiedName,
-                                Message = ex.Message,
-                                Data = ex.Data
-                            }
-                        });
-                        break;
-                    default:
-                        response.ContentType = "application/json";
-                        response.ContentEncoding = Encoding.UTF8;
-                        await JsonSerializer.SerializeAsync(outputStream = new MemoryStream(), new RpcResponse
-                        {
-                            Result = result
-                        });
-                        break;
-                }
-
-                response.StatusCode = (int) HttpStatusCode.OK;
-
-                //
-                // A "response.ContentLength64 = response.OutputStream.Length" nem mukodne
-                //
-
-                response.ContentLength64 = outputStream.Length;
-                outputStream.Seek(0, SeekOrigin.Begin);
-                await outputStream.CopyToAsync(response.OutputStream);
+                            TypeName = ex.GetType().AssemblyQualifiedName,
+                            Message = ex.Message,
+                            Data = ex.Data
+                        }
+                    }, cancellationToken: cancellation);
+                    break;
+                default:
+                    response.ContentType = "application/json";
+                    response.ContentEncoding = Encoding.UTF8;
+                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse
+                    {
+                        Result = result
+                    }, cancellationToken: cancellation);
+                    break;
             }
 
             //
-            // Mindenkepp felszabaditjuk a Stream-et meg ha RPC interface-metodus adta vissza akkor is
+            // Statuszt es hosszt nem kell beallitani.
             //
-
-            finally { outputStream?.Dispose(); }
 
             response.Close();
         }
