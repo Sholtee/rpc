@@ -274,7 +274,13 @@ namespace Solti.Utils.Rpc
                     response.ContentEncoding = null;
                     if (stream.CanSeek)
                         stream.Seek(0, SeekOrigin.Begin);
-                    await stream.CopyToAsync(response.OutputStream);      
+                    await stream.CopyToAsync
+                    (
+                        response.OutputStream
+#if !NETSTANDARD2_0
+                        , cancellation
+#endif
+                    );      
                     stream.Dispose();
                     break;
                 case Exception ex:

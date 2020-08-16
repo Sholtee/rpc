@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Internals
 {
+    using Interfaces;
     using Primitives.Patterns;
     using Properties;
 
@@ -255,7 +256,14 @@ namespace Solti.Utils.Rpc.Internals
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentEncoding = Encoding.UTF8;
             response.ContentLength64 = buffer.Length;
-            await response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+            await response.OutputStream.WriteAsync
+            (
+#if NETSTANDARD2_0
+                buffer, 0, buffer.Length
+#else
+                buffer.AsMemory(0, buffer.Length)
+#endif
+            );
         }
 
         /// <summary>
@@ -285,9 +293,9 @@ namespace Solti.Utils.Rpc.Internals
 
             base.Dispose(disposeManaged);
         }
-        #endregion
+#endregion
 
-        #region Public
+#region Public
         /// <summary>
         /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
         /// </summary>
@@ -410,6 +418,6 @@ namespace Solti.Utils.Rpc.Internals
         /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url ?? throw new ArgumentNullException(nameof(url))}");
-        #endregion
+#endregion
     }
 }
