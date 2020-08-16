@@ -21,7 +21,6 @@ namespace Solti.Utils.Rpc.Tests
 {
     using DI;
     using Interfaces;
-    using Internals;
 
     [TestFixture]
     public class RpcTests

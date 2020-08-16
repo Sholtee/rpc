@@ -6,7 +6,7 @@
 using System;
 using System.Net;
 
-namespace Solti.Utils.Rpc.Internals
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Represents a HTTP error.
