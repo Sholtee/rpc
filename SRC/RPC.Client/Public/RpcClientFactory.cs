@@ -9,9 +9,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.WebUtilities;
@@ -142,8 +142,15 @@ namespace Solti.Utils.Rpc
 
             HttpResponseMessage response;
 
-            using (var data = new StringContent(JsonSerializer.Serialize(args), Encoding.UTF8, "application/json"))
+            using (var stm = new MemoryStream())
             {
+                await JsonSerializer.SerializeAsync(stm, args);
+                stm.Seek(0, SeekOrigin.Begin);
+
+                using var data = new StreamContent(stm);
+                data.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                data.Headers.ContentEncoding.Add("utf-8");
+
                 response = await FHttpClient.PostAsync
                 (
                     QueryHelpers.AddQueryString(Host, GetRequestParameters(method)),
@@ -164,18 +171,16 @@ namespace Solti.Utils.Rpc
             switch (response.Content.Headers.ContentType.MediaType) 
             {
                 case "application/json":
-                    //
-                    // Itt direkt nincs "response.EnsureSuccessStatusCode()" mivel hiba eseten a reszleteknek is
-                    // JSON formaban kene megerkezniuk.
-                    //
-
-                    IRpcResonse result = (IRpcResonse) JsonSerializer.Deserialize
-                    (
-                        await response.Content.ReadAsStringAsync(),
-                        GenerateTypedResponseTo(method)
-                    );
-                    if (result.Exception != null) ProcessRemoteError(result.Exception);
-                    return result.Result;
+                    using (Stream stm = await response.Content.ReadAsStreamAsync())
+                    {
+                        IRpcResonse result =  (IRpcResonse) await JsonSerializer.DeserializeAsync
+                        (
+                            stm,
+                            GenerateTypedResponseTo(method)
+                        );
+                        if (result.Exception != null) ProcessRemoteError(result.Exception);
+                        return result.Result;
+                    }
                 case "application/octet-stream":
                     return await response.Content.ReadAsStreamAsync();
                 default:
