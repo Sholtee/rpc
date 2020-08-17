@@ -7,6 +7,8 @@
 describe('ApiConnectionFactory', () => {
     const noop = function() {};
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
     var factory;
 
     beforeEach(() => {
