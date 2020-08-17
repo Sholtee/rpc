@@ -131,4 +131,14 @@ describe('ApiConnectionFactory', () => {
             });
         });
     });
+
+    describe('version', () => {
+        it('should return the version of the remote host', () => {
+            factory.serviceVersion.then(version => {
+                expect(version.Major).toBe('number');
+                expect(version.Minor).toBe('number');
+                expect(version.Patch).toBe('number');
+            });
+        });
+    });
 });

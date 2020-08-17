@@ -13,6 +13,9 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
     sessionId: null,
     headers: {},
     timeout: 0,
+    get serviceVersion() {
+      return this.invoke('IServiceDescriptor', 'get_Version');
+    },
     invoke: function(module, method, args) {
       let url = `${urlBase}?module=${module}&method=${method}`;
       if (this.sessionId) url += `&sessionid=${this.sessionId}`;
