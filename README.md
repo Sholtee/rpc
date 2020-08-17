@@ -101,7 +101,7 @@
    ICalculator calculator = factory.CreateClient<ICalculator>();
    try
    {
-     int result = await calculator.AddAsync(1, 2));
+     int result = await calculator.AddAsync(1, 2);
    } catch(RpcException ex) {
      // ex.InnerException will contain the original exception
    }
