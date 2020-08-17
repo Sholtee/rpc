@@ -7,11 +7,11 @@
 - 1.0.0:
   - *added:* `IHostRunnerFactory` interface
 - 2.0.0-preview1:
-  - *breaking:* removed `WebService.PreCheck()`, `RpcService.GetErrorCode()` method, renamed `WebService.ProcessRequest()` -> `Process()`
-  - *breaking:* to set the status code returned by the `RpcService` you should throw a `HttpException`. Previously it was done via the `RpcService.GetErrorCode()` method.
+  - *breaking:* Removed `WebService.PreCheck()`, `RpcService.GetErrorCode()` method, renamed `WebService.ProcessRequest()` -> `Process()`
+  - *breaking:* To set the status code returned by the `RpcService` you should throw a `HttpException`. Previously it was done via the `RpcService.GetErrorCode()` method.
   - *added:* `WebService.[AllowedOrigins, Logger]` properties
   - *added:* `WebService.[SetAcHeaders(), IsPreflight(),ProcessUnhandledException()]` methods
-  - *done:* Enhanced request validation in `RpcService`
+  - *enhanced:* request validation in `RpcService`
 - 2.0.0-preview2:
   - *breaking:* Changed `WebService.Process()` layout
   - *breaking:* Removed `MayRunLongAttribute`
@@ -19,3 +19,6 @@
   - *added:* Cancellable request processors
   - *added:* Custom request parameter support
   - *added:* `IHost.Logger` property
+- 2.0.0-preview3
+  - *enhanced:* Server performance
+  - *added:* `RpcClientFactory` class

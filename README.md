@@ -92,15 +92,16 @@
    ```
 ## Client example
 1. Install the [RPC.NET.Client](https://www.nuget.org/packages/rpc.net.client) package.
-2. Reference the assembly that contains the interface of the module you want to use.
+2. Reference the assembly that contains the module interface you want to use.
 3. Create the client:
    ```csharp
    using Solti.Utils.Rpc;
    ...
-   using var client = new RpcClient<ICalculator>("http://127.0.0.1:1986/api/");
+   using var factory = new RpcClientFactory("http://127.0.0.1:1986/api/");
+   ICalculator calculator = factory.CreateClient<ICalculator>();
    try
    {
-     int result = await client.Proxy.AddAsync(1, 2));
+     int result = await calculator.AddAsync(1, 2));
    } catch(RpcException ex) {
      // ex.InnerException will contain the original exception
    }
