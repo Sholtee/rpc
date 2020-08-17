@@ -13,9 +13,6 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
     sessionId: null,
     headers: {},
     timeout: 0,
-    get serviceVersion() {
-      return this.invoke('IServiceDescriptor', 'get_Version');
-    },
     invoke: function(module, method, args = []) {
       let url = `${urlBase}?module=${module}&method=${method}`;
       if (this.sessionId) url += `&sessionid=${this.sessionId}`;
@@ -38,13 +35,20 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
         registerProperty: function(name, alias) {
           Object.defineProperty(this.prototype, alias || name, {
             enumerable: true,
-            get: () =>  owner.invoke(module, `get_${name}`, []),
+            get: () =>  owner.invoke(module, `get_${name}`),
             set: val => owner.invoke(module, `set_${name}`, [val])
           });
           return this;
         },
         module
       });
+    }
+  });
+
+  Object.defineProperty(this, 'serviceVersion', {
+    enumerable: false,
+    get() {
+      return this.invoke('IServiceDescriptor', 'get_Version');
     }
   });
 
