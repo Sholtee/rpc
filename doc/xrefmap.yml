@@ -1691,6 +1691,19 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcClientFactory.MethodCallForwarder(Of TInterface).Owner
   nameWithType: RpcClientFactory.MethodCallForwarder<TInterface>.Owner
   nameWithType.vb: RpcClientFactory.MethodCallForwarder(Of TInterface).Owner
+- uid: Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies
+  name: PreserveProxyAssemblies
+  href: Solti.Utils.Rpc.RpcClientFactory.html#Solti_Utils_Rpc_RpcClientFactory_PreserveProxyAssemblies
+  commentId: P:Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies
+  fullName: Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies
+  nameWithType: RpcClientFactory.PreserveProxyAssemblies
+- uid: Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies*
+  name: PreserveProxyAssemblies
+  href: Solti.Utils.Rpc.RpcClientFactory.html#Solti_Utils_Rpc_RpcClientFactory_PreserveProxyAssemblies_
+  commentId: Overload:Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies
+  nameWithType: RpcClientFactory.PreserveProxyAssemblies
 - uid: Solti.Utils.Rpc.RpcClientFactory.ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo)
   name: ProcessRemoteError(ExceptionInfo)
   href: Solti.Utils.Rpc.RpcClientFactory.html#Solti_Utils_Rpc_RpcClientFactory_ProcessRemoteError_Solti_Utils_Rpc_Interfaces_ExceptionInfo_

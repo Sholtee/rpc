@@ -103,7 +103,7 @@
     <pre><code class="lang-csharp hljs">public class RpcClientFactory : Disposable, IDisposableEx, IDisposable, IAsyncDisposable</code></pre>
   </div>
   <h5 id="Solti_Utils_Rpc_RpcClientFactory_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>This class and also the create proxy objects are not thread safe.</p>
+  <div class="markdown level0 remarks"><p>This class and also the created proxy objects are not thread safe.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -186,6 +186,33 @@
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_RpcClientFactory_PreserveProxyAssemblies_" data-uid="Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies*"></a>
+  <h4 id="Solti_Utils_Rpc_RpcClientFactory_PreserveProxyAssemblies" data-uid="Solti.Utils.Rpc.RpcClientFactory.PreserveProxyAssemblies">PreserveProxyAssemblies</h4>
+  <div class="markdown level1 summary"><p>Indicates whether the system should store the generated proxy assemblies or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool PreserveProxyAssemblies { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_RpcClientFactory_PreserveProxyAssemblies_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property should be true in production anf false in development builds.</p>
+</div>
   <a id="Solti_Utils_Rpc_RpcClientFactory_ServiceVersion_" data-uid="Solti.Utils.Rpc.RpcClientFactory.ServiceVersion*"></a>
   <h4 id="Solti_Utils_Rpc_RpcClientFactory_ServiceVersion" data-uid="Solti.Utils.Rpc.RpcClientFactory.ServiceVersion">ServiceVersion</h4>
   <div class="markdown level1 summary"><p>The <a class="xref" href="Solti.Utils.Rpc.Interfaces.Version.html">Version</a> of the service we want to invoke.</p>
