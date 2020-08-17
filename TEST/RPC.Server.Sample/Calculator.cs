@@ -20,6 +20,7 @@ namespace Solti.Utils.Rpc.Server.Sample
             FContext.Cancellation.ThrowIfCancellationRequested();
             return Task.FromResult(a + b);
         }
+        public int ParseInt(string val) => int.Parse(val);
         public double PI => Math.PI;
     }
 }
