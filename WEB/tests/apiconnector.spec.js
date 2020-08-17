@@ -7,7 +7,11 @@
 describe('ApiConnectionFactory', () => {
     const noop = function() {};
 
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    //
+    // Proxy generalas az elso megszolitaskor sokaig tarthat (ha a generalt asm-ek gyorsitotarazasa nincs beallitva)
+    //
+
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
     var factory;
 
