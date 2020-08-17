@@ -13,18 +13,20 @@ namespace Solti.Utils.Rpc.Perf
     [MemoryDiagnoser]
     public class Calculator
     {
-        private RpcClient<ICalculator> Client { get; set; }
+        static Calculator() => RpcClientFactory.PreserveProxyAssemblies = true;
+
+        private RpcClientFactory Factory { get; set; }
 
         [GlobalSetup]
-        public void Setup() => Client = new RpcClient<ICalculator>("http://localhost:1986/api/");
+        public void Setup() => Factory = new RpcClientFactory("http://localhost:1986/api/");
 
         [GlobalCleanup]
-        public void Cleanup() => Client?.Dispose();
+        public void Cleanup() => Factory?.Dispose();
 
         [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
         public void Add()
         {
-            ICalculator calculator = Client.Proxy;
+            ICalculator calculator = Factory.CreateClient<ICalculator>();
 
             for (int i = 0; i < OperationsPerInvoke; i++)
             {
@@ -35,7 +37,7 @@ namespace Solti.Utils.Rpc.Perf
         [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
         public void AddAsync()
         {
-            ICalculator calculator = Client.Proxy;
+            ICalculator calculator = Factory.CreateClient<ICalculator>();
 
             for (int i = 0; i < OperationsPerInvoke; i++)
             {

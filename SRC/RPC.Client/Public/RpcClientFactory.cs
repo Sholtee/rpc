@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc
     /// <summary>
     /// Creates remote API connections.
     /// </summary>
-    /// <remarks>This class and also the create proxy objects are not thread safe.</remarks>
+    /// <remarks>This class and also the created proxy objects are not thread safe.</remarks>
     public class RpcClientFactory: Disposable
     {
         #region Private
@@ -47,10 +47,15 @@ namespace Solti.Utils.Rpc
         {
             static MethodCallForwarder() 
             {
-                string cacheDir = Path.Combine(Path.GetTempPath(), $".rpcclient", typeof(RpcClientFactory).Assembly.GetName().Version.ToString());
-                Directory.CreateDirectory(cacheDir);
+                if (PreserveProxyAssemblies)
+                {
+                    string cacheDir = Path.Combine(Path.GetTempPath(), $".rpcclient", GetVersion<RpcClientFactory>(), typeof(TInterface).Name, GetVersion<TInterface>());
+                    Directory.CreateDirectory(cacheDir);
 
-                ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.CacheDirectory = cacheDir;
+                    ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.CacheDirectory = cacheDir;
+                }
+
+                static string GetVersion<T>() => typeof(T).Assembly.GetName().Version.ToString();
             }
 
             /// <summary>
@@ -260,6 +265,12 @@ namespace Solti.Utils.Rpc
         #endregion
 
         #region Public
+        /// <summary>
+        /// Indicates whether the system should store the generated proxy assemblies or not.
+        /// </summary>
+        /// <remarks>This property should be true in production anf false in development builds.</remarks>
+        public static bool PreserveProxyAssemblies { get; set; }
+
         /// <summary>
         /// The (optional) session ID related to this instance.
         /// </summary>
