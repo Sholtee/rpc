@@ -42,7 +42,7 @@ namespace Solti.Utils.Rpc.Tests
         public interface IDummy { }
 
         [Test]
-        public void Client_ShouldGetTheServiceVersion()
+        public void Client_MayGetTheServiceVersion()
         {
             using var clientFactory = new RpcClientFactory(Host);
 
