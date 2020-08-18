@@ -21,4 +21,8 @@
     <PackageId>RPC.NET.Interfaces</PackageId>
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Perf|AnyCPU'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  
 </Project>

@@ -51,5 +51,9 @@
     <Description>SDK designed for building lightweight RPC servers.</Description>
     <PackageId>RPC.NET.Server</PackageId>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Perf|AnyCPU'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
   
 </Project>

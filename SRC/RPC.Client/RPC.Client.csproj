@@ -41,5 +41,9 @@
     <Description>Lightweight client to invoke RPC services built with RPC.NET</Description>
     <PackageId>RPC.NET.Client</PackageId>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Perf|AnyCPU'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
   
 </Project>
