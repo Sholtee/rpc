@@ -49,7 +49,7 @@ namespace Solti.Utils.Rpc
             {
                 if (PreserveProxyAssemblies)
                 {
-                    string cacheDir = Path.Combine(Path.GetTempPath(), $".rpcclient", GetVersion<RpcClientFactory>(), typeof(TInterface).Name, GetVersion<TInterface>());
+                    string cacheDir = Path.Combine(Path.GetTempPath(), ".rpcclient", GetVersion<RpcClientFactory>(), typeof(TInterface).GetFriendlyName(), GetVersion<TInterface>());
                     Directory.CreateDirectory(cacheDir);
 
                     ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.CacheDirectory = cacheDir;
