@@ -282,6 +282,24 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Url
   nameWithType: AppHostBase.Url
+- uid: Solti.Utils.Rpc.Hosting.HostConfiguration
+  name: HostConfiguration
+  href: Solti.Utils.Rpc.Hosting.HostConfiguration.html
+  commentId: T:Solti.Utils.Rpc.Hosting.HostConfiguration
+  fullName: Solti.Utils.Rpc.Hosting.HostConfiguration
+  nameWithType: HostConfiguration
+- uid: Solti.Utils.Rpc.Hosting.HostConfiguration.Debug
+  name: Debug
+  href: Solti.Utils.Rpc.Hosting.HostConfiguration.html#Solti_Utils_Rpc_Hosting_HostConfiguration_Debug
+  commentId: F:Solti.Utils.Rpc.Hosting.HostConfiguration.Debug
+  fullName: Solti.Utils.Rpc.Hosting.HostConfiguration.Debug
+  nameWithType: HostConfiguration.Debug
+- uid: Solti.Utils.Rpc.Hosting.HostConfiguration.Release
+  name: Release
+  href: Solti.Utils.Rpc.Hosting.HostConfiguration.html#Solti_Utils_Rpc_Hosting_HostConfiguration_Release
+  commentId: F:Solti.Utils.Rpc.Hosting.HostConfiguration.Release
+  fullName: Solti.Utils.Rpc.Hosting.HostConfiguration.Release
+  nameWithType: HostConfiguration.Release
 - uid: Solti.Utils.Rpc.Hosting.HostRunner
   name: HostRunner
   href: Solti.Utils.Rpc.Hosting.HostRunner.html
@@ -301,6 +319,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.HostRunner.HostRunner
   nameWithType: HostRunner.HostRunner
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.Configuration
+  name: Configuration
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Configuration
+  commentId: P:Solti.Utils.Rpc.Hosting.HostRunner.Configuration
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.Configuration
+  nameWithType: HostRunner.Configuration
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.Configuration*
+  name: Configuration
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Configuration_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.HostRunner.Configuration
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.Configuration
+  nameWithType: HostRunner.Configuration
 - uid: Solti.Utils.Rpc.Hosting.HostRunner.Dispose(System.Boolean)
   name: Dispose(Boolean)
   href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Dispose_System_Boolean_
