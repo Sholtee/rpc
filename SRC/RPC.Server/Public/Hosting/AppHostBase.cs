@@ -22,6 +22,7 @@ namespace Solti.Utils.Rpc.Hosting
 
     using Primitives.Patterns;
     using Properties;
+    using Proxy;
 
     /// <summary>
     /// Represents the an app host that can be invoked by RPC
@@ -38,6 +39,12 @@ namespace Solti.Utils.Rpc.Hosting
             FContainer = container ?? throw new ArgumentNullException(nameof(container));
             RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
             Runner     = HostRunner.GetCompatibleRunner(this);
+
+            if (HostRunner.Configuration == HostConfiguration.Release) 
+            {
+                ProxyFactory.PreserveProxyAssemblies = true;
+                DuckFactory.PreserveProxyAssemblies = true;
+            }
         }
 
         /// <summary>
@@ -92,7 +99,7 @@ namespace Solti.Utils.Rpc.Hosting
         IEnumerable<string> IHost.Dependencies => Dependencies;
 
         /// <summary>
-        /// Services that must run.
+        /// Service dependencies that must run.
         /// </summary>
         protected ICollection<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
             ? (ICollection<string>) new List<string>()
@@ -159,7 +166,7 @@ namespace Solti.Utils.Rpc.Hosting
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, Trace.STARTING_HOST_FAILED);
+                Logger?.LogError(ex, Trace.STARTING_HOST_FAILED);
                 throw;
             }
         }

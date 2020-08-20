@@ -20,7 +20,7 @@ namespace Solti.Utils.Rpc.Hosting
     /// <summary>
     /// Defines an abstract host runner.
     /// </summary>
-    public abstract class HostRunner: Disposable, IHostRunner
+    public abstract class HostRunner : Disposable, IHostRunner
     {
         private void UnhandledExceptionEventHandler(object sender, UnhandledExceptionEventArgs e) => Host.OnUnhandledException((Exception) e.ExceptionObject);
 
@@ -47,8 +47,13 @@ namespace Solti.Utils.Rpc.Hosting
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
 
-            host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name));
+            host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name, Configuration));
         }
+
+        /// <summary>
+        /// The configuration in which the host should run.
+        /// </summary>
+        public static HostConfiguration Configuration { get; }
 
         /// <summary>
         /// Starts the host.
@@ -74,6 +79,18 @@ namespace Solti.Utils.Rpc.Hosting
 
         static HostRunner() 
         {
+            //
+            // Konfiguracio kiolvasasa az [appname].runtimeconfig.json fajlbol
+            //
+
+            object? config = AppContext.GetData("hostConfiguration");
+            if (config != null)
+                Configuration = (HostConfiguration) Enum.Parse(typeof(HostConfiguration), (string) config);
+
+            //
+            // Alapertelmezett host futtatok regisztralasa
+            //
+
             RegisterFactory(DefaultHostRunner.Factory);
             RegisterFactory(ConsoleHostRunner.Factory);
 

@@ -178,7 +178,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Starting host with {0}..
+        ///   Looks up a localized string similar to Starting host with {0} (Configuration = {1})..
         /// </summary>
         internal static string STARTING_HOST_WITH {
             get {

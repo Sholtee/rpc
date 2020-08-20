@@ -157,7 +157,7 @@
     <value>Host starting failed.</value>
   </data>
   <data name="STARTING_HOST_WITH" xml:space="preserve">
-    <value>Starting host with {0}.</value>
+    <value>Starting host with {0} (Configuration = {1}).</value>
   </data>
   <data name="STARTING_RPC_SERVICE" xml:space="preserve">
     <value>Starting RPC service...</value>
