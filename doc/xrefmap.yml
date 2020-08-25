@@ -301,19 +301,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.HostRunner.Configuration
   nameWithType: HostRunner.Configuration
-- uid: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
-  name: CreateRunned(IHost, HostConfiguration)
-  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_CreateRunned_Solti_Utils_Rpc_Interfaces_IHost_Solti_Utils_Rpc_Interfaces_HostConfiguration_
-  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
-  fullName: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned(Solti.Utils.Rpc.Interfaces.IHost, Solti.Utils.Rpc.Interfaces.HostConfiguration)
-  nameWithType: HostRunner.CreateRunned(IHost, HostConfiguration)
-- uid: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned*
-  name: CreateRunned
-  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_CreateRunned_
-  commentId: Overload:Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  name: CreateRunner(IHost, HostConfiguration)
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_CreateRunner_Solti_Utils_Rpc_Interfaces_IHost_Solti_Utils_Rpc_Interfaces_HostConfiguration_
+  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost, Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  nameWithType: HostRunner.CreateRunner(IHost, HostConfiguration)
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunner*
+  name: CreateRunner
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_CreateRunner_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.HostRunner.CreateRunner
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned
-  nameWithType: HostRunner.CreateRunned
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunner
+  nameWithType: HostRunner.CreateRunner
 - uid: Solti.Utils.Rpc.Hosting.HostRunner.Dispose(System.Boolean)
   name: Dispose(Boolean)
   href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Dispose_System_Boolean_
