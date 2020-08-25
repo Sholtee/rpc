@@ -19,6 +19,9 @@
   - *added:* Cancellable request processors
   - *added:* Custom request parameter support
   - *added:* `IHost.Logger` property
-- 2.0.0-preview3
+- 2.0.0-preview3:
   - *enhanced:* Server performance
   - *added:* `RpcClientFactory` class
+- 2.0.0-preview4:
+  - *added:* `RpcClientFactory.PreserveProxyAssemblies` property
+  - *done:* Rethought host running
