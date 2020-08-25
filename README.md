@@ -156,13 +156,11 @@
    ```
 2. Into `Program.cs` simply put the followings:
    ```csharp
+   using Solti.Utils.Rpc.Hosting;
+   ...
    class Program
    {
-     static void Main()
-     {
-       using CalculatorHost appHost = new CalculatorHost();
-       appHost.Runner.Start(); // blocks until your app terminates
-     }
+     static void Main() => HostRunner.Run<CalculatorHost>();
    }
    ```
 3. The compiled executable can be used in several ways:
