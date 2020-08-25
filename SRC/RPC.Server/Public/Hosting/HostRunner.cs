@@ -97,7 +97,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Creates a compatible runner for the given <paramref name="host"/>.
         /// </summary>
-        public static IHostRunner CreateRunned(IHost host, HostConfiguration configuration) 
+        public static IHostRunner CreateRunner(IHost host, HostConfiguration configuration) 
         {
             if (host == null)
                 throw new ArgumentNullException(nameof(host));
@@ -132,7 +132,7 @@ namespace Solti.Utils.Rpc.Hosting
             if (data != null) 
                 Enum.TryParse(data.ToString(), out config);
 
-            using IHostRunner runner = CreateRunned(host, config);
+            using IHostRunner runner = CreateRunner(host, config);
 
             //
             // Blokkolodik
