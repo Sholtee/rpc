@@ -341,30 +341,6 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Runner_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Runner*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Runner" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Runner">Runner</h4>
-  <div class="markdown level1 summary"><p>The related <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHostRunner.html">IHostRunner</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IHostRunner Runner { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHostRunner.html">IHostRunner</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Url_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Url*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Url" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Url">Url</h4>
   <div class="markdown level1 summary"><p>The URL on which the RPC service will listen.</p>
@@ -481,14 +457,31 @@
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart">OnStart()</h4>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_Solti_Utils_Rpc_Interfaces_HostConfiguration_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)">OnStart(HostConfiguration)</h4>
   <div class="markdown level1 summary"><p>Invoked on service startup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnStart()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnStart(HostConfiguration configuration)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.HostConfiguration.html">HostConfiguration</a></td>
+        <td><span class="parametername">configuration</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop">OnStop()</h4>
   <div class="markdown level1 summary"><p>Invoked on service termination.</p>

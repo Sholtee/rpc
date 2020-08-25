@@ -174,12 +174,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices
   nameWithType: AppHostBase.OnRegisterServices
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnStart
-  name: OnStart()
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnStart
-  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnStart
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnStart()
-  nameWithType: AppHostBase.OnStart()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  name: OnStart(HostConfiguration)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_Solti_Utils_Rpc_Interfaces_HostConfiguration_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  nameWithType: AppHostBase.OnStart(HostConfiguration)
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnStart*
   name: OnStart
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_
@@ -239,19 +239,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
   nameWithType: AppHostBase.RpcService
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.Runner
-  name: Runner
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Runner
-  commentId: P:Solti.Utils.Rpc.Hosting.AppHostBase.Runner
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Runner
-  nameWithType: AppHostBase.Runner
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.Runner*
-  name: Runner
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Runner_
-  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.Runner
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Runner
-  nameWithType: AppHostBase.Runner
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Interfaces#IHost#Dependencies
   name: IHost.Dependencies
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Solti_Utils_Rpc_Interfaces_IHost_Dependencies
@@ -282,36 +269,18 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Url
   nameWithType: AppHostBase.Url
-- uid: Solti.Utils.Rpc.Hosting.HostConfiguration
-  name: HostConfiguration
-  href: Solti.Utils.Rpc.Hosting.HostConfiguration.html
-  commentId: T:Solti.Utils.Rpc.Hosting.HostConfiguration
-  fullName: Solti.Utils.Rpc.Hosting.HostConfiguration
-  nameWithType: HostConfiguration
-- uid: Solti.Utils.Rpc.Hosting.HostConfiguration.Debug
-  name: Debug
-  href: Solti.Utils.Rpc.Hosting.HostConfiguration.html#Solti_Utils_Rpc_Hosting_HostConfiguration_Debug
-  commentId: F:Solti.Utils.Rpc.Hosting.HostConfiguration.Debug
-  fullName: Solti.Utils.Rpc.Hosting.HostConfiguration.Debug
-  nameWithType: HostConfiguration.Debug
-- uid: Solti.Utils.Rpc.Hosting.HostConfiguration.Release
-  name: Release
-  href: Solti.Utils.Rpc.Hosting.HostConfiguration.html#Solti_Utils_Rpc_Hosting_HostConfiguration_Release
-  commentId: F:Solti.Utils.Rpc.Hosting.HostConfiguration.Release
-  fullName: Solti.Utils.Rpc.Hosting.HostConfiguration.Release
-  nameWithType: HostConfiguration.Release
 - uid: Solti.Utils.Rpc.Hosting.HostRunner
   name: HostRunner
   href: Solti.Utils.Rpc.Hosting.HostRunner.html
   commentId: T:Solti.Utils.Rpc.Hosting.HostRunner
   fullName: Solti.Utils.Rpc.Hosting.HostRunner
   nameWithType: HostRunner
-- uid: Solti.Utils.Rpc.Hosting.HostRunner.#ctor(Solti.Utils.Rpc.Interfaces.IHost)
-  name: HostRunner(IHost)
-  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner__ctor_Solti_Utils_Rpc_Interfaces_IHost_
-  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.#ctor(Solti.Utils.Rpc.Interfaces.IHost)
-  fullName: Solti.Utils.Rpc.Hosting.HostRunner.HostRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  nameWithType: HostRunner.HostRunner(IHost)
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.#ctor(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  name: HostRunner(IHost, HostConfiguration)
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner__ctor_Solti_Utils_Rpc_Interfaces_IHost_Solti_Utils_Rpc_Interfaces_HostConfiguration_
+  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.#ctor(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.HostRunner(Solti.Utils.Rpc.Interfaces.IHost, Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  nameWithType: HostRunner.HostRunner(IHost, HostConfiguration)
 - uid: Solti.Utils.Rpc.Hosting.HostRunner.#ctor*
   name: HostRunner
   href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner__ctor_
@@ -332,6 +301,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.HostRunner.Configuration
   nameWithType: HostRunner.Configuration
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  name: CreateRunned(IHost, HostConfiguration)
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_CreateRunned_Solti_Utils_Rpc_Interfaces_IHost_Solti_Utils_Rpc_Interfaces_HostConfiguration_
+  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned(Solti.Utils.Rpc.Interfaces.IHost, Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  nameWithType: HostRunner.CreateRunned(IHost, HostConfiguration)
+- uid: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned*
+  name: CreateRunned
+  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_CreateRunned_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.HostRunner.CreateRunned
+  nameWithType: HostRunner.CreateRunned
 - uid: Solti.Utils.Rpc.Hosting.HostRunner.Dispose(System.Boolean)
   name: Dispose(Boolean)
   href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Dispose_System_Boolean_
@@ -345,19 +327,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.HostRunner.Dispose
   nameWithType: HostRunner.Dispose
-- uid: Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  name: GetCompatibleRunner(IHost)
-  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_GetCompatibleRunner_Solti_Utils_Rpc_Interfaces_IHost_
-  commentId: M:Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  fullName: Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  nameWithType: HostRunner.GetCompatibleRunner(IHost)
-- uid: Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner*
-  name: GetCompatibleRunner
-  href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_GetCompatibleRunner_
-  commentId: Overload:Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Hosting.HostRunner.GetCompatibleRunner
-  nameWithType: HostRunner.GetCompatibleRunner
 - uid: Solti.Utils.Rpc.Hosting.HostRunner.Host
   name: Host
   href: Solti.Utils.Rpc.Hosting.HostRunner.html#Solti_Utils_Rpc_Hosting_HostRunner_Host
@@ -509,6 +478,24 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ExceptionInfo.TypeName
   nameWithType: ExceptionInfo.TypeName
+- uid: Solti.Utils.Rpc.Interfaces.HostConfiguration
+  name: HostConfiguration
+  href: Solti.Utils.Rpc.Interfaces.HostConfiguration.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.HostConfiguration
+  fullName: Solti.Utils.Rpc.Interfaces.HostConfiguration
+  nameWithType: HostConfiguration
+- uid: Solti.Utils.Rpc.Interfaces.HostConfiguration.Debug
+  name: Debug
+  href: Solti.Utils.Rpc.Interfaces.HostConfiguration.html#Solti_Utils_Rpc_Interfaces_HostConfiguration_Debug
+  commentId: F:Solti.Utils.Rpc.Interfaces.HostConfiguration.Debug
+  fullName: Solti.Utils.Rpc.Interfaces.HostConfiguration.Debug
+  nameWithType: HostConfiguration.Debug
+- uid: Solti.Utils.Rpc.Interfaces.HostConfiguration.Release
+  name: Release
+  href: Solti.Utils.Rpc.Interfaces.HostConfiguration.html#Solti_Utils_Rpc_Interfaces_HostConfiguration_Release
+  commentId: F:Solti.Utils.Rpc.Interfaces.HostConfiguration.Release
+  fullName: Solti.Utils.Rpc.Interfaces.HostConfiguration.Release
+  nameWithType: HostConfiguration.Release
 - uid: Solti.Utils.Rpc.Interfaces.HttpException
   name: HttpException
   href: Solti.Utils.Rpc.Interfaces.HttpException.html
@@ -643,12 +630,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IHost.OnInstall
   nameWithType: IHost.OnInstall
-- uid: Solti.Utils.Rpc.Interfaces.IHost.OnStart
-  name: OnStart()
-  href: Solti.Utils.Rpc.Interfaces.IHost.html#Solti_Utils_Rpc_Interfaces_IHost_OnStart
-  commentId: M:Solti.Utils.Rpc.Interfaces.IHost.OnStart
-  fullName: Solti.Utils.Rpc.Interfaces.IHost.OnStart()
-  nameWithType: IHost.OnStart()
+- uid: Solti.Utils.Rpc.Interfaces.IHost.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  name: OnStart(HostConfiguration)
+  href: Solti.Utils.Rpc.Interfaces.IHost.html#Solti_Utils_Rpc_Interfaces_IHost_OnStart_Solti_Utils_Rpc_Interfaces_HostConfiguration_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IHost.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  fullName: Solti.Utils.Rpc.Interfaces.IHost.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  nameWithType: IHost.OnStart(HostConfiguration)
 - uid: Solti.Utils.Rpc.Interfaces.IHost.OnStart*
   name: OnStart
   href: Solti.Utils.Rpc.Interfaces.IHost.html#Solti_Utils_Rpc_Interfaces_IHost_OnStart_
@@ -701,6 +688,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.IHostRunner
   fullName: Solti.Utils.Rpc.Interfaces.IHostRunner
   nameWithType: IHostRunner
+- uid: Solti.Utils.Rpc.Interfaces.IHostRunner.Configuration
+  name: Configuration
+  href: Solti.Utils.Rpc.Interfaces.IHostRunner.html#Solti_Utils_Rpc_Interfaces_IHostRunner_Configuration
+  commentId: P:Solti.Utils.Rpc.Interfaces.IHostRunner.Configuration
+  fullName: Solti.Utils.Rpc.Interfaces.IHostRunner.Configuration
+  nameWithType: IHostRunner.Configuration
+- uid: Solti.Utils.Rpc.Interfaces.IHostRunner.Configuration*
+  name: Configuration
+  href: Solti.Utils.Rpc.Interfaces.IHostRunner.html#Solti_Utils_Rpc_Interfaces_IHostRunner_Configuration_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IHostRunner.Configuration
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IHostRunner.Configuration
+  nameWithType: IHostRunner.Configuration
 - uid: Solti.Utils.Rpc.Interfaces.IHostRunner.Host
   name: Host
   href: Solti.Utils.Rpc.Interfaces.IHostRunner.html#Solti_Utils_Rpc_Interfaces_IHostRunner_Host
@@ -746,12 +746,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory
   fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory
   nameWithType: IHostRunnerFactory
-- uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  name: CreateRunner(IHost)
-  href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_CreateRunner_Solti_Utils_Rpc_Interfaces_IHost_
-  commentId: M:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost)
-  nameWithType: IHostRunnerFactory.CreateRunner(IHost)
+- uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  name: CreateRunner(IHost, HostConfiguration)
+  href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_CreateRunner_Solti_Utils_Rpc_Interfaces_IHost_Solti_Utils_Rpc_Interfaces_HostConfiguration_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost,Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner(Solti.Utils.Rpc.Interfaces.IHost, Solti.Utils.Rpc.Interfaces.HostConfiguration)
+  nameWithType: IHostRunnerFactory.CreateRunner(IHost, HostConfiguration)
 - uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner*
   name: CreateRunner
   href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_CreateRunner_
@@ -759,19 +759,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.CreateRunner
   nameWithType: IHostRunnerFactory.CreateRunner
-- uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.ShouldUse
-  name: ShouldUse
-  href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_ShouldUse
-  commentId: P:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.ShouldUse
-  fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.ShouldUse
-  nameWithType: IHostRunnerFactory.ShouldUse
-- uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.ShouldUse*
-  name: ShouldUse
-  href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_ShouldUse_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.ShouldUse
+- uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.IsCompatible(Solti.Utils.Rpc.Interfaces.IHost)
+  name: IsCompatible(IHost)
+  href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_IsCompatible_Solti_Utils_Rpc_Interfaces_IHost_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.IsCompatible(Solti.Utils.Rpc.Interfaces.IHost)
+  fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.IsCompatible(Solti.Utils.Rpc.Interfaces.IHost)
+  nameWithType: IHostRunnerFactory.IsCompatible(IHost)
+- uid: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.IsCompatible*
+  name: IsCompatible
+  href: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.html#Solti_Utils_Rpc_Interfaces_IHostRunnerFactory_IsCompatible_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.IsCompatible
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.ShouldUse
-  nameWithType: IHostRunnerFactory.ShouldUse
+  fullName: Solti.Utils.Rpc.Interfaces.IHostRunnerFactory.IsCompatible
+  nameWithType: IHostRunnerFactory.IsCompatible
 - uid: Solti.Utils.Rpc.Interfaces.IModuleRegistry
   name: IModuleRegistry
   href: Solti.Utils.Rpc.Interfaces.IModuleRegistry.html
