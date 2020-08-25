@@ -3,7 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-namespace Solti.Utils.Rpc.Hosting
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Describes the configuration in which the host runs.

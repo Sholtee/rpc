@@ -37,14 +37,7 @@ namespace Solti.Utils.Rpc.Hosting
         protected AppHostBase(IServiceContainer container, RpcService rpcService)
         {
             FContainer = container ?? throw new ArgumentNullException(nameof(container));
-            RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));           
-            Runner     = HostRunner.GetCompatibleRunner(this);
-
-            if (HostRunner.Configuration == HostConfiguration.Release) 
-            {
-                ProxyFactory.PreserveProxyAssemblies = true;
-                DuckFactory.PreserveProxyAssemblies = true;
-            }
+            RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));
         }
 
         /// <summary>
@@ -67,11 +60,6 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
         public abstract string Url { get; }
-
-        /// <summary>
-        /// The related <see cref="IHostRunner"/>.
-        /// </summary>
-        public IHostRunner Runner { get; }
 
         /// <summary>
         /// The related <see cref="Rpc.RpcService"/>.
@@ -133,8 +121,7 @@ namespace Solti.Utils.Rpc.Hosting
         {
             container
                 .Instance<IReadOnlyList<string>>("CommandLineArgs", Environment.GetCommandLineArgs())
-                .Instance("EnvironmentVariables", GetEnvironmentVariables())
-                .Instance(Runner);
+                .Instance("EnvironmentVariables", GetEnvironmentVariables());
 
             IReadOnlyDictionary<object, object> GetEnvironmentVariables() 
             {
@@ -149,7 +136,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service startup.
         /// </summary>
-        public virtual void OnStart()
+        public virtual void OnStart(HostConfiguration configuration)
         {
             Logger?.LogInformation(Trace.STARTING_HOST);
 
@@ -157,6 +144,12 @@ namespace Solti.Utils.Rpc.Hosting
             {
                 if (!Initialized)
                 {
+                    if (configuration == HostConfiguration.Release)
+                    {
+                        ProxyFactory.PreserveProxyAssemblies = true;
+                        DuckFactory.PreserveProxyAssemblies = true;
+                    }
+
                     OnRegisterServices(FContainer);
                     OnRegisterModules(RpcService);
                     Initialized = true;
@@ -199,7 +192,6 @@ namespace Solti.Utils.Rpc.Hosting
         {
             if (disposeManaged)
             {
-                Runner.Dispose();
                 RpcService.Dispose();
                 FContainer.Dispose();
             }

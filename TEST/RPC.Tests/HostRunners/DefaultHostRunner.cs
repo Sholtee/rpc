@@ -23,10 +23,10 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
-        public void Start_ShouldThrow()
+        public void Start_ShouldThrow([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
         {
             using IHost appHost = new AppHost();
-            using IHostRunner hostRunner = new DefaultHostRunner(appHost);
+            using IHostRunner hostRunner = new DefaultHostRunner(appHost, configuration);
 
             Assert.Throws<Exception>(hostRunner.Start);
         }

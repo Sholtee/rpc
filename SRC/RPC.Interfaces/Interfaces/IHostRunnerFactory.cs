@@ -14,11 +14,11 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Returns true if the factory should be used.
         /// </summary>
-        bool ShouldUse { get; }
+        bool IsCompatible(IHost host);
 
         /// <summary>
         /// Creates a new runner for the given <see cref="IHost"/>.
         /// </summary>
-        IHostRunner CreateRunner(IHost host);
+        IHostRunner CreateRunner(IHost host, HostConfiguration configuration);
     }
 }

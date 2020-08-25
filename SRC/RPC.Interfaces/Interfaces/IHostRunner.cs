@@ -19,6 +19,11 @@ namespace Solti.Utils.Rpc.Interfaces
         IHost Host { get; }
 
         /// <summary>
+        /// The configuration in which the host should run.
+        /// </summary>
+        HostConfiguration Configuration { get; }
+
+        /// <summary>
         /// Starts the host.
         /// </summary>
         void Start();

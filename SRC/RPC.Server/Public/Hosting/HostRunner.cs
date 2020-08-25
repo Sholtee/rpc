@@ -39,21 +39,22 @@ namespace Solti.Utils.Rpc.Hosting
         public IHost Host { get; }
 
         /// <summary>
+        /// The configuration in which the host should run.
+        /// </summary>
+        public HostConfiguration Configuration { get; }
+
+        /// <summary>
         /// Creates a new <see cref="HostRunner"/> instance.
         /// </summary>
-        protected HostRunner(IHost host)
+        protected HostRunner(IHost host, HostConfiguration configuration)
         {
             Host = host ?? throw new ArgumentNullException(nameof(host));
+            Configuration = configuration;
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
 
-            host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name, Configuration));
+            host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name, configuration));
         }
-
-        /// <summary>
-        /// The configuration in which the host should run.
-        /// </summary>
-        public static HostConfiguration Configuration { get; }
 
         /// <summary>
         /// Starts the host.
@@ -80,14 +81,6 @@ namespace Solti.Utils.Rpc.Hosting
         static HostRunner() 
         {
             //
-            // Konfiguracio kiolvasasa az [appname].runtimeconfig.json fajlbol
-            //
-
-            object? config = AppContext.GetData("hostConfiguration");
-            if (config != null)
-                Configuration = (HostConfiguration) Enum.Parse(typeof(HostConfiguration), (string) config);
-
-            //
             // Alapertelmezett host futtatok regisztralasa
             //
 
@@ -102,18 +95,18 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
-        /// Gets the compatible runner for the given <paramref name="host"/>.
+        /// Creates a compatible runner for the given <paramref name="host"/>.
         /// </summary>
-        public static IHostRunner GetCompatibleRunner(IHost host) 
+        public static IHostRunner CreateRunned(IHost host, HostConfiguration configuration) 
         {
             if (host == null)
                 throw new ArgumentNullException(nameof(host));
 
             foreach (IHostRunnerFactory factory in RunnerFactories)
             {
-                if (factory.ShouldUse)
+                if (factory.IsCompatible(host))
                 {
-                    return factory.CreateRunner(host);
+                    return factory.CreateRunner(host, configuration);
                 }
             }
 
@@ -123,11 +116,29 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Runs the given host.
         /// </summary>
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results")]
         public static void Run<THost>() where THost : IHost, new()
         {
             using IHost host = new THost();
-            using IHostRunner runner = GetCompatibleRunner(host);
-                runner.Start();
+
+            HostConfiguration config = HostConfiguration.Debug;
+
+            //
+            // Konfiguracio kiolvasasa az [appname].runtimeconfig.json fajlbol
+            //
+
+            object? data = AppContext.GetData("hostConfiguration");
+
+            if (data != null) 
+                Enum.TryParse(data.ToString(), out config);
+
+            using IHostRunner runner = CreateRunned(host, config);
+
+            //
+            // Blokkolodik
+            //
+
+            runner.Start();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
         internal bool Uninstall { get; set; }
 
-        internal InstallHostRunner_WinNT(IHost host) : base(host) { }
+        internal InstallHostRunner_WinNT(IHost host, HostConfiguration configuration) : base(host, configuration) { }
         #endregion
 
         public override void Start()
@@ -81,9 +81,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 .GetCommandLineArgs()
                 .Any(arg => arg.ToUpperInvariant() == name);
 
-            public bool ShouldUse => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
+            public bool IsCompatible(IHost host) => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && Install || Uninstall;
 
-            public IHostRunner CreateRunner(IHost host) => new InstallHostRunner_WinNT(host) 
+            public IHostRunner CreateRunner(IHost host, HostConfiguration configuration) => new InstallHostRunner_WinNT(host, configuration) 
             {
                 Install   = Install,
                 Uninstall = Uninstall

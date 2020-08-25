@@ -26,10 +26,10 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             public AppHost() : base() => Dependencies.Add("LanmanWorkstation");
         }
 
-        private static void InvokeRunner(bool install = false, bool uninstall = false) 
+        private static void InvokeRunner(HostConfiguration configuration, bool install = false, bool uninstall = false) 
         {
             using IHost appHost = new AppHost();
-            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost) 
+            using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost, configuration) 
             {
                 Install = install,
                 Uninstall = uninstall
@@ -38,11 +38,11 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
-        public void Install_ShouldInstallTheService()
+        public void Install_ShouldInstallTheService([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            InvokeRunner(install: true);
+            InvokeRunner(configuration, install: true);
 
             try
             {
@@ -53,18 +53,18 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             }
             finally 
             {
-                InvokeRunner(uninstall: true);
+                InvokeRunner(configuration, uninstall: true);
             }
         }
 
         [Test]
-        public void Uninstall_ShouldUninstallTheService()
+        public void Uninstall_ShouldUninstallTheService([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
             try
             {
-                InvokeRunner(install: true);
+                InvokeRunner(configuration, install: true);
             }
 
             //
@@ -73,7 +73,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             catch { }
 
-            InvokeRunner(uninstall: true);
+            InvokeRunner(configuration, uninstall: true);
 
             ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
             Assert.That(svc, Is.Null);

@@ -5,12 +5,10 @@
 ********************************************************************************/
 namespace Solti.Utils.Rpc.Server.Sample
 {
+    using Hosting;
+
     class Program
     {
-        static void Main()
-        {
-            using AppHost appHost = new AppHost();
-            appHost.Runner.Start();
-        }
+        static void Main() => HostRunner.Run<AppHost>();
     }
 }

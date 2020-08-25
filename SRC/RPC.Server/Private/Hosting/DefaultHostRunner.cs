@@ -12,7 +12,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
 
     internal class DefaultHostRunner: HostRunner
     {
-        internal DefaultHostRunner(IHost host) : base(host) { }
+        internal DefaultHostRunner(IHost host, HostConfiguration configuration) : base(host, configuration) { }
 
         public override void Start() => throw new Exception(Errors.NO_HOSTING);
 
@@ -23,9 +23,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         #region Factory
         private sealed class FactoryImpl : IHostRunnerFactory
         {
-            public bool ShouldUse => true;
+            public bool IsCompatible(IHost host) => true;
 
-            public IHostRunner CreateRunner(IHost host) => new DefaultHostRunner(host);
+            public IHostRunner CreateRunner(IHost host, HostConfiguration configuration) => new DefaultHostRunner(host, configuration);
         }
 
         public static IHostRunnerFactory Factory { get; } = new FactoryImpl();

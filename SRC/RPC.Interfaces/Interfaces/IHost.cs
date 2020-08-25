@@ -53,7 +53,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Invoked on service startup.
         /// </summary>
-        void OnStart();
+        void OnStart(HostConfiguration configuration);
 
         /// <summary>
         /// Invoked on service termination.

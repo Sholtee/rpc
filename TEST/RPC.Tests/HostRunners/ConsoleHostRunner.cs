@@ -30,12 +30,12 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
-        public void Start_ShouldValidateTheDependencies()
+        public void Start_ShouldValidateTheDependencies([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
             using IHost appHost = new BadDependencyAppHost();
-            using IHostRunner hostRunner = new ConsoleHostRunner(appHost);
+            using IHostRunner hostRunner = new ConsoleHostRunner(appHost, configuration);
 
             Assert.Throws<Exception>(hostRunner.Start);
         }
@@ -48,9 +48,9 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             public ManualResetEventSlim Started { get; } = new ManualResetEventSlim();
 
-            public override void OnStart()
+            public override void OnStart(HostConfiguration configuration)
             {
-                base.OnStart();
+                base.OnStart(configuration);
                 Started.Set();
             }
 
@@ -69,10 +69,10 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
-        public void Runner_ShouldTerminateOnCtrlC() 
+        public void Runner_ShouldTerminateOnCtrlC([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration) 
         {
             using ConsoleAppHost appHost = new ConsoleAppHost();
-            using ConsoleHostRunner hostRunner = new ConsoleHostRunner(appHost);
+            using ConsoleHostRunner hostRunner = new ConsoleHostRunner(appHost, configuration);
 
             Task t = Task.Factory.StartNew(((IHostRunner) hostRunner).Start);
             Assert.That(appHost.Started.Wait(TimeSpan.FromSeconds(1)));
