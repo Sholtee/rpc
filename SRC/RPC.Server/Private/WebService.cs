@@ -187,7 +187,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
                     //
-                    //Elkuldjuk a megszakitas kerelmet a feldolgozonak.
+                    // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
                     //
 
                     processorCancellation.Cancel();
@@ -293,9 +293,9 @@ namespace Solti.Utils.Rpc.Internals
 
             base.Dispose(disposeManaged);
         }
-#endregion
+        #endregion
 
-#region Public
+        #region Public
         /// <summary>
         /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
         /// </summary>
@@ -418,6 +418,6 @@ namespace Solti.Utils.Rpc.Internals
         /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url ?? throw new ArgumentNullException(nameof(url))}");
-#endregion
+        #endregion
     }
 }
