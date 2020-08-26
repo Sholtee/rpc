@@ -20,6 +20,7 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using DI;
+    using DI.Interfaces;
     using Interfaces;
 
     [TestFixture]
@@ -436,6 +437,22 @@ namespace Solti.Utils.Rpc.Tests
             using var clientFactory = new MyFactory(Host);
 
             Assert.That(clientFactory.CreateClient<IGetMyParamBack>().GetMyParamBack(), Is.EqualTo("mica"));
+        }
+
+        [Test]
+        public void Client_MustNotAccessModuleDependencies() 
+        {
+            var mockDisposable = new Mock<IDisposable>(MockBehavior.Strict);
+            mockDisposable.Setup(d => d.Dispose());
+
+            Server.Container.Factory(i => mockDisposable.Object);
+            Server.Start(Host);
+
+            using var client = new RpcClient<IDisposable>(Host);
+            
+            var ex = Assert.Throws<RpcException>(client.Proxy.Dispose);
+            Assert.That(ex.InnerException, Is.InstanceOf<ServiceNotFoundException>());
+            mockDisposable.Verify(d => d.Dispose(), Times.Never);
         }
     }
 }
