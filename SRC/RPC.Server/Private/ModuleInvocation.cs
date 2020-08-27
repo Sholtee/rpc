@@ -157,7 +157,7 @@ namespace Solti.Utils.Rpc.Internals
                                 )
                             )
                         ),
-                        defaultBody: Throw<ServiceNotFoundException>(new[] { typeof(string) }, ifaceId)
+                        defaultBody: Throw<MissingModuleException>(new[] { typeof(string) }, ifaceId)
                     )
                 ),
                 injector,

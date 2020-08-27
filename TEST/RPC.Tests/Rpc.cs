@@ -20,7 +20,6 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using DI;
-    using DI.Interfaces;
     using Interfaces;
 
     [TestFixture]
@@ -451,7 +450,7 @@ namespace Solti.Utils.Rpc.Tests
             using var client = new RpcClient<IDisposable>(Host);
             
             var ex = Assert.Throws<RpcException>(client.Proxy.Dispose);
-            Assert.That(ex.InnerException, Is.InstanceOf<ServiceNotFoundException>());
+            Assert.That(ex.InnerException, Is.InstanceOf<MissingModuleException>());
             mockDisposable.Verify(d => d.Dispose(), Times.Never);
         }
     }

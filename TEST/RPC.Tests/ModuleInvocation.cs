@@ -95,7 +95,7 @@ namespace Solti.Utils.Rpc.Tests
         {
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
-            Assert.ThrowsAsync<ServiceNotFoundException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, "Invalid", nameof(IService.Add), AsStream(1, 2), default)));
+            Assert.ThrowsAsync<MissingModuleException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, "Invalid", nameof(IService.Add), AsStream(1, 2), default)));
         }
 
         [Test]
