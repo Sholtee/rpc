@@ -71,7 +71,7 @@ namespace Solti.Utils.Rpc
             /// <summary>
             /// Forwards the intercepted method calls to the <see cref="Owner"/>.
             /// </summary>
-            public override object? Invoke(MethodInfo method, object[] args, MemberInfo extra) => Owner.InvokeService(method, args);
+            public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra) => Owner.InvokeService(method, args);
         }
 
         private static Type GenerateTypedResponseTo(MethodInfo method) 
@@ -122,7 +122,7 @@ namespace Solti.Utils.Rpc
         /// Does the actual remote module invocation.
         /// </summary>
         [SuppressMessage("Globalization", "CA1304:Specify CultureInfo")]
-        protected virtual async Task<object?> InvokeServiceAsync(MethodInfo method, object[] args)
+        protected virtual async Task<object?> InvokeServiceAsync(MethodInfo method, object?[] args)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
@@ -196,7 +196,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Does the actual remote module invocation.
         /// </summary>
-        protected virtual object? InvokeService(MethodInfo method, object[] args)
+        protected virtual object? InvokeService(MethodInfo method, object?[] args)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
