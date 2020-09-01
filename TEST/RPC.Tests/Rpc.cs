@@ -428,14 +428,14 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Client_MaySendCustomParameters()
+        public async Task Client_MaySendCustomParameters()
         {
             Server.Register<IGetMyParamBack, GetMyParamBack>();
             Server.Start(Host);
 
             using var clientFactory = new MyFactory(Host);
 
-            Assert.That(clientFactory.CreateClient<IGetMyParamBack>().GetMyParamBack(), Is.EqualTo("mica"));
+            Assert.That((await clientFactory.CreateClient<IGetMyParamBack>()).GetMyParamBack(), Is.EqualTo("mica"));
         }
 
         [Test]

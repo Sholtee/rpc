@@ -3,6 +3,8 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System.Threading.Tasks;
+
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
@@ -13,11 +15,11 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The name of the RPC service.
         /// </summary>
-        string Name { get; }
+        Task<string> Name { get; }
 
         /// <summary>
         /// The version of the RPC service.
         /// </summary>
-        Version Version { get; }
+        Task<Version> Version { get; }
     }
 }

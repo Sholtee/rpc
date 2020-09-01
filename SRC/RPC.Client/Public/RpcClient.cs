@@ -64,7 +64,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// The generated proxy instance related to this client.
         /// </summary>
-        public TInterface Proxy => FFactory.CreateClient<TInterface>();
+        public TInterface Proxy => FFactory.CreateClient<TInterface>().GetAwaiter().GetResult();
         #endregion
     }
 }

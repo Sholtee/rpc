@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace Solti.Utils.Rpc.Tests
 {
     using Interfaces;
     using Server.Sample;
-    
+
     [TestFixture]
     public class RpcHostTests
     {
@@ -42,7 +43,7 @@ namespace Solti.Utils.Rpc.Tests
         public interface IDummy { }
 
         [Test]
-        public void Client_MayGetTheServiceVersion()
+        public async Task Client_MayGetTheServiceVersion()
         {
             using var clientFactory = new RpcClientFactory(Host);
 
@@ -52,7 +53,7 @@ namespace Solti.Utils.Rpc.Tests
             //
 
             Version
-                serverVer = clientFactory.ServiceVersion,
+                serverVer = await clientFactory.ServiceVersion,
                 corVer = HostProcess.MainModule.FileVersionInfo;
 
             Assert.That(serverVer, Is.EqualTo(corVer));

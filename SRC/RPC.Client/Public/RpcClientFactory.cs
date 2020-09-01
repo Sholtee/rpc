@@ -36,8 +36,6 @@ namespace Solti.Utils.Rpc
         #region Private
         private readonly HttpClient FHttpClient;
 
-        private Version? FServiceVersion;
-
         /// <summary>
         /// Represents the underlying proxy.
         /// </summary>
@@ -85,6 +83,8 @@ namespace Solti.Utils.Rpc
 
             return typeof(TypedRpcResponse<>).MakeGenericType(returnType);
         }
+
+        private async Task<Version> GetServiceVersion() => await (await CreateClient<IServiceDescriptor>()).Version;
         #endregion
 
         #region Protected
@@ -291,20 +291,10 @@ namespace Solti.Utils.Rpc
         }
 
         /// <summary>
-        /// The <see cref="Version"/> of the service we want to invoke.
+        /// The <see cref="Version"/> of the remote service we want to invoke.
         /// </summary>
-        public Version ServiceVersion 
-        {
-            get
-            {
-                if (FServiceVersion == null)
-                {
-                    FServiceVersion = CreateClient<IServiceDescriptor>().Version;
-                }
-                return FServiceVersion;
-            }
-        }
-        
+        public Task<Version> ServiceVersion => GetServiceVersion();
+
         /// <summary>
         /// Headers sent along with each request.
         /// </summary>
@@ -324,8 +314,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new RPC client against the given service <typeparamref name="TInterface"/>.
         /// </summary>
-        public TInterface CreateClient<TInterface>() where TInterface : class => (TInterface) ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>
-            .GeneratedType
+        public async Task<TInterface> CreateClient<TInterface>() where TInterface : class => (TInterface) (await ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.GeneratedTypeAsync)
             .GetConstructor(new Type[] { typeof(RpcClientFactory) })
             .ToStaticDelegate()
             .Invoke(new object[] { this });

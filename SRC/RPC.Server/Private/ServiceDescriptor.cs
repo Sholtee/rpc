@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Internals
 {
@@ -13,8 +14,8 @@ namespace Solti.Utils.Rpc.Internals
     {
         private static ProcessModule MainModule { get; } = Process.GetCurrentProcess().MainModule;
 
-        public string Name => MainModule.FileVersionInfo.ProductName;
+        public Task<string> Name => Task.FromResult(MainModule.FileVersionInfo.ProductName);
 
-        public Version Version => MainModule.FileVersionInfo;
+        public Task<Version> Version => Task.FromResult((Version) MainModule.FileVersionInfo);
     }
 }
