@@ -41,8 +41,14 @@ namespace Solti.Utils.Rpc.Tests
 
         public RpcService Server { get; set; }
 
+        public RpcClientFactory ClientFactory { get; set; }
+
         [SetUp]
-        public void Setup() => Server = new RpcService(new ServiceContainer());
+        public void Setup()
+        {
+            Server = new RpcService(new ServiceContainer());
+            ClientFactory = new RpcClientFactory(Host);
+        }
 
         [TearDown]
         public void Teardown() 
@@ -50,10 +56,13 @@ namespace Solti.Utils.Rpc.Tests
             Server.Dispose();
             Server.Container.Dispose();
             Server = null;
+
+            ClientFactory.Dispose();
+            ClientFactory = null;
         }
 
         [Test]
-        public void Context_ShouldBeAccessible() 
+        public async Task Context_ShouldBeAccessible() 
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule.Setup(i => i.Dummy());
@@ -68,11 +77,10 @@ namespace Solti.Utils.Rpc.Tests
             });
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host) 
-            {
-                SessionId = "cica"
-            };
-            client.Proxy.Dummy();
+            ClientFactory.SessionId = "cica";
+
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
+            proxy.Dummy();
 
             Assert.That(context, Is.Not.Null);
             Assert.That(context.SessionId, Is.EqualTo("cica"));
@@ -81,7 +89,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void RemoteAdd_ShouldWork() 
+        public async Task RemoteAdd_ShouldWork() 
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -91,9 +99,8 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
-
-            Assert.That(client.Proxy.Add(1, 2), Is.EqualTo(3));
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
+            Assert.That(proxy.Add(1, 2), Is.EqualTo(3));
 
             mockModule.Verify(i => i.Add(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
@@ -111,18 +118,17 @@ namespace Solti.Utils.Rpc.Tests
 
             await Task.WhenAll
             (
-                Enumerable.Repeat(0, 10).Select
-                (
-                    _ => Task.Factory.StartNew(() =>
-                    {
-                        using var client = new RpcClient<IModule>(Host);
-
-                        Assert.That(client.Proxy.Add(1, 2), Is.EqualTo(3));
-                    })
-                ).ToArray()
+                Enumerable.Repeat(0, 10).Select(_ => Invoke()).ToArray()
             );
 
             mockModule.Verify(i => i.Add(1, 2), Times.Exactly(10));
+
+            static async Task Invoke() 
+            {
+                using var factory = new RpcClientFactory(Host);
+                IModule proxy = await factory.CreateClient<IModule>();
+                Assert.That(proxy.Add(1, 2), Is.EqualTo(3));
+            }
         }
 
         [Test]
@@ -136,15 +142,15 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
-            Assert.That(await client.Proxy.AddAsync(1, 2), Is.EqualTo(3));
+            Assert.That(await proxy.AddAsync(1, 2), Is.EqualTo(3));
 
             mockModule.Verify(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
         [Test]
-        public void UsingProperties_ShouldWork() 
+        public async Task UsingProperties_ShouldWork() 
         {
             int prop = 0;
 
@@ -159,16 +165,14 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
-            IModule module = client.Proxy;
-
-            Assert.DoesNotThrow(() => module.Prop = 1986);
-            Assert.That(module.Prop, Is.EqualTo(1986));
+            Assert.DoesNotThrow(() => proxy.Prop = 1986);
+            Assert.That(proxy.Prop, Is.EqualTo(1986));
         }
 
         [Test]
-        public void RemoteAsync_ShouldWork()
+        public async Task RemoteAsync_ShouldWork()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -178,15 +182,15 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
-            Assert.DoesNotThrowAsync(client.Proxy.Async);
+            Assert.DoesNotThrowAsync(proxy.Async);
 
             mockModule.Verify(i => i.Async(), Times.Once);
         }
 
         [Test]
-        public void Client_ShouldHandleRemoteExceptions() 
+        public async Task Client_ShouldHandleRemoteExceptions() 
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -196,15 +200,15 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
-            var ex = Assert.ThrowsAsync<RpcException>(client.Proxy.Faulty);
+            var ex = Assert.ThrowsAsync<RpcException>(proxy.Faulty);
             Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
         }
 
         [Test]
-        public void GetStream_ShouldWork() 
+        public async Task GetStream_ShouldWork() 
         {
             var stm = new MemoryStream();
             byte[] bytes = Encoding.UTF8.GetBytes("kutya");
@@ -218,11 +222,11 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
             Stream sentStm = null;
 
-            Assert.DoesNotThrow(() => sentStm = client.Proxy.GetStream());
+            Assert.DoesNotThrow(() => sentStm = proxy.GetStream());
             Assert.That(new StreamReader(sentStm).ReadToEnd, Is.EqualTo("kutya"));
 
             //
@@ -233,7 +237,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void GetStreamAsync_ShouldWork()
+        public async Task GetStreamAsync_ShouldWork()
         {
             var stm = new MemoryStream();
             byte[] bytes = Encoding.UTF8.GetBytes("kutya");
@@ -247,17 +251,17 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
             Stream sentStm = null;
 
-            Assert.DoesNotThrowAsync(async () => sentStm = await client.Proxy.GetStreamAsync());
+            Assert.DoesNotThrowAsync(async () => sentStm = await proxy.GetStreamAsync());
             Assert.That(new StreamReader(sentStm).ReadToEnd, Is.EqualTo("kutya"));
             Assert.Throws<ObjectDisposedException>(() => stm.Seek(0, SeekOrigin.Begin));
         }
 
         [Test]
-        public void Server_ShouldTimeout() 
+        public async Task Server_ShouldTimeout() 
         {
             Server.Timeout = TimeSpan.FromSeconds(1);
             Server.Register(i =>
@@ -271,9 +275,9 @@ namespace Solti.Utils.Rpc.Tests
             });
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
-            var ex = Assert.ThrowsAsync<RpcException>(() => client.Proxy.Faulty());
+            var ex = Assert.ThrowsAsync<RpcException>(() => proxy.Faulty());
             Assert.That(ex.InnerException, Is.InstanceOf<OperationCanceledException>());
         }
 
@@ -294,7 +298,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Module_MaySendArbitraryErrorCode() 
+        public async Task Module_MaySendArbitraryErrorCode() 
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -307,14 +311,14 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host);
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
 
-            var ex = Assert.ThrowsAsync<HttpRequestException>(client.Proxy.Faulty);
+            var ex = Assert.ThrowsAsync<HttpRequestException>(proxy.Faulty);
             Assert.That(ex.Message.Contains("401"));
         } 
 
         [Test]
-        public void Client_ShouldTimeout() 
+        public async Task Client_ShouldTimeout() 
         {
             using var evt = new ManualResetEventSlim();
 
@@ -326,12 +330,11 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IModule>(Host)
-            {
-                Timeout = TimeSpan.FromSeconds(1)
-            };
+            ClientFactory.Timeout = TimeSpan.FromSeconds(1);
 
-            Assert.ThrowsAsync<TaskCanceledException>(() => client.Proxy.Faulty());
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
+
+            Assert.ThrowsAsync<TaskCanceledException>(() => proxy.Faulty());
         }
 
         public interface IDummy 
@@ -341,7 +344,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Server_ShouldProcessRequestAsynchronously() 
+        public async Task Server_ShouldProcessRequestAsynchronously() 
         {
             var evt = new ManualResetEventSlim();
 
@@ -356,9 +359,9 @@ namespace Solti.Utils.Rpc.Tests
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IDummy>(Host);
+            IDummy proxy = await ClientFactory.CreateClient<IDummy>();
 
-            Task blockingTask = client.Proxy.Method_1();
+            Task blockingTask = proxy.Method_1();
 
             Thread.Sleep(100);
 
@@ -366,7 +369,7 @@ namespace Solti.Utils.Rpc.Tests
             // Ha kiszolgalo oldalon a feldolgozas szinkron akkor ez itt timeoutolni fog
             //
 
-            Assert.DoesNotThrow(client.Proxy.Method_2);
+            Assert.DoesNotThrow(proxy.Method_2);
 
             Assert.That(blockingTask.IsCompleted, Is.False);
             evt.Set();
@@ -390,15 +393,15 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Client_MaySendCustomHeaders() 
+        public async Task Client_MaySendCustomHeaders() 
         {
             Server.Register<IGetMyHeaderBack, GetMyHeaderBack>();
             Server.Start(Host);
 
-            using var client = new RpcClient<IGetMyHeaderBack>(Host);
-            client.CustomHeaders.Add("cica", "mica");
+            ClientFactory.CustomHeaders.Add("cica", "mica");
+            IGetMyHeaderBack proxy = await ClientFactory.CreateClient<IGetMyHeaderBack>();
 
-            Assert.That(client.Proxy.GetMyHeaderBack(), Is.EqualTo("mica"));
+            Assert.That(proxy.GetMyHeaderBack(), Is.EqualTo("mica"));
         }
 
         public interface IGetMyParamBack 
@@ -439,7 +442,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Client_MustNotAccessModuleDependencies() 
+        public async Task Client_MustNotAccessModuleDependencies() 
         {
             var mockDisposable = new Mock<IDisposable>(MockBehavior.Strict);
             mockDisposable.Setup(d => d.Dispose());
@@ -447,9 +450,9 @@ namespace Solti.Utils.Rpc.Tests
             Server.Container.Factory(i => mockDisposable.Object);
             Server.Start(Host);
 
-            using var client = new RpcClient<IDisposable>(Host);
-            
-            var ex = Assert.Throws<RpcException>(client.Proxy.Dispose);
+            IDisposable proxy = await ClientFactory.CreateClient<IDisposable>();
+
+            var ex = Assert.Throws<RpcException>(proxy.Dispose);
             Assert.That(ex.InnerException, Is.InstanceOf<MissingModuleException>());
             mockDisposable.Verify(d => d.Dispose(), Times.Never);
         }

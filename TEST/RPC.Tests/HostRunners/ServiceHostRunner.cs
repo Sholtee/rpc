@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 using NUnit.Framework;
 
@@ -30,13 +31,14 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
-        public void InstalledService_ShouldRun() 
+        public async Task InstalledService_ShouldRun() 
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            using var client = new RpcClient<ICalculator>("http://localhost:1986/api/");
+            using var factory = new RpcClientFactory("http://localhost:1986/api/");
+            ICalculator calculator = await factory.CreateClient<ICalculator>();
 
-            Assert.That(client.Proxy.Add(1, 1), Is.EqualTo(2));
+            Assert.That(await calculator.AddAsync(1, 1), Is.EqualTo(2));
         }
 
         private static void InvokeSc(string args)
