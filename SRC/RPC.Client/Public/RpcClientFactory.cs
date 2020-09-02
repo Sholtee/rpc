@@ -268,7 +268,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Indicates whether the system should store the generated proxy assemblies or not.
         /// </summary>
-        /// <remarks>This property should be true in production anf false in development builds.</remarks>
+        /// <remarks>This property should be true in production and false in development builds.</remarks>
         public static bool PreserveProxyAssemblies { get; set; }
 
         /// <summary>
