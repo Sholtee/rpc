@@ -302,7 +302,7 @@ namespace Solti.Utils.Rpc
         public IDictionary<string, string> CustomHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>
-        /// Creates a new <see cref="RpcClient{TInterface}"/> instance.
+        /// Creates a new <see cref="RpcClientFactory"/> instance.
         /// </summary>
         public RpcClientFactory(string host)
         {
