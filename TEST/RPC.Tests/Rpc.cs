@@ -106,7 +106,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task MultipleRemoteAdd_ShouldWork()
+        public async Task ParallelCallsShould_ShouldWork()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -118,7 +118,9 @@ namespace Solti.Utils.Rpc.Tests
 
             await Task.WhenAll
             (
-                Enumerable.Repeat(0, 10).Select(_ => Invoke()).ToArray()
+                Enumerable
+                    .Repeat<Func<Task>>(Invoke, 10)
+                    .Select(_ => _())
             );
 
             mockModule.Verify(i => i.Add(1, 2), Times.Exactly(10));
@@ -128,6 +130,34 @@ namespace Solti.Utils.Rpc.Tests
                 using var factory = new RpcClientFactory(Host);
                 IModule proxy = await factory.CreateClient<IModule>();
                 Assert.That(proxy.Add(1, 2), Is.EqualTo(3));
+            }
+        }
+
+        [Test]
+        public async Task ParallelAsyncCallsShould_ShouldWork()
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>((a, b) => Task.FromResult(a + b));
+
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            await Task.WhenAll
+            (
+                Enumerable
+                    .Repeat<Func<Task>>(Invoke, 10)
+                    .Select(_ => _())
+            );
+
+            mockModule.Verify(i => i.AddAsync(1, 2), Times.Exactly(10));
+
+            static async Task Invoke()
+            {
+                using var factory = new RpcClientFactory(Host);
+                IModule proxy = await factory.CreateClient<IModule>();
+                Assert.That(await proxy.AddAsync(1, 2), Is.EqualTo(3));
             }
         }
 
