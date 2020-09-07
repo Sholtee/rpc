@@ -2,7 +2,7 @@
 *  apiconnector.spec.js                                                         *
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
-'use strict';
+const {ApiConnectionFactory, RESPONSE_NOT_VALID} = window.apiconnector;
 
 describe('ApiConnectionFactory', () => {
     const noop = function() {};
@@ -13,7 +13,7 @@ describe('ApiConnectionFactory', () => {
 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 
-    var factory;
+    let factory;
 
     beforeEach(() => {
         factory = new ApiConnectionFactory('http://localhost:1986/api');
@@ -22,7 +22,7 @@ describe('ApiConnectionFactory', () => {
     describe('invoke()', () => {
         const api = 'http://localhost:1986/api?module=ICalculator&method=Add';
 
-        var server;
+        let server;
 
         beforeEach(function() {
             server = sinon.createFakeServer();
@@ -70,7 +70,7 @@ describe('ApiConnectionFactory', () => {
         });
 
         it('should set the content type', () => {
-            var headers;
+            let headers = {};
 
             server.respondWith('POST', api, xhr => {
                 headers = xhr.requestHeaders;
@@ -85,7 +85,7 @@ describe('ApiConnectionFactory', () => {
         it('should handle custom headers', () => {
             factory.headers['my-header'] = 'value';
 
-            var headers;
+            let headers = {};
 
             server.respondWith('POST', api, xhr => {
                 headers = xhr.requestHeaders;

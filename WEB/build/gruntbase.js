@@ -15,7 +15,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
 
     initConfig({
         project: {
-            name:  pkg.name.toLowerCase(),
+            module:  pkg.module,
             version: pkg.version,
             dirs: {
                 app:       `${dir}/src`,
@@ -66,14 +66,15 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             }
         },
         babel: {
+            __module_transform: ['@babel/plugin-transform-modules-umd', {moduleId: '<%= project.module %>'}],
             options: {
                 //sourceMap: true,
-                sourceType: 'script',
                 presets: ['@babel/preset-env']
             },
             app: {
                 options: {
-                    plugins: ['istanbul']
+                    sourceType: 'module',
+                    plugins: ['istanbul', '<%= babel.__module_transform%>']
                 },
                 files: [{
                     expand: true,
@@ -83,6 +84,9 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 }]
             },
             tests: {
+                options: {
+                    sourceType: 'script'
+                },
                 files: [{
                     expand: true,
                     cwd: '<%= project.dirs.tests %>',
@@ -91,8 +95,12 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 }]
             },
             dist: {
+                options: {
+                    sourceType: 'module',
+                    plugins: ['<%= babel.__module_transform%>']
+                },
                 files: {
-                    '<%= project.dirs.dist %>/<%= project.name %>.js': '<%= project.dirs.app %>/**/*.js'
+                    '<%= project.dirs.dist %>/<%= project.module %>.js': '<%= project.dirs.app %>/**/*.js'
                 }
             }
         },

@@ -7,7 +7,7 @@
   },
 
   "globals": {
-    "window": true,
-    "Promise": true
+    "window": false,
+    "Promise": false
   }
 }

@@ -2,28 +2,45 @@
 *  apiconnector.js                                                              *
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
-'use strict';
-
-(function(window) {
 const RESPONSE_NOT_VALID = 'Server response could not be processed';
 
 // class
-function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new window.XMLHttpRequest()) {
+function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new XMLHttpRequest()) {
   Object.assign(this, {
     sessionId: null,
     headers: {},
     timeout: 0,
-    invoke: function(module, method, args = []) {
+    invoke(module, method, args = []) {
       let url = `${urlBase}?module=${module}&method=${method}`;
       if (this.sessionId) url += `&sessionid=${this.sessionId}`;
 
-      return post(url, args, this.headers, this.timeout);
+      return new Promise((resolve, reject) => {
+        const xhr = xhrFactory();
+
+        xhr.open('POST', url, true);
+        xhr.timeout = this.timeout;
+
+        const headers = {
+          ...this.headers,
+          'Content-Type': 'application/json'
+        };
+
+        Object
+          .keys(headers)
+          .forEach(key => xhr.setRequestHeader(key, headers[key].toString()));
+
+        xhr.onload = onResponse.bind(xhr, resolve, reject);
+
+        xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
+
+        xhr.send(JSON.stringify(args));
+      });
     },
-    createConnection: function(module) {
+    createConnection(module) {
       const owner = this;
 
       return Object.assign(function ApiConnection() {}, {
-        registerMethod: function(name, alias) {
+        registerMethod(name, alias) {
           this.prototype[alias || name] = (...args) => owner.invoke(module, name, args);
 
           //
@@ -32,7 +49,7 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
 
           return this;
         },
-        registerProperty: function(name, alias) {
+        registerProperty(name, alias) {
           Object.defineProperty(this.prototype, alias || name, {
             enumerable: true,
             get: () =>  owner.invoke(module, `get_${name}`),
@@ -75,7 +92,7 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
 
         if (typeof parsed === 'object') {
           //
-          // Ne hasOwnProperty()-vel vizsgaljuk mert lehet jelen van, csak NULL
+          // Ne "in" operatorral vizsgaljuk mert lehet jelen van, csak NULL
           //
 
           if (parsed.Exception) {
@@ -84,10 +101,10 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
           }
 
           //
-          // Viszont itt mar NULL is jo ertek -> hasOwnProperty()
+          // Viszont itt mar NULL is jo ertek
           //
 
-          if (parsed.hasOwnProperty('Result')) {
+          if ('Result' in parsed) {
             resolve(parsed.Result);
             break;
           }
@@ -106,36 +123,6 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
   }
   /* eslint-enable no-invalid-this */
 
-  function post(url, args, headers, timeout) {
-    return new Promise((resolve, reject) => {
-      const xhr = xhrFactory();
-
-      xhr.open('POST', url, true);
-      xhr.timeout = timeout;
-
-      headers = Object.assign({
-        'Content-Type': 'application/json'
-      }, headers);
-
-      Object
-        .keys(headers)
-        .forEach(key => xhr.setRequestHeader(key, headers[key].toString()));
-
-      xhr.onload = onResponse.bind(xhr, resolve, reject);
-
-      xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
-
-      xhr.send(JSON.stringify(args));
-    });
-  }
 }
 
-//
-// Exports
-//
-
-Object.assign(window, {
-    RESPONSE_NOT_VALID,
-    ApiConnectionFactory
-});
-})(window);
+export {ApiConnectionFactory, RESPONSE_NOT_VALID};

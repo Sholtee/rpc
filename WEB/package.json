@@ -1,5 +1,6 @@
 {
   "name": "rpcdotnet-connector",
+  "module": "apiconnector",
   "description": "JS connector for RPC.NET",
   "version": "1.0.0-preview5",
   "repository": {
