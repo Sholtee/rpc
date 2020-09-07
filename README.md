@@ -98,7 +98,7 @@
    using Solti.Utils.Rpc;
    ...
    using var factory = new RpcClientFactory("http://127.0.0.1:1986/api/");
-   ICalculator calculator = factory.CreateClient<ICalculator>();
+   ICalculator calculator = await factory.CreateClient<ICalculator>();
    try
    {
      int result = await calculator.AddAsync(1, 2);
@@ -107,9 +107,11 @@
    }
    ```
 ## JS client example
-1. Reference the [rpcdotnet-connector](https://www.npmjs.com/package/rpcdotnet-connector )  package: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/rpcdotnet-connector.min.js"></script>`
+1. Reference the [rpcdotnet-connector](https://www.npmjs.com/package/rpcdotnet-connector )  package: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/apiconnector.js"></script>`
 2. Create a connection factory:
    ```js
+   const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'apiconnector'" 
+   ...
    const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
 3. Set up the API connection:

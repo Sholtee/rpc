@@ -2,9 +2,11 @@
 > This package provides the functionality for invoking [RPC.NET](https://github.com/Sholtee/rpc ) services.
 
 ## How to use it
-1. Reference this package via `jsdelivr`: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/rpcdotnet-connector.min.js"></script>`
+1. Reference this package via `jsdelivr`: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/apiconnector.js"></script>`
 2. Create a connection factory:
    ```js
+   const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'apiconnector'" 
+   ...
    const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
 3. Set up the API connection:
