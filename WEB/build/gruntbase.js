@@ -107,7 +107,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         karma: {
             test: {
                 basePath: '',
-                frameworks: ['jasmine', 'sinon'],
+                frameworks: ['detectBrowsers', 'jasmine', 'sinon'],
                 files: [
                     {src: ['<%= project.dirs.tmp %>/**/*.js'], served: true}
                 ],
@@ -115,12 +115,11 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
                 singleRun: true,
-                browsers: ['Chrome', 'Firefox', 'Edge'],
                 logLevel: 'ERROR',
                 plugins: [
+                    'karma-detect-browsers',
                     'karma-chrome-launcher',
                     'karma-firefox-launcher',
-                    '@chiragrupani/karma-chromium-edge-launcher',
                     'karma-jasmine',
                     'karma-sinon',
                     'karma-junit-reporter',
@@ -133,6 +132,11 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     reports: ['lcov'],
                     dir: '<%= project.dirs.artifacts %>',
                     skipFilesWithNoCoverage: true
+                },
+                detectBrowsers: {
+                    enabled: true,
+                    usePhantomJS: false,
+                    preferHeadless: true
                 }
             }
         },
