@@ -38,7 +38,8 @@ namespace Solti.Utils.Rpc.Perf
         {
             var psi = new ProcessStartInfo(Path.ChangeExtension(typeof(ICalculator).Assembly.Location, "exe"))
             {
-                UseShellExecute = true
+                UseShellExecute = true,
+                Arguments = "-nolog"
             };
 
             return Process.Start(psi);

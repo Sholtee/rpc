@@ -3,6 +3,9 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
+using System.Linq;
+
 namespace Solti.Utils.Rpc.Server.Sample
 {
     using Interfaces;
@@ -17,9 +20,17 @@ namespace Solti.Utils.Rpc.Server.Sample
         public AppHost() : base()
         {
             RpcService.AllowedOrigins.Add("http://localhost:1987");
-            RpcService.LoggerFactory = ConsoleLogger.Create<AppHost>;
 
-            Logger = RpcService.LoggerFactory();
+            if (Environment.GetCommandLineArgs().Any(arg => arg.ToLowerInvariant() == "-nolog"))
+            {
+                RpcService.LoggerFactory = null;
+                Logger = null;
+            }
+            else
+            {
+                RpcService.LoggerFactory = ConsoleLogger.Create<AppHost>;
+                Logger = RpcService.LoggerFactory();
+            }
         }
 
         public override void OnRegisterModules(IModuleRegistry registry)
