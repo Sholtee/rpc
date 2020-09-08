@@ -120,6 +120,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     'karma-detect-browsers',
                     'karma-chrome-launcher',
                     'karma-firefox-launcher',
+                    'karma-ie-launcher',
                     'karma-jasmine',
                     'karma-sinon',
                     'karma-junit-reporter',
