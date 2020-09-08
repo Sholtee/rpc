@@ -1088,6 +1088,112 @@ references:
   commentId: N:Solti.Utils.Rpc.Internals
   fullName: Solti.Utils.Rpc.Internals
   nameWithType: Solti.Utils.Rpc.Internals
+- uid: Solti.Utils.Rpc.Internals.LoggerBase
+  name: LoggerBase
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html
+  commentId: T:Solti.Utils.Rpc.Internals.LoggerBase
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase
+  nameWithType: LoggerBase
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.#ctor(System.String)
+  name: LoggerBase(String)
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase__ctor_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.LoggerBase.#ctor(System.String)
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.LoggerBase(System.String)
+  nameWithType: LoggerBase.LoggerBase(String)
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.#ctor*
+  name: LoggerBase
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.LoggerBase
+  nameWithType: LoggerBase.LoggerBase
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.BeginScope*
+  name: BeginScope
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_BeginScope_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.BeginScope
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.BeginScope
+  nameWithType: LoggerBase.BeginScope
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.BeginScope``1(``0)
+  name: BeginScope<TState>(TState)
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_BeginScope__1___0_
+  commentId: M:Solti.Utils.Rpc.Internals.LoggerBase.BeginScope``1(``0)
+  name.vb: BeginScope(Of TState)(TState)
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.BeginScope<TState>(TState)
+  fullName.vb: Solti.Utils.Rpc.Internals.LoggerBase.BeginScope(Of TState)(TState)
+  nameWithType: LoggerBase.BeginScope<TState>(TState)
+  nameWithType.vb: LoggerBase.BeginScope(Of TState)(TState)
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.Category
+  name: Category
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_Category
+  commentId: P:Solti.Utils.Rpc.Internals.LoggerBase.Category
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.Category
+  nameWithType: LoggerBase.Category
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.Category*
+  name: Category
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_Category_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.Category
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.Category
+  nameWithType: LoggerBase.Category
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory*
+  name: GetDefaultCategory
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_GetDefaultCategory_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory
+  nameWithType: LoggerBase.GetDefaultCategory
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory``1
+  name: GetDefaultCategory<TCategory>()
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_GetDefaultCategory__1
+  commentId: M:Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory``1
+  name.vb: GetDefaultCategory(Of TCategory)()
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory<TCategory>()
+  fullName.vb: Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory(Of TCategory)()
+  nameWithType: LoggerBase.GetDefaultCategory<TCategory>()
+  nameWithType.vb: LoggerBase.GetDefaultCategory(Of TCategory)()
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  name: IsEnabled(LogLevel)
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_IsEnabled_Microsoft_Extensions_Logging_LogLevel_
+  commentId: M:Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  nameWithType: LoggerBase.IsEnabled(LogLevel)
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled*
+  name: IsEnabled
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_IsEnabled_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled
+  nameWithType: LoggerBase.IsEnabled
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.Log*
+  name: Log
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_Log_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.Log
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.Log
+  nameWithType: LoggerBase.Log
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})
+  name: Log<TState>(LogLevel, EventId, TState, Exception, Func<TState, Exception, String>)
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_Log__1_Microsoft_Extensions_Logging_LogLevel_Microsoft_Extensions_Logging_EventId___0_System_Exception_System_Func___0_System_Exception_System_String__
+  commentId: M:Solti.Utils.Rpc.Internals.LoggerBase.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})
+  name.vb: Log(Of TState)(LogLevel, EventId, TState, Exception, Func(Of TState, Exception, String))
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.Log<TState>(Microsoft.Extensions.Logging.LogLevel, Microsoft.Extensions.Logging.EventId, TState, System.Exception, System.Func<TState, System.Exception, System.String>)
+  fullName.vb: Solti.Utils.Rpc.Internals.LoggerBase.Log(Of TState)(Microsoft.Extensions.Logging.LogLevel, Microsoft.Extensions.Logging.EventId, TState, System.Exception, System.Func(Of TState, System.Exception, System.String))
+  nameWithType: LoggerBase.Log<TState>(LogLevel, EventId, TState, Exception, Func<TState, Exception, String>)
+  nameWithType.vb: LoggerBase.Log(Of TState)(LogLevel, EventId, TState, Exception, Func(Of TState, Exception, String))
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.LogCore(System.String)
+  name: LogCore(String)
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_LogCore_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.LoggerBase.LogCore(System.String)
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.LogCore(System.String)
+  nameWithType: LoggerBase.LogCore(String)
+- uid: Solti.Utils.Rpc.Internals.LoggerBase.LogCore*
+  name: LogCore
+  href: Solti.Utils.Rpc.Internals.LoggerBase.html#Solti_Utils_Rpc_Internals_LoggerBase_LogCore_
+  commentId: Overload:Solti.Utils.Rpc.Internals.LoggerBase.LogCore
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.LoggerBase.LogCore
+  nameWithType: LoggerBase.LogCore
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocation
   name: ModuleInvocation
   href: Solti.Utils.Rpc.Internals.ModuleInvocation.html
