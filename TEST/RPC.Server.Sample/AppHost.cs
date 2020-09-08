@@ -21,6 +21,10 @@ namespace Solti.Utils.Rpc.Server.Sample
         {
             RpcService.AllowedOrigins.Add("http://localhost:1987");
 
+            //
+            // A naplozas kikapcsolhato mivel az a teljesitmeny teszteket negativan befolyasolja.
+            //
+
             if (Environment.GetCommandLineArgs().Any(arg => arg.ToLowerInvariant() == "-nolog"))
             {
                 RpcService.LoggerFactory = null;
