@@ -135,6 +135,9 @@
   <data name="PREFLIGHT_REQUEST" xml:space="preserve">
     <value>Preflight request, processor won't be called.</value>
   </data>
+  <data name="REQUEST_AVAILABLE" xml:space="preserve">
+    <value>Request available.</value>
+  </data>
   <data name="REQUEST_PROCESSED" xml:space="preserve">
     <value>Request processed successfully.</value>
   </data>

@@ -54,6 +54,8 @@ namespace Solti.Utils.Rpc.Internals
 
             for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;) 
             {
+                logger?.LogInformation(Trace.REQUEST_AVAILABLE);
+
                 getContext.ContinueWith
                 (
                     t => SafeCallContextProcessor(t.Result),

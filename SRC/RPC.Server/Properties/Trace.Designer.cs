@@ -115,6 +115,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request available..
+        /// </summary>
+        internal static string REQUEST_AVAILABLE {
+            get {
+                return ResourceManager.GetString("REQUEST_AVAILABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request processed successfully..
         /// </summary>
         internal static string REQUEST_PROCESSED {

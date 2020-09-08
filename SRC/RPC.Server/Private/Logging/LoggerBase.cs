@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* TraceLogger.cs                                                                *
+* LoggerBase.cs                                                                 *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -16,7 +16,10 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Primitives.Patterns;
 
-    internal class TraceLogger : ILogger
+    /// <summary>
+    /// Minimalist logger implementation, intended for private use only.
+    /// </summary>
+    public abstract class LoggerBase : ILogger
     {
         private readonly Stack<string> FScopes = new Stack<string>();
 
@@ -48,28 +51,52 @@ namespace Solti.Utils.Rpc.Internals
             }
         }
 
-        public static ILogger Create<TCategory>() => new TraceLogger($"'{Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName)}' ({typeof(TCategory).Name})");
+        /// <summary>
+        /// Gets the default category.
+        /// </summary>
+        protected static string GetDefaultCategory<TCategory>() => $"'{Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName)}' ({typeof(TCategory).Name})";
 
-        public TraceLogger(string category) => Category = category;
+        /// <summary>
+        /// Creates a new <see cref="LoggerBase"/> instance.
+        /// </summary>
+        protected LoggerBase(string category) => Category = category;
 
+        /// <summary>
+        /// The concrete logger invocation.
+        /// </summary>
+        /// <param name="message"></param>
+        protected abstract void LogCore(string message);
+
+        /// <summary>
+        /// See category.
+        /// </summary>
         public string Category { get; }
 
-        public IDisposable BeginScope<TState>(TState state)
+        /// <summary>
+        /// See <see cref="ILogger.BeginScope{TState}(TState)"/>.
+        /// </summary>
+        public virtual IDisposable BeginScope<TState>(TState state)
         {
             if (state == null)
                 throw new ArgumentNullException(nameof(state));
 
             string scope = state is IDictionary<string, object> dict
-                ? $"[{string.Join(", ", dict.Select(kv => $"{kv.Key} = {kv.Value}").ToArray())}]"
+                ? $"[{string.Join(", ", dict.Select(kv => $"{kv.Key ?? string.Empty} = {kv.Value ?? "NULL"}"))}]"
                 : state.ToString();
 
             FScopes.Push(scope);
             return new Popper(FScopes);
         }
 
+        /// <summary>
+        /// See <see cref="ILogger.IsEnabled(LogLevel)"/>.
+        /// </summary>
         public bool IsEnabled(LogLevel logLevel) => true;
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        /// <summary>
+        /// See <see cref="ILogger.Log{TState}(LogLevel, EventId, TState, Exception, Func{TState, Exception, string})"/>.
+        /// </summary>
+        public virtual void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             if (!IsEnabled(logLevel)) return;
 
@@ -82,7 +109,7 @@ namespace Solti.Utils.Rpc.Internals
 
             message = $"{Category}: {string.Join(" ", FScopes.Reverse())} { logLevel }: {message}";
 
-            Trace.WriteLine(message);
+            LogCore(message);
         }
     }
 }
