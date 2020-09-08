@@ -25,3 +25,6 @@
 - 2.0.0-preview4:
   - *added:* `RpcClientFactory.PreserveProxyAssemblies` property
   - *done:* Rethought host running
+- 2.0.0:
+  - *added:* `MissingModuleException`
+  - *breaking:* make `RpcClientFactory.CreateClient()` async
