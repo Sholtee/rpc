@@ -120,7 +120,6 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     'karma-detect-browsers',
                     'karma-chrome-launcher',
                     'karma-firefox-launcher',
-                    'karma-ie-launcher',
                     'karma-jasmine',
                     'karma-sinon',
                     'karma-junit-reporter',
@@ -137,7 +136,8 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 detectBrowsers: {
                     enabled: true,
                     usePhantomJS: false,
-                    preferHeadless: true
+                    preferHeadless: true,
+                    postDetection: availableBrowsers => availableBrowsers.filter(browser => browser.indexOf('IE') < 0)
                 }
             }
         },
