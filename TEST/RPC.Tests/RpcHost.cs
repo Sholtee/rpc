@@ -3,8 +3,10 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 using NUnit.Framework;
@@ -40,8 +42,6 @@ namespace Solti.Utils.Rpc.Tests
             HostProcess = null;
         }
 
-        public interface IDummy { }
-
         [Test]
         public async Task Client_MayGetTheServiceVersion()
         {
@@ -57,6 +57,50 @@ namespace Solti.Utils.Rpc.Tests
                 corVer = HostProcess.MainModule.FileVersionInfo;
 
             Assert.That(serverVer, Is.EqualTo(corVer));
+        }
+
+        [Test]
+        public async Task ParallelCallsShould_ShouldWork()
+        {
+            await Task.WhenAll
+            (
+                Enumerable
+                    .Repeat<Func<Task>>(Invoke, 10)
+                    .Select(_ => _())
+            );
+
+            static async Task Invoke()
+            {
+                using var factory = new RpcClientFactory(Host)
+                {
+                    Timeout = TimeSpan.FromSeconds(5)
+                };
+
+                ICalculator proxy = await factory.CreateClient<ICalculator>();     
+                Assert.That(proxy.Add(1, 2), Is.EqualTo(3));
+            }
+        }
+
+        [Test]
+        public async Task ParallelAsyncCallsShould_ShouldWork()
+        {
+            await Task.WhenAll
+            (
+                Enumerable
+                    .Repeat<Func<Task>>(Invoke, 10)
+                    .Select(_ => _())
+            );
+
+            static async Task Invoke()
+            {
+                using var factory = new RpcClientFactory(Host)
+                {
+                    Timeout = TimeSpan.FromSeconds(5)
+                };
+
+                ICalculator proxy = await factory.CreateClient<ICalculator>();
+                Assert.That(await proxy.AddAsync(1, 2), Is.EqualTo(3));
+            }
         }
     }
 }

@@ -83,12 +83,10 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Service_ShouldHandleRequestsAsynchronously() 
-        {
-            Task[] tasks = Enumerable.Repeat(0, 100).Select(_ => Service_ShouldHandleRequests()).ToArray();
-
-            Assert.DoesNotThrow(() => Task.WaitAll(tasks));
-        }
+        public void Service_ShouldHandleRequestsAsynchronously() =>
+            Assert.DoesNotThrowAsync(() => Task.WhenAll(Enumerable
+                .Repeat<Func<Task>>(Service_ShouldHandleRequests, 100)
+                .Select(_ => _())));
 
         [Test]
         public async Task Service_ShouldHandleExceptions() 
