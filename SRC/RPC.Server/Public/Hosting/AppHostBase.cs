@@ -94,6 +94,11 @@ namespace Solti.Utils.Rpc.Hosting
             : (ICollection<string>) Array.Empty<string>();
 
         /// <summary>
+        /// Creates a new <see cref="IInjector"/>.
+        /// </summary>
+        protected IInjector CreateInjector() => FContainer.CreateInjector();
+
+        /// <summary>
         /// Invoked on service installation.
         /// </summary> 
         public virtual void OnInstall()
