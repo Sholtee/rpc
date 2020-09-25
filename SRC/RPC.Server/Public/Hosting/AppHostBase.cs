@@ -96,12 +96,22 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked on service installation.
         /// </summary> 
-        public virtual void OnInstall() => Logger?.LogInformation(Trace.INSTALLING_HOST);
+        public virtual void OnInstall()
+        {
+            Logger?.LogInformation(Trace.INSTALLING_HOST);
+
+            OnRegisterServices(FContainer);
+        }
 
         /// <summary>
         /// Invoked on service removal.
         /// </summary>
-        public virtual void OnUninstall() => Logger?.LogInformation(Trace.UNINSTALLING_HOST);
+        public virtual void OnUninstall()
+        {
+            Logger?.LogInformation(Trace.UNINSTALLING_HOST);
+
+            OnRegisterServices(FContainer);
+        }
 
         /// <summary>
         /// Place of module registration routines.
