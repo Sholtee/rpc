@@ -27,4 +27,8 @@
   - *done:* Rethought host running
 - 2.0.0:
   - *added:* `MissingModuleException`
-  - *breaking:* make `RpcClientFactory.CreateClient()` async
+  - *breaking:* Make `RpcClientFactory.CreateClient()` async
+- 2.1.0:
+  - *fixed:* Missing service registration before host install
+  - *added:* `AppHostBase.CreateInjector()` method
+  - *upgraded:* **ProxyGen.NET**
