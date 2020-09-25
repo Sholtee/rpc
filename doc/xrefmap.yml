@@ -57,6 +57,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.AutoStart
   nameWithType: AppHostBase.AutoStart
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector
+  name: CreateInjector()
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_CreateInjector
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector()
+  nameWithType: AppHostBase.CreateInjector()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector*
+  name: CreateInjector
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_CreateInjector_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector
+  nameWithType: AppHostBase.CreateInjector
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.Dependencies
   name: Dependencies
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Dependencies
