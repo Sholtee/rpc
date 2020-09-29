@@ -110,7 +110,7 @@
 1. Reference the [rpcdotnet-connector](https://www.npmjs.com/package/rpcdotnet-connector )  package: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@1.x.x/dist/apiconnector.js"></script>`
 2. Create a connection factory:
    ```js
-   const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'apiconnector'" 
+   const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'rpcdotnet-connector'" 
    ...
    const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
