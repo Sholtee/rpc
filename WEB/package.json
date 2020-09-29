@@ -1,6 +1,7 @@
 {
   "name": "rpcdotnet-connector",
   "main": "dist/apiconnector.js",
+  "module": "apiconnector",
   "description": "JS connector for RPC.NET",
   "version": "1.0.1",
   "repository": {
