@@ -96,7 +96,7 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
           //
 
           if (parsed.Exception) {
-            reject(parsed.Exception.Message);
+            reject(parsed.Exception);
             break;
           }
 

@@ -98,8 +98,8 @@ describe('ApiConnectionFactory', () => {
         });
     });
 
-    describe('createConnection()', () => {
-        it('should return a configurable connection', () => {
+    describe('API connection', () => {
+        it('should be configurable', () => {
             const Calculator = factory.createConnection('ICalculator');
 
             expect(typeof Calculator).toBe('function');
@@ -113,7 +113,7 @@ describe('ApiConnectionFactory', () => {
             expect(typeof Calculator.prototype.PI).toBe('object');
         });
 
-        ['Add', 'AddAsync'].forEach(method => it(`should return an API connection that may have methods (${method})`, done => {
+        ['Add', 'AddAsync'].forEach(method => it(`should support methods (${method})`, done => {
             const Calculator = factory
                 .createConnection('ICalculator')
                 .registerMethod(method, 'add');
@@ -125,7 +125,7 @@ describe('ApiConnectionFactory', () => {
             });
         }));
 
-        it('should return an API connection that may have properties', done => {
+        it('should support properties', done => {
             const Calculator = factory
                 .createConnection('ICalculator')
                 .registerProperty('PI');
@@ -136,6 +136,21 @@ describe('ApiConnectionFactory', () => {
                 done();
             });
         });
+
+        it('should handle remote exceptions', done => {
+            const Calculator = factory
+                .createConnection('ICalculator')
+                .registerMethod('ParseInt');
+
+            const inst = new Calculator();
+            inst.ParseInt('cica').catch(e => {
+                expect('Message' in e).toBeTrue();
+                expect(typeof e.TypeName).toBe('string');
+                expect(e.TypeName).toContain('System.FormatException');
+                done();
+            });
+        });
+
     });
 
     describe('version', () => {
