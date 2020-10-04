@@ -2,35 +2,33 @@
 *  apiconnector.js                                                              *
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
-const RESPONSE_NOT_VALID = 'Server response could not be processed';
+export const RESPONSE_NOT_VALID = 'Server response could not be processed';
 
 // class
-function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new XMLHttpRequest()) {
+export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new XMLHttpRequest()) {
   Object.assign(this, {
     sessionId: null,
     headers: {},
     timeout: 0,
     invoke(module, method, args = []) {
-      let url = `${urlBase}?module=${module}&method=${method}`;
-      if (this.sessionId) url += `&sessionid=${this.sessionId}`;
-
       return new Promise((resolve, reject) => {
+        const url = new URL(urlBase);
+        url.searchParams.append('module', module);
+        url.searchParams.append('method', method);
+
+        if (this.sessionId)
+          url.searchParams.append('sessionId', this.sessionId);
+
         const xhr = xhrFactory();
 
-        xhr.open('POST', url, true);
+        xhr.open('POST', url.toString(), true);
         xhr.timeout = this.timeout;
 
-        const headers = {
-          ...this.headers,
-          'Content-Type': 'application/json'
-        };
-
-        Object
-          .keys(headers)
-          .forEach(key => xhr.setRequestHeader(key, headers[key].toString()));
+        for (const [key, value] of Object.entries({...this.headers, 'Content-Type': 'application/json'})) {
+          xhr.setRequestHeader(key, value.toString());
+        }
 
         xhr.onload = onResponse.bind(xhr, resolve, reject);
-
         xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
 
         xhr.send(JSON.stringify(args));
@@ -124,5 +122,3 @@ function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new 
   /* eslint-enable no-invalid-this */
 
 }
-
-export {ApiConnectionFactory, RESPONSE_NOT_VALID};
