@@ -32,3 +32,5 @@
   - *fixed:* Missing service registration before host install
   - *added:* `AppHostBase.CreateInjector()` method
   - *upgraded:* **ProxyGen.NET**
+- 2.1.1:
+  - *fixed:* Attempt to deserialize NULL as a value type in `RpcClientFactory.InvokeServiceAsync()`
