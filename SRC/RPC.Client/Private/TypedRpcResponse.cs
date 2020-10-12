@@ -3,16 +3,24 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-
 namespace Solti.Utils.Rpc.Internals
 {
     using Interfaces;
 
-    internal class TypedRpcResponse<TResult>: IRpcResonse
+    internal class ValueRpcResponse<TResult>: IRpcResonse where TResult: struct
     {
-        #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        public TResult Result { get; set; }
-        #pragma warning restore CS8618
+        public TResult? Result { get; set; }
+
+        public ExceptionInfo? Exception { get; set; }
+
+        object? IRpcResonse.Result => Result;
+
+        ExceptionInfo? IRpcResonse.Exception => Exception;
+    }
+
+    internal class ReferenceRpcResponse<TResult> : IRpcResonse where TResult : class
+    {
+        public TResult? Result { get; set; }
 
         public ExceptionInfo? Exception { get; set; }
 

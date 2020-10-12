@@ -81,7 +81,11 @@ namespace Solti.Utils.Rpc
             else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
                 returnType = returnType.GetGenericArguments().Single();
 
-            return typeof(TypedRpcResponse<>).MakeGenericType(returnType);
+            Type responseType = returnType.IsValueType
+                ? typeof(ValueRpcResponse<>)
+                : typeof(ReferenceRpcResponse<>);
+
+            return responseType.MakeGenericType(returnType);
         }
 
         private async Task<Version> GetServiceVersion() => await (await CreateClient<IServiceDescriptor>()).Version;
