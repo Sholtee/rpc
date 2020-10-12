@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,6 +21,7 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using DI;
+    using DI.Interfaces;
     using Interfaces;
 
     [TestFixture]
@@ -35,6 +37,7 @@ namespace Solti.Utils.Rpc.Tests
             Stream GetStream();
             Task<Stream> GetStreamAsync();
             int Prop { get; set; }
+            Guid Guid { get; }
         }
 
         const string Host = "http://localhost:1986/test/";
@@ -363,7 +366,51 @@ namespace Solti.Utils.Rpc.Tests
 
             var ex = Assert.ThrowsAsync<HttpRequestException>(proxy.Faulty);
             Assert.That(ex.Message.Contains("401"));
-        } 
+        }
+
+        public interface IGuid 
+        {
+            Guid Value { get; }
+        }
+
+        [Test]
+        public async Task Module_MayHaveDependencies([Values(Lifetime.Scoped, Lifetime.Singleton, Lifetime.Transient)] Lifetime lifetime) 
+        {
+            Server.Container.Factory(i => 
+            {
+                var mockModule = new Mock<IGuid>(MockBehavior.Strict);
+                mockModule
+                    .SetupGet(i => i.Value)
+                    .Returns(Guid.NewGuid());
+
+                return mockModule.Object;
+            }, lifetime);
+
+            Server.Register(injector => 
+            {
+                var mockModule = new Mock<IModule>(MockBehavior.Strict);
+                mockModule
+                    .SetupGet(i => i.Guid)
+                    .Returns(() => injector.Get<IGuid>().Value);
+
+                return mockModule.Object;
+            });
+
+            Server.Start(Host);
+
+            var store = new ConcurrentDictionary<Guid, int>();
+
+            await Task.WhenAll(Enumerable.Repeat(0, 20).Select(_ => InvokeModule()));
+
+            Assert.That(store.Count, Is.EqualTo(lifetime == Lifetime.Singleton ? 1 : 20));
+
+            async Task InvokeModule() 
+            {
+                IModule proxy = await ClientFactory.CreateClient<IModule>();
+
+                store.TryAdd(proxy.Guid, 0);
+            }
+        }
 
         [Test]
         public async Task Client_ShouldTimeout() 
