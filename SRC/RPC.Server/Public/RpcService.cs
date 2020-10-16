@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -31,6 +32,7 @@ namespace Solti.Utils.Rpc
     public class RpcService : WebService, IModuleRegistry
     {
         private readonly ModuleInvocationBuilder FModuleInvocationBuilder;
+        private readonly JsonSerializerOptions FSerializerOptions;
         private ModuleInvocation? FModuleInvocation;
 
         #region Public
@@ -40,19 +42,46 @@ namespace Solti.Utils.Rpc
         public IServiceContainer Container { get; }
 
         /// <summary>
+        /// Controls the <see cref="JsonSerializer"/> related to this RPC service.
+        /// </summary>
+        /// <remarks>Don't change serialization options after the first module was registered. These options will be applied to serialization and deserialization as well.</remarks>
+        public JsonSerializerOptions SerializerOptions 
+        {
+            //
+            // A modul metodusokhoz tartozo kontextus tartalmazza a beallitasok masolatat -> modul regisztralas
+            // utan mar nem jo otlet modositani.
+            //
+
+            get => !FModuleInvocationBuilder.Modules.Any()
+                ? FSerializerOptions
+                : throw new InvalidOperationException(); // TODO: message
+        }
+
+        /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder) : base()
+        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder) : base()
         {
             Container = container ?? throw new ArgumentNullException(nameof(container));
             FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
+            FSerializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
             LoggerFactory = () => TraceLogger.Create<RpcService>();
         }
 
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container) : this(container, new ModuleInvocationBuilder()) { }
+        public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder) : this(container, new JsonSerializerOptions(), moduleInvocationBuilder) {}
+
+        /// <summary>
+        /// Creates a new <see cref="RpcService"/> instance.
+        /// </summary>
+        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions) : this(container, serializerOptions, new ModuleInvocationBuilder(serializerOptions)) {}
+
+        /// <summary>
+        /// Creates a new <see cref="RpcService"/> instance.
+        /// </summary>
+        public RpcService(IServiceContainer container) : this(container, new JsonSerializerOptions()) { }
 
         /// <summary>
         /// See <see cref="IModuleRegistry.Register{TInterface, TImplementation}"/>.
@@ -294,7 +323,7 @@ namespace Solti.Utils.Rpc
                             Message = ex.Message,
                             Data = ex.Data
                         }
-                    }, cancellationToken: cancellation);
+                    }, FSerializerOptions, cancellation);
                     break;
                 default:
                     response.ContentType = "application/json";
@@ -302,7 +331,7 @@ namespace Solti.Utils.Rpc
                     await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse
                     {
                         Result = result
-                    }, cancellationToken: cancellation);
+                    }, FSerializerOptions, cancellation);
                     break;
             }
 

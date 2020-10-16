@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -15,19 +16,46 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Properties;
 
-    internal static class MultiTypeArraySerializer
+    internal sealed class MultiTypeArraySerializer // szal biztos
     {
-        public static Task<object?[]> Deserialize(Stream json, CancellationToken cancellation, params Type[] elementTypes) 
-        {
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new MultiTypeArrayConverter(elementTypes));
+        public JsonSerializerOptions SerializerOptions { get; }
 
+        public MultiTypeArraySerializer(JsonSerializerOptions serializerOptions, params Type[] elementTypes) 
+        {
+#if FALSE
+            SerializerOptions = new JsonSerializerOptions(serializerOptions); // .NET 5-ben elvileg mar lesz
+            SerializerOptions.Converters.Add(new MultiTypeArrayConverter(elementTypes));
+#else
+            SerializerOptions = new JsonSerializerOptions
+            {
+                AllowTrailingCommas         = serializerOptions.AllowTrailingCommas,
+                DefaultBufferSize           = serializerOptions.DefaultBufferSize,
+                DictionaryKeyPolicy         = serializerOptions.DictionaryKeyPolicy,
+                Encoder                     = serializerOptions.Encoder,
+                IgnoreNullValues            = serializerOptions.IgnoreNullValues,
+                IgnoreReadOnlyProperties    = serializerOptions.IgnoreReadOnlyProperties,
+                MaxDepth                    = serializerOptions.MaxDepth,
+                PropertyNameCaseInsensitive = serializerOptions.PropertyNameCaseInsensitive,
+                PropertyNamingPolicy        = serializerOptions.PropertyNamingPolicy,
+                ReadCommentHandling         = serializerOptions.ReadCommentHandling,
+                WriteIndented               = serializerOptions.WriteIndented
+            };
+
+            foreach (JsonConverter converter in serializerOptions.Converters.Append(new MultiTypeArrayConverter(elementTypes)))
+            {
+                SerializerOptions.Converters.Add(converter);
+            }
+#endif
+        }
+
+        public Task<object?[]> Deserialize(Stream json, CancellationToken cancellation)
+        {
             return JsonSerializer
-                .DeserializeAsync<object?[]>(json, options, cancellation)
+                .DeserializeAsync<object?[]>(json, SerializerOptions, cancellation)
                 .AsTask();
         }
 #if DEBUG
-        public static object?[] Deserialize(string json, params Type[] elementTypes) 
+        public object?[] Deserialize(string json) 
         {
             using var stm = new MemoryStream();
             using var sw = new StreamWriter(stm);
@@ -35,16 +63,16 @@ namespace Solti.Utils.Rpc.Internals
             sw.Flush();
             stm.Seek(0, SeekOrigin.Begin);
 
-            return Deserialize(stm, default, elementTypes).GetAwaiter().GetResult();
+            return Deserialize(stm, default).GetAwaiter().GetResult();
         }
 #endif
-        private sealed class MultiTypeArrayConverter : JsonConverter<object[]>
+        private sealed class MultiTypeArrayConverter : JsonConverter<object?[]>
         {
             public IReadOnlyList<Type> ElementTypes { get; }
 
             public MultiTypeArrayConverter(IReadOnlyList<Type> elementTypes) => ElementTypes = elementTypes;
 
-            public override object[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override object?[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 //
                 // Csak tomboket tamogatunk
@@ -52,7 +80,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException(Errors.NOT_AN_ARRAY);
 
-                object[] result = new object[ElementTypes.Count];
+                object?[] result = new object?[ElementTypes.Count];
 
                 for (int i = 0; reader.Read(); i++)
                 {
@@ -87,7 +115,7 @@ namespace Solti.Utils.Rpc.Internals
                 throw new JsonException();
             }
 
-            public override void Write(Utf8JsonWriter writer, object[] value, JsonSerializerOptions options) => throw new NotImplementedException();
+            public override void Write(Utf8JsonWriter writer, object?[] value, JsonSerializerOptions options) => throw new NotImplementedException();
         }
     }
 }

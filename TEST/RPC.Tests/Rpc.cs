@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ namespace Solti.Utils.Rpc.Tests
             Task Async();
             Stream GetStream();
             Task<Stream> GetStreamAsync();
+            Complex MethodHavingComplexArg(Complex arg);
             int Prop { get; set; }
             Guid Guid { get; }
         }
@@ -109,7 +111,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task ParallelCallsShould_ShouldWork()
+        public async Task ParallelCalls_ShouldWork()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -137,7 +139,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task ParallelAsyncCallsShould_ShouldWork()
+        public async Task ParallelAsyncCalls_ShouldWork()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
@@ -550,6 +552,45 @@ namespace Solti.Utils.Rpc.Tests
             var ex = Assert.Throws<RpcException>(proxy.Dispose);
             Assert.That(ex.InnerException, Is.InstanceOf<MissingModuleException>());
             mockDisposable.Verify(d => d.Dispose(), Times.Never);
+        }
+
+        public class Complex 
+        {
+            public string PropA { get; set; }
+            public int PropB { get; set; }
+        }
+
+        [Test]
+        public async Task Serialization_ShouldBeControlled() 
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.MethodHavingComplexArg(It.IsAny<Complex>()))
+                .Returns<Complex>(arg => arg);
+
+            Server.SerializerOptions.PropertyNamingPolicy = new LowerCasePolicy();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
+
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
+            Complex ret = proxy.MethodHavingComplexArg(new Complex { PropA = "cica", PropB = 1986 });
+
+            // kisbetu miatt {"result": ...} formaban lesz a valasz
+            Assert.That(ret, Is.Null);
+
+            ClientFactory.SerializerOptions = new JsonSerializerOptions(); // ne legyen InvalidOperationException (mivel a korabbi beallitasok mar hasznalva vtak) 
+            ClientFactory.SerializerOptions.PropertyNamingPolicy = new LowerCasePolicy();
+            proxy = await ClientFactory.CreateClient<IModule>();
+
+            ret = proxy.MethodHavingComplexArg(new Complex { PropA = "cica", PropB = 1986 });
+
+            Assert.That(ret.PropA, Is.EqualTo("cica"));
+            Assert.That(ret.PropB, Is.EqualTo(1986));
+        }
+
+        private class LowerCasePolicy : JsonNamingPolicy
+        {
+            public override string ConvertName(string name) => name.ToLowerInvariant();
         }
     }
 }

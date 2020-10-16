@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,6 +51,8 @@ namespace Solti.Utils.Rpc.Internals
         private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
 
         private readonly HashSet<Type> FModules = new HashSet<Type>();
+
+        private readonly JsonSerializerOptions FSerializerOptions;
 
         //
         // {throw new Exception(...); return null;}
@@ -306,16 +309,16 @@ namespace Solti.Utils.Rpc.Internals
             if (ifaceMethod == null)
                 throw new ArgumentNullException(nameof(ifaceMethod));
 
-            Type[] argTypes = ifaceMethod
+            var serializer = new MultiTypeArraySerializer(FSerializerOptions, ifaceMethod
                 .GetParameters()
                 .Select(param => param.ParameterType)
-                .ToArray();
+                .ToArray());
 
             return (json, cancellation) =>
             {
                 try
                 {
-                    return MultiTypeArraySerializer.Deserialize(json, cancellation, argTypes);
+                    return serializer.Deserialize(json, cancellation);
                 }
                 finally
                 {
@@ -384,6 +387,11 @@ namespace Solti.Utils.Rpc.Internals
             ModuleInvocationExtensions.RelatedModules.Add(result, FModules.ToArray());
             return result;
         }
+
+        /// <summary>
+        /// Creates a new <see cref="ModuleInvocationBuilder"/> instance.
+        /// </summary>
+        public ModuleInvocationBuilder(JsonSerializerOptions? serializerOptions = null) => FSerializerOptions = serializerOptions ?? new JsonSerializerOptions();
         #endregion
     }
 }

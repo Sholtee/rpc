@@ -153,7 +153,7 @@ namespace Solti.Utils.Rpc
 
             using (var stm = new MemoryStream())
             {
-                await JsonSerializer.SerializeAsync(stm, args);
+                await JsonSerializer.SerializeAsync(stm, args, SerializerOptions);
                 stm.Seek(0, SeekOrigin.Begin);
 
                 using var data = new StreamContent(stm);
@@ -185,7 +185,8 @@ namespace Solti.Utils.Rpc
                         IRpcResonse result =  (IRpcResonse) await JsonSerializer.DeserializeAsync
                         (
                             stm,
-                            GenerateTypedResponseTo(method)
+                            GenerateTypedResponseTo(method),
+                            SerializerOptions
                         );
                         if (result.Exception != null) ProcessRemoteError(result.Exception);
                         return result.Result;
@@ -293,6 +294,12 @@ namespace Solti.Utils.Rpc
             get => FHttpClient.Timeout;
             set => FHttpClient.Timeout = value;
         }
+
+        /// <summary>
+        /// Contains the options for the underlying <see cref="JsonSerializer"/>.
+        /// </summary>
+        /// <remarks>These options will be applied to serialization and deserialization as well.</remarks>
+        public JsonSerializerOptions SerializerOptions { get; internal set; /*tesztekhez*/ } = new JsonSerializerOptions();
 
         /// <summary>
         /// The <see cref="Version"/> of the remote service we want to invoke.
