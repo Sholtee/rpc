@@ -89,21 +89,21 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
         const parsed = JSON.parse(response);
 
         if (typeof parsed === 'object') {
-          //
-          // Ne "in" operatorral vizsgaljuk mert lehet jelen van, csak NULL
-          //
+          const exception = getProp(parsed, 'Exception');
 
-          if (parsed.Exception) {
-            reject(parsed.Exception);
+          if (typeof exception === 'object') {
+            reject(exception);
             break;
           }
 
           //
-          // Viszont itt mar NULL is jo ertek
+          // NULL is jo ertek
           //
 
-          if ('Result' in parsed) {
-            resolve(parsed.Result);
+          const result = getProp(parsed, 'Result');
+
+          if (typeof result !== 'undefined') {
+            resolve(result);
             break;
           }
         }
@@ -121,4 +121,12 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
   }
   /* eslint-enable no-invalid-this */
 
+  function getProp(obj, prop) { // nem kis-nagy betu erzekeny
+    let key;
+    for (key in obj) {
+      if (key.toLowerCase() === prop.toLowerCase()) {
+        return obj[key];
+      }
+    }
+  }
 }
