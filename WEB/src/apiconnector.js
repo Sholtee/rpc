@@ -91,7 +91,7 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
         if (typeof parsed === 'object') {
           const exception = getProp(parsed, 'Exception');
 
-          if (typeof exception === 'object') {
+          if (exception) {
             reject(exception);
             break;
           }
