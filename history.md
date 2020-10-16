@@ -34,3 +34,5 @@
   - *upgraded:* **ProxyGen.NET**
 - 2.1.1:
   - *fixed:* Attempt to deserialize NULL as a value type in `RpcClientFactory.InvokeServiceAsync()`
+- 2.2.0:
+  - *added:* `[RpcService|RpcClientFactory].SerializerOptions` property
