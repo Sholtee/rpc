@@ -202,6 +202,73 @@
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_RpcService__ctor_" data-uid="Solti.Utils.Rpc.RpcService.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_System_Text_Json_JsonSerializerOptions_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions)">RpcService(IServiceContainer, JsonSerializerOptions)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
+        <td><span class="parametername">container</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td><span class="parametername">serializerOptions</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_RpcService__ctor_" data-uid="Solti.Utils.Rpc.RpcService.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_System_Text_Json_JsonSerializerOptions_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)">RpcService(IServiceContainer, JsonSerializerOptions, ModuleInvocationBuilder)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
+        <td><span class="parametername">container</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td><span class="parametername">serializerOptions</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html">ModuleInvocationBuilder</a></td>
+        <td><span class="parametername">moduleInvocationBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   <a id="Solti_Utils_Rpc_RpcService_Container_" data-uid="Solti.Utils.Rpc.RpcService.Container*"></a>
@@ -228,6 +295,33 @@
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_RpcService_SerializerOptions_" data-uid="Solti.Utils.Rpc.RpcService.SerializerOptions*"></a>
+  <h4 id="Solti_Utils_Rpc_RpcService_SerializerOptions" data-uid="Solti.Utils.Rpc.RpcService.SerializerOptions">SerializerOptions</h4>
+  <div class="markdown level1 summary"><p>Controls the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializer">JsonSerializer</a> related to this RPC service.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonSerializerOptions SerializerOptions { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_RpcService_SerializerOptions_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Don&apos;t change serialization options after the first module was registered. These options will be applied to serialization and deserialization as well.</p>
+</div>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_RpcService_CreateResponse_" data-uid="Solti.Utils.Rpc.RpcService.CreateResponse*"></a>

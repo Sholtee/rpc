@@ -1219,6 +1219,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
   nameWithType: ModuleInvocationBuilder
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.#ctor(System.Text.Json.JsonSerializerOptions)
+  name: ModuleInvocationBuilder(JsonSerializerOptions)
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder__ctor_System_Text_Json_JsonSerializerOptions_
+  commentId: M:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.#ctor(System.Text.Json.JsonSerializerOptions)
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.ModuleInvocationBuilder(System.Text.Json.JsonSerializerOptions)
+  nameWithType: ModuleInvocationBuilder.ModuleInvocationBuilder(JsonSerializerOptions)
+- uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.#ctor*
+  name: ModuleInvocationBuilder
+  href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.ModuleInvocationBuilder
+  nameWithType: ModuleInvocationBuilder.ModuleInvocationBuilder
 - uid: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type)
   name: AddModule(Type)
   href: Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html#Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_AddModule_System_Type_
@@ -1886,6 +1899,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.RpcClientFactory.ProcessRemoteError
   nameWithType: RpcClientFactory.ProcessRemoteError
+- uid: Solti.Utils.Rpc.RpcClientFactory.SerializerOptions
+  name: SerializerOptions
+  href: Solti.Utils.Rpc.RpcClientFactory.html#Solti_Utils_Rpc_RpcClientFactory_SerializerOptions
+  commentId: P:Solti.Utils.Rpc.RpcClientFactory.SerializerOptions
+  fullName: Solti.Utils.Rpc.RpcClientFactory.SerializerOptions
+  nameWithType: RpcClientFactory.SerializerOptions
+- uid: Solti.Utils.Rpc.RpcClientFactory.SerializerOptions*
+  name: SerializerOptions
+  href: Solti.Utils.Rpc.RpcClientFactory.html#Solti_Utils_Rpc_RpcClientFactory_SerializerOptions_
+  commentId: Overload:Solti.Utils.Rpc.RpcClientFactory.SerializerOptions
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcClientFactory.SerializerOptions
+  nameWithType: RpcClientFactory.SerializerOptions
 - uid: Solti.Utils.Rpc.RpcClientFactory.ServiceVersion
   name: ServiceVersion
   href: Solti.Utils.Rpc.RpcClientFactory.html#Solti_Utils_Rpc_RpcClientFactory_ServiceVersion
@@ -1974,6 +2000,18 @@ references:
   commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
   fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer, Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
   nameWithType: RpcService.RpcService(IServiceContainer, ModuleInvocationBuilder)
+- uid: Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions)
+  name: RpcService(IServiceContainer, JsonSerializerOptions)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_System_Text_Json_JsonSerializerOptions_
+  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions)
+  fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer, System.Text.Json.JsonSerializerOptions)
+  nameWithType: RpcService.RpcService(IServiceContainer, JsonSerializerOptions)
+- uid: Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  name: RpcService(IServiceContainer, JsonSerializerOptions, ModuleInvocationBuilder)
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_System_Text_Json_JsonSerializerOptions_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_
+  commentId: M:Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  fullName: Solti.Utils.Rpc.RpcService.RpcService(Solti.Utils.DI.Interfaces.IServiceContainer, System.Text.Json.JsonSerializerOptions, Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)
+  nameWithType: RpcService.RpcService(IServiceContainer, JsonSerializerOptions, ModuleInvocationBuilder)
 - uid: Solti.Utils.Rpc.RpcService.#ctor*
   name: RpcService
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService__ctor_
@@ -2058,6 +2096,19 @@ references:
   fullName.vb: Solti.Utils.Rpc.RpcService.Register(Of TInterface, TImplementation)()
   nameWithType: RpcService.Register<TInterface, TImplementation>()
   nameWithType.vb: RpcService.Register(Of TInterface, TImplementation)()
+- uid: Solti.Utils.Rpc.RpcService.SerializerOptions
+  name: SerializerOptions
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_SerializerOptions
+  commentId: P:Solti.Utils.Rpc.RpcService.SerializerOptions
+  fullName: Solti.Utils.Rpc.RpcService.SerializerOptions
+  nameWithType: RpcService.SerializerOptions
+- uid: Solti.Utils.Rpc.RpcService.SerializerOptions*
+  name: SerializerOptions
+  href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_SerializerOptions_
+  commentId: Overload:Solti.Utils.Rpc.RpcService.SerializerOptions
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.RpcService.SerializerOptions
+  nameWithType: RpcService.SerializerOptions
 - uid: Solti.Utils.Rpc.RpcService.SetAcHeaders(System.Net.HttpListenerContext)
   name: SetAcHeaders(HttpListenerContext)
   href: Solti.Utils.Rpc.RpcService.html#Solti_Utils_Rpc_RpcService_SetAcHeaders_System_Net_HttpListenerContext_
