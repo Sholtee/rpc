@@ -354,7 +354,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 FListener = null;
 
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/)
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
                 {
                     AddUrlReservation(url);
                     FNeedToRemoveUrlReservation = true;
@@ -406,7 +406,10 @@ namespace Solti.Utils.Rpc.Internals
             FListenerCancellation = null;
 
             if (FNeedToRemoveUrlReservation)
+            {
                 RemoveUrlReservation(Url!);
+                FNeedToRemoveUrlReservation = false;
+            }
 
             Url = null;
         }
