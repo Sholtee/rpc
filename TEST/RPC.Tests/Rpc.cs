@@ -16,6 +16,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -91,6 +92,28 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(context.SessionId, Is.EqualTo("cica"));
             Assert.That(context.Module, Is.EqualTo(nameof(IModule)));
             Assert.That(context.Method, Is.EqualTo(nameof(IModule.Dummy)));
+        }
+
+        [Test]
+        public async Task Logger_ShouldBeAccessible() 
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule.Setup(i => i.Dummy());
+
+            ILogger logger = null;
+
+            Server.Register(injector =>
+            {
+                logger = injector.Get<ILogger>();
+
+                return mockModule.Object;
+            });
+            Server.Start(Host);
+
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
+            proxy.Dummy();
+
+            Assert.That(logger, Is.Not.Null);
         }
 
         [Test]
@@ -194,8 +217,8 @@ namespace Solti.Utils.Rpc.Tests
                 .SetupGet(i => i.Prop)
                 .Returns(() => prop);
             mockModule
-                .SetupSet(i => i.Prop)
-                .Callback(val => prop = val);
+                .SetupSet(i => i.Prop = 1986)
+                .Callback<int>(val => prop = val);
 
             Server.Register(i => mockModule.Object);
             Server.Start(Host);

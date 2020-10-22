@@ -253,10 +253,13 @@ namespace Solti.Utils.Rpc
             await using IInjector injector = Container.CreateInjector();
 
             //
-            // A kontextust elerhetik a modulok fuggosegkent.
+            // A kontextust es a naplozat elerhetik a modulok fuggosegkent.
             //
 
             injector.UnderlyingContainer.Instance(context);
+
+            if (logger != null)
+                injector.UnderlyingContainer.Instance(logger);
 
             //
             // Naplozzuk a metodus hivast.
