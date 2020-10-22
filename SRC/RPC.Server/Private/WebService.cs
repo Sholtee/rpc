@@ -386,6 +386,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         public virtual void Stop()
         {
             if (!IsStarted) return;
@@ -407,7 +408,12 @@ namespace Solti.Utils.Rpc.Internals
 
             if (FNeedToRemoveUrlReservation)
             {
-                RemoveUrlReservation(Url!);
+                try
+                {
+                    RemoveUrlReservation(Url!);
+                }
+                catch { }
+
                 FNeedToRemoveUrlReservation = false;
             }
 
