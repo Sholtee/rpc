@@ -13,9 +13,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.*" />
-    <PackageReference Include="ProxyGen.NET" Version="3.*" />
+    <PackageReference Include="ProxyGen.NET" Version="4.0-preview*" />
     <PackageReference Include="System.Text.Json" Version="4.*" />
-    <PackageReference Include="Solti.Utils.Primitives" Version="1.*" />
+    <PackageReference Include="Solti.Utils.Primitives" Version="2.*" />
   </ItemGroup>
 
   <ItemGroup>

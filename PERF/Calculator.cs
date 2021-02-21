@@ -15,8 +15,6 @@ namespace Solti.Utils.Rpc.Perf
     [MemoryDiagnoser]
     public class Calculator
     {
-        static Calculator() => RpcClientFactory.PreserveProxyAssemblies = true;
-
         private RpcClientFactory Factory { get; set; }
 
         [GlobalSetup]

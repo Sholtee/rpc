@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Authors>Denes Solti</Authors>
-    <Version>2.2.0</Version>
+    <Version>3.0.0-preview1</Version>
     <Configurations>Debug;Release;Perf</Configurations>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
@@ -24,8 +24,8 @@
     <None Include="..\..\icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(CI)' == ''"> 
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.*">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

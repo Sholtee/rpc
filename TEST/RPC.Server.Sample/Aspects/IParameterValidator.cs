@@ -1,18 +1,14 @@
 ﻿/********************************************************************************
-* ICalculator.cs                                                                *
+* IParameterValidator.cs                                                        *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Solti.Utils.Rpc.Server.Sample
 {
-    [ParameterValidatorAspect]
-    public interface ICalculator
+    public interface IParameterValidator
     {
-        int Add(int a, int b);
-        Task<int> AddAsync(int a, int b);
-        double PI { get; }
-        int ParseInt([NotNull] string val);
+        void Validate(ParameterInfo param, object? value);
     }
 }

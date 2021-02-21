@@ -43,19 +43,6 @@ namespace Solti.Utils.Rpc
         [SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "ProxyGen.NET requires types to be visible.")]
         public class MethodCallForwarder<TInterface> : InterfaceInterceptor<TInterface> where TInterface: class
         {
-            static MethodCallForwarder() 
-            {
-                if (PreserveProxyAssemblies)
-                {
-                    string cacheDir = Path.Combine(Path.GetTempPath(), ".rpcclient", GetVersion<RpcClientFactory>(), typeof(TInterface).GetFriendlyName(), GetVersion<TInterface>());
-                    Directory.CreateDirectory(cacheDir);
-
-                    ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.CacheDirectory = cacheDir;
-                }
-
-                static string GetVersion<T>() => typeof(T).Assembly.GetName().Version.ToString();
-            }
-
             /// <summary>
             /// The owner of this entity.
             /// </summary>
@@ -271,12 +258,6 @@ namespace Solti.Utils.Rpc
 
         #region Public
         /// <summary>
-        /// Indicates whether the system should store the generated proxy assemblies or not.
-        /// </summary>
-        /// <remarks>This property should be true in production and false in development builds.</remarks>
-        public static bool PreserveProxyAssemblies { get; set; }
-
-        /// <summary>
         /// The (optional) session ID related to this instance.
         /// </summary>
         public string? SessionId { get; set; }
@@ -325,7 +306,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new RPC client against the given service <typeparamref name="TInterface"/>.
         /// </summary>
-        public async Task<TInterface> CreateClient<TInterface>() where TInterface : class => (TInterface) (await ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.GeneratedTypeAsync)
+        public async Task<TInterface> CreateClient<TInterface>() where TInterface : class => (TInterface) (await ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.GetGeneratedTypeAsync())
             .GetConstructor(new Type[] { typeof(RpcClientFactory) })
             .ToStaticDelegate()
             .Invoke(new object[] { this });

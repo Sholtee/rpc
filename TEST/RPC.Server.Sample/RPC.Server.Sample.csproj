@@ -22,11 +22,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Perf|AnyCPU'">
     <Optimize>true</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Injector.NET.Extensions" Version="3.*"></PackageReference>
-  </ItemGroup>
-
+  
   <ItemGroup Condition="'$(LibVersion)' != ''">
     <PackageReference Include="RPC.NET.Interfaces" Version="$(LibVersion)"></PackageReference>
     <PackageReference Include="RPC.NET.Server" Version="$(LibVersion)"></PackageReference>

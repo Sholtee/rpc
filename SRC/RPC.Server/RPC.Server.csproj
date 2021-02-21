@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Injector.NET" Version="3.*" />
+    <PackageReference Include="Injector.NET" Version="4.0-preview*" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.*" />
-    <PackageReference Include="Solti.Utils.Primitives" Version="1.*" />
+    <PackageReference Include="Solti.Utils.Primitives" Version="2.*" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.*" />
     <PackageReference Include="System.Text.Json" Version="4.*" />
   </ItemGroup>

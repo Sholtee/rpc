@@ -398,8 +398,19 @@ namespace Solti.Utils.Rpc.Tests
             Guid Value { get; }
         }
 
+        public static IEnumerable<Lifetime> Lifetimes
+        {
+            get
+            {
+                yield return Lifetime.Transient;
+                yield return Lifetime.Scoped;
+                yield return Lifetime.Singleton;
+                yield return Lifetime.Pooled.WithCapacity(4);
+            }
+        }
+
         [Test]
-        public async Task Module_MayHaveDependencies([Values(Lifetime.Scoped, Lifetime.Singleton, Lifetime.Transient)] Lifetime lifetime) 
+        public async Task Module_MayHaveDependencies([ValueSource(nameof(Lifetimes))] Lifetime lifetime) 
         {
             Server.Container.Factory(i => 
             {
@@ -567,7 +578,7 @@ namespace Solti.Utils.Rpc.Tests
             var mockDisposable = new Mock<IDisposable>(MockBehavior.Strict);
             mockDisposable.Setup(d => d.Dispose());
 
-            Server.Container.Factory(i => mockDisposable.Object);
+            Server.Container.Factory(i => mockDisposable.Object, Lifetime.Transient);
             Server.Start(Host);
 
             IDisposable proxy = await ClientFactory.CreateClient<IDisposable>();

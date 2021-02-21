@@ -22,7 +22,6 @@ namespace Solti.Utils.Rpc.Hosting
 
     using Primitives.Patterns;
     using Properties;
-    using Proxy;
 
     /// <summary>
     /// Represents the an app host that can be invoked by RPC
@@ -159,12 +158,6 @@ namespace Solti.Utils.Rpc.Hosting
             {
                 if (!Initialized)
                 {
-                    if (configuration == HostConfiguration.Release)
-                    {
-                        ProxyFactory.PreserveProxyAssemblies = true;
-                        DuckFactory.PreserveProxyAssemblies = true;
-                    }
-
                     OnRegisterServices(FContainer);
                     OnRegisterModules(RpcService);
                     Initialized = true;
