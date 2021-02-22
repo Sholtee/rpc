@@ -51,19 +51,26 @@
     <div class="level1"><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html">InterfaceInterceptor</a>&lt;TInterface&gt;</div>
     <div class="level2"><span class="xref">RpcClientFactory.MethodCallForwarder&lt;TInterface&gt;</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.IProxyAccess-1.html">IProxyAccess</a>&lt;TInterface&gt;</div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Properties">InterfaceInterceptor&lt;TInterface&gt;.Properties</a>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_ResolveMethod_System_Func_System_Object__">InterfaceInterceptor&lt;TInterface&gt;.ResolveMethod(Func&lt;Object&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Events">InterfaceInterceptor&lt;TInterface&gt;.Events</a>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_ResolveProperty_System_Func_System_Object__">InterfaceInterceptor&lt;TInterface&gt;.ResolveProperty(Func&lt;Object&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_MethodAccess_System_Linq_Expressions_Expression_System_Action__">InterfaceInterceptor&lt;TInterface&gt;.MethodAccess(Expression&lt;Action&gt;)</a>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_ResolveEvent_System_Func_System_Object__">InterfaceInterceptor&lt;TInterface&gt;.ResolveEvent(Func&lt;Object&gt;)</a>
     </div>
     <div>
       <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Target">InterfaceInterceptor&lt;TInterface&gt;.Target</a>
+    </div>
+    <div>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Proxy">InterfaceInterceptor&lt;TInterface&gt;.Proxy</a>
     </div>
     <div>
       <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_InvokeTarget">InterfaceInterceptor&lt;TInterface&gt;.InvokeTarget</a>
@@ -94,7 +101,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Client.dll</h6>
   <h5 id="Solti_Utils_Rpc_RpcClientFactory_MethodCallForwarder_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class MethodCallForwarder&lt;TInterface&gt; : InterfaceInterceptor&lt;TInterface&gt;, IHasTarget&lt;TInterface&gt; where TInterface : class</code></pre>
+    <pre><code class="lang-csharp hljs">public class MethodCallForwarder&lt;TInterface&gt; : InterfaceInterceptor&lt;TInterface&gt;, IHasTarget&lt;TInterface&gt;, IProxyAccess&lt;TInterface&gt; where TInterface : class</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -223,6 +230,10 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Solti.Utils.Proxy.InterfaceInterceptor&lt;TInterface&gt;.Invoke(System.Reflection.MethodInfo, System.Object[], System.Reflection.MemberInfo)</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.IProxyAccess-1.html">IProxyAccess&lt;TInterface&gt;</a>
+  </div>
 </article>
           </div>
           
