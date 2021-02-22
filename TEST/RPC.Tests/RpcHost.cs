@@ -60,7 +60,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task ParallelCallsShould_ShouldWork()
+        public async Task ParallelCall_ShouldWork()
         {
             await Task.WhenAll
             (
@@ -82,7 +82,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task ParallelAsyncCallsShould_ShouldWork()
+        public async Task ParallelAsyncCall_ShouldWork()
         {
             await Task.WhenAll
             (

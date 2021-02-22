@@ -5,7 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -402,6 +402,8 @@ namespace Solti.Utils.Rpc.Tests
         {
             get
             {
+                Debug.WriteLine($"Loading assembly: {typeof(ServiceContainer).Assembly}");
+
                 yield return Lifetime.Transient;
                 yield return Lifetime.Scoped;
                 yield return Lifetime.Singleton;
@@ -412,16 +414,19 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Module_MayHaveDependencies([ValueSource(nameof(Lifetimes))] Lifetime lifetime) 
         {
-            Server.Container.Factory(i => 
+            int factoryRequested = 0;
+            Server.Container.Factory(injector => 
             {
-                var mockModule = new Mock<IGuid>(MockBehavior.Strict);
-                mockModule
-                    .SetupGet(i => i.Value)
+                var mockService = new Mock<IGuid>(MockBehavior.Strict);
+                mockService
+                    .SetupGet(svc => svc.Value)
                     .Returns(Guid.NewGuid());
 
-                return mockModule.Object;
+                factoryRequested++;
+                return mockService.Object;
             }, lifetime);
 
+            int moduleRequested = 0;
             Server.Register(injector => 
             {
                 var mockModule = new Mock<IModule>(MockBehavior.Strict);
@@ -429,22 +434,27 @@ namespace Solti.Utils.Rpc.Tests
                     .SetupGet(i => i.Guid)
                     .Returns(() => injector.Get<IGuid>().Value);
 
+                moduleRequested++;
                 return mockModule.Object;
             });
 
             Server.Start(Host);
 
-            var store = new ConcurrentDictionary<Guid, int>();
-
             await Task.WhenAll(Enumerable.Repeat(0, 20).Select(_ => InvokeModule()));
 
-            Assert.That(store.Count, Is.EqualTo(lifetime == Lifetime.Singleton ? 1 : 20));
+            Assert.That(moduleRequested, Is.EqualTo(20));
+
+            Assert.That(factoryRequested, lifetime.ToString() switch
+            {
+                nameof(Lifetime.Singleton) => Is.EqualTo(1),
+                nameof(Lifetime.Pooled) => Is.GreaterThanOrEqualTo(1).And.LessThanOrEqualTo(4),
+                _ => Is.EqualTo(20)
+            });
 
             async Task InvokeModule() 
             {
                 IModule proxy = await ClientFactory.CreateClient<IModule>();
-
-                store.TryAdd(proxy.Guid, 0);
+                _ = proxy.Guid;
             }
         }
 
