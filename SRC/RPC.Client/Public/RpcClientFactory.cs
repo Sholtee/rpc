@@ -212,7 +212,7 @@ namespace Solti.Utils.Rpc
                 if (!method.ReturnType.IsGenericType) return getResult;
 
                 //
-                // Kulomben a konvertaljuk a metodus visszateresenek megfelelo formara: Task<object?> -> Task<int> pl
+                // Kulonben a konvertaljuk a metodus visszateresenek megfelelo formara: Task<object?> -> Task<int> pl
                 //
 
                 return getResult.Cast
