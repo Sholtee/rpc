@@ -54,8 +54,7 @@ namespace Solti.Utils.Rpc.Tests
         [OneTimeTearDown]
         public void OneTimeCleanup()
         {
-            HostProcess.CloseMainWindow();
-            HostProcess.WaitForExit();
+            HostProcess?.Kill();
             HostProcess = null;
         }
 
