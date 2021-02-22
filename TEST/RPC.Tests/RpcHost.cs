@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using NUnit.Framework;
@@ -14,6 +15,7 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using Interfaces;
+    using Properties;
     using Server.Sample;
 
     [TestFixture]
@@ -29,10 +31,24 @@ namespace Solti.Utils.Rpc.Tests
             var psi = new ProcessStartInfo("dotnet")
             {
                 Arguments = Path.ChangeExtension(typeof(ICalculator).Assembly.Location, "dll"),
-                UseShellExecute = true
+                UseShellExecute = false,
+                RedirectStandardOutput = true
             };
 
-            HostProcess = Process.Start(psi);
+            HostProcess = new Process();
+            HostProcess.StartInfo = psi;
+
+            var evt = new ManualResetEventSlim();
+
+            HostProcess.OutputDataReceived += (sender, data) =>
+            {
+                if (data.Data.Contains(Trace.RUNNING))
+                    evt.Set();
+            };
+
+            HostProcess.Start();
+            HostProcess.BeginOutputReadLine();
+            evt.Wait();
         }
 
         [OneTimeTearDown]
