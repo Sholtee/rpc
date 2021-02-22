@@ -189,7 +189,8 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     file.expand(`${dir}/../BIN/**/Solti.Utils.Rpc.Server.Sample.dll`)[0]
                 ],
                 options: {
-                    wait: false
+                    wait: false,
+                    ready: /Server is running/g
                 }
             }
         }
