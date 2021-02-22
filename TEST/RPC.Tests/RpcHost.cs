@@ -42,7 +42,7 @@ namespace Solti.Utils.Rpc.Tests
 
             HostProcess.OutputDataReceived += (sender, data) =>
             {
-                if (data.Data.Contains(Trace.RUNNING))
+                if (data.Data?.Contains(Trace.RUNNING) == true)
                     evt.Set();
             };
 
@@ -54,7 +54,8 @@ namespace Solti.Utils.Rpc.Tests
         [OneTimeTearDown]
         public void OneTimeCleanup()
         {
-            HostProcess?.Kill();
+            HostProcess.CloseMainWindow();
+            HostProcess.WaitForExit();
             HostProcess = null;
         }
 
