@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Server.Sample
 {
+    using Aspects;
+
     [ParameterValidatorAspect]
     public interface ICalculator
     {

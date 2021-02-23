@@ -4,7 +4,7 @@
     <Authors>Denes Solti</Authors>
     <Version>3.0.0-preview1</Version>
     <Configurations>Debug;Release;Perf</Configurations>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>CA2007</NoWarn>
