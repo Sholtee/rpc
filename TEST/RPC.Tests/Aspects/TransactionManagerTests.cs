@@ -14,6 +14,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 {
     using DI;
     using DI.Interfaces;
+    using Interfaces;
     using Proxy.Generators;
 
     [TestFixture]

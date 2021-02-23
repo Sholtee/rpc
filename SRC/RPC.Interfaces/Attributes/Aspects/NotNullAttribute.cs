@@ -6,21 +6,32 @@
 using System;
 using System.Reflection;
 
-namespace Solti.Utils.Rpc.Aspects
+namespace Solti.Utils.Rpc.Interfaces
 {
+    using Properties;
+
     /// <summary>
     /// Ensures that a parameter is not null.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
-    public class NotNullAttribute : Attribute, IParameterValidator
+    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
+    public class NotNullAttribute : Attribute, IParameterValidator, IPropertyValidator
     {
-        /// <summary>
-        /// Implements the validation logic.
-        /// </summary>
-        public void Validate(ParameterInfo param, object? value)
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value)
         {
-            if (value == null) 
-                throw new ArgumentNullException(param.Name);
+            if (value is null)
+                throw new ValidationException(Errors.NULL_PROPERTY) 
+                {
+                    Name = prop.Name
+                };
+        }
+
+        void IParameterValidator.Validate(ParameterInfo param, object? value)
+        {
+            if (value is null)
+                throw new ValidationException(Errors.NULL_PARAM)
+                {
+                    Name = param.Name
+                };
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Reflection;
 namespace Solti.Utils.Rpc.Aspects
 {
     using DI.Interfaces;
+    using Interfaces;
     using Primitives;
     using Proxy;
 
@@ -44,33 +45,36 @@ namespace Solti.Utils.Rpc.Aspects
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            List<ArgumentException> validationErrors = new();
+            List<ValidationException> exceptions = new();
 
-            foreach (Action<object?[]> validate in GetValidators(method))
+            foreach (Action<object?[]> validate in GetValidators())
             {
                 try
                 {
                     validate(args);
                 }
-                catch (ArgumentException validationError)
+                catch (ValidationException validationError) when (Aggregate)
                 {
-                    if (!Aggregate) throw;
-                    validationErrors.Add(validationError);
+                    exceptions.Add(validationError);
+                }
+                catch (AggregateException validationErrors) when (Aggregate) // PropertyValidator tamogatas
+                {
+                    exceptions.AddRange(validationErrors.InnerExceptions.OfType<ValidationException>());
                 }
             }
 
-            if (validationErrors.Any())
-                throw new AggregateException(validationErrors);
+            if (exceptions.Any())
+                throw new AggregateException(exceptions);
 
             return base.Invoke(method, args, extra);
-        }
 
-        private static IReadOnlyCollection<Action<object?[]>> GetValidators(MethodInfo method) => Cache.GetOrAdd(method, () => method
-            .GetParameters()
-            .SelectMany(param => param
-                .GetCustomAttributes()
-                .OfType<IParameterValidator>()
-                .Select<IParameterValidator, Action<object?[]>>(validator => args => validator.Validate(param, args[param.Position])))
-            .ToArray());
+            IReadOnlyCollection<Action<object?[]>> GetValidators() => Cache.GetOrAdd(method, () => method
+                .GetParameters()
+                .SelectMany(param => param
+                    .GetCustomAttributes()
+                    .OfType<IParameterValidator>()
+                    .Select<IParameterValidator, Action<object?[]>>(validator => args => validator.Validate(param, args[param.Position])))
+                .ToArray());
+        }
     }
 }

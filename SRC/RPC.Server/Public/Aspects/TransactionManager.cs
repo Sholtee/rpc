@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Aspects
 {
+    using Interfaces;
     using Proxy;
 
     /// <summary>

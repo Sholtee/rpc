@@ -6,7 +6,7 @@
 using System;
 using System.Data;
 
-namespace Solti.Utils.Rpc.Aspects
+namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Marks a method to be transactional.

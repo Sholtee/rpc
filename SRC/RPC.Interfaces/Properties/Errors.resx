@@ -120,4 +120,10 @@
   <data name="MODULE_NOT_FOUND" xml:space="preserve">
     <value>The module "{0}" could not be found.</value>
   </data>
+  <data name="NULL_PARAM" xml:space="preserve">
+    <value>The value of the parameter can not be NULL.</value>
+  </data>
+  <data name="NULL_PROPERTY" xml:space="preserve">
+    <value>The value of the property can not be NULL.</value>
+  </data>
 </root>

@@ -12,6 +12,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 {
     using DI;
     using DI.Interfaces;
+    using Interfaces;
     using Proxy.Generators;
 
     [TestFixture]
@@ -34,7 +35,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, false)!;
 
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
-            Assert.Throws<ArgumentNullException>(() => module.DoSomething(null, null));
+            Assert.Throws<ValidationException>(() => module.DoSomething(null, null));
         }
 
         [Test]
@@ -49,10 +50,10 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
             AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomething(null, null));
             Assert.That(ex.InnerExceptions.Count, Is.EqualTo(2));
-            Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ArgumentNullException>());
-            Assert.That(((ArgumentNullException) ex.InnerExceptions[0]).ParamName, Is.EqualTo("arg1"));
-            Assert.That(ex.InnerExceptions[1], Is.InstanceOf<ArgumentNullException>());
-            Assert.That(((ArgumentNullException) ex.InnerExceptions[1]).ParamName, Is.EqualTo("arg2"));
+            Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ValidationException>());
+            Assert.That(((ValidationException) ex.InnerExceptions[0]).Name, Is.EqualTo("arg1"));
+            Assert.That(ex.InnerExceptions[1], Is.InstanceOf<ValidationException>());
+            Assert.That(((ValidationException) ex.InnerExceptions[1]).Name, Is.EqualTo("arg2"));
         }
 
         [Test]

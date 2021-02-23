@@ -68,5 +68,23 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
                 return ResourceManager.GetString("MODULE_NOT_FOUND", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the parameter can not be NULL..
+        /// </summary>
+        internal static string NULL_PARAM {
+            get {
+                return ResourceManager.GetString("NULL_PARAM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the property can not be NULL..
+        /// </summary>
+        internal static string NULL_PROPERTY {
+            get {
+                return ResourceManager.GetString("NULL_PROPERTY", resourceCulture);
+            }
+        }
     }
 }
