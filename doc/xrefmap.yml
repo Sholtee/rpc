@@ -7,6 +7,112 @@ references:
   commentId: N:Solti.Utils.Rpc
   fullName: Solti.Utils.Rpc
   nameWithType: Solti.Utils.Rpc
+- uid: Solti.Utils.Rpc.Aspects
+  name: Solti.Utils.Rpc.Aspects
+  href: Solti.Utils.Rpc.Aspects.html
+  commentId: N:Solti.Utils.Rpc.Aspects
+  fullName: Solti.Utils.Rpc.Aspects
+  nameWithType: Solti.Utils.Rpc.Aspects
+- uid: Solti.Utils.Rpc.Aspects.TransactionalAttribute
+  name: TransactionalAttribute
+  href: Solti.Utils.Rpc.Aspects.TransactionalAttribute.html
+  commentId: T:Solti.Utils.Rpc.Aspects.TransactionalAttribute
+  fullName: Solti.Utils.Rpc.Aspects.TransactionalAttribute
+  nameWithType: TransactionalAttribute
+- uid: Solti.Utils.Rpc.Aspects.TransactionalAttribute.IsolationLevel
+  name: IsolationLevel
+  href: Solti.Utils.Rpc.Aspects.TransactionalAttribute.html#Solti_Utils_Rpc_Aspects_TransactionalAttribute_IsolationLevel
+  commentId: P:Solti.Utils.Rpc.Aspects.TransactionalAttribute.IsolationLevel
+  fullName: Solti.Utils.Rpc.Aspects.TransactionalAttribute.IsolationLevel
+  nameWithType: TransactionalAttribute.IsolationLevel
+- uid: Solti.Utils.Rpc.Aspects.TransactionalAttribute.IsolationLevel*
+  name: IsolationLevel
+  href: Solti.Utils.Rpc.Aspects.TransactionalAttribute.html#Solti_Utils_Rpc_Aspects_TransactionalAttribute_IsolationLevel_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionalAttribute.IsolationLevel
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.TransactionalAttribute.IsolationLevel
+  nameWithType: TransactionalAttribute.IsolationLevel
+- uid: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute
+  name: TransactionAspectAttribute
+  href: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.html
+  commentId: T:Solti.Utils.Rpc.Aspects.TransactionAspectAttribute
+  fullName: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute
+  nameWithType: TransactionAspectAttribute
+- uid: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType(System.Type)
+  name: GetInterceptorType(Type)
+  href: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.html#Solti_Utils_Rpc_Aspects_TransactionAspectAttribute_GetInterceptorType_System_Type_
+  commentId: M:Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType(System.Type)
+  fullName: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType(System.Type)
+  nameWithType: TransactionAspectAttribute.GetInterceptorType(Type)
+- uid: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType*
+  name: GetInterceptorType
+  href: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.html#Solti_Utils_Rpc_Aspects_TransactionAspectAttribute_GetInterceptorType_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType
+  nameWithType: TransactionAspectAttribute.GetInterceptorType
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1
+  name: TransactionManager<TInterface>
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html
+  commentId: T:Solti.Utils.Rpc.Aspects.TransactionManager`1
+  name.vb: TransactionManager(Of TInterface)
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface)
+  nameWithType: TransactionManager<TInterface>
+  nameWithType.vb: TransactionManager(Of TInterface)
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.#ctor(`0,System.Lazy{System.Data.IDbConnection})
+  name: TransactionManager(TInterface, Lazy<IDbConnection>)
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1__ctor__0_System_Lazy_System_Data_IDbConnection__
+  commentId: M:Solti.Utils.Rpc.Aspects.TransactionManager`1.#ctor(`0,System.Lazy{System.Data.IDbConnection})
+  name.vb: TransactionManager(TInterface, Lazy(Of IDbConnection))
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.TransactionManager(TInterface, System.Lazy<System.Data.IDbConnection>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).TransactionManager(TInterface, System.Lazy(Of System.Data.IDbConnection))
+  nameWithType: TransactionManager<TInterface>.TransactionManager(TInterface, Lazy<IDbConnection>)
+  nameWithType.vb: TransactionManager(Of TInterface).TransactionManager(TInterface, Lazy(Of IDbConnection))
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.#ctor*
+  name: TransactionManager
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionManager`1.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.TransactionManager
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).TransactionManager
+  nameWithType: TransactionManager<TInterface>.TransactionManager
+  nameWithType.vb: TransactionManager(Of TInterface).TransactionManager
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Connection
+  name: Connection
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Connection
+  commentId: P:Solti.Utils.Rpc.Aspects.TransactionManager`1.Connection
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Connection
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Connection
+  nameWithType: TransactionManager<TInterface>.Connection
+  nameWithType.vb: TransactionManager(Of TInterface).Connection
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Connection*
+  name: Connection
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Connection_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionManager`1.Connection
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Connection
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Connection
+  nameWithType: TransactionManager<TInterface>.Connection
+  nameWithType.vb: TransactionManager(Of TInterface).Connection
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
+  name: Invoke(MethodInfo, Object[], MemberInfo)
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Invoke_System_Reflection_MethodInfo_System_Object___System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
+  name.vb: Invoke(MethodInfo, Object(), MemberInfo)
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Invoke(System.Reflection.MethodInfo, System.Object[], System.Reflection.MemberInfo)
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Invoke(System.Reflection.MethodInfo, System.Object(), System.Reflection.MemberInfo)
+  nameWithType: TransactionManager<TInterface>.Invoke(MethodInfo, Object[], MemberInfo)
+  nameWithType.vb: TransactionManager(Of TInterface).Invoke(MethodInfo, Object(), MemberInfo)
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke*
+  name: Invoke
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Invoke_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Invoke
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Invoke
+  nameWithType: TransactionManager<TInterface>.Invoke
+  nameWithType.vb: TransactionManager(Of TInterface).Invoke
 - uid: Solti.Utils.Rpc.Hosting
   name: Solti.Utils.Rpc.Hosting
   href: Solti.Utils.Rpc.Hosting.html
