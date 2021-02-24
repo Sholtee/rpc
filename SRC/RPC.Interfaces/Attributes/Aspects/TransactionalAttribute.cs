@@ -15,7 +15,7 @@ namespace Solti.Utils.Rpc.Interfaces
     public sealed class TransactionalAttribute : Attribute
     {
         /// <summary>
-        /// The <see cref="IsolationLevel"/> of the transaction.
+        /// The <see cref="System.Data.IsolationLevel"/> of the transaction.
         /// </summary>
         public IsolationLevel IsolationLevel { get; set; } = IsolationLevel.Unspecified;
     }
