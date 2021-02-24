@@ -1120,6 +1120,85 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Version
   nameWithType: IServiceDescriptor.Version
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute
+  name: MatchAttribute
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.MatchAttribute
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute
+  nameWithType: MatchAttribute
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.#ctor(System.String,System.Text.RegularExpressions.RegexOptions)
+  name: MatchAttribute(String, RegexOptions)
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute__ctor_System_String_System_Text_RegularExpressions_RegexOptions_
+  commentId: M:Solti.Utils.Rpc.Interfaces.MatchAttribute.#ctor(System.String,System.Text.RegularExpressions.RegexOptions)
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.MatchAttribute(System.String, System.Text.RegularExpressions.RegexOptions)
+  nameWithType: MatchAttribute.MatchAttribute(String, RegexOptions)
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.#ctor*
+  name: MatchAttribute
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.MatchAttribute.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.MatchAttribute
+  nameWithType: MatchAttribute.MatchAttribute
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationMessage
+  name: ParameterValidationMessage
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_ParameterValidationMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationMessage
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationMessage
+  nameWithType: MatchAttribute.ParameterValidationMessage
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationMessage*
+  name: ParameterValidationMessage
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_ParameterValidationMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationMessage
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationMessage
+  nameWithType: MatchAttribute.ParameterValidationMessage
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationMessage
+  name: PropertyValidationMessage
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_PropertyValidationMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationMessage
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationMessage
+  nameWithType: MatchAttribute.PropertyValidationMessage
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationMessage*
+  name: PropertyValidationMessage
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_PropertyValidationMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationMessage
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationMessage
+  nameWithType: MatchAttribute.PropertyValidationMessage
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object)
+  name: IParameterValidator.Validate(ParameterInfo, Object)
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_
+  commentId: M:Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object)
+  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(ParameterInfo, Object)
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(System.Reflection.ParameterInfo, System.Object)
+  nameWithType: MatchAttribute.IParameterValidator.Validate(ParameterInfo, Object)
+  nameWithType.vb: MatchAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(ParameterInfo, Object)
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*
+  name: IParameterValidator.Validate
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate
+  isSpec: "True"
+  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate
+  nameWithType: MatchAttribute.IParameterValidator.Validate
+  nameWithType.vb: MatchAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object)
+  name: IPropertyValidator.Validate(PropertyInfo, Object)
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_
+  commentId: M:Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object)
+  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(PropertyInfo, Object)
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(System.Reflection.PropertyInfo, System.Object)
+  nameWithType: MatchAttribute.IPropertyValidator.Validate(PropertyInfo, Object)
+  nameWithType.vb: MatchAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(PropertyInfo, Object)
+- uid: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*
+  name: IPropertyValidator.Validate
+  href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html#Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate
+  isSpec: "True"
+  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate
+  fullName: Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate
+  nameWithType: MatchAttribute.IPropertyValidator.Validate
+  nameWithType.vb: MatchAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate
 - uid: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions
   name: MemberInfoExtensions
   href: Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.html
