@@ -24,7 +24,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
         public class MyParameter2 
         {
-            [NotNull, PropertyValidator]
+            [NotNull, ValidateProperties]
             public MyParameter1 Value2 { get; set; }
 
             [NotNull]
@@ -33,8 +33,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
         public interface IModule
         {
-            void DoSomething([PropertyValidator] MyParameter2 arg);
-            void DoSomethingElse([PropertyValidator(aggregate: true)] MyParameter2 arg);
+            void DoSomething([ValidateProperties] MyParameter2 arg);
+            void DoSomethingElse([ValidateProperties(aggregate: true)] MyParameter2 arg);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule)Activator.CreateInstance(proxyType, mockModule.Object)!;
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object)!;
 
             Assert.DoesNotThrow(() => module.DoSomething(null));
         }

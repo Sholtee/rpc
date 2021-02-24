@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* PropertyValidatorAttribute.cs                                                 *
+* ValidatePropertiesAttribute.cs                                                *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -16,7 +16,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Indicates that the properties of a parameter or property may be validated.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public class PropertyValidatorAttribute : Attribute, IParameterValidator, IPropertyValidator
+    public class ValidatePropertiesAttribute : Attribute, IParameterValidator, IPropertyValidator
     {
         /// <summary>
         /// Returns true if the validator should collect all the validation errors.
@@ -24,9 +24,9 @@ namespace Solti.Utils.Rpc.Interfaces
         public bool Aggregate { get; }
 
         /// <summary>
-        /// Creates a new <see cref="PropertyValidatorAttribute"/> instance.
+        /// Creates a new <see cref="ValidatePropertiesAttribute"/> instance.
         /// </summary>
-        public PropertyValidatorAttribute(bool aggregate = false) => Aggregate = aggregate;
+        public ValidatePropertiesAttribute(bool aggregate = false) => Aggregate = aggregate;
 
         private void Validate(Type type, object value)
         {
