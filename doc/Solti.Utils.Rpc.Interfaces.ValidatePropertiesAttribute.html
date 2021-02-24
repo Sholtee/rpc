@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class PropertyValidatorAttribute
+    <title>Class ValidatePropertiesAttribute
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class PropertyValidatorAttribute
+    <meta name="title" content="Class ValidatePropertiesAttribute
    | RPC.NET ">
     <meta name="generator" content="docfx 2.46.0.0">
     
@@ -37,10 +37,10 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute">
   
   
-  <h1 id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute" class="text-break">Class PropertyValidatorAttribute
+  <h1 id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute" class="text-break">Class ValidatePropertiesAttribute
   </h1>
   <div class="markdown level0 summary"><p>Indicates that the properties of a parameter or property may be validated.</p>
 </div>
@@ -49,7 +49,7 @@
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
-    <div class="level2"><span class="xref">PropertyValidatorAttribute</span></div>
+    <div class="level2"><span class="xref">ValidatePropertiesAttribute</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -187,21 +187,21 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-public class PropertyValidatorAttribute : Attribute, IParameterValidator, IPropertyValidator</code></pre>
+public class ValidatePropertiesAttribute : Attribute, IParameterValidator, IPropertyValidator</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute__ctor_System_Boolean_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.#ctor(System.Boolean)">PropertyValidatorAttribute(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.html">PropertyValidatorAttribute</a> instance.</p>
+  <a id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute__ctor_System_Boolean_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.#ctor(System.Boolean)">ValidatePropertiesAttribute(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html">ValidatePropertiesAttribute</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PropertyValidatorAttribute(bool aggregate = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public ValidatePropertiesAttribute(bool aggregate = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -222,8 +222,8 @@ public class PropertyValidatorAttribute : Attribute, IParameterValidator, IPrope
   </table>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_Aggregate_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.Aggregate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_Aggregate" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.Aggregate">Aggregate</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Aggregate_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Aggregate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Aggregate" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Aggregate">Aggregate</h4>
   <div class="markdown level1 summary"><p>Returns true if the validator should collect all the validation errors.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -248,8 +248,8 @@ public class PropertyValidatorAttribute : Attribute, IParameterValidator, IPrope
   </table>
   <h3 id="eii">Explicit Interface Implementations
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object)">IParameterValidator.Validate(ParameterInfo, Object)</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object)">IParameterValidator.Validate(ParameterInfo, Object)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -278,8 +278,8 @@ public class PropertyValidatorAttribute : Attribute, IParameterValidator, IPrope
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_PropertyValidatorAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_" data-uid="Solti.Utils.Rpc.Interfaces.PropertyValidatorAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object)">IPropertyValidator.Validate(PropertyInfo, Object)</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object)">IPropertyValidator.Validate(PropertyInfo, Object)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
