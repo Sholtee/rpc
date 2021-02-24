@@ -126,4 +126,10 @@
   <data name="NULL_PROPERTY" xml:space="preserve">
     <value>The value of the property can not be NULL.</value>
   </data>
+  <data name="PARAM_NOT_MATCHES" xml:space="preserve">
+    <value>The value of the parameter does not match the given pattern.</value>
+  </data>
+  <data name="PROPERTY_NOT_MATCHES" xml:space="preserve">
+    <value>The value of the property does not match the given pattern.</value>
+  </data>
 </root>

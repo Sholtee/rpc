@@ -86,5 +86,23 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
                 return ResourceManager.GetString("NULL_PROPERTY", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the parameter does not match the given pattern..
+        /// </summary>
+        internal static string PARAM_NOT_MATCHES {
+            get {
+                return ResourceManager.GetString("PARAM_NOT_MATCHES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the property does not match the given pattern..
+        /// </summary>
+        internal static string PROPERTY_NOT_MATCHES {
+            get {
+                return ResourceManager.GetString("PROPERTY_NOT_MATCHES", resourceCulture);
+            }
+        }
     }
 }

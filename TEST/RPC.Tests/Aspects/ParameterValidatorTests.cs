@@ -13,6 +13,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
     using DI;
     using DI.Interfaces;
     using Interfaces;
+    using Interfaces.Properties;
     using Proxy.Generators;
 
     [TestFixture]
@@ -21,7 +22,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         [ParameterValidatorAspect]
         public interface IModule
         {
-            void DoSomething([NotNull] string arg1, [NotNull] object arg2);
+            void DoSomething([NotNull, Match("cica", ParameterValidationMessage = "ooops")] string arg1, [NotNull] object arg2);
             void DoSomethingElse();
         }
 
@@ -35,7 +36,9 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, false)!;
 
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
-            Assert.Throws<ValidationException>(() => module.DoSomething(null, null));
+            var ex = Assert.Throws<ValidationException>(() => module.DoSomething(null, null));
+            Assert.That(ex.Name, Is.EqualTo("arg1"));
+            Assert.That(ex.Message, Is.EqualTo(Errors.NULL_PARAM));
         }
 
         [Test]
@@ -48,10 +51,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, true)!;
 
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
-            AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomething(null, null));
+            AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomething("kutya", null));
             Assert.That(ex.InnerExceptions.Count, Is.EqualTo(2));
             Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ValidationException>());
             Assert.That(((ValidationException) ex.InnerExceptions[0]).Name, Is.EqualTo("arg1"));
+            Assert.That(((ValidationException) ex.InnerExceptions[0]).Message, Is.EqualTo("ooops"));
             Assert.That(ex.InnerExceptions[1], Is.InstanceOf<ValidationException>());
             Assert.That(((ValidationException) ex.InnerExceptions[1]).Name, Is.EqualTo("arg2"));
         }
