@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* ParameterValidatorAspectAttribute.cs                                          *
+* RoleValidatorAspectAttribute.cs                                               *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -10,22 +10,12 @@ namespace Solti.Utils.Rpc.Interfaces
     using DI.Interfaces;
 
     /// <summary>
-    /// Indicates that the methods of a service may validate their parameters.
+    /// Indicates that the caller may have sufficient privileges to call the module methods.
     /// </summary>
+    /// <remarks>In order to use this aspect the server must support the <see cref="IRoleManager"/> service.</remarks>
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
-    public sealed class ParameterValidatorAspectAttribute : AspectAttribute
+    public sealed class RoleValidatorAspectAttribute : AspectAttribute
     {
-        /// <summary>
-        /// Returns true if the validator should collect all the validation errors.
-        /// </summary>
-        public bool Aggregate { get; }
-
-        /// <summary>
-        /// Creates a new <see cref="ParameterValidatorAspectAttribute"/> instance.
-        /// </summary>
-        public ParameterValidatorAspectAttribute(bool aggregate = false) => Aggregate = aggregate;
-
-        /// <inheritdoc/>
         /// <inheritdoc/>
         public override Type GetInterceptorType(Type iface)
         {
@@ -36,7 +26,7 @@ namespace Solti.Utils.Rpc.Interfaces
             // Rpc.Server szerelveny verzioja megegyezik az Rpc.Interfaces szerelveny verziojaval
             //
 
-            Type interceptor = Type.GetType($"Solti.Utils.Rpc.Aspects.ParameterValidator`1, Solti.Utils.Rpc.Server, Version = {GetType().Assembly.GetName().Version}, Culture = neutral, PublicKeyToken = null", throwOnError: true);
+            Type interceptor = Type.GetType($"Solti.Utils.Rpc.Aspects.RoleValidator`1, Solti.Utils.Rpc.Server, Version = {GetType().Assembly.GetName().Version}, Culture = neutral, PublicKeyToken = null", throwOnError: true);
             return interceptor.MakeGenericType(iface);
         }
     }

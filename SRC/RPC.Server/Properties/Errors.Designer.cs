@@ -97,6 +97,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The caller does not have sufficient privileges to invoke the method..
+        /// </summary>
+        internal static string INSUFFICIENT_PRIVILEGES {
+            get {
+                return ResourceManager.GetString("INSUFFICIENT_PRIVILEGES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;netsh&quot; invocation failed..
         /// </summary>
         internal static string NETSH_INVOCATION_FAILED {
@@ -129,6 +138,15 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string NO_MODULE {
             get {
                 return ResourceManager.GetString("NO_MODULE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no RequiredRoles attribute specified for the module method {0}..
+        /// </summary>
+        internal static string NO_ROLES_SPECIFIED {
+            get {
+                return ResourceManager.GetString("NO_ROLES_SPECIFIED", resourceCulture);
             }
         }
         

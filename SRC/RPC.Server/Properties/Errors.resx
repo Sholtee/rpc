@@ -129,6 +129,9 @@
   <data name="INAPPROPRIATE_ARRAY_LENGTH" xml:space="preserve">
     <value>The length of the args array does not match the parameter count.</value>
   </data>
+  <data name="INSUFFICIENT_PRIVILEGES" xml:space="preserve">
+    <value>The caller does not have sufficient privileges to invoke the method.</value>
+  </data>
   <data name="NETSH_INVOCATION_FAILED" xml:space="preserve">
     <value>"netsh" invocation failed.</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="NO_MODULE" xml:space="preserve">
     <value>Request must specify a module.</value>
+  </data>
+  <data name="NO_ROLES_SPECIFIED" xml:space="preserve">
+    <value>There is no RequiredRoles attribute specified for the module method {0}.</value>
   </data>
   <data name="SC_INVOCATION_FAILED" xml:space="preserve">
     <value>Service Control Manager invocation failed. Error {0}</value>
