@@ -82,6 +82,50 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).Invoke
   nameWithType: ParameterValidator<TInterface>.Invoke
   nameWithType.vb: ParameterValidator(Of TInterface).Invoke
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1
+  name: RoleValidator<TInterface>
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html
+  commentId: T:Solti.Utils.Rpc.Aspects.RoleValidator`1
+  name.vb: RoleValidator(Of TInterface)
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface)
+  nameWithType: RoleValidator<TInterface>
+  nameWithType.vb: RoleValidator(Of TInterface)
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRoleManager)
+  name: RoleValidator(TInterface, IRequestContext, IRoleManager)
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRoleManager_
+  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRoleManager)
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.RoleValidator(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRoleManager)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).RoleValidator(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRoleManager)
+  nameWithType: RoleValidator<TInterface>.RoleValidator(TInterface, IRequestContext, IRoleManager)
+  nameWithType.vb: RoleValidator(Of TInterface).RoleValidator(TInterface, IRequestContext, IRoleManager)
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor*
+  name: RoleValidator
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.RoleValidator
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).RoleValidator
+  nameWithType: RoleValidator<TInterface>.RoleValidator
+  nameWithType.vb: RoleValidator(Of TInterface).RoleValidator
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
+  name: Invoke(MethodInfo, Object[], MemberInfo)
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_Invoke_System_Reflection_MethodInfo_System_Object___System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke(System.Reflection.MethodInfo,System.Object[],System.Reflection.MemberInfo)
+  name.vb: Invoke(MethodInfo, Object(), MemberInfo)
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Invoke(System.Reflection.MethodInfo, System.Object[], System.Reflection.MemberInfo)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).Invoke(System.Reflection.MethodInfo, System.Object(), System.Reflection.MemberInfo)
+  nameWithType: RoleValidator<TInterface>.Invoke(MethodInfo, Object[], MemberInfo)
+  nameWithType.vb: RoleValidator(Of TInterface).Invoke(MethodInfo, Object(), MemberInfo)
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke*
+  name: Invoke
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_Invoke_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Invoke
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).Invoke
+  nameWithType: RoleValidator<TInterface>.Invoke
+  nameWithType.vb: RoleValidator(Of TInterface).Invoke
 - uid: Solti.Utils.Rpc.Aspects.TransactionManager`1
   name: TransactionManager<TInterface>
   href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html
@@ -1088,6 +1132,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.SessionId
   nameWithType: IRequestContext.SessionId
+- uid: Solti.Utils.Rpc.Interfaces.IRoleManager
+  name: IRoleManager
+  href: Solti.Utils.Rpc.Interfaces.IRoleManager.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IRoleManager
+  fullName: Solti.Utils.Rpc.Interfaces.IRoleManager
+  nameWithType: IRoleManager
+- uid: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles(System.String)
+  name: GetAssignedRoles(String)
+  href: Solti.Utils.Rpc.Interfaces.IRoleManager.html#Solti_Utils_Rpc_Interfaces_IRoleManager_GetAssignedRoles_System_String_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles(System.String)
+  fullName: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles(System.String)
+  nameWithType: IRoleManager.GetAssignedRoles(String)
+- uid: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles*
+  name: GetAssignedRoles
+  href: Solti.Utils.Rpc.Interfaces.IRoleManager.html#Solti_Utils_Rpc_Interfaces_IRoleManager_GetAssignedRoles_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles
+  nameWithType: IRoleManager.GetAssignedRoles
 - uid: Solti.Utils.Rpc.Interfaces.IServiceDescriptor
   name: IServiceDescriptor
   href: Solti.Utils.Rpc.Interfaces.IServiceDescriptor.html
@@ -1322,6 +1385,60 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute.GetInterceptorType
   nameWithType: ParameterValidatorAspectAttribute.GetInterceptorType
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
+  name: RequiredRolesAttribute
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
+  nameWithType: RequiredRolesAttribute
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Enum[])
+  name: RequiredRolesAttribute(Enum[])
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Enum___
+  commentId: M:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Enum[])
+  name.vb: RequiredRolesAttribute(Enum())
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Enum[])
+  fullName.vb: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Enum())
+  nameWithType: RequiredRolesAttribute.RequiredRolesAttribute(Enum[])
+  nameWithType.vb: RequiredRolesAttribute.RequiredRolesAttribute(Enum())
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor*
+  name: RequiredRolesAttribute
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute
+  nameWithType: RequiredRolesAttribute.RequiredRolesAttribute
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups
+  name: RoleGroups
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute_RoleGroups
+  commentId: P:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups
+  nameWithType: RequiredRolesAttribute.RoleGroups
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups*
+  name: RoleGroups
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute_RoleGroups_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups
+  nameWithType: RequiredRolesAttribute.RoleGroups
+- uid: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute
+  name: RoleValidatorAspectAttribute
+  href: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute
+  fullName: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute
+  nameWithType: RoleValidatorAspectAttribute
+- uid: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType(System.Type)
+  name: GetInterceptorType(Type)
+  href: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.html#Solti_Utils_Rpc_Interfaces_RoleValidatorAspectAttribute_GetInterceptorType_System_Type_
+  commentId: M:Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType(System.Type)
+  fullName: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType(System.Type)
+  nameWithType: RoleValidatorAspectAttribute.GetInterceptorType(Type)
+- uid: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType*
+  name: GetInterceptorType
+  href: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.html#Solti_Utils_Rpc_Interfaces_RoleValidatorAspectAttribute_GetInterceptorType_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType
+  nameWithType: RoleValidatorAspectAttribute.GetInterceptorType
 - uid: Solti.Utils.Rpc.Interfaces.TransactionalAttribute
   name: TransactionalAttribute
   href: Solti.Utils.Rpc.Interfaces.TransactionalAttribute.html
