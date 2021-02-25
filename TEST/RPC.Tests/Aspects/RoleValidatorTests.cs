@@ -12,6 +12,8 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Aspects.Tests
 {
+    using DI;
+    using DI.Interfaces;
     using Interfaces;
     using Properties;
     using Proxy.Generators;
@@ -118,6 +120,37 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
 
             Assert.Throws<InvalidOperationException>(module.MissingRequiredRoleAttribute, Errors.NO_ROLES_SPECIFIED);
+        }
+
+        [Test]
+        public void RequiredRoleAttribute_ShouldThrowOnNull() => Assert.Throws<ArgumentNullException>(() => new RequiredRolesAttribute(null));
+
+        [Test]
+        public void RequiredRoleAttribute_ShouldThrowIfThereIsNoRoleSpecified() => Assert.Throws<ArgumentException>(() => new RequiredRolesAttribute(), Errors.NO_ROLES_SPECIFIED);
+
+        [Test]
+        public void RoleValidatorAspect_ShouldSpecializeTheRoleValidator()
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+
+            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict); ;
+
+            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+
+            using (IServiceContainer container = new ServiceContainer())
+            {
+                container
+                    .Factory(injector => mockModule.Object, Lifetime.Scoped)
+                    .Factory(injector => mockRoleManager.Object, Lifetime.Scoped);
+
+                IInjector injector = container.CreateInjector();
+                injector.UnderlyingContainer
+                    .Instance(mockRequest.Object);
+
+                IModule module = injector.Get<IModule>();
+
+                Assert.That(module, Is.InstanceOf<RoleValidator<IModule>>());
+            }
         }
     }
 }

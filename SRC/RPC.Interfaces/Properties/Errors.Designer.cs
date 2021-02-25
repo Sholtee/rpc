@@ -70,6 +70,15 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one role must be specified..
+        /// </summary>
+        internal static string NO_REQUIRED_ROLE {
+            get {
+                return ResourceManager.GetString("NO_REQUIRED_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value of the parameter can not be NULL..
         /// </summary>
         internal static string NULL_PARAM {

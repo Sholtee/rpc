@@ -10,7 +10,6 @@ using System.Security.Authentication;
 
 namespace Solti.Utils.Rpc.Aspects
 {
-    using DI.Interfaces;
     using Interfaces;
     using Properties;
     using Proxy;
@@ -23,15 +22,15 @@ namespace Solti.Utils.Rpc.Aspects
     {
         private IRoleManager RoleManager { get; }
 
-        private IRequestContext? RequestContext { get; }
+        private IRequestContext RequestContext { get; }
 
         /// <summary>
         /// Creates a new <see cref="RoleValidator{TInterface}"/> instance.
         /// </summary>
-        public RoleValidator(TInterface target, [Options(Optional = true)] IRequestContext? requestContext, IRoleManager roleManager) : base(target)
+        public RoleValidator(TInterface target, IRequestContext requestContext, IRoleManager roleManager) : base(target)
         {
             RoleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));
-            RequestContext = requestContext;
+            RequestContext = requestContext ?? throw new ArgumentNullException(nameof(requestContext));
         }
 
         /// <inheritdoc/>
@@ -40,26 +39,19 @@ namespace Solti.Utils.Rpc.Aspects
             if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
+            RequiredRolesAttribute? attr = method.GetCustomAttribute<RequiredRolesAttribute>();
+
             //
-            // Ha a hivas WEB felol erkezik es a metodus megkoveteli a hitelesitest csak akkor validalunk
+            // Meg ha nem is szukseges szerep a metodus meghivasahoz, akkor is muszaj h szerepeljen az attributum
             //
 
-            if (RequestContext != null)
-            {
-                RequiredRolesAttribute? attr = method.GetCustomAttribute<RequiredRolesAttribute>();
+            if (attr is null)
+                throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
 
-                //
-                // Meg ha nem is szukseges szerep a metodus meghivasahoz, akkor is muszaj h szerepeljen az attributum
-                //
+            Enum availableRoles = RoleManager.GetAssignedRoles(RequestContext.SessionId);
 
-                if (attr is null)
-                    throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
-
-                Enum availableRoles = RoleManager.GetAssignedRoles(RequestContext.SessionId);
-
-                if (!attr.RoleGroups.Any(grp => availableRoles.HasFlag(grp)))
-                    throw new AuthenticationException(Errors.INSUFFICIENT_PRIVILEGES);
-            }
+            if (!attr.RoleGroups.Any(grp => availableRoles.HasFlag(grp)))
+                throw new AuthenticationException(Errors.INSUFFICIENT_PRIVILEGES);
 
             return base.Invoke(method, args, extra);
         }

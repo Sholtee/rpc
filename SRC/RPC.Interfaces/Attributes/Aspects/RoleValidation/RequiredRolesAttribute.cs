@@ -9,6 +9,8 @@ using System.Linq;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
+    using Properties;
+
     /// <summary>
     /// Specifies the roles required for the module method invocation.
     /// </summary>
@@ -28,7 +30,15 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Creates a new <see cref="RequiredRolesAttribute"/> instance. You may specify more groups: <br/>
         /// [RequiredRoles(MyRoles.StandardUser | MyRoles.CanPrint, MyRoles.Admin)]
         /// </summary>
-        public RequiredRolesAttribute(params object[] roleGroups) => // CS0181 "roleGroups" Enum[] nem lehet =(
-            RoleGroups = (roleGroups ?? throw new ArgumentNullException(nameof(roleGroups))).Cast<Enum>().ToArray();
+        public RequiredRolesAttribute(params object[] roleGroups) // CS0181 "roleGroups" Enum[] nem lehet =(
+        {
+            if (roleGroups is null)
+                throw new ArgumentNullException(nameof(roleGroups));
+
+            if (!roleGroups.Any())
+                throw new ArgumentException(Errors.NO_REQUIRED_ROLE, nameof(roleGroups));
+
+            RoleGroups = roleGroups.Cast<Enum>().ToArray();
+        }
     }
 }
