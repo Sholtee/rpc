@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
@@ -27,6 +28,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Creates a new <see cref="RequiredRolesAttribute"/> instance. You may specify more groups: <br/>
         /// [RequiredRoles(MyRoles.StandardUser | MyRoles.CanPrint, MyRoles.Admin)]
         /// </summary>
-        public RequiredRolesAttribute(params Enum[] roleGroups) => RoleGroups = roleGroups ?? throw new ArgumentNullException(nameof(roleGroups));
+        public RequiredRolesAttribute(params object[] roleGroups) => // CS0181 "roleGroups" Enum[] nem lehet =(
+            RoleGroups = (roleGroups ?? throw new ArgumentNullException(nameof(roleGroups))).Cast<Enum>().ToArray();
     }
 }
