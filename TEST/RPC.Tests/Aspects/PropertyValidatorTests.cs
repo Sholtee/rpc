@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Aspects.Tests
 {
+    using DI.Interfaces;
     using Interfaces;
     using Proxy.Generators;
 
@@ -41,10 +42,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void PropertyValidationTest()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object)!;
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object)!;
 
             Assert.DoesNotThrow(() => module.DoSomething(new MyParameter2 
             {
@@ -86,10 +88,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void AggregatedPropertyValidationTest()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, true)!;
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, true)!;
 
             Assert.DoesNotThrow(() => module.DoSomethingElse(new MyParameter2 { Value2 = new MyParameter1 { Value1 = new object() }, Value3 = new object() }));
             AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomethingElse(new MyParameter2()));
@@ -104,10 +107,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void PropertyValidator_ShouldHandleNulls()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object)!;
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object)!;
 
             Assert.DoesNotThrow(() => module.DoSomething(null));
         }

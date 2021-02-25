@@ -106,6 +106,15 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameterless constructor required..
+        /// </summary>
+        internal static string PARAMETERLESS_CTOR_REQUIRED {
+            get {
+                return ResourceManager.GetString("PARAMETERLESS_CTOR_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value of the property does not match the given pattern..
         /// </summary>
         internal static string PROPERTY_NOT_MATCHES {

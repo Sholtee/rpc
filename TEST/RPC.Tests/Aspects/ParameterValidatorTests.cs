@@ -30,10 +30,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void ParameterValidationTest()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, false)!;
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, false)!;
 
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
             var ex = Assert.Throws<ValidationException>(() => module.DoSomething(null, null));
@@ -45,10 +46,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void AggregatedParameterValidationTest()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, true)!;
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, true)!;
 
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
             AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomething("kutya", null));

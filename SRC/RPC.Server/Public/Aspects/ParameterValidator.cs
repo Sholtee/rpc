@@ -26,15 +26,24 @@ namespace Solti.Utils.Rpc.Aspects
         public bool Aggregate { get; }
 
         /// <summary>
+        /// The current scope.
+        /// </summary>
+        public IInjector CurrentScope { get; }
+
+        /// <summary>
         /// Creates a new <see cref="ParameterValidator{TInterface}"/> instance.
         /// </summary>
-        public ParameterValidator(TInterface target, bool aggregate) : base(target) => Aggregate = aggregate;
+        public ParameterValidator(TInterface target, IInjector currentScope, bool aggregate) : base(target)
+        {
+            CurrentScope = currentScope;
+            Aggregate = aggregate;
+        }
 
         /// <summary>
         /// Creates a new <see cref="ParameterValidator{TInterface}"/> instance.
         /// </summary>
         [ServiceActivator]
-        public ParameterValidator(TInterface target) : this(target, typeof(TInterface).GetCustomAttribute<ParameterValidatorAspectAttribute>()?.Aggregate ?? false) { }
+        public ParameterValidator(TInterface target, IInjector currentScope) : this(target, currentScope, typeof(TInterface).GetCustomAttribute<ParameterValidatorAspectAttribute>()?.Aggregate ?? false) { }
 
         /// <inheritdoc/>
         public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
@@ -47,11 +56,11 @@ namespace Solti.Utils.Rpc.Aspects
 
             List<ValidationException> exceptions = new();
 
-            foreach (Action<object?[]> validate in GetValidators())
+            foreach (Action<IInjector, object?[]> validate in GetValidators(method))
             {
                 try
                 {
-                    validate(args);
+                    validate(CurrentScope, args);
                 }
                 catch (ValidationException validationError) when (Aggregate)
                 {
@@ -68,12 +77,16 @@ namespace Solti.Utils.Rpc.Aspects
 
             return base.Invoke(method, args, extra);
 
-            IReadOnlyCollection<Action<object?[]>> GetValidators() => Cache.GetOrAdd(method, () => method
+            static IReadOnlyCollection<Action<IInjector, object?[]>> GetValidators(MethodInfo method) => Cache.GetOrAdd(method, () => method
                 .GetParameters()
                 .SelectMany(param => param
                     .GetCustomAttributes()
                     .OfType<IParameterValidator>()
-                    .Select<IParameterValidator, Action<object?[]>>(validator => args => validator.Validate(param, args[param.Position])))
+                    .Select<IParameterValidator, Action<IInjector, object?[]>>(validator => (currentScope, args) =>
+                    {
+                        if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(method, currentScope))
+                            validator.Validate(param, args[param.Position], currentScope);
+                    }))
                 .ToArray());
         }
     }

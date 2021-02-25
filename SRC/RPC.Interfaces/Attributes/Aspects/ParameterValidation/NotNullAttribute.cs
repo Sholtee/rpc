@@ -8,15 +8,16 @@ using System.Reflection;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
+    using DI.Interfaces;
     using Properties;
 
     /// <summary>
     /// Ensures that a parameter is not null.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public class NotNullAttribute : Attribute, IParameterValidator, IPropertyValidator
+    public class NotNullAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
     {
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value)
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
         {
             if (value is null)
                 throw new ValidationException(Errors.NULL_PROPERTY) 
@@ -25,7 +26,7 @@ namespace Solti.Utils.Rpc.Interfaces
                 };
         }
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value)
+        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
         {
             if (value is null)
                 throw new ValidationException(Errors.NULL_PARAM)

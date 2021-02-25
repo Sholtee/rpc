@@ -129,6 +129,9 @@
   <data name="NULL_PROPERTY" xml:space="preserve">
     <value>The value of the property can not be NULL.</value>
   </data>
+  <data name="PARAMETERLESS_CTOR_REQUIRED" xml:space="preserve">
+    <value>Parameterless constructor required.</value>
+  </data>
   <data name="PARAM_NOT_MATCHES" xml:space="preserve">
     <value>The value of the parameter does not match the given pattern.</value>
   </data>

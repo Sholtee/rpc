@@ -9,13 +9,14 @@ using System.Text.RegularExpressions;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
+    using DI.Interfaces;
     using Properties;
 
     /// <summary>
     /// Ensures that the string representation of a parameter matches the given pattern.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public class MatchAttribute : Attribute, IParameterValidator, IPropertyValidator
+    public class MatchAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
     {
         private Regex Regex { get; }
 
@@ -29,7 +30,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string PropertyValidationMessage { get; set; } = Errors.PROPERTY_NOT_MATCHES;
 
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value)
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
         {
             if (value is null) return;
 
@@ -45,7 +46,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string ParameterValidationMessage { get; set; } = Errors.PARAM_NOT_MATCHES;
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value)
+        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
         {
             if (value is null) return;
 

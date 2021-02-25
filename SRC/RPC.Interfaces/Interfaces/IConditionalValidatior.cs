@@ -1,9 +1,8 @@
 ﻿/********************************************************************************
-* IPropertyValidator.cs                                                         *
+* IConditionalValidatior.cs                                                     *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System;
 using System.Reflection;
 
 namespace Solti.Utils.Rpc.Interfaces
@@ -11,18 +10,13 @@ namespace Solti.Utils.Rpc.Interfaces
     using DI.Interfaces;
 
     /// <summary>
-    /// Defines an abstract property validator.
+    /// Determines whether a validator should run or not.
     /// </summary>
-    public interface IPropertyValidator 
+    public interface IConditionalValidatior
     {
         /// <summary>
-        /// If set, it should point to a class implementing the <see cref="IConditionalValidatior"/> interface.
+        /// Returns true if the validator should run.
         /// </summary>
-        Type? Condition { get; set; }
-
-        /// <summary>
-        /// Defines the layout of the validator method.
-        /// </summary>
-        void Validate(PropertyInfo prop, object? value, IInjector currentScope);
+        bool ShouldRun(MethodInfo containingMethod, IInjector currentScope);
     }
 }
