@@ -49,15 +49,23 @@
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
-    <div class="level2"><span class="xref">MatchAttribute</span></div>
+    <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html">ValidatorAttributeBase</a></div>
+    <div class="level3"><span class="xref">MatchAttribute</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a></div>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html">IParameterValidator</a></div>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html">IPropertyValidator</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition">ValidatorAttributeBase.Condition</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Solti_Utils_Rpc_Interfaces_IConditionalValidatior_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_">ValidatorAttributeBase.IConditionalValidatior.ShouldRun(MethodInfo, IInjector)</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.equals#System_Attribute_Equals_System_Object_">Attribute.Equals(Object)</a>
     </div>
@@ -190,7 +198,7 @@
   <h5 id="Solti_Utils_Rpc_Interfaces_MatchAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-public class MatchAttribute : Attribute, IParameterValidator, IPropertyValidator</code></pre>
+public class MatchAttribute : ValidatorAttributeBase, IConditionalValidatior, IParameterValidator, IPropertyValidator</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -278,12 +286,12 @@ public class MatchAttribute : Attribute, IParameterValidator, IPropertyValidator
   <h3 id="eii">Explicit Interface Implementations
   </h3>
   <a id="Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_" data-uid="Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object)">IParameterValidator.Validate(ParameterInfo, Object)</h4>
+  <h4 id="Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IParameterValidator.Validate(ParameterInfo, Object, IInjector)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void IParameterValidator.Validate(ParameterInfo param, object value)</code></pre>
+    <pre><code class="lang-csharp hljs">void IParameterValidator.Validate(ParameterInfo param, object value, IInjector _)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -305,15 +313,20 @@ public class MatchAttribute : Attribute, IParameterValidator, IPropertyValidator
         <td><span class="parametername">value</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">_</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_" data-uid="Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object)">IPropertyValidator.Validate(PropertyInfo, Object)</h4>
+  <h4 id="Solti_Utils_Rpc_Interfaces_MatchAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.MatchAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IPropertyValidator.Validate(PropertyInfo, Object, IInjector)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void IPropertyValidator.Validate(PropertyInfo prop, object value)</code></pre>
+    <pre><code class="lang-csharp hljs">void IPropertyValidator.Validate(PropertyInfo prop, object value, IInjector _)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -335,9 +348,17 @@ public class MatchAttribute : Attribute, IParameterValidator, IPropertyValidator
         <td><span class="parametername">value</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">_</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a>
+  </div>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html">IParameterValidator</a>
   </div>

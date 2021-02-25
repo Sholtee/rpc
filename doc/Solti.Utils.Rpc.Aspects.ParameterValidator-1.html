@@ -121,14 +121,14 @@
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_Aspects_ParameterValidator_1__ctor_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Aspects_ParameterValidator_1__ctor__0_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.#ctor(`0)">ParameterValidator(TInterface)</h4>
+  <h4 id="Solti_Utils_Rpc_Aspects_ParameterValidator_1__ctor__0_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.#ctor(`0,Solti.Utils.DI.Interfaces.IInjector)">ParameterValidator(TInterface, IInjector)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Aspects.ParameterValidator-1.html">ParameterValidator&lt;TInterface&gt;</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[ServiceActivator]
-public ParameterValidator(TInterface target)</code></pre>
+public ParameterValidator(TInterface target, IInjector currentScope)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -145,16 +145,21 @@ public ParameterValidator(TInterface target)</code></pre>
         <td><span class="parametername">target</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">currentScope</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_Aspects_ParameterValidator_1__ctor_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Aspects_ParameterValidator_1__ctor__0_System_Boolean_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.#ctor(`0,System.Boolean)">ParameterValidator(TInterface, Boolean)</h4>
+  <h4 id="Solti_Utils_Rpc_Aspects_ParameterValidator_1__ctor__0_Solti_Utils_DI_Interfaces_IInjector_System_Boolean_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.#ctor(`0,Solti.Utils.DI.Interfaces.IInjector,System.Boolean)">ParameterValidator(TInterface, IInjector, Boolean)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Aspects.ParameterValidator-1.html">ParameterValidator&lt;TInterface&gt;</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ParameterValidator(TInterface target, bool aggregate)</code></pre>
+    <pre><code class="lang-csharp hljs">public ParameterValidator(TInterface target, IInjector currentScope, bool aggregate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -169,6 +174,11 @@ public ParameterValidator(TInterface target)</code></pre>
       <tr>
         <td><span class="xref">TInterface</span></td>
         <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">currentScope</span></td>
         <td></td>
       </tr>
       <tr>
@@ -200,6 +210,30 @@ public ParameterValidator(TInterface target)</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Aspects_ParameterValidator_1_CurrentScope_" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.CurrentScope*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_ParameterValidator_1_CurrentScope" data-uid="Solti.Utils.Rpc.Aspects.ParameterValidator`1.CurrentScope">CurrentScope</h4>
+  <div class="markdown level1 summary"><p>The current scope.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IInjector CurrentScope { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
         <td></td>
       </tr>
     </tbody>
