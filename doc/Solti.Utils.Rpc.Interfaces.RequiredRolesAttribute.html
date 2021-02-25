@@ -193,14 +193,14 @@ public class RequiredRolesAttribute : Attribute</code></pre>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Enum___" data-uid="Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Enum[])">RequiredRolesAttribute(Enum[])</h4>
+  <h4 id="Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Object___" data-uid="Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Object[])">RequiredRolesAttribute(Object[])</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html">RequiredRolesAttribute</a> instance. You may specify more groups: <br>
 [RequiredRoles(MyRoles.StandardUser | MyRoles.CanPrint, MyRoles.Admin)]</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RequiredRolesAttribute(params Enum[] roleGroups)</code></pre>
+    <pre><code class="lang-csharp hljs">public RequiredRolesAttribute(params object[] roleGroups)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -213,7 +213,7 @@ public class RequiredRolesAttribute : Attribute</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.enum">Enum</a>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
         <td><span class="parametername">roleGroups</span></td>
         <td></td>
       </tr>

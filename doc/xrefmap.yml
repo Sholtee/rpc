@@ -1391,15 +1391,15 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
   fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
   nameWithType: RequiredRolesAttribute
-- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Enum[])
-  name: RequiredRolesAttribute(Enum[])
-  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Enum___
-  commentId: M:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Enum[])
-  name.vb: RequiredRolesAttribute(Enum())
-  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Enum[])
-  fullName.vb: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Enum())
-  nameWithType: RequiredRolesAttribute.RequiredRolesAttribute(Enum[])
-  nameWithType.vb: RequiredRolesAttribute.RequiredRolesAttribute(Enum())
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Object[])
+  name: RequiredRolesAttribute(Object[])
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Object___
+  commentId: M:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Object[])
+  name.vb: RequiredRolesAttribute(Object())
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Object[])
+  fullName.vb: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Object())
+  nameWithType: RequiredRolesAttribute.RequiredRolesAttribute(Object[])
+  nameWithType.vb: RequiredRolesAttribute.RequiredRolesAttribute(Object())
 - uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor*
   name: RequiredRolesAttribute
   href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_
