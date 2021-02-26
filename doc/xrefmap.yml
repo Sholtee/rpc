@@ -1634,23 +1634,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition
   nameWithType: ValidatorAttributeBase.Condition
-- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Solti#Utils#Rpc#Interfaces#IConditionalValidatior#ShouldRun(System.Reflection.MethodInfo,Solti.Utils.DI.Interfaces.IInjector)
-  name: IConditionalValidatior.ShouldRun(MethodInfo, IInjector)
-  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Solti_Utils_Rpc_Interfaces_IConditionalValidatior_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_
-  commentId: M:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Solti#Utils#Rpc#Interfaces#IConditionalValidatior#ShouldRun(System.Reflection.MethodInfo,Solti.Utils.DI.Interfaces.IInjector)
-  name.vb: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun(MethodInfo, IInjector)
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun(System.Reflection.MethodInfo, Solti.Utils.DI.Interfaces.IInjector)
-  nameWithType: ValidatorAttributeBase.IConditionalValidatior.ShouldRun(MethodInfo, IInjector)
-  nameWithType.vb: ValidatorAttributeBase.Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun(MethodInfo, IInjector)
-- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Solti#Utils#Rpc#Interfaces#IConditionalValidatior#ShouldRun*
-  name: IConditionalValidatior.ShouldRun
-  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Solti_Utils_Rpc_Interfaces_IConditionalValidatior_ShouldRun_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Solti#Utils#Rpc#Interfaces#IConditionalValidatior#ShouldRun
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo,Solti.Utils.DI.Interfaces.IInjector)
+  name: ShouldRun(MethodInfo, IInjector)
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo,Solti.Utils.DI.Interfaces.IInjector)
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo, Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: ValidatorAttributeBase.ShouldRun(MethodInfo, IInjector)
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun*
+  name: ShouldRun
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_ShouldRun_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun
   isSpec: "True"
-  name.vb: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun
-  nameWithType: ValidatorAttributeBase.IConditionalValidatior.ShouldRun
-  nameWithType.vb: ValidatorAttributeBase.Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun
+  nameWithType: ValidatorAttributeBase.ShouldRun
 - uid: Solti.Utils.Rpc.Interfaces.Version
   name: Version
   href: Solti.Utils.Rpc.Interfaces.Version.html
