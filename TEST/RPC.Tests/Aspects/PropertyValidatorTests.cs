@@ -20,7 +20,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
     {
         public class MyParameter1
         {
-            [NotNull]
+            [NotNull(Condition = typeof(IfNoSession))]
             public object Value1 { get; set; }
         }
 
@@ -45,6 +45,12 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 currentScope.Get<IRoleManager>().GetAssignedRoles(null).Equals(MyEnum.LoggedInUser);
         }
 
+        public class IfNoSession : IConditionalValidatior
+        {
+            public bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) =>
+                currentScope.TryGet<IRequestContext>() is null;
+        }
+
         public interface IModule
         {
             void DoSomething([ValidateProperties] MyParameter2 arg);
@@ -56,7 +62,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void PropertyValidationTest()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Returns<Type, string>((iface, name) => null);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
@@ -102,7 +112,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void AggregatedPropertyValidationTest()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
+
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Returns<Type, string>((iface, name) => null);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
 
@@ -156,6 +170,29 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             role = MyEnum.LoggedInUser;
 
             Assert.Throws<ValidationException>(() => module.ConditionallyValidated(new MyParameter2()));
+        }
+
+        [Test]
+        public void NestedPropertyValidator_MayBeConditional()
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Loose);
+
+            IRequestContext context = null;
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Returns<Type, string>((iface, name) => context);
+
+            Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, false);
+
+            Assert.Throws<ValidationException>(() => module.DoSomething(new MyParameter2 { Value3 = new object(), Value2 = new MyParameter1 { Value1 = null } }));
+
+            context = new Mock<IRequestContext>(MockBehavior.Strict).Object;
+
+            Assert.DoesNotThrow(() => module.DoSomething(new MyParameter2 { Value3 = new object(), Value2 = new MyParameter1 { Value1 = null } }));
         }
     }
 }
