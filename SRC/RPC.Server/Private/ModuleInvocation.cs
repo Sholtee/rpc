@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -49,6 +50,10 @@ namespace Solti.Utils.Rpc.Internals
     {
         #region Private
         private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
+
+        private static readonly Func<object, object?> GetDebugView = typeof(Expression)
+            .GetProperty("DebugView", BindingFlags.Instance | BindingFlags.NonPublic) // DebugView property internal, tudja fasz miert
+            .ToGetter();
 
         private readonly HashSet<Type> FModules = new HashSet<Type>();
 
@@ -378,7 +383,10 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         public ModuleInvocation Build()
         {
-            ModuleInvocation result = BuildExpression(FModules).Compile();
+            Expression<ModuleInvocation> moduleInvocation = BuildExpression(FModules);
+            Debug.WriteLine($"ModuleInvocation built:{Environment.NewLine}{GetDebugView(moduleInvocation)}");
+
+            ModuleInvocation result = moduleInvocation.Compile();
 
             //
             // A this.Modules bejegyzesek ertekei valtozhatnak, ezert a ToArray() hivas.
