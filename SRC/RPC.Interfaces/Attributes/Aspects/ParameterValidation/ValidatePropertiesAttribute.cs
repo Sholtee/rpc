@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -19,6 +20,8 @@ namespace Solti.Utils.Rpc.Interfaces
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
     public class ValidatePropertiesAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
     {
+        private MethodInfo? ContainingMethod { get; set; }
+
         /// <summary>
         /// Returns true if the validator should collect all the validation errors.
         /// </summary>
@@ -31,13 +34,15 @@ namespace Solti.Utils.Rpc.Interfaces
 
         private void Validate(Type type, object value, IInjector currentScope)
         {
+            Debug.Assert(ContainingMethod is not null);
+
             List<ValidationException> validationErrors = new();
 
-            foreach (Action<IInjector, object> validate in GetValidators(type))
+            foreach (Action<MethodInfo, IInjector, object> validate in GetValidators(type))
             {
                 try
                 {
-                    validate(currentScope, value);
+                    validate(ContainingMethod!, currentScope, value);
                 }
                 catch (ValidationException validationError) when (Aggregate)
                 {
@@ -48,7 +53,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (validationErrors.Any())
                 throw new AggregateException(validationErrors);
 
-            static IReadOnlyCollection<Action<IInjector, object>> GetValidators(Type type) => Cache.GetOrAdd(type, () => type
+            static IReadOnlyCollection<Action<MethodInfo, IInjector, object>> GetValidators(Type type) => Cache.GetOrAdd(type, () => type
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty | BindingFlags.FlattenHierarchy)
                 .SelectMany(prop =>
                 {
@@ -57,13 +62,20 @@ namespace Solti.Utils.Rpc.Interfaces
                     return prop
                         .GetCustomAttributes()
                         .OfType<IPropertyValidator>()
-                        .Select<IPropertyValidator, Action<IInjector, object>>(validator => (currentScope, instance) =>
+                        .Select<IPropertyValidator, Action<MethodInfo, IInjector, object>>(validator => (containingMethod, currentScope, instance) =>
                         {
-                            if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(null!, currentScope))
+                            if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(containingMethod, currentScope))
                                 validator.Validate(prop, getter(instance), currentScope);
                         });
                 })
                 .ToArray());
+        }
+
+        /// <inheritdoc/>
+        public override bool ShouldRun(MethodInfo containingMethod, IInjector currentScope)
+        {
+            ContainingMethod = containingMethod;
+            return base.ShouldRun(containingMethod, currentScope);
         }
 
         void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector currentScope)

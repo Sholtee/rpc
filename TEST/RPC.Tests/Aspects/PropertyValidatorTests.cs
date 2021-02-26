@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Reflection;
 
 using Moq;
 using NUnit.Framework;
@@ -32,10 +33,23 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             public object Value3 { get; set; }
         }
 
+        public enum MyEnum
+        {
+            Anonymous = 0,
+            LoggedInUser = 1
+        }
+
+        public class IfLoggedIn : IConditionalValidatior
+        {
+            public bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) =>
+                currentScope.Get<IRoleManager>().GetAssignedRoles(null).Equals(MyEnum.LoggedInUser);
+        }
+
         public interface IModule
         {
             void DoSomething([ValidateProperties] MyParameter2 arg);
             void DoSomethingElse([ValidateProperties(aggregate: true)] MyParameter2 arg);
+            void ConditionallyValidated([ValidateProperties(Condition = typeof(IfLoggedIn))] MyParameter2 arg);
         }
 
         [Test]
@@ -114,6 +128,34 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object)!;
 
             Assert.DoesNotThrow(() => module.DoSomething(null));
+        }
+
+        [Test]
+        public void PropertyValidator_MayBeConditional() 
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Loose);
+
+            var role = MyEnum.Anonymous;
+
+            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
+            mockRoleManager
+                .Setup(rm => rm.GetAssignedRoles(null))
+                .Returns<string>(sessionId => role);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.Get(typeof(IRoleManager), null))
+                .Returns(mockRoleManager.Object);
+
+            Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, false);
+
+            Assert.DoesNotThrow(() => module.ConditionallyValidated(new MyParameter2()));
+
+            role = MyEnum.LoggedInUser;
+
+            Assert.Throws<ValidationException>(() => module.ConditionallyValidated(new MyParameter2()));
         }
     }
 }

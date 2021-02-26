@@ -39,6 +39,9 @@ namespace Solti.Utils.Rpc.Interfaces
             }
         }
 
-        bool IConditionalValidatior.ShouldRun(MethodInfo containingMethod, IInjector currentScope) => ShouldRunImpl?.ShouldRun(containingMethod, currentScope) ?? true;
+        /// <summary>
+        /// See <see cref="IConditionalValidatior.ShouldRun(MethodInfo, IInjector)"/>.
+        /// </summary>
+        public virtual bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) => ShouldRunImpl?.ShouldRun(containingMethod, currentScope) ?? true;
     }
 }
