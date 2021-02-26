@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -33,15 +34,34 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                ServiceController[] services = ServiceController.GetServices();
+                List<string> missingDependencies = new();
 
-                string[] missingServices = Host
-                    .Dependencies
-                    .Where(dep => services.SingleOrDefault(svc => svc.ServiceName == dep)?.Status != ServiceControllerStatus.Running)
-                    .ToArray();
+                IReadOnlyList<ServiceController>
+                    services = ServiceController.GetServices(),
+                    dependencies = Host
+                        .Dependencies
+                        .Select(dep => 
+                        {
+                            ServiceController? instance = services.SingleOrDefault(svc => svc.ServiceName == dep);
+                            if (instance is null)
+                                missingDependencies.Add(dep);
+                            return instance!;
+                        })
+                        .ToArray();
 
-                if (missingServices.Any())
-                    throw new Exception(string.Format(Errors.Culture, Errors.DEPENDENCY_NOT_AVAILABLE, string.Join(",", missingServices)));
+                if (missingDependencies.Any())
+                    throw new Exception(string.Format(Errors.Culture, Errors.DEPENDENCY_NOT_AVAILABLE, string.Join(",", missingDependencies)));
+
+                bool depsAvailable = Task.WaitAll
+                (
+                    dependencies
+                        .Where(svc => svc.Status is not ServiceControllerStatus.Running)
+                        .Select(svc => Task.Run(() => svc.WaitForStatus(ServiceControllerStatus.Running)))
+                        .ToArray(),
+                    TimeSpan.FromSeconds(10) // TODO: ezt konfiguralhatova tenni
+                );
+                if (!depsAvailable)
+                    throw new Exception(Errors.DEPENDENCY_NOT_RUNNING);
             }
 
             Console.Title = Host.Name;

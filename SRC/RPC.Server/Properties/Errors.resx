@@ -123,6 +123,9 @@
   <data name="DEPENDENCY_NOT_AVAILABLE" xml:space="preserve">
     <value>One or more dependencies are not available: {0}</value>
   </data>
+  <data name="DEPENDENCY_NOT_RUNNING" xml:space="preserve">
+    <value>One or more dependencies are not running.</value>
+  </data>
   <data name="GENERIC_IFACE" xml:space="preserve">
     <value>Generic interfaces are not supported.</value>
   </data>

@@ -13,20 +13,18 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 {
     using Interfaces;
     using Internals;
+    using Properties;
     
     [TestFixture]
     public class ConsoleHostRunnerTests
     {
         private class BadDependencyAppHost : AppHostBase
         {
+            public BadDependencyAppHost(string dep): base() => Dependencies.Add(dep);
+
             public override string Name => throw new NotImplementedException();
 
             public override string Url => throw new NotImplementedException();
-
-            public BadDependencyAppHost() : base() 
-            {
-                Dependencies.Add("invalid");
-            }
         }
 
         [Test]
@@ -34,10 +32,21 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            using IHost appHost = new BadDependencyAppHost();
+            using IHost appHost = new BadDependencyAppHost("invalid");
             using IHostRunner hostRunner = new ConsoleHostRunner(appHost, configuration);
 
-            Assert.Throws<Exception>(hostRunner.Start);
+            Assert.Throws<Exception>(hostRunner.Start, Errors.DEPENDENCY_NOT_AVAILABLE);
+        }
+
+        [Test]
+        public void Start_ShouldThrowIfADependencyNotRunning([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration) 
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
+
+            using IHost appHost = new BadDependencyAppHost("wmiApSrv");
+            using IHostRunner hostRunner = new ConsoleHostRunner(appHost, configuration);
+
+            Assert.Throws<Exception>(hostRunner.Start, Errors.DEPENDENCY_NOT_RUNNING);
         }
 
         private class ConsoleAppHost : AppHostBase

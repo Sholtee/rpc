@@ -79,6 +79,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more dependencies are not running..
+        /// </summary>
+        internal static string DEPENDENCY_NOT_RUNNING {
+            get {
+                return ResourceManager.GetString("DEPENDENCY_NOT_RUNNING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generic interfaces are not supported..
         /// </summary>
         internal static string GENERIC_IFACE {
