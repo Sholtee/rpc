@@ -14,17 +14,12 @@ namespace Solti.Utils.Rpc.Interfaces
     public class Version
     {
         /// <summary>
-        /// Creates a new <see cref="Version"/> instance.
-        /// </summary>
-        public Version() { }
-
-        /// <summary>
         /// Converts the given <see cref="FileVersionInfo"/> to <see cref="Version"/>.
         /// </summary>
         [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates")]
         public static implicit operator Version(FileVersionInfo src)
         {
-            if (src == null) return null!;
+            if (src is null) return null!;
 
             return new Version
             {
@@ -40,7 +35,7 @@ namespace Solti.Utils.Rpc.Interfaces
         [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates")]
         public static implicit operator Version(System.Version src)
         {
-            if (src == null) return null!;
+            if (src is null) return null!;
 
             return new Version
             {
@@ -53,7 +48,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (!(obj is Version that)) return false;
+            if (obj is not Version that) return false;
 
             return that.Major == Major && that.Minor == Minor && that.Patch == Patch;
         }
