@@ -1653,19 +1653,6 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.Version
   fullName: Solti.Utils.Rpc.Interfaces.Version
   nameWithType: Version
-- uid: Solti.Utils.Rpc.Interfaces.Version.#ctor
-  name: Version()
-  href: Solti.Utils.Rpc.Interfaces.Version.html#Solti_Utils_Rpc_Interfaces_Version__ctor
-  commentId: M:Solti.Utils.Rpc.Interfaces.Version.#ctor
-  fullName: Solti.Utils.Rpc.Interfaces.Version.Version()
-  nameWithType: Version.Version()
-- uid: Solti.Utils.Rpc.Interfaces.Version.#ctor*
-  name: Version
-  href: Solti.Utils.Rpc.Interfaces.Version.html#Solti_Utils_Rpc_Interfaces_Version__ctor_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.Version.#ctor
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.Version.Version
-  nameWithType: Version.Version
 - uid: Solti.Utils.Rpc.Interfaces.Version.Equals(System.Object)
   name: Equals(Object)
   href: Solti.Utils.Rpc.Interfaces.Version.html#Solti_Utils_Rpc_Interfaces_Version_Equals_System_Object_
