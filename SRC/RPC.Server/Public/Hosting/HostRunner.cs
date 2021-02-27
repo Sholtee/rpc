@@ -89,9 +89,11 @@ namespace Solti.Utils.Rpc.Hosting
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                RegisterFactory(InstallHostRunner_WinNT.Factory);
                 RegisterFactory(ServiceHostRunner_WinNT.Factory);
+                RegisterFactory(InstallHostRunner_WinNT.Factory);
             }
+
+            RegisterFactory(InstallHostRunner.Factory);
         }
 
         /// <summary>

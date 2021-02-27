@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.ServiceProcess;
 
+using Moq;
 using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Hosting.Tests
@@ -17,18 +18,17 @@ namespace Solti.Utils.Rpc.Hosting.Tests
     [TestFixture]
     public class InstallHostRunnerTests
     {
-        private class AppHost : AppHostBase
+        public class AppHost : AppHostBase
         {
-            public override string Name => "MyService";
+            public sealed override string Name => "MyService";
 
             public override string Url => throw new NotImplementedException();
 
             public AppHost() : base() => Dependencies.Add("LanmanWorkstation");
         }
 
-        private static void InvokeRunner(HostConfiguration configuration, bool install = false, bool uninstall = false) 
+        private static void InvokeRunner(IHost appHost, HostConfiguration configuration, bool install = false, bool uninstall = false) 
         {
-            using IHost appHost = new AppHost();
             using IHostRunner hostRunner = new InstallHostRunner_WinNT(appHost, configuration) 
             {
                 Install = install,
@@ -42,10 +42,15 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
 
-            InvokeRunner(configuration, install: true);
+            var mockAppHost = new Mock<AppHost>(MockBehavior.Loose);
+
+            InvokeRunner(mockAppHost.Object, configuration, install: true);
 
             try
             {
+                mockAppHost.Verify(h => h.OnInstall(), Times.Once);
+                mockAppHost.Verify(h => h.OnStart(It.IsAny<HostConfiguration>()), Times.Never);
+
                 ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
 
                 Assert.That(svc, Is.Not.Null);
@@ -53,7 +58,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             }
             finally 
             {
-                InvokeRunner(configuration, uninstall: true);
+                InvokeRunner(mockAppHost.Object, configuration, uninstall: true);
             }
         }
 
@@ -64,7 +69,7 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             try
             {
-                InvokeRunner(configuration, install: true);
+                InvokeRunner(new AppHost(), configuration, install: true);
             }
 
             //
@@ -73,10 +78,45 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             catch { }
 
-            InvokeRunner(configuration, uninstall: true);
+            var mockAppHost = new Mock<AppHost>(MockBehavior.Loose);
+
+            InvokeRunner(mockAppHost.Object, configuration, uninstall: true);
+
+            mockAppHost.Verify(h => h.OnUninstall(), Times.Once);
+            mockAppHost.Verify(h => h.OnStop(), Times.Never);
 
             ServiceController svc = ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService");
             Assert.That(svc, Is.Null);
+        }
+
+        [Test]
+        public void Install_ShouldExecuteCustomInstallLogic([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
+        {
+            var mockAppHost = new Mock<AppHost>(MockBehavior.Loose);
+
+            using IHostRunner hostRunner = new InstallHostRunner(mockAppHost.Object, configuration)
+            {
+                Install = true
+            };
+            hostRunner.Start();
+
+            mockAppHost.Verify(h => h.OnInstall(), Times.Once);
+            mockAppHost.Verify(h => h.OnStart(It.IsAny<HostConfiguration>()), Times.Never);
+        }
+
+        [Test]
+        public void Uninstall_ShouldExecuteCustomUninstallLogic([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
+        {
+            var mockAppHost = new Mock<AppHost>(MockBehavior.Loose);
+
+            using IHostRunner hostRunner = new InstallHostRunner(mockAppHost.Object, configuration)
+            {
+                Uninstall = true
+            };
+            hostRunner.Start();
+
+            mockAppHost.Verify(h => h.OnUninstall(), Times.Once);
+            mockAppHost.Verify(h => h.OnStop(), Times.Never);
         }
     }
 }
