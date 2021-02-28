@@ -57,6 +57,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a></div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -191,8 +192,36 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
   <h5 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class ValidatorAttributeBase : Attribute, IConditionalValidatior</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class ValidatorAttributeBase : Attribute, IConditionalValidatior, ICustomValidator</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase__ctor_System_Boolean_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor(System.Boolean)">ValidatorAttributeBase(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html">ValidatorAttributeBase</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ValidatorAttributeBase(bool supportsNull)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">supportsNull</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition*"></a>
@@ -215,6 +244,30 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull">SupportsNull</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull">SupportsNull</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SupportsNull { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -270,6 +323,9 @@
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a>
   </div>
 </article>
           </div>

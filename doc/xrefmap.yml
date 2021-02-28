@@ -770,6 +770,38 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun
   nameWithType: IConditionalValidatior.ShouldRun
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator
+  name: ICustomValidator
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.ICustomValidator
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator
+  nameWithType: ICustomValidator
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
+  name: Condition
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_Condition
+  commentId: P:Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
+  nameWithType: ICustomValidator.Condition
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition*
+  name: Condition
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_Condition_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
+  nameWithType: ICustomValidator.Condition
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
+  name: SupportsNull
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull
+  commentId: P:Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
+  nameWithType: ICustomValidator.SupportsNull
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull*
+  name: SupportsNull
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
+  nameWithType: ICustomValidator.SupportsNull
 - uid: Solti.Utils.Rpc.Interfaces.IgnoreAttribute
   name: IgnoreAttribute
   href: Solti.Utils.Rpc.Interfaces.IgnoreAttribute.html
@@ -1039,19 +1071,6 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.IParameterValidator
   fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator
   nameWithType: IParameterValidator
-- uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.Condition
-  name: Condition
-  href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_Condition
-  commentId: P:Solti.Utils.Rpc.Interfaces.IParameterValidator.Condition
-  fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator.Condition
-  nameWithType: IParameterValidator.Condition
-- uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.Condition*
-  name: Condition
-  href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_Condition_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IParameterValidator.Condition
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator.Condition
-  nameWithType: IParameterValidator.Condition
 - uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
   name: Validate(ParameterInfo, Object, IInjector)
   href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
@@ -1071,19 +1090,6 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.IPropertyValidator
   fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator
   nameWithType: IPropertyValidator
-- uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Condition
-  name: Condition
-  href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_Condition
-  commentId: P:Solti.Utils.Rpc.Interfaces.IPropertyValidator.Condition
-  fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Condition
-  nameWithType: IPropertyValidator.Condition
-- uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Condition*
-  name: Condition
-  href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_Condition_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IPropertyValidator.Condition
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Condition
-  nameWithType: IPropertyValidator.Condition
 - uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
   name: Validate(PropertyInfo, Object, IInjector)
   href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
@@ -1368,6 +1374,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.NotNullAttribute
   fullName: Solti.Utils.Rpc.Interfaces.NotNullAttribute
   nameWithType: NotNullAttribute
+- uid: Solti.Utils.Rpc.Interfaces.NotNullAttribute.#ctor
+  name: NotNullAttribute()
+  href: Solti.Utils.Rpc.Interfaces.NotNullAttribute.html#Solti_Utils_Rpc_Interfaces_NotNullAttribute__ctor
+  commentId: M:Solti.Utils.Rpc.Interfaces.NotNullAttribute.#ctor
+  fullName: Solti.Utils.Rpc.Interfaces.NotNullAttribute.NotNullAttribute()
+  nameWithType: NotNullAttribute.NotNullAttribute()
+- uid: Solti.Utils.Rpc.Interfaces.NotNullAttribute.#ctor*
+  name: NotNullAttribute
+  href: Solti.Utils.Rpc.Interfaces.NotNullAttribute.html#Solti_Utils_Rpc_Interfaces_NotNullAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.NotNullAttribute.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.NotNullAttribute.NotNullAttribute
+  nameWithType: NotNullAttribute.NotNullAttribute
 - uid: Solti.Utils.Rpc.Interfaces.NotNullAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
   name: IParameterValidator.Validate(ParameterInfo, Object, IInjector)
   href: Solti.Utils.Rpc.Interfaces.NotNullAttribute.html#Solti_Utils_Rpc_Interfaces_NotNullAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
@@ -1621,6 +1640,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase
   fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase
   nameWithType: ValidatorAttributeBase
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor(System.Boolean)
+  name: ValidatorAttributeBase(Boolean)
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase__ctor_System_Boolean_
+  commentId: M:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor(System.Boolean)
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ValidatorAttributeBase(System.Boolean)
+  nameWithType: ValidatorAttributeBase.ValidatorAttributeBase(Boolean)
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor*
+  name: ValidatorAttributeBase
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ValidatorAttributeBase
+  nameWithType: ValidatorAttributeBase.ValidatorAttributeBase
 - uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition
   name: Condition
   href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition
@@ -1647,6 +1679,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun
   nameWithType: ValidatorAttributeBase.ShouldRun
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
+  name: SupportsNull
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull
+  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
+  nameWithType: ValidatorAttributeBase.SupportsNull
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull*
+  name: SupportsNull
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
+  nameWithType: ValidatorAttributeBase.SupportsNull
 - uid: Solti.Utils.Rpc.Interfaces.Version
   name: Version
   href: Solti.Utils.Rpc.Interfaces.Version.html

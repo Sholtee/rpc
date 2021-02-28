@@ -57,11 +57,15 @@
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a></div>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html">IParameterValidator</a></div>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html">IPropertyValidator</a></div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition">ValidatorAttributeBase.Condition</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull">ValidatorAttributeBase.SupportsNull</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_">ValidatorAttributeBase.ShouldRun(MethodInfo, IInjector)</a>
@@ -198,7 +202,7 @@
   <h5 id="Solti_Utils_Rpc_Interfaces_MatchAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-public class MatchAttribute : ValidatorAttributeBase, IConditionalValidatior, IParameterValidator, IPropertyValidator</code></pre>
+public class MatchAttribute : ValidatorAttributeBase, IConditionalValidatior, IParameterValidator, IPropertyValidator, ICustomValidator</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -364,6 +368,9 @@ public class MatchAttribute : ValidatorAttributeBase, IConditionalValidatior, IP
   </div>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html">IPropertyValidator</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a>
   </div>
 </article>
           </div>
