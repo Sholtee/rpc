@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 using Moq;
@@ -13,6 +14,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 {
     using DI.Interfaces;
     using Interfaces;
+    using Interfaces.Properties;
     using Proxy.Generators;
 
     [TestFixture]
@@ -193,6 +195,34 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             context = new Mock<IRequestContext>(MockBehavior.Strict).Object;
 
             Assert.DoesNotThrow(() => module.DoSomething(new MyParameter2 { Value3 = new object(), Value2 = new MyParameter1 { Value1 = null } }));
+        }
+
+        [Test]
+        public void MatchAttribute_ShouldThrowIfThereIsNoMatch()
+        {
+            var attr = new MatchAttribute("cica");
+
+            PropertyInfo prop = GetType().GetProperty(nameof(EmptyValues), BindingFlags.Public | BindingFlags.Static);
+            Assert.Throws<ValidationException>(() => ((IPropertyValidator)attr).Validate(prop, "mica", null!), Errors.PROPERTY_NOT_MATCHES);
+        }
+
+        public static IEnumerable<object> EmptyValues
+        {
+            get
+            {
+                yield return string.Empty;
+                yield return Array.Empty<int>();
+                yield return new List<IDisposable>(0);
+            }
+        }
+
+        [Test]
+        public void NotEmptyAttribute_ShouldThrowOnEmptyValue([ValueSource(nameof(EmptyValues))] object value)
+        {
+            var attr = new NotEmptyAttribute();
+
+            PropertyInfo prop = GetType().GetProperty(nameof(EmptyValues), BindingFlags.Public | BindingFlags.Static);
+            Assert.Throws<ValidationException>(() => ((IPropertyValidator)attr).Validate(prop, value, null!), Errors.EMPTY_PROPERTY);
         }
     }
 }

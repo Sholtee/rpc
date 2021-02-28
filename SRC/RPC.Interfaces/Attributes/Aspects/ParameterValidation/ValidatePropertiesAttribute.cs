@@ -27,6 +27,14 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public bool Aggregate { get; }
 
+        //
+        // Mivel ezek explicit implementaciok ezert az attributumok alkalmazasakor nem lehet beallitani oket
+        //
+
+        string IParameterValidator.PropertyValidationMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        string IPropertyValidator.ParameterValidationMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         /// <summary>
         /// Creates a new <see cref="ValidatePropertiesAttribute"/> instance.
         /// </summary>

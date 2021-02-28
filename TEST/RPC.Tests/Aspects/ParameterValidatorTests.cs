@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 using Moq;
@@ -118,6 +119,34 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             role = MyEnum.LoggedInUser;
 
             Assert.Throws<ValidationException>(() => module.ConditionallyValidated(null));
+        }
+
+        [Test]
+        public void MatchAttribute_ShouldThrowIfThereIsNoMatch()
+        {
+            var attr = new MatchAttribute("cica");
+
+            ParameterInfo param = GetType().GetMethod(nameof(NotEmptyAttribute_ShouldThrowOnEmptyValue)).GetParameters()[0];
+            Assert.Throws<ValidationException>(() => ((IParameterValidator) attr).Validate(param, "mica", null!), Errors.PARAM_NOT_MATCHES);
+        }
+
+        public static IEnumerable<object> EmptyValues
+        {
+            get 
+            {
+                yield return string.Empty;
+                yield return Array.Empty<int>();
+                yield return new List<IDisposable>(0);
+            }
+        }
+
+        [Test]
+        public void NotEmptyAttribute_ShouldThrowOnEmptyValue([ValueSource(nameof(EmptyValues))] object value)
+        {
+            var attr = new NotEmptyAttribute();
+
+            ParameterInfo param = MethodBase.GetCurrentMethod().GetParameters()[0];
+            Assert.Throws<ValidationException>(() => ((IParameterValidator) attr).Validate(param, value, null!), Errors.EMPTY_PARAM);
         }
     }
 }

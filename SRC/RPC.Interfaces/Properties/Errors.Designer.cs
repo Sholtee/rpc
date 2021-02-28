@@ -61,6 +61,24 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value of the parameter can not be empty..
+        /// </summary>
+        internal static string EMPTY_PARAM {
+            get {
+                return ResourceManager.GetString("EMPTY_PARAM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the property can not be empty..
+        /// </summary>
+        internal static string EMPTY_PROPERTY {
+            get {
+                return ResourceManager.GetString("EMPTY_PROPERTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The module &quot;{0}&quot; could not be found..
         /// </summary>
         internal static string MODULE_NOT_FOUND {

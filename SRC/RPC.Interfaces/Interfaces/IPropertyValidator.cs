@@ -15,6 +15,11 @@ namespace Solti.Utils.Rpc.Interfaces
     public interface IPropertyValidator: ICustomValidator
     {
         /// <summary>
+        /// The message that is thrown when the validation failed.
+        /// </summary>
+        string ParameterValidationMessage { get; set; }
+
+        /// <summary>
         /// Defines the layout of the validator method.
         /// </summary>
         void Validate(PropertyInfo prop, object? value, IInjector currentScope);
