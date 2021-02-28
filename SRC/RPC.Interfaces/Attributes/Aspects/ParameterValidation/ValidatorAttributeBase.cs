@@ -15,9 +15,14 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Base class for validator attributes e.g.: <see cref="NotNullAttribute"/>.
     /// </summary>
-    public abstract class ValidatorAttributeBase: Attribute, IConditionalValidatior
+    public abstract class ValidatorAttributeBase: Attribute, IConditionalValidatior, ICustomValidator
     {
         private IConditionalValidatior? ShouldRunImpl;
+
+        /// <summary>
+        /// Creates a new <see cref="ValidatorAttributeBase"/> instance.
+        /// </summary>
+        protected ValidatorAttributeBase(bool supportsNull) => SupportsNull = supportsNull;
 
         /// <summary>
         /// If set, it should point to a class implementing the <see cref="IConditionalValidatior"/> interface.
@@ -38,6 +43,11 @@ namespace Solti.Utils.Rpc.Interfaces
                 }
             }
         }
+
+        /// <summary>
+        /// See <see cref="ICustomValidator.SupportsNull"/>.
+        /// </summary>
+        public bool SupportsNull { get; }
 
         /// <summary>
         /// See <see cref="IConditionalValidatior.ShouldRun(MethodInfo, IInjector)"/>.

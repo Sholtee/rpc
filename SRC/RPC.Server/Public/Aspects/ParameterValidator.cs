@@ -85,7 +85,12 @@ namespace Solti.Utils.Rpc.Aspects
                     .Select<IParameterValidator, Action<IInjector, object?[]>>(validator => (currentScope, args) =>
                     {
                         if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(method, currentScope))
-                            validator.Validate(param, args[param.Position], currentScope);
+                        {
+                            object? value = args[param.Position];
+
+                            if (value is not null || validator.SupportsNull)
+                                validator.Validate(param, value, currentScope);
+                        }
                     }))
                 .ToArray());
         }

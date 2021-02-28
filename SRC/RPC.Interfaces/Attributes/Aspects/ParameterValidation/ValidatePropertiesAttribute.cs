@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Creates a new <see cref="ValidatePropertiesAttribute"/> instance.
         /// </summary>
-        public ValidatePropertiesAttribute(bool aggregate = false) => Aggregate = aggregate;
+        public ValidatePropertiesAttribute(bool aggregate = false): base(supportsNull: false) => Aggregate = aggregate;
 
         private void Validate(Type type, object value, IInjector currentScope)
         {
@@ -65,7 +65,12 @@ namespace Solti.Utils.Rpc.Interfaces
                         .Select<IPropertyValidator, Action<MethodInfo, IInjector, object>>(validator => (containingMethod, currentScope, instance) =>
                         {
                             if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(containingMethod, currentScope))
-                                validator.Validate(prop, getter(instance), currentScope);
+                            {
+                                object? value = getter(instance);
+
+                                if (value is not null || validator.SupportsNull)
+                                    validator.Validate(prop, value, currentScope);
+                            }
                         });
                 })
                 .ToArray());
@@ -78,16 +83,8 @@ namespace Solti.Utils.Rpc.Interfaces
             return base.ShouldRun(containingMethod, currentScope);
         }
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector currentScope)
-        {
-            if (value is not null)
-                Validate(param.ParameterType, value, currentScope);
-        }
+        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector currentScope) => Validate(param.ParameterType, value!, currentScope);
 
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector currentScope)
-        {
-            if (value is not null)
-                Validate(prop.PropertyType, value, currentScope);
-        }
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector currentScope) => Validate(prop.PropertyType, value!, currentScope);
     }
 }

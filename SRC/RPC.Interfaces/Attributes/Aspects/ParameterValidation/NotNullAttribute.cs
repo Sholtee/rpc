@@ -17,6 +17,11 @@ namespace Solti.Utils.Rpc.Interfaces
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
     public class NotNullAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
     {
+        /// <summary>
+        /// Creates a new <see cref="NotNullAttribute"/> class.
+        /// </summary>
+        public NotNullAttribute() : base(supportsNull: true) {}
+
         void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
         {
             if (value is null)

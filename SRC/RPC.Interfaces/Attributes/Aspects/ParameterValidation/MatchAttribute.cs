@@ -23,7 +23,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Creates a new <see cref="MatchAttribute"/> instance.
         /// </summary>
-        public MatchAttribute(string pattern, RegexOptions options = RegexOptions.Compiled) => Regex = new Regex(pattern, options);
+        public MatchAttribute(string pattern, RegexOptions options = RegexOptions.Compiled): base(supportsNull: false) => Regex = new Regex(pattern, options);
 
         /// <summary>
         /// The message that is thrown when the match was not successful.
@@ -32,9 +32,7 @@ namespace Solti.Utils.Rpc.Interfaces
 
         void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
         {
-            if (value is null) return;
-
-            if (!Regex.Match(value.ToString()).Success)
+            if (!Regex.Match(value!.ToString()).Success)
                 throw new ValidationException(PropertyValidationMessage) 
                 {
                     Name = prop.Name
@@ -48,9 +46,7 @@ namespace Solti.Utils.Rpc.Interfaces
 
         void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
         {
-            if (value is null) return;
-
-            if (!Regex.Match(value.ToString()).Success)
+            if (!Regex.Match(value!.ToString()).Success)
                 throw new ValidationException(ParameterValidationMessage)
                 {
                     Name = param.Name
