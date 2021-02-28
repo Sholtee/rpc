@@ -3,7 +3,6 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System;
 using System.Reflection;
 
 namespace Solti.Utils.Rpc.Interfaces
