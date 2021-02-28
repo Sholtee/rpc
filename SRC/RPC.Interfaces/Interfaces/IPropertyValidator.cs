@@ -17,7 +17,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The message that is thrown when the validation failed.
         /// </summary>
-        string ParameterValidationMessage { get; set; }
+        string ParameterValidationErrorMessage { get; set; }
 
         /// <summary>
         /// Defines the layout of the validator method.

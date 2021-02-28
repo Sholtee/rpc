@@ -24,7 +24,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         [ParameterValidatorAspect]
         public interface IModule
         {
-            void DoSomething([NotNull, Match("cica", ParameterValidationMessage = "ooops")] string arg1, [NotNull] object arg2);
+            void DoSomething([NotNull, Match("cica", ParameterValidationErrorMessage = "ooops")] string arg1, [NotNull] object arg2);
             void DoSomethingElse();
             void ConditionallyValidated([NotNull(Condition = typeof(IfLoggedIn))] string arg);
         }

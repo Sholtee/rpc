@@ -25,28 +25,28 @@ namespace Solti.Utils.Rpc.Interfaces
         public NotEmptyAttribute() : base(supportsNull: false) {}
 
         /// <summary>
-        /// See <see cref="IParameterValidator.PropertyValidationMessage"/>.
+        /// See <see cref="IParameterValidator.PropertyValidationErrorMessage"/>.
         /// </summary>
-        public string PropertyValidationMessage { get; set; } = Errors.EMPTY_PROPERTY;
+        public string PropertyValidationErrorMessage { get; set; } = Errors.EMPTY_PROPERTY;
 
         void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
         {
             if (value is IEnumerable enumerable && !enumerable.Cast<object>().Any())
-                throw new ValidationException(PropertyValidationMessage) 
+                throw new ValidationException(PropertyValidationErrorMessage) 
                 {
                     Name = prop.Name
                 };
         }
 
         /// <summary>
-        /// See <see cref="IPropertyValidator.ParameterValidationMessage"/>.
+        /// See <see cref="IPropertyValidator.ParameterValidationErrorMessage"/>.
         /// </summary>
-        public string ParameterValidationMessage { get; set; } = Errors.EMPTY_PARAM;
+        public string ParameterValidationErrorMessage { get; set; } = Errors.EMPTY_PARAM;
 
         void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
         {
             if (value is IEnumerable enumerable && !enumerable.Cast<object>().Any())
-                throw new ValidationException(ParameterValidationMessage)
+                throw new ValidationException(ParameterValidationErrorMessage)
                 {
                     Name = param.Name
                 };

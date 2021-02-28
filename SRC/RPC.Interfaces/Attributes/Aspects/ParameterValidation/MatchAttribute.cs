@@ -28,12 +28,12 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The message that is thrown when the match was not successful.
         /// </summary>
-        public string PropertyValidationMessage { get; set; } = Errors.PROPERTY_NOT_MATCHES;
+        public string PropertyValidationErrorMessage { get; set; } = Errors.PROPERTY_NOT_MATCHES;
 
         void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
         {
             if (!Regex.Match(value!.ToString()).Success)
-                throw new ValidationException(PropertyValidationMessage) 
+                throw new ValidationException(PropertyValidationErrorMessage) 
                 {
                     Name = prop.Name
                 };
@@ -42,12 +42,12 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The message that is thrown when the match was not successful.
         /// </summary>
-        public string ParameterValidationMessage { get; set; } = Errors.PARAM_NOT_MATCHES;
+        public string ParameterValidationErrorMessage { get; set; } = Errors.PARAM_NOT_MATCHES;
 
         void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
         {
             if (!Regex.Match(value!.ToString()).Success)
-                throw new ValidationException(ParameterValidationMessage)
+                throw new ValidationException(ParameterValidationErrorMessage)
                 {
                     Name = param.Name
                 };
