@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class NotNullAttribute
+    <title>Class NotEmptyAttribute
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class NotNullAttribute
+    <meta name="title" content="Class NotEmptyAttribute
    | RPC.NET ">
     <meta name="generator" content="docfx 2.46.0.0">
     
@@ -37,12 +37,12 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute">
   
   
-  <h1 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute" class="text-break">Class NotNullAttribute
+  <h1 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute" class="text-break">Class NotEmptyAttribute
   </h1>
-  <div class="markdown level0 summary"><p>Ensures that a parameter is not null.</p>
+  <div class="markdown level0 summary"><p>Ensures that the value of a parameter is not null.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -50,7 +50,7 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
     <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html">ValidatorAttributeBase</a></div>
-    <div class="level3"><span class="xref">NotNullAttribute</span></div>
+    <div class="level3"><span class="xref">NotEmptyAttribute</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -199,26 +199,26 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-public class NotNullAttribute : ValidatorAttributeBase, IConditionalValidatior, IParameterValidator, IPropertyValidator, ICustomValidator</code></pre>
+public class NotEmptyAttribute : ValidatorAttributeBase, IConditionalValidatior, IParameterValidator, IPropertyValidator, ICustomValidator</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_NotNullAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute__ctor" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.#ctor">NotNullAttribute()</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute__ctor" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.#ctor">NotEmptyAttribute()</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.NotNullAttribute.html">NotNullAttribute</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NotNullAttribute()</code></pre>
+    <pre><code class="lang-csharp hljs">public NotEmptyAttribute()</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_ParameterValidationMessage_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.ParameterValidationMessage*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_ParameterValidationMessage" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.ParameterValidationMessage">ParameterValidationMessage</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_ParameterValidationMessage_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.ParameterValidationMessage*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_ParameterValidationMessage" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.ParameterValidationMessage">ParameterValidationMessage</h4>
   <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_ParameterValidationMessage">ParameterValidationMessage</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -241,8 +241,8 @@ public class NotNullAttribute : ValidatorAttributeBase, IConditionalValidatior, 
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_PropertyValidationMessage_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.PropertyValidationMessage*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_PropertyValidationMessage" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.PropertyValidationMessage">PropertyValidationMessage</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_PropertyValidationMessage_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.PropertyValidationMessage*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_PropertyValidationMessage" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.PropertyValidationMessage">PropertyValidationMessage</h4>
   <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_PropertyValidationMessage">PropertyValidationMessage</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -267,8 +267,8 @@ public class NotNullAttribute : ValidatorAttributeBase, IConditionalValidatior, 
   </table>
   <h3 id="eii">Explicit Interface Implementations
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IParameterValidator.Validate(ParameterInfo, Object, IInjector)</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IParameterValidator.Validate(ParameterInfo, Object, IInjector)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -302,8 +302,8 @@ public class NotNullAttribute : ValidatorAttributeBase, IConditionalValidatior, 
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_NotNullAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.NotNullAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IPropertyValidator.Validate(PropertyInfo, Object, IInjector)</h4>
+  <a id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_NotEmptyAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IPropertyValidator.Validate(PropertyInfo, Object, IInjector)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
