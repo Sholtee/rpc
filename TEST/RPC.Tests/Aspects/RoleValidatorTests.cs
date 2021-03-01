@@ -6,6 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Moq;
 using NUnit.Framework;
@@ -35,6 +37,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
             void Print();
+            [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
+            Task<string> PrintAsync();
             [RequiredRoles(MyRoles.Anonymous)]
             void Login();
             void MissingRequiredRoleAttribute();
@@ -54,8 +58,10 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         [TestCaseSource(nameof(TestCases))]
         public void RoleValidationTest((MyRoles Roles, bool ShouldThrow) data)
         {
-            var mockModule = new Mock<IModule>(MockBehavior.Loose);
-
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.Print());
+         
             var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
             mockRoleManager
                 .Setup(rm => rm.GetAssignedRoles("cica"))
@@ -71,12 +77,57 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
 
             if (data.ShouldThrow)
+            {
                 Assert.Throws<AuthenticationException>(module.Print, Errors.INSUFFICIENT_PRIVILEGES);
+                mockModule.Verify(m => m.Print(), Times.Never);
+            }
             else
                 Assert.DoesNotThrow(module.Print);
 
             mockRequest.VerifyGet(r => r.SessionId, Times.Once);
             mockRoleManager.Verify(rm => rm.GetAssignedRoles("cica"), Times.Once);
+        }
+
+        [TestCaseSource(nameof(TestCases))]
+        public void RoleValidationAsyncTest((MyRoles Roles, bool ShouldThrow) data)
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.PrintAsync())
+                .Returns(Task.FromResult("kutya"));
+
+            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
+            mockRoleManager
+                .Setup(rm => rm.GetAssignedRolesAsync("cica", It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult((Enum) data.Roles));
+
+            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            mockRequest
+                .SetupGet(r => r.SessionId)
+                .Returns("cica");
+            mockRequest
+                .SetupGet(r => r.Cancellation)
+                .Returns(default(CancellationToken));
+
+            Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
+
+            if (data.ShouldThrow)
+            {
+                Assert.ThrowsAsync<AuthenticationException>(module.PrintAsync, Errors.INSUFFICIENT_PRIVILEGES);
+                mockModule.Verify(m => m.PrintAsync(), Times.Never);
+            }
+            else
+            {
+                string result = null;
+                Assert.DoesNotThrowAsync(async () => result = await module.PrintAsync());
+                Assert.That(result, Is.EqualTo("kutya"));
+            }
+
+            mockRequest.VerifyGet(r => r.SessionId, Times.Once);
+            mockRequest.VerifyGet(r => r.Cancellation, Times.Once);
+            mockRoleManager.Verify(rm => rm.GetAssignedRolesAsync("cica", default), Times.Once);
         }
 
         [Test]

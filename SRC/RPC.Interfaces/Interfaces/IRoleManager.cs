@@ -4,6 +4,8 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
@@ -17,5 +19,11 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         /// <remarks>Returns the value of 0 if the <paramref name="sessionId"/> is null.</remarks>
         Enum GetAssignedRoles(string? sessionId);
+
+        /// <summary>
+        /// Gets the roles assigned to the given <paramref name="sessionId"/>.
+        /// </summary>
+        /// <remarks>Returns the value of 0 if the <paramref name="sessionId"/> is null.</remarks>
+        Task<Enum> GetAssignedRolesAsync(string? sessionId, CancellationToken cancellation);
     }
 }

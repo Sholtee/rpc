@@ -7,11 +7,13 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Aspects
 {
     using Interfaces;
     using Properties;
+    using Primitives;
     using Proxy;
 
     /// <summary>
@@ -48,12 +50,44 @@ namespace Solti.Utils.Rpc.Aspects
             if (attr is null)
                 throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
 
-            Enum availableRoles = RoleManager.GetAssignedRoles(RequestContext.SessionId);
+            if (!typeof(Task).IsAssignableFrom(method.ReturnType))
+                return Invoke();
 
-            if (!attr.RoleGroups.Any(grp => availableRoles.HasFlag(grp)))
-                throw new AuthenticationException(Errors.INSUFFICIENT_PRIVILEGES);
+            if (!method.ReturnType.IsGenericType)
+                return InvokeAsync();
 
-            return base.Invoke(method, args, extra);
+            Func<Task<object>> invokeAsync = InvokeAsyncHavingResult<object>;
+
+            return invokeAsync
+                .Method
+                .GetGenericMethodDefinition()
+                .MakeGenericMethod(method.ReturnType.GetGenericArguments().Single())
+                .ToInstanceDelegate()
+                .Invoke(invokeAsync.Target, Array.Empty<object?>());
+   
+            async Task<T> InvokeAsyncHavingResult<T>() 
+            {
+                Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
+                return await (Task<T>) base.Invoke(method, args, extra)!;
+            }
+
+            async Task InvokeAsync() 
+            {
+                Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
+                await (Task) base.Invoke(method, args, extra)!;
+            }
+
+            object? Invoke() 
+            {
+                Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
+                return base.Invoke(method, args, extra);
+            }
+
+            void Validate(Enum availableRoles)
+            {
+                if (!attr.RoleGroups.Any(grp => availableRoles.HasFlag(grp)))
+                    throw new AuthenticationException(Errors.INSUFFICIENT_PRIVILEGES);
+            }
         }
     }
 }
