@@ -37,7 +37,7 @@ namespace Solti.Utils.Rpc.Aspects
         [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
         public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
         {
-            if (method == null)
+            if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
             TransactionalAttribute? ta = method.GetCustomAttribute<TransactionalAttribute>();
