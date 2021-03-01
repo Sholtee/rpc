@@ -61,7 +61,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
                 .Setup(m => m.Print());
-         
+
             var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
             mockRoleManager
                 .Setup(rm => rm.GetAssignedRoles("cica"))
@@ -74,7 +74,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object, null);
 
             if (data.ShouldThrow)
             {
@@ -96,7 +96,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(m => m.PrintAsync())
                 .Returns(Task.FromResult("kutya"));
 
-            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
+            var mockRoleManager = new Mock<IAsyncRoleManager>(MockBehavior.Strict);
             mockRoleManager
                 .Setup(rm => rm.GetAssignedRolesAsync("cica", It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((Enum) data.Roles));
@@ -111,7 +111,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, new Mock<IRoleManager>(MockBehavior.Strict).Object, mockRoleManager.Object);
 
             if (data.ShouldThrow)
             {
@@ -149,7 +149,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object, null);
 
             Assert.DoesNotThrow(module.Login);
 
@@ -168,7 +168,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object, null);
 
             Assert.Throws<InvalidOperationException>(module.MissingRequiredRoleAttribute, Errors.NO_ROLES_SPECIFIED);
         }
@@ -184,7 +184,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
 
-            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict); ;
+            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
 
             var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
 

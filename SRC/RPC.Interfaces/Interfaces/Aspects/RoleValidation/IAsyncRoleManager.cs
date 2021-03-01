@@ -1,21 +1,23 @@
 ﻿/********************************************************************************
-* IRoleManager.cs                                                               *
+* IAsyncRoleManager.cs                                                          *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
     /// Contains some role related logic.
     /// </summary>
-    public interface IRoleManager
+    public interface IAsyncRoleManager
     {
         /// <summary>
         /// Gets the roles assigned to the given <paramref name="sessionId"/>.
         /// </summary>
         /// <remarks>Returns the value of 0 if the <paramref name="sessionId"/> is null.</remarks>
-        Enum GetAssignedRoles(string? sessionId);
+        Task<Enum> GetAssignedRolesAsync(string? sessionId, CancellationToken cancellation);
     }
 }
