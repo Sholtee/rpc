@@ -108,14 +108,14 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface)
   nameWithType: RoleValidator<TInterface>
   nameWithType.vb: RoleValidator(Of TInterface)
-- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRoleManager)
-  name: RoleValidator(TInterface, IRequestContext, IRoleManager)
-  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRoleManager_
-  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRoleManager)
-  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.RoleValidator(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRoleManager)
-  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).RoleValidator(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRoleManager)
-  nameWithType: RoleValidator<TInterface>.RoleValidator(TInterface, IRequestContext, IRoleManager)
-  nameWithType.vb: RoleValidator(Of TInterface).RoleValidator(TInterface, IRequestContext, IRoleManager)
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRoleManager,Solti.Utils.Rpc.Interfaces.IAsyncRoleManager)
+  name: RoleValidator(TInterface, IRequestContext, IRoleManager, IAsyncRoleManager)
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRoleManager_Solti_Utils_Rpc_Interfaces_IAsyncRoleManager_
+  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRoleManager,Solti.Utils.Rpc.Interfaces.IAsyncRoleManager)
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.RoleValidator(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRoleManager, Solti.Utils.Rpc.Interfaces.IAsyncRoleManager)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).RoleValidator(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRoleManager, Solti.Utils.Rpc.Interfaces.IAsyncRoleManager)
+  nameWithType: RoleValidator<TInterface>.RoleValidator(TInterface, IRequestContext, IRoleManager, IAsyncRoleManager)
+  nameWithType.vb: RoleValidator(Of TInterface).RoleValidator(TInterface, IRequestContext, IRoleManager, IAsyncRoleManager)
 - uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.#ctor*
   name: RoleValidator
   href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1__ctor_
@@ -751,6 +751,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.HttpException.Status
   nameWithType: HttpException.Status
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager
+  name: IAsyncRoleManager
+  href: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IAsyncRoleManager
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager
+  nameWithType: IAsyncRoleManager
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.GetAssignedRolesAsync(System.String,System.Threading.CancellationToken)
+  name: GetAssignedRolesAsync(String, CancellationToken)
+  href: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.html#Solti_Utils_Rpc_Interfaces_IAsyncRoleManager_GetAssignedRolesAsync_System_String_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.GetAssignedRolesAsync(System.String,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.GetAssignedRolesAsync(System.String, System.Threading.CancellationToken)
+  nameWithType: IAsyncRoleManager.GetAssignedRolesAsync(String, CancellationToken)
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.GetAssignedRolesAsync*
+  name: GetAssignedRolesAsync
+  href: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.html#Solti_Utils_Rpc_Interfaces_IAsyncRoleManager_GetAssignedRolesAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.GetAssignedRolesAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.GetAssignedRolesAsync
+  nameWithType: IAsyncRoleManager.GetAssignedRolesAsync
 - uid: Solti.Utils.Rpc.Interfaces.IConditionalValidatior
   name: IConditionalValidatior
   href: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html
@@ -1245,19 +1264,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRoles
   nameWithType: IRoleManager.GetAssignedRoles
-- uid: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRolesAsync(System.String,System.Threading.CancellationToken)
-  name: GetAssignedRolesAsync(String, CancellationToken)
-  href: Solti.Utils.Rpc.Interfaces.IRoleManager.html#Solti_Utils_Rpc_Interfaces_IRoleManager_GetAssignedRolesAsync_System_String_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRolesAsync(System.String,System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRolesAsync(System.String, System.Threading.CancellationToken)
-  nameWithType: IRoleManager.GetAssignedRolesAsync(String, CancellationToken)
-- uid: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRolesAsync*
-  name: GetAssignedRolesAsync
-  href: Solti.Utils.Rpc.Interfaces.IRoleManager.html#Solti_Utils_Rpc_Interfaces_IRoleManager_GetAssignedRolesAsync_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRolesAsync
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IRoleManager.GetAssignedRolesAsync
-  nameWithType: IRoleManager.GetAssignedRolesAsync
 - uid: Solti.Utils.Rpc.Interfaces.IServiceDescriptor
   name: IServiceDescriptor
   href: Solti.Utils.Rpc.Interfaces.IServiceDescriptor.html
