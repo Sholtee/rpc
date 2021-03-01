@@ -50,38 +50,37 @@ namespace Solti.Utils.Rpc.Aspects
             if (attr is null)
                 throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
 
-            if (!typeof(Task).IsAssignableFrom(method.ReturnType))
-                return Invoke();
-
-            if (!method.ReturnType.IsGenericType)
+            if (method.ReturnType == typeof(Task))
+            {
                 return InvokeAsync();
 
-            Func<Task<object>> invokeAsync = InvokeAsyncHavingResult<object>;
-
-            return invokeAsync
-                .Method
-                .GetGenericMethodDefinition()
-                .MakeGenericMethod(method.ReturnType.GetGenericArguments().Single())
-                .ToInstanceDelegate()
-                .Invoke(invokeAsync.Target, Array.Empty<object?>());
-   
-            async Task<T> InvokeAsyncHavingResult<T>() 
-            {
-                Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
-                return await (Task<T>) base.Invoke(method, args, extra)!;
+                async Task InvokeAsync()
+                {
+                    Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
+                    await (Task) base.Invoke(method, args, extra)!;
+                }
             }
 
-            async Task InvokeAsync() 
+            if (typeof(Task).IsAssignableFrom(method.ReturnType)) // Task<>
             {
-                Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
-                await (Task) base.Invoke(method, args, extra)!;
+                Func<Task<object>> invokeAsync = InvokeAsyncHavingResult<object>;
+
+                return invokeAsync
+                    .Method
+                    .GetGenericMethodDefinition()
+                    .MakeGenericMethod(method.ReturnType.GetGenericArguments().Single())
+                    .ToInstanceDelegate()
+                    .Invoke(invokeAsync.Target, Array.Empty<object?>());
+
+                async Task<T> InvokeAsyncHavingResult<T>()
+                {
+                    Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
+                    return await (Task<T>) base.Invoke(method, args, extra)!;
+                }
             }
 
-            object? Invoke() 
-            {
-                Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
-                return base.Invoke(method, args, extra);
-            }
+            Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
+            return base.Invoke(method, args, extra);
 
             void Validate(Enum availableRoles)
             {
