@@ -13,11 +13,6 @@ namespace Solti.Utils.Rpc.Interfaces
     public interface ICustomValidator 
     {
         /// <summary>
-        /// If set, it should point to a class implementing the <see cref="IConditionalValidatior"/> interface.
-        /// </summary>
-        Type? Condition { get; set; }
-
-        /// <summary>
         /// Returns true if the validator can handle NULL values.
         /// </summary>
         bool SupportsNull { get; }
