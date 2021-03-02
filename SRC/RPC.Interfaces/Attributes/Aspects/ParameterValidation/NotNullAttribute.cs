@@ -23,7 +23,7 @@ namespace Solti.Utils.Rpc.Interfaces
         public NotNullAttribute() : base(supportsNull: true) {}
 
         /// <summary>
-        /// See <see cref="IParameterValidator.PropertyValidationErrorMessage"/>.
+        /// See <see cref="IPropertyValidator.PropertyValidationErrorMessage"/>.
         /// </summary>
         public string PropertyValidationErrorMessage { get; set; } = Errors.NULL_PROPERTY;
         
@@ -37,7 +37,7 @@ namespace Solti.Utils.Rpc.Interfaces
         }
 
         /// <summary>
-        /// See <see cref="IPropertyValidator.ParameterValidationErrorMessage"/>.
+        /// See <see cref="IParameterValidator.ParameterValidationErrorMessage"/>.
         /// </summary>
         public string ParameterValidationErrorMessage { get; set; } = Errors.NULL_PARAM;
 

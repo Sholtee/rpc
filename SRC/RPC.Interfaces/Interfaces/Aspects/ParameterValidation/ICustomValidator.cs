@@ -16,5 +16,10 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Returns true if the validator can handle NULL values.
         /// </summary>
         bool SupportsNull { get; }
+
+        /// <summary>
+        /// Returns true if the validator supports asynchronous invocation.
+        /// </summary>
+        bool SupportsAsync { get; }
     }
 }

@@ -4,7 +4,6 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Security.Authentication;
@@ -14,7 +13,7 @@ namespace Solti.Utils.Rpc.Aspects
 {
     using DI.Interfaces;
     using Interfaces;
-    using Primitives;
+    using Internals;
     using Properties;
     using Proxy;
 
@@ -55,47 +54,18 @@ namespace Solti.Utils.Rpc.Aspects
             if (attr is null)
                 throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
 
-            if (typeof(Task).IsAssignableFrom(method.ReturnType))
-            {
-                //
-                // Aszinkron szerep validalas csak akkor jatszik h hozza kapcsolodo logika implementalva lett
-                // (kulonben aszinkron metodusnal is szinkron szerep validalas van)
-                //
+            //
+            // Aszinkron szerep validalas csak akkor jatszik h hozza kapcsolodo logika implementalva lett
+            // (kulonben aszinkron metodusnal is szinkron szerep validalas van)
+            //
 
-                if (AsyncRoleManager is not null)
-                {
-                    if (method.ReturnType == typeof(Task))
-                    {
-                        return InvokeAsync();
+            if (typeof(Task).IsAssignableFrom(method.ReturnType) && AsyncRoleManager is not null) return AsyncExtensions.Decorate
+            (
+                () => (Task) base.Invoke(method, args, extra)!, 
+                method.ReturnType, 
+                async () => Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
+            );
 
-                        async Task InvokeAsync()
-                        {
-                            Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
-                            await (Task) base.Invoke(method, args, extra)!;
-                        }
-                    }
-
-                    if (typeof(Task).IsAssignableFrom(method.ReturnType)) // Task<>
-                    {
-                        Func<Task<object>> invokeAsync = InvokeAsyncHavingResult<object>;
-
-                        return invokeAsync
-                            .Method
-                            .GetGenericMethodDefinition()
-                            .MakeGenericMethod(method.ReturnType.GetGenericArguments().Single())
-                            .ToInstanceDelegate()
-                            .Invoke(invokeAsync.Target, Array.Empty<object?>());
-
-                        async Task<T> InvokeAsyncHavingResult<T>()
-                        {
-                            Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
-                            return await (Task<T>) base.Invoke(method, args, extra)!;
-                        }
-                    }
-
-                    Debug.Fail("Should never get here.");
-                }
-            }
 
             Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
             return base.Invoke(method, args, extra);

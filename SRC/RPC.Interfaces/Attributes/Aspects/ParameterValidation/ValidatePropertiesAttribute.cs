@@ -31,9 +31,9 @@ namespace Solti.Utils.Rpc.Interfaces
         // Mivel ezek explicit implementaciok ezert az attributumok alkalmazasakor nem lehet beallitani oket
         //
 
-        string IParameterValidator.PropertyValidationErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string IParameterValidator.ParameterValidationErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        string IPropertyValidator.ParameterValidationErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string IPropertyValidator.PropertyValidationErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// Creates a new <see cref="ValidatePropertiesAttribute"/> instance.
