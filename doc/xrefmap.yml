@@ -795,19 +795,6 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.ICustomValidator
   fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator
   nameWithType: ICustomValidator
-- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
-  name: Condition
-  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_Condition
-  commentId: P:Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
-  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
-  nameWithType: ICustomValidator.Condition
-- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition*
-  name: Condition
-  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_Condition_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.Condition
-  nameWithType: ICustomValidator.Condition
 - uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
   name: SupportsNull
   href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull
