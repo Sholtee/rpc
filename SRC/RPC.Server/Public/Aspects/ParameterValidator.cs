@@ -56,15 +56,18 @@ namespace Solti.Utils.Rpc.Aspects
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            if (typeof(Task).IsAssignableFrom(method.ReturnType)) return AsyncExtensions.Decorate
+            if (!typeof(Task).IsAssignableFrom(method.ReturnType))
+            {
+                Validate();
+                return base.Invoke(method, args, extra);
+            }
+
+            return AsyncExtensions.Decorate
             (
                 () => (Task) base.Invoke(method, args, extra)!,
                 method.ReturnType, 
                 ValidateAsync
             );
-
-            Validate();
-            return base.Invoke(method, args, extra);
 
             async Task ValidateAsync()
             {
@@ -89,30 +92,24 @@ namespace Solti.Utils.Rpc.Aspects
                 if (exceptions.Any())
                     throw new AggregateException(exceptions);
 
-                static IReadOnlyCollection<Func<IInjector, object?[], Task>> GetValidators(MethodInfo method) => Cache.GetOrAdd(method, () => method
-                    .GetParameters()
-                    .SelectMany(param => param
-                        .GetCustomAttributes()
-                        .OfType<IParameterValidator>()
-                        .Select<IParameterValidator, Func<IInjector, object?[], Task>>(validator => async (currentScope, args) =>
-                        {
-                            if (validator is IConditionalValidatior conditional && !conditional.ShouldRun(method, currentScope))
-                                return;
-    
-                            object? value = args[param.Position];
+                static IReadOnlyCollection<Func<IInjector, object?[], Task>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Func<IInjector, object?[], Task>>(method, (param, validator) => async (currentScope, args) =>
+                {
+                    if (validator is IConditionalValidatior conditional && !conditional.ShouldRun(method, currentScope))
+                        return;
 
-                            if (value is null && !validator.SupportsNull)
-                                return;
+                    object? value = args[param.Position];
 
-                            if (validator.SupportsAsync && validator is IAsyncParameterValidator asyncValidator)
-                            {
-                                await asyncValidator.ValidateAsync(param, value, currentScope);
-                                return;
-                            }
+                    if (value is null && !validator.SupportsNull)
+                        return;
 
-                            validator.Validate(param, value, currentScope);
-                        }))
-                    .ToArray());
+                    if (validator.SupportsAsync && validator is IAsyncParameterValidator asyncValidator)
+                    {
+                        await asyncValidator.ValidateAsync(param, value, currentScope);
+                        return;
+                    }
+
+                    validator.Validate(param, value, currentScope);
+                });
             }
 
             void Validate()
@@ -138,23 +135,25 @@ namespace Solti.Utils.Rpc.Aspects
                 if (exceptions.Any())
                     throw new AggregateException(exceptions);
 
-                static IReadOnlyCollection<Action<IInjector, object?[]>> GetValidators(MethodInfo method) => Cache.GetOrAdd(method, () => method
-                    .GetParameters()
-                    .SelectMany(param => param
-                        .GetCustomAttributes()
-                        .OfType<IParameterValidator>()
-                        .Select<IParameterValidator, Action<IInjector, object?[]>>(validator => (currentScope, args) =>
-                        {
-                            if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(method, currentScope))
-                            {
-                                object? value = args[param.Position];
+                static IReadOnlyCollection<Action<IInjector, object?[]>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Action<IInjector, object?[]>>(method, (param, validator) => (currentScope, args) =>
+                {
+                    if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(method, currentScope))
+                    {
+                        object? value = args[param.Position];
 
-                                if (value is not null || validator.SupportsNull)
-                                    validator.Validate(param, value, currentScope);
-                            }
-                        }))
-                    .ToArray());
+                        if (value is not null || validator.SupportsNull)
+                            validator.Validate(param, value, currentScope);
+                    }
+                });
             }
+
+            static IReadOnlyCollection<TDelegate> ValidatorsToDelegate<TDelegate>(MethodInfo method, Func<ParameterInfo, IParameterValidator, TDelegate> convert) where TDelegate : Delegate => Cache.GetOrAdd(method, () => method
+                .GetParameters()
+                .SelectMany(param => param
+                    .GetCustomAttributes()
+                    .OfType<IParameterValidator>()
+                    .Select(validator => convert(param, validator)))
+                .ToArray());
         }
     }
 }

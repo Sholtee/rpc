@@ -17,6 +17,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
     using Interfaces;
     using Interfaces.Properties;
     using Proxy.Generators;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class ParameterValidatorTests
@@ -147,6 +148,66 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             ParameterInfo param = MethodBase.GetCurrentMethod().GetParameters()[0];
             Assert.Throws<ValidationException>(() => ((IParameterValidator) attr).Validate(param, value, null!), Errors.EMPTY_PARAM);
+        }
+
+        public class AsyncNotNullAttribute : Attribute, IAsyncParameterValidator
+        {
+            public string ParameterValidationErrorMessage { get; set; }
+
+            public bool SupportsNull => true;
+
+            public bool SupportsAsync => true;
+
+            public void Validate(ParameterInfo param, object value, IInjector currentScope) => throw new NotImplementedException();
+
+            public Task ValidateAsync(ParameterInfo param, object value, IInjector currentScope) => value is null
+                ? Task.FromException<ValidationException>(new ValidationException(ParameterValidationErrorMessage))
+                : Task.CompletedTask;
+        }
+
+        public interface IMyAsyncModule 
+        {
+            Task Foo([AsyncNotNull(ParameterValidationErrorMessage = "ooops")] string para);
+        }
+
+        [Test]
+        public void AsyncParameterValidationTest()
+        {
+            var mockModule = new Mock<IMyAsyncModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.Foo(It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+
+            Type proxyType = ProxyGenerator<IMyAsyncModule, ParameterValidator<IMyAsyncModule>>.GetGeneratedType();
+
+            IMyAsyncModule module = (IMyAsyncModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, false)!;
+
+            Assert.DoesNotThrowAsync(() => module.Foo("cica"));
+            var ex = Assert.ThrowsAsync<ValidationException>(() => module.Foo(null));
+            Assert.That(ex.Message, Is.EqualTo("ooops"));
+        }
+
+        [Test]
+        public void AsyncAggregatedParameterValidationTest()
+        {
+            var mockModule = new Mock<IMyAsyncModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.Foo(It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+
+            Type proxyType = ProxyGenerator<IMyAsyncModule, ParameterValidator<IMyAsyncModule>>.GetGeneratedType();
+
+            IMyAsyncModule module = (IMyAsyncModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, true)!;
+
+            Assert.DoesNotThrowAsync(() => module.Foo("cica"));
+            AggregateException ex = Assert.ThrowsAsync<AggregateException>(() => module.Foo(null));
+            Assert.That(ex.InnerExceptions.Count, Is.EqualTo(1));
+            Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ValidationException>());
+            Assert.That(((ValidationException)ex.InnerExceptions[0]).Message, Is.EqualTo("ooops"));
         }
     }
 }

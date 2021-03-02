@@ -59,13 +59,13 @@ namespace Solti.Utils.Rpc.Aspects
             // (kulonben aszinkron metodusnal is szinkron szerep validalas van)
             //
 
-            if (typeof(Task).IsAssignableFrom(method.ReturnType) && AsyncRoleManager is not null) return AsyncExtensions.Decorate
-            (
-                () => (Task) base.Invoke(method, args, extra)!, 
-                method.ReturnType, 
-                async () => Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
-            );
-
+            if (typeof(Task).IsAssignableFrom(method.ReturnType) && AsyncRoleManager is not null)
+                return AsyncExtensions.Decorate
+                (
+                    () => (Task) base.Invoke(method, args, extra)!, 
+                    method.ReturnType, 
+                    async () => Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
+                );
 
             Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
             return base.Invoke(method, args, extra);
