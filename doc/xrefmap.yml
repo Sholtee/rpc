@@ -751,6 +751,44 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.HttpException.Status
   nameWithType: HttpException.Status
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator
+  name: IAsyncParameterValidator
+  href: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator
+  nameWithType: IAsyncParameterValidator
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  name: ValidateAsync(ParameterInfo, Object, IInjector)
+  href: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.html#Solti_Utils_Rpc_Interfaces_IAsyncParameterValidator_ValidateAsync_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync(System.Reflection.ParameterInfo, System.Object, Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: IAsyncParameterValidator.ValidateAsync(ParameterInfo, Object, IInjector)
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync*
+  name: ValidateAsync
+  href: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.html#Solti_Utils_Rpc_Interfaces_IAsyncParameterValidator_ValidateAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync
+  nameWithType: IAsyncParameterValidator.ValidateAsync
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator
+  name: IAsyncPropertyValidator
+  href: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator
+  nameWithType: IAsyncPropertyValidator
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  name: ValidateAsync(PropertyInfo, Object, IInjector)
+  href: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IAsyncPropertyValidator_ValidateAsync_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync(System.Reflection.PropertyInfo, System.Object, Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: IAsyncPropertyValidator.ValidateAsync(PropertyInfo, Object, IInjector)
+- uid: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync*
+  name: ValidateAsync
+  href: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IAsyncPropertyValidator_ValidateAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync
+  nameWithType: IAsyncPropertyValidator.ValidateAsync
 - uid: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager
   name: IAsyncRoleManager
   href: Solti.Utils.Rpc.Interfaces.IAsyncRoleManager.html
@@ -795,6 +833,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.ICustomValidator
   fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator
   nameWithType: ICustomValidator
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
+  name: SupportsAsync
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsAsync
+  commentId: P:Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
+  nameWithType: ICustomValidator.SupportsAsync
+- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync*
+  name: SupportsAsync
+  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
+  nameWithType: ICustomValidator.SupportsAsync
 - uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
   name: SupportsNull
   href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull
@@ -1077,19 +1128,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.IParameterValidator
   fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator
   nameWithType: IParameterValidator
-- uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  name: PropertyValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_PropertyValidationErrorMessage
-  commentId: P:Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  nameWithType: IParameterValidator.PropertyValidationErrorMessage
-- uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage*
-  name: PropertyValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_PropertyValidationErrorMessage_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  name: ParameterValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_ParameterValidationErrorMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  nameWithType: IParameterValidator.ParameterValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage*
+  name: ParameterValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_ParameterValidationErrorMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  nameWithType: IParameterValidator.PropertyValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  nameWithType: IParameterValidator.ParameterValidationErrorMessage
 - uid: Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
   name: Validate(ParameterInfo, Object, IInjector)
   href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
@@ -1109,19 +1160,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.IPropertyValidator
   fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator
   nameWithType: IPropertyValidator
-- uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  name: ParameterValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_ParameterValidationErrorMessage
-  commentId: P:Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  nameWithType: IPropertyValidator.ParameterValidationErrorMessage
-- uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage*
-  name: ParameterValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_ParameterValidationErrorMessage_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  name: PropertyValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_PropertyValidationErrorMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  nameWithType: IPropertyValidator.PropertyValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage*
+  name: PropertyValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_PropertyValidationErrorMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  nameWithType: IPropertyValidator.ParameterValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  nameWithType: IPropertyValidator.PropertyValidationErrorMessage
 - uid: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
   name: Validate(PropertyInfo, Object, IInjector)
   href: Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
@@ -1727,40 +1778,40 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Aggregate
   nameWithType: ValidatePropertiesAttribute.Aggregate
-- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#PropertyValidationErrorMessage
-  name: IParameterValidator.PropertyValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_PropertyValidationErrorMessage
-  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#PropertyValidationErrorMessage
-  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  nameWithType: ValidatePropertiesAttribute.IParameterValidator.PropertyValidationErrorMessage
-  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#PropertyValidationErrorMessage*
-  name: IParameterValidator.PropertyValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_PropertyValidationErrorMessage_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#PropertyValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#ParameterValidationErrorMessage
+  name: IParameterValidator.ParameterValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_ParameterValidationErrorMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#ParameterValidationErrorMessage
+  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  nameWithType: ValidatePropertiesAttribute.IParameterValidator.ParameterValidationErrorMessage
+  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#ParameterValidationErrorMessage*
+  name: IParameterValidator.ParameterValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_ParameterValidationErrorMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#ParameterValidationErrorMessage
   isSpec: "True"
-  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-  nameWithType: ValidatePropertiesAttribute.IParameterValidator.PropertyValidationErrorMessage
-  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.PropertyValidationErrorMessage
-- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#ParameterValidationErrorMessage
-  name: IPropertyValidator.ParameterValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_ParameterValidationErrorMessage
-  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#ParameterValidationErrorMessage
-  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  nameWithType: ValidatePropertiesAttribute.IPropertyValidator.ParameterValidationErrorMessage
-  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#ParameterValidationErrorMessage*
-  name: IPropertyValidator.ParameterValidationErrorMessage
-  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_ParameterValidationErrorMessage_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#ParameterValidationErrorMessage
+  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+  nameWithType: ValidatePropertiesAttribute.IParameterValidator.ParameterValidationErrorMessage
+  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#PropertyValidationErrorMessage
+  name: IPropertyValidator.PropertyValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_PropertyValidationErrorMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#PropertyValidationErrorMessage
+  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  nameWithType: ValidatePropertiesAttribute.IPropertyValidator.PropertyValidationErrorMessage
+  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#PropertyValidationErrorMessage*
+  name: IPropertyValidator.PropertyValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_PropertyValidationErrorMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#PropertyValidationErrorMessage
   isSpec: "True"
-  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
-  nameWithType: ValidatePropertiesAttribute.IPropertyValidator.ParameterValidationErrorMessage
-  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.ParameterValidationErrorMessage
+  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
+  nameWithType: ValidatePropertiesAttribute.IPropertyValidator.PropertyValidationErrorMessage
+  nameWithType.vb: ValidatePropertiesAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.PropertyValidationErrorMessage
 - uid: Solti.Utils.Rpc.Interfaces.ValidationException
   name: ValidationException
   href: Solti.Utils.Rpc.Interfaces.ValidationException.html
@@ -1850,6 +1901,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun
   nameWithType: ValidatorAttributeBase.ShouldRun
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
+  name: SupportsAsync
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsAsync
+  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
+  nameWithType: ValidatorAttributeBase.SupportsAsync
+- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync*
+  name: SupportsAsync
+  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
+  nameWithType: ValidatorAttributeBase.SupportsAsync
 - uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
   name: SupportsNull
   href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull
