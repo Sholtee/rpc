@@ -102,7 +102,7 @@ namespace Solti.Utils.Rpc.Aspects
                     if (value is null && !validator.SupportsNull)
                         return;
 
-                    if (validator.SupportsAsync && validator is IAsyncParameterValidator asyncValidator)
+                    if (validator is IAsyncParameterValidator asyncValidator)
                     {
                         await asyncValidator.ValidateAsync(param, value, currentScope);
                         return;

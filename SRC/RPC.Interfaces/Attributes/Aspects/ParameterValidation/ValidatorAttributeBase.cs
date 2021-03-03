@@ -50,11 +50,6 @@ namespace Solti.Utils.Rpc.Interfaces
         public bool SupportsNull { get; }
 
         /// <summary>
-        /// See <see cref="ICustomValidator.SupportsAsync"/>.
-        /// </summary>
-        public virtual bool SupportsAsync { get; } = false;
-
-        /// <summary>
         /// See <see cref="IConditionalValidatior.ShouldRun(MethodInfo, IInjector)"/>.
         /// </summary>
         public virtual bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) => ShouldRunImpl?.ShouldRun(containingMethod, currentScope) ?? true;

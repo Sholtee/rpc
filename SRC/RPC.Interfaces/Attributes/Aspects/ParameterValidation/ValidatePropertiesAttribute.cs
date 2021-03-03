@@ -28,9 +28,6 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public bool Aggregate { get; }
 
-        /// <inheritdoc/>
-        public override bool SupportsAsync { get; } = true;
-
         /// <summary>
         /// Creates a new <see cref="ValidatePropertiesAttribute"/> instance.
         /// </summary>
@@ -67,7 +64,7 @@ namespace Solti.Utils.Rpc.Interfaces
                 if (value is null && !validator.SupportsNull)
                     return;
 
-                if (validator.SupportsAsync && validator is IAsyncPropertyValidator asyncValidator)
+                if (validator is IAsyncPropertyValidator asyncValidator)
                 {
                     await asyncValidator.ValidateAsync(prop, value, currentScope);
                     return;
