@@ -12,6 +12,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Determines whether a validator should run or not.
     /// </summary>
+    /// <remarks>Implementations should not contain complex logics, so this interface has no asynchronous counterpart.</remarks>
     public interface IConditionalValidatior
     {
         /// <summary>
