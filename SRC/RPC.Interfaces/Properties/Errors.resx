@@ -144,4 +144,7 @@
   <data name="PROPERTY_NOT_MATCHES" xml:space="preserve">
     <value>The value of the property does not match the given pattern.</value>
   </data>
+  <data name="VALIDATION_FAILED" xml:space="preserve">
+    <value>The validation failed.</value>
+  </data>
 </root>

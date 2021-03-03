@@ -140,5 +140,14 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
                 return ResourceManager.GetString("PROPERTY_NOT_MATCHES", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The validation failed..
+        /// </summary>
+        internal static string VALIDATION_FAILED {
+            get {
+                return ResourceManager.GetString("VALIDATION_FAILED", resourceCulture);
+            }
+        }
     }
 }

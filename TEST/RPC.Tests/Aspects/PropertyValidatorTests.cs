@@ -226,6 +226,27 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             Assert.Throws<ValidationException>(() => ((IPropertyValidator)attr).Validate(prop, value, null!), Errors.EMPTY_PROPERTY);
         }
 
+        private class NotNull : IAsyncPredicate
+        {
+            public bool Execute(object value, IInjector currentScope) => value != null;
+
+            public Task<bool> ExecuteAsync(object value, IInjector currentScope) => Task.FromResult(value != null);
+        }
+
+        [Test]
+        public void MustAttribute_ShouldThrowIfThePredicateReturnsFalse()
+        {
+            IAsyncPropertyValidator validator = new MustAttribute(typeof(NotNull));
+
+            Assert.DoesNotThrow(() => validator.Validate(GetDummyPropInfo(), new object(), null));
+            Assert.DoesNotThrowAsync(() => validator.ValidateAsync(GetDummyPropInfo(), new object(), null));
+
+            Assert.Throws<ValidationException>(() => validator.Validate(GetDummyPropInfo(), null, null), Errors.VALIDATION_FAILED);
+            Assert.ThrowsAsync<ValidationException>(() => validator.ValidateAsync(GetDummyPropInfo(), null, null), Errors.VALIDATION_FAILED);
+
+            PropertyInfo GetDummyPropInfo() => typeof(ValidatorAttributeBase).GetProperties()[0];
+        }
+
         public class AsyncNotNullAttribute : Attribute, IAsyncPropertyValidator
         {
             public string PropertyValidationErrorMessage { get; set; }

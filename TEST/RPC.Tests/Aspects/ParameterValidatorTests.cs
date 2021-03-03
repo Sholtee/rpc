@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Moq;
 using NUnit.Framework;
@@ -17,7 +18,6 @@ namespace Solti.Utils.Rpc.Aspects.Tests
     using Interfaces;
     using Interfaces.Properties;
     using Proxy.Generators;
-    using System.Threading.Tasks;
 
     [TestFixture]
     public class ParameterValidatorTests
@@ -127,8 +127,9 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             var attr = new MatchAttribute("cica");
 
-            ParameterInfo param = GetType().GetMethod(nameof(NotEmptyAttribute_ShouldThrowOnEmptyValue)).GetParameters()[0];
-            Assert.Throws<ValidationException>(() => ((IParameterValidator) attr).Validate(param, "mica", null!), Errors.PARAM_NOT_MATCHES);
+            Assert.Throws<ValidationException>(() => ((IParameterValidator) attr).Validate(GetDummyParamInfo(), "mica", null!), Errors.PARAM_NOT_MATCHES);
+
+            ParameterInfo GetDummyParamInfo() => ((MethodInfo)MethodBase.GetCurrentMethod()).ReturnParameter;
         }
 
         public static IEnumerable<object> EmptyValues
@@ -148,6 +149,27 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             ParameterInfo param = MethodBase.GetCurrentMethod().GetParameters()[0];
             Assert.Throws<ValidationException>(() => ((IParameterValidator) attr).Validate(param, value, null!), Errors.EMPTY_PARAM);
+        }
+
+        private class NotNull : IAsyncPredicate
+        {
+            public bool Execute(object value, IInjector currentScope) => value != null;
+
+            public Task<bool> ExecuteAsync(object value, IInjector currentScope) => Task.FromResult(value != null);
+        }
+
+        [Test]
+        public void MustAttribute_ShouldThrowIfThePredicateReturnsFalse()
+        {
+            IAsyncParameterValidator validator = new MustAttribute(typeof(NotNull));
+
+            Assert.DoesNotThrow(() => validator.Validate(GetDummyParamInfo(), new object(), null));
+            Assert.DoesNotThrowAsync(() => validator.ValidateAsync(GetDummyParamInfo(), new object(), null));
+
+            Assert.Throws<ValidationException>(() => validator.Validate(GetDummyParamInfo(), null, null), Errors.VALIDATION_FAILED);
+            Assert.ThrowsAsync<ValidationException>(() => validator.ValidateAsync(GetDummyParamInfo(), null, null), Errors.VALIDATION_FAILED);
+
+            ParameterInfo GetDummyParamInfo() => ((MethodInfo) MethodBase.GetCurrentMethod()).ReturnParameter;
         }
 
         public class AsyncNotNullAttribute : Attribute, IAsyncParameterValidator
