@@ -52,7 +52,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// See <see cref="ICustomValidator.SupportsAsync"/>.
         /// </summary>
-        public bool SupportsAsync { get; } = false;
+        public virtual bool SupportsAsync { get; } = false;
 
         /// <summary>
         /// See <see cref="IConditionalValidatior.ShouldRun(MethodInfo, IInjector)"/>.

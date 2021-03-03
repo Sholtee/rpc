@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Moq;
 using NUnit.Framework;
@@ -223,6 +224,80 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             PropertyInfo prop = GetType().GetProperty(nameof(EmptyValues), BindingFlags.Public | BindingFlags.Static);
             Assert.Throws<ValidationException>(() => ((IPropertyValidator)attr).Validate(prop, value, null!), Errors.EMPTY_PROPERTY);
+        }
+
+        public class AsyncNotNullAttribute : Attribute, IAsyncPropertyValidator
+        {
+            public string PropertyValidationErrorMessage { get; set; }
+
+            public bool SupportsNull => true;
+
+            public bool SupportsAsync => true;
+
+            public void Validate(PropertyInfo prop, object value, IInjector currentScope) => throw new NotImplementedException();
+
+            public Task ValidateAsync(PropertyInfo prop, object value, IInjector currentScope) => value is null
+                ? Task.FromException<ValidationException>(new ValidationException(PropertyValidationErrorMessage))
+                : Task.CompletedTask;
+        }
+
+        public class MyArg 
+        {
+            [AsyncNotNull]
+            public string Value { get; set; }
+        }
+
+        public interface IMyAsyncModule
+        {
+            Task Foo([ValidateProperties] MyArg para);
+
+            Task Bar([ValidateProperties(aggregate: true)] MyArg para);
+        }
+
+        [Test]
+        public void AsyncPropertyValidationTest()
+        {
+            var mockModule = new Mock<IMyAsyncModule>(MockBehavior.Loose);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Returns<Type, string>((iface, name) => null);
+
+            Type proxyType = ProxyGenerator<IMyAsyncModule, ParameterValidator<IMyAsyncModule>>.GetGeneratedType();
+
+            IMyAsyncModule module = (IMyAsyncModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object)!;
+
+            Assert.DoesNotThrowAsync(() => module.Foo(new MyArg 
+            {
+                Value = "cica"
+            }));
+
+            Assert.ThrowsAsync<ValidationException>(() => module.Foo(new MyArg()));
+        }
+
+        [Test]
+        public void AsyncAggregatedPropertyValidationTest()
+        {
+            var mockModule = new Mock<IMyAsyncModule>(MockBehavior.Loose);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Returns<Type, string>((iface, name) => null);
+
+            Type proxyType = ProxyGenerator<IMyAsyncModule, ParameterValidator<IMyAsyncModule>>.GetGeneratedType();
+
+            IMyAsyncModule module = (IMyAsyncModule) Activator.CreateInstance(proxyType, mockModule.Object, mockInjector.Object, true)!;
+
+            Assert.DoesNotThrowAsync(() => module.Foo(new MyArg
+            {
+                Value = "cica"
+            }));
+
+            var ex = Assert.ThrowsAsync<AggregateException>(() => module.Foo(new MyArg()));
+            Assert.That(ex.InnerExceptions.Count, Is.EqualTo(1));
+            Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ValidationException>());
         }
     }
 }
