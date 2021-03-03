@@ -833,19 +833,6 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.ICustomValidator
   fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator
   nameWithType: ICustomValidator
-- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
-  name: SupportsAsync
-  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsAsync
-  commentId: P:Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
-  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
-  nameWithType: ICustomValidator.SupportsAsync
-- uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync*
-  name: SupportsAsync
-  href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsAsync_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsAsync
-  nameWithType: ICustomValidator.SupportsAsync
 - uid: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
   name: SupportsNull
   href: Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull
@@ -1778,19 +1765,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Aggregate
   nameWithType: ValidatePropertiesAttribute.Aggregate
-- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.SupportsAsync
-  name: SupportsAsync
-  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_SupportsAsync
-  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.SupportsAsync
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.SupportsAsync
-  nameWithType: ValidatePropertiesAttribute.SupportsAsync
-- uid: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.SupportsAsync*
-  name: SupportsAsync
-  href: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html#Solti_Utils_Rpc_Interfaces_ValidatePropertiesAttribute_SupportsAsync_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.SupportsAsync
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.SupportsAsync
-  nameWithType: ValidatePropertiesAttribute.SupportsAsync
 - uid: Solti.Utils.Rpc.Interfaces.ValidationException
   name: ValidationException
   href: Solti.Utils.Rpc.Interfaces.ValidationException.html
@@ -1880,19 +1854,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun
   nameWithType: ValidatorAttributeBase.ShouldRun
-- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
-  name: SupportsAsync
-  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsAsync
-  commentId: P:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
-  nameWithType: ValidatorAttributeBase.SupportsAsync
-- uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync*
-  name: SupportsAsync
-  href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsAsync_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsAsync
-  nameWithType: ValidatorAttributeBase.SupportsAsync
 - uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull
   name: SupportsNull
   href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull
