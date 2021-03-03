@@ -14,7 +14,7 @@ namespace Solti.Utils.Rpc.Interfaces
     using Properties;
 
     /// <summary>
-    /// Ensures that the value of a parameter is not null.
+    /// Ensures that the value of a parameter or property is not empty.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
     public class NotEmptyAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator

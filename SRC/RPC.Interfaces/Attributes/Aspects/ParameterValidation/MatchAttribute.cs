@@ -13,7 +13,7 @@ namespace Solti.Utils.Rpc.Interfaces
     using Properties;
 
     /// <summary>
-    /// Ensures that the string representation of a parameter matches the given pattern.
+    /// Ensures that the string representation of a parameter or property matches the given pattern.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
     public class MatchAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
