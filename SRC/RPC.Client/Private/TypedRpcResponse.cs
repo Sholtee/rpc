@@ -7,25 +7,20 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Interfaces;
 
-    internal class ValueRpcResponse<TResult>: IRpcResonse where TResult: struct
+    internal abstract class TypedRpcResponse<TResult> : IRpcResonse
     {
         public TResult? Result { get; set; }
 
         public ExceptionInfo? Exception { get; set; }
 
         object? IRpcResonse.Result => Result;
-
-        ExceptionInfo? IRpcResonse.Exception => Exception;
     }
 
-    internal class ReferenceRpcResponse<TResult> : IRpcResonse where TResult : class
+    internal class ValueRpcResponse<TResult>: TypedRpcResponse<TResult?> where TResult: struct // Nem eleg ha csak az osben van Nullable megjeloles
     {
-        public TResult? Result { get; set; }
+    }
 
-        public ExceptionInfo? Exception { get; set; }
-
-        object? IRpcResonse.Result => Result;
-
-        ExceptionInfo? IRpcResonse.Exception => Exception;
+    internal class ReferenceRpcResponse<TResult> : TypedRpcResponse<TResult?> where TResult : class
+    {
     }
 }
