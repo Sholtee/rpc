@@ -68,7 +68,7 @@
    - `AliasAttribute`: Specifies the alias of the method. Useful if your module has overloaded methods.
    - `IgnoreAttribute`: Marks the method "remotely invisible".
    - [Aspects](https://github.com/Sholtee/injector#aspects ) also supported. The built-in aspects are the followings:
-     1. `ParameterValidatorAspectAttribute`:
+     - `ParameterValidatorAspectAttribute`:
 	 ```csharp
      [ParameterValidatorAspect]
      public interface IModule
@@ -91,7 +91,8 @@
      }
 	 ```
 	 The complete list of available parameter/property validators can be found [here](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects/ParameterValidation )
-     2. `TransactionAspectAttribute`:
+	 
+     - `TransactionAspectAttribute`:
      ```csharp
      [TransactionAspect]
      public interface IModule
@@ -105,7 +106,7 @@
        Task<int> DoSomethingAsync();
      }
 	 ```
-	 3. `RoleValidatorAspectAttribute`:
+	 - `RoleValidatorAspectAttribute`:
 	 ```csharp
      [Flags]
      public enum MyRoles
