@@ -253,7 +253,10 @@ namespace Solti.Utils.Rpc.Tests
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule
                 .Setup(i => i.Faulty())
-                .Callback(() => throw new InvalidOperationException("cica"));
+                .Returns(Task.FromException(new InvalidOperationException("cica")));
+            mockModule
+                .Setup(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Task.FromException<int>(new InvalidOperationException("cica")));
 
             Server.Register(i => mockModule.Object);
             Server.Start(Host);
@@ -261,6 +264,10 @@ namespace Solti.Utils.Rpc.Tests
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
             var ex = Assert.ThrowsAsync<RpcException>(proxy.Faulty);
+            Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
+
+            ex = Assert.ThrowsAsync<RpcException>(() => proxy.AddAsync(0, 0));
             Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
             Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
         }
