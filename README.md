@@ -67,6 +67,69 @@
    There are some control attributes that can be applied on (module) interface methods:
    - `AliasAttribute`: Specifies the alias of the method. Useful if your module has overloaded methods.
    - `IgnoreAttribute`: Marks the method "remotely invisible".
+   - [Aspects](https://github.com/Sholtee/injector#aspects ) also supported. The built-in aspects are the followings:
+     1. `ParameterValidatorAspectAttribute`:
+	 ```csharp
+     [ParameterValidatorAspect]
+     public interface IModule
+     {
+	   void DoSomething([NotNull, Match("cica", ParameterValidationErrorMessage = "ooops")] string arg1, [NotNull] object arg2);
+       void DoSomethingElse();
+       void ConditionallyValidated([NotNull(Condition = typeof(IfLoggedIn))] string arg);
+     }
+
+     public enum MyEnum
+     {
+       Anonymous = 0,
+       LoggedInUser = 1
+     }
+
+     public class IfLoggedIn : IConditionalValidatior
+     {
+       public bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) =>
+         currentScope.Get<IRoleManager>().GetAssignedRoles(null).Equals(MyEnum.LoggedInUser);
+     }
+	 ```
+	 The complete list of available parameter/property validators can be found [here](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects/ParameterValidation )
+     2. `TransactionAspectAttribute`:
+     ```csharp
+     [TransactionAspect]
+     public interface IModule
+     {
+       void NonTransactional();
+       [Transactional]
+       void DoSomething(object arg);
+       [Transactional]
+       void DoSomethingFaulty();
+       [Transactional(IsolationLevel = IsolationLevel.Serializable)]
+       Task<int> DoSomethingAsync();
+     }
+	 ```
+	 3. `RoleValidatorAspectAttribute`:
+	 ```csharp
+     [Flags]
+     public enum MyRoles
+     {
+       Anonymous = 0,
+       User = 1,
+       MayPrint = 2,
+       Admin = 4
+     }
+
+     [RoleValidatorAspect] // to usse this aspect you have to implement and register the IRoleManager interface
+     public interface IModule
+     {
+       [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
+       void Print();
+       [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
+       Task<string> PrintAsync();
+       [RequiredRoles(MyRoles.Anonymous)]
+       void Login();
+       void MissingRequiredRoleAttribute();
+     }	 
+	 ```
+	 
+     Note that these aspects are [naked](https://github.com/Sholtee/injector#naked-aspects )
    
    These attributes are provided by the [RPC.NET.Interfaces](https://www.nuget.org/packages/rpc.net.interfaces ) package.
 3. Create the service `exe`:
