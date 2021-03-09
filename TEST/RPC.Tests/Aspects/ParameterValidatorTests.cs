@@ -169,8 +169,22 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             Assert.Throws<ValidationException>(() => validator.Validate(GetDummyParamInfo(), null, null), Errors.VALIDATION_FAILED);
             Assert.ThrowsAsync<ValidationException>(() => validator.ValidateAsync(GetDummyParamInfo(), null, null), Errors.VALIDATION_FAILED);
 
-            ParameterInfo GetDummyParamInfo() => ((MethodInfo) MethodBase.GetCurrentMethod()).ReturnParameter;
+            
         }
+
+        [Test]
+        public void LengthBetween_ShouldThrowIfTheLengthIsNotBetweenTheGivenValues() 
+        {
+            IParameterValidator validator = new LengthBetweenAttribute(min: 1, max: 3);
+
+            Assert.DoesNotThrow(() => validator.Validate(GetDummyParamInfo(), new int[1], null));
+            Assert.DoesNotThrow(() => validator.Validate(GetDummyParamInfo(), new int[3], null));
+
+            Assert.Throws<ValidationException>(() => validator.Validate(GetDummyParamInfo(), new int[0], null), Errors.INVALID_PARAM_LENGTH);
+            Assert.Throws<ValidationException>(() => validator.Validate(GetDummyParamInfo(), new int[4], null), Errors.INVALID_PARAM_LENGTH);
+        }
+
+        private static ParameterInfo GetDummyParamInfo() => ((MethodInfo) MethodBase.GetCurrentMethod()).ReturnParameter;
 
         public class AsyncNotNullAttribute : Attribute, IAsyncParameterValidator
         {

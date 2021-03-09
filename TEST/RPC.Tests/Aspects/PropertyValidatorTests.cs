@@ -220,10 +220,24 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         [Test]
         public void NotEmptyAttribute_ShouldThrowOnEmptyValue([ValueSource(nameof(EmptyValues))] object value)
         {
-            var attr = new NotEmptyAttribute();
+            IPropertyValidator validator = new NotEmptyAttribute();
 
             PropertyInfo prop = GetType().GetProperty(nameof(EmptyValues), BindingFlags.Public | BindingFlags.Static);
-            Assert.Throws<ValidationException>(() => ((IPropertyValidator)attr).Validate(prop, value, null!), Errors.EMPTY_PROPERTY);
+            Assert.Throws<ValidationException>(() => validator.Validate(prop, value, null!), Errors.EMPTY_PROPERTY);
+        }
+
+        [Test]
+        public void LengthBetween_ShouldThrowIfTheLengthIsNotBetweenTheGivenValues()
+        {
+            PropertyInfo prop = GetType().GetProperty(nameof(EmptyValues), BindingFlags.Public | BindingFlags.Static);
+
+            IPropertyValidator validator = new LengthBetweenAttribute(min: 1, max: 3);
+
+            Assert.DoesNotThrow(() => validator.Validate(prop, new int[1], null));
+            Assert.DoesNotThrow(() => validator.Validate(prop, new int[3], null));
+
+            Assert.Throws<ValidationException>(() => validator.Validate(prop, new int[0], null), Errors.INVALID_PROPERTY_LENGTH);
+            Assert.Throws<ValidationException>(() => validator.Validate(prop, new int[4], null), Errors.INVALID_PROPERTY_LENGTH);
         }
 
         private class NotNull : IAsyncPredicate

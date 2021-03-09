@@ -123,6 +123,12 @@
   <data name="EMPTY_PROPERTY" xml:space="preserve">
     <value>The value of the property can not be empty.</value>
   </data>
+  <data name="INVALID_PARAM_LENGTH" xml:space="preserve">
+    <value>The length of the parameter should be between {0} and {1}.</value>
+  </data>
+  <data name="INVALID_PROPERTY_LENGTH" xml:space="preserve">
+    <value>The length of the property should be between {0} and {1}.</value>
+  </data>
   <data name="MODULE_NOT_FOUND" xml:space="preserve">
     <value>The module "{0}" could not be found.</value>
   </data>

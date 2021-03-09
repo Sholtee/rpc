@@ -79,6 +79,24 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The length of the parameter should be between {0} and {1}..
+        /// </summary>
+        internal static string INVALID_PARAM_LENGTH {
+            get {
+                return ResourceManager.GetString("INVALID_PARAM_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The length of the property should be between {0} and {1}..
+        /// </summary>
+        internal static string INVALID_PROPERTY_LENGTH {
+            get {
+                return ResourceManager.GetString("INVALID_PROPERTY_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The module &quot;{0}&quot; could not be found..
         /// </summary>
         internal static string MODULE_NOT_FOUND {
