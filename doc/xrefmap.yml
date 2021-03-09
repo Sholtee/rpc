@@ -1359,6 +1359,111 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Version
   nameWithType: IServiceDescriptor.Version
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
+  name: LengthBetweenAttribute
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
+  nameWithType: LengthBetweenAttribute
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.UInt32,System.UInt32)
+  name: LengthBetweenAttribute(UInt32, UInt32)
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_System_UInt32_System_UInt32_
+  commentId: M:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.UInt32,System.UInt32)
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.LengthBetweenAttribute(System.UInt32, System.UInt32)
+  nameWithType: LengthBetweenAttribute.LengthBetweenAttribute(UInt32, UInt32)
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor*
+  name: LengthBetweenAttribute
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.LengthBetweenAttribute
+  nameWithType: LengthBetweenAttribute.LengthBetweenAttribute
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max
+  name: Max
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Max
+  commentId: P:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max
+  nameWithType: LengthBetweenAttribute.Max
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max*
+  name: Max
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Max_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max
+  nameWithType: LengthBetweenAttribute.Max
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min
+  name: Min
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Min
+  commentId: P:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min
+  nameWithType: LengthBetweenAttribute.Min
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min*
+  name: Min
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Min_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min
+  nameWithType: LengthBetweenAttribute.Min
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage
+  name: ParameterValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_ParameterValidationErrorMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage
+  nameWithType: LengthBetweenAttribute.ParameterValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage*
+  name: ParameterValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_ParameterValidationErrorMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage
+  nameWithType: LengthBetweenAttribute.ParameterValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage
+  name: PropertyValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_PropertyValidationErrorMessage
+  commentId: P:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage
+  nameWithType: LengthBetweenAttribute.PropertyValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage*
+  name: PropertyValidationErrorMessage
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_PropertyValidationErrorMessage_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage
+  nameWithType: LengthBetweenAttribute.PropertyValidationErrorMessage
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  name: IParameterValidator.Validate(ParameterInfo, Object, IInjector)
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(ParameterInfo, Object, IInjector)
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(System.Reflection.ParameterInfo, System.Object, Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: LengthBetweenAttribute.IParameterValidator.Validate(ParameterInfo, Object, IInjector)
+  nameWithType.vb: LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate(ParameterInfo, Object, IInjector)
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*
+  name: IParameterValidator.Validate
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate
+  isSpec: "True"
+  name.vb: Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate
+  nameWithType: LengthBetweenAttribute.IParameterValidator.Validate
+  nameWithType.vb: LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IParameterValidator.Validate
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  name: IPropertyValidator.Validate(PropertyInfo, Object, IInjector)
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)
+  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(PropertyInfo, Object, IInjector)
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(System.Reflection.PropertyInfo, System.Object, Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: LengthBetweenAttribute.IPropertyValidator.Validate(PropertyInfo, Object, IInjector)
+  nameWithType.vb: LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate(PropertyInfo, Object, IInjector)
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*
+  name: IPropertyValidator.Validate
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate
+  isSpec: "True"
+  name.vb: Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate
+  nameWithType: LengthBetweenAttribute.IPropertyValidator.Validate
+  nameWithType.vb: LengthBetweenAttribute.Solti.Utils.Rpc.Interfaces.IPropertyValidator.Validate
 - uid: Solti.Utils.Rpc.Interfaces.MatchAttribute
   name: MatchAttribute
   href: Solti.Utils.Rpc.Interfaces.MatchAttribute.html

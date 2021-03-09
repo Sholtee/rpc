@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class ValidatorAttributeBase
+    <title>Class LengthBetweenAttribute
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class ValidatorAttributeBase
+    <meta name="title" content="Class LengthBetweenAttribute
    | RPC.NET ">
     <meta name="generator" content="docfx 2.46.0.0">
     
@@ -37,33 +37,39 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute">
   
   
-  <h1 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase" class="text-break">Class ValidatorAttributeBase
+  <h1 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute" class="text-break">Class LengthBetweenAttribute
   </h1>
-  <div class="markdown level0 summary"><p>Base class for validator attributes e.g.: <a class="xref" href="Solti.Utils.Rpc.Interfaces.NotNullAttribute.html">NotNullAttribute</a>.</p>
+  <div class="markdown level0 summary"><p>Ensures that the string representation of a parameter or property matches the given pattern.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
-    <div class="level2"><span class="xref">ValidatorAttributeBase</span></div>
-      <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html">LengthBetweenAttribute</a></div>
-      <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Interfaces.MatchAttribute.html">MatchAttribute</a></div>
-      <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Interfaces.MustAttribute.html">MustAttribute</a></div>
-      <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.html">NotEmptyAttribute</a></div>
-      <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Interfaces.NotNullAttribute.html">NotNullAttribute</a></div>
-      <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.html">ValidatePropertiesAttribute</a></div>
+    <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html">ValidatorAttributeBase</a></div>
+    <div class="level3"><span class="xref">LengthBetweenAttribute</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a></div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html">IParameterValidator</a></div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html">IPropertyValidator</a></div>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition">ValidatorAttributeBase.Condition</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull">ValidatorAttributeBase.SupportsNull</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html#Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_">ValidatorAttributeBase.ShouldRun(MethodInfo, IInjector)</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute.equals#System_Attribute_Equals_System_Object_">Attribute.Equals(Object)</a>
     </div>
@@ -193,20 +199,21 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class ValidatorAttributeBase : Attribute, IConditionalValidatior, ICustomValidator</code></pre>
+    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
+public class LengthBetweenAttribute : ValidatorAttributeBase, IConditionalValidatior, IParameterValidator, IPropertyValidator, ICustomValidator</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase__ctor_System_Boolean_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.#ctor(System.Boolean)">ValidatorAttributeBase(Boolean)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html">ValidatorAttributeBase</a> instance.</p>
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_System_UInt32_System_UInt32_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.UInt32,System.UInt32)">LengthBetweenAttribute(UInt32, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html">LengthBetweenAttribute</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected ValidatorAttributeBase(bool supportsNull)</code></pre>
+    <pre><code class="lang-csharp hljs">public LengthBetweenAttribute(uint min = 0U, uint max = 4294967295U)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -219,22 +226,27 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">supportsNull</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">min</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">max</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_Condition" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition">Condition</h4>
-  <div class="markdown level1 summary"><p>If set, it should point to a class implementing the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a> interface.</p>
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Max_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Max" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max">Max</h4>
+  <div class="markdown level1 summary"><p>The maximum length of the value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Type Condition { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public uint Max { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -246,19 +258,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_SupportsNull" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull">SupportsNull</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull">SupportsNull</a>.</p>
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Min_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Min" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min">Min</h4>
+  <div class="markdown level1 summary"><p>The minimum length of the value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool SupportsNull { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public uint Min { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -270,21 +282,68 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_ParameterValidationErrorMessage_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_ParameterValidationErrorMessage" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage">ParameterValidationErrorMessage</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_ParameterValidationErrorMessage">ParameterValidationErrorMessage</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ParameterValidationErrorMessage { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_PropertyValidationErrorMessage_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_PropertyValidationErrorMessage" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage">PropertyValidationErrorMessage</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html#Solti_Utils_Rpc_Interfaces_IPropertyValidator_PropertyValidationErrorMessage">PropertyValidationErrorMessage</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PropertyValidationErrorMessage { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_ShouldRun_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_ValidatorAttributeBase_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo,Solti.Utils.DI.Interfaces.IInjector)">ShouldRun(MethodInfo, IInjector)</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html#Solti_Utils_Rpc_Interfaces_IConditionalValidatior_ShouldRun_System_Reflection_MethodInfo_Solti_Utils_DI_Interfaces_IInjector_">ShouldRun(MethodInfo, IInjector)</a>.</p>
-</div>
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IParameterValidator#Validate(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IParameterValidator.Validate(ParameterInfo, Object, IInjector)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool ShouldRun(MethodInfo containingMethod, IInjector currentScope)</code></pre>
+    <pre><code class="lang-csharp hljs">void IParameterValidator.Validate(ParameterInfo param, object value, IInjector currentScope)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -297,8 +356,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
-        <td><span class="parametername">containingMethod</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.parameterinfo">ParameterInfo</a></td>
+        <td><span class="parametername">param</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
         <td></td>
       </tr>
       <tr>
@@ -308,17 +372,37 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
+  <a id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute_Solti_Utils_Rpc_Interfaces_IPropertyValidator_Validate_System_Reflection_PropertyInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Solti#Utils#Rpc#Interfaces#IPropertyValidator#Validate(System.Reflection.PropertyInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">IPropertyValidator.Validate(PropertyInfo, Object, IInjector)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void IPropertyValidator.Validate(PropertyInfo prop, object value, IInjector currentScope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
+        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.propertyinfo">PropertyInfo</a></td>
+        <td><span class="parametername">prop</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">currentScope</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -326,6 +410,12 @@
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html">IParameterValidator</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html">IPropertyValidator</a>
   </div>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a>
