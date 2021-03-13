@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Configurations>Debug;Perf</Configurations>
     <!--BenchmarkDotNet requires the exe and csproj name to be equal-->
     <AssemblyName>RPC.Perf</AssemblyName>
@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.*" />
-    <PackageReference Include="Injector.NET" Version="4.0-preview*" />
+    <PackageReference Include="Injector.NET" Version="4.*" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(LibVersion)' != ''">

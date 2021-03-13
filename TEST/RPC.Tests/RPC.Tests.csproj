@@ -14,7 +14,7 @@
 
   <!--OpenCover requires .NET Core 2.2 while Test Explorer needs 3.X-->
   <PropertyGroup Condition="'$(CI)'==''">
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
