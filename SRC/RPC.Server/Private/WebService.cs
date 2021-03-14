@@ -89,7 +89,7 @@ namespace Solti.Utils.Rpc.Internals
         private static void InvokeNetsh(string arguments) 
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-                throw new NotSupportedException();
+                throw new PlatformNotSupportedException();
 
             var psi = new ProcessStartInfo("netsh", arguments)
             {
@@ -434,9 +434,19 @@ namespace Solti.Utils.Rpc.Internals
         public static void AddUrlReservation(string url) => InvokeNetsh($"http add urlacl url={url ?? throw new ArgumentNullException(nameof(url))} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes");
 
         /// <summary>
+        /// Binds an SSL certificate to the given IP and port.
+        /// </summary>
+        public static void AddSslCert(IPEndPoint ipPort, string certHash) => InvokeNetsh($"http add sslcert ipport={ipPort ?? throw new ArgumentNullException(nameof(ipPort))} certhash={certHash ?? throw new ArgumentNullException(nameof(certHash))}");
+
+        /// <summary>
         /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
         /// </summary>
         public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url ?? throw new ArgumentNullException(nameof(url))}");
+
+        /// <summary>
+        /// Removes the bound SSL certificate.
+        /// </summary>
+        public static void RemoveSslCert(IPEndPoint ipPort) => InvokeNetsh($"http delete sslcert ipport={ipPort ?? throw new ArgumentNullException(nameof(ipPort))}");
         #endregion
     }
 }
