@@ -6,12 +6,18 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Server", "SRC\RPC.Server\RPC.Server.csproj", "{F160383A-7000-4FE4-B5E8-D2CA329F48B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Tests", "TEST\RPC.Tests\RPC.Tests.csproj", "{4F92F535-C640-457A-A908-40529B17AE7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{29590C53-75E1-43A7-80D7-9298CCC2E06E} = {29590C53-75E1-43A7-80D7-9298CCC2E06E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Client", "SRC\RPC.Client\RPC.Client.csproj", "{EA247979-47CA-4ABA-990F-7E267BD72C4E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Interfaces", "SRC\RPC.Interfaces\RPC.Interfaces.csproj", "{1FBD13AD-02C2-4959-8C84-F80927BE8F44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Perf", "PERF\RPC.Perf.csproj", "{B95B397C-E87F-4E9E-91AD-1DF11D183754}"
+	ProjectSection(ProjectDependencies) = postProject
+		{29590C53-75E1-43A7-80D7-9298CCC2E06E} = {29590C53-75E1-43A7-80D7-9298CCC2E06E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Server.Sample", "TEST\RPC.Server.Sample\RPC.Server.Sample.csproj", "{29590C53-75E1-43A7-80D7-9298CCC2E06E}"
 EndProject
