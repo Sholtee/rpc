@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -36,7 +37,7 @@ namespace Solti.Utils.Rpc.Perf
 
         private static Process StartServer() 
         {
-            var psi = new ProcessStartInfo(Path.ChangeExtension(typeof(ICalculator).Assembly.Location, "exe"))
+            var psi = new ProcessStartInfo(Path.ChangeExtension(typeof(ICalculator).Assembly.Location.Replace(".Interfaces", string.Empty, StringComparison.OrdinalIgnoreCase), "exe"))
             {
                 UseShellExecute = true,
                 Arguments = "-nolog"

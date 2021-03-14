@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc.Tests
         {
             var psi = new ProcessStartInfo("dotnet")
             {
-                Arguments = Path.ChangeExtension(typeof(ICalculator).Assembly.Location, "dll"),
+                Arguments = Path.ChangeExtension(typeof(ICalculator).Assembly.Location.Replace(".Interfaces", string.Empty, StringComparison.OrdinalIgnoreCase), "dll"),
                 UseShellExecute = false,
                 RedirectStandardOutput = true
             };

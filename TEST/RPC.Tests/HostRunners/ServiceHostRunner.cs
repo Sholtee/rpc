@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,13 +20,15 @@ namespace Solti.Utils.Rpc.Hosting.Tests
     {
         const string HOST = "http://localhost:1986/api/";
 
+        private readonly string EXE_PATCH = Path.ChangeExtension(typeof(ICalculator).Assembly.Location.Replace(".Interfaces", string.Empty, StringComparison.OrdinalIgnoreCase), "exe");
+
         [OneTimeSetUp]
         public async Task Setup()
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) return;
 
-            InvokeSc($"create Calculator binPath= \"%ProgramFiles%\\dotnet\\dotnet.exe {typeof(ICalculator).Assembly.Location}\"");
-            InvokeSc("start Calculator");
+            Invoke(EXE_PATCH, "-install");
+            Invoke("sc", "start Calculator");
 
             using var factory = new RpcClientFactory(HOST);
             int attempts = 0;
@@ -50,8 +53,8 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) return;
 
-            InvokeSc("stop Calculator");
-            InvokeSc("delete Calculator");
+            Invoke("sc", "stop Calculator");
+            Invoke(EXE_PATCH, "-uninstall");
         }
 
         [Test]
@@ -65,9 +68,9 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             Assert.That(await calculator.AddAsync(1, 1), Is.EqualTo(2));
         }
 
-        private static void InvokeSc(string args)
+        private static void Invoke(string cmd, string args)
         {
-            var psi = new ProcessStartInfo("sc")
+            var psi = new ProcessStartInfo(cmd)
             {
                 Verb = "runas",
                 Arguments = args,
