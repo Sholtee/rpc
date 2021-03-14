@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <AssemblyName>Solti.Utils.Rpc.Tests</AssemblyName>
@@ -10,11 +10,6 @@
     <Configurations>Debug</Configurations>
     <OutputType>Library</OutputType>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>
-  </PropertyGroup>
-
-  <!--OpenCover requires .NET Core 2.2 while Test Explorer needs 3.X-->
-  <PropertyGroup Condition="'$(CI)'==''">
-    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

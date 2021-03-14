@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Solti.Utils.Rpc.Server.Sample</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Server.Sample</RootNamespace>
     <Authors>Denes Solti</Authors>
@@ -13,10 +13,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>
     <Product>RPC.NET.Server.Sample</Product>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(CI)'=='' Or '$(Configuration)'=='Perf'">
-    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Perf|AnyCPU'">
