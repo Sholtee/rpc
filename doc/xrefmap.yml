@@ -2058,19 +2058,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ValidationException.ValidationException
   nameWithType: ValidationException.ValidationException
-- uid: Solti.Utils.Rpc.Interfaces.ValidationException.Name
-  name: Name
-  href: Solti.Utils.Rpc.Interfaces.ValidationException.html#Solti_Utils_Rpc_Interfaces_ValidationException_Name
-  commentId: P:Solti.Utils.Rpc.Interfaces.ValidationException.Name
-  fullName: Solti.Utils.Rpc.Interfaces.ValidationException.Name
-  nameWithType: ValidationException.Name
-- uid: Solti.Utils.Rpc.Interfaces.ValidationException.Name*
-  name: Name
-  href: Solti.Utils.Rpc.Interfaces.ValidationException.html#Solti_Utils_Rpc_Interfaces_ValidationException_Name_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidationException.Name
+- uid: Solti.Utils.Rpc.Interfaces.ValidationException.TargetName
+  name: TargetName
+  href: Solti.Utils.Rpc.Interfaces.ValidationException.html#Solti_Utils_Rpc_Interfaces_ValidationException_TargetName
+  commentId: P:Solti.Utils.Rpc.Interfaces.ValidationException.TargetName
+  fullName: Solti.Utils.Rpc.Interfaces.ValidationException.TargetName
+  nameWithType: ValidationException.TargetName
+- uid: Solti.Utils.Rpc.Interfaces.ValidationException.TargetName*
+  name: TargetName
+  href: Solti.Utils.Rpc.Interfaces.ValidationException.html#Solti_Utils_Rpc_Interfaces_ValidationException_TargetName_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ValidationException.TargetName
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.ValidationException.Name
-  nameWithType: ValidationException.Name
+  fullName: Solti.Utils.Rpc.Interfaces.ValidationException.TargetName
+  nameWithType: ValidationException.TargetName
 - uid: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase
   name: ValidatorAttributeBase
   href: Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.html
