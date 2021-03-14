@@ -37,8 +37,10 @@ namespace Solti.Utils.Rpc.Interfaces
 
         /// <summary>
         /// The <see cref="ILogger"/> related to the host.
-        /// </summary>
+        /// </summary>       
+        #pragma warning disable CS3003 // ILogger is not CLS-compliant
         ILogger? Logger { get; }
+        #pragma warning restore CS3003
 
         /// <summary>
         /// Invoked on service installation.

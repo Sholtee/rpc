@@ -19,7 +19,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Indicates that the properties of a parameter or property may be validated.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public class ValidatePropertiesAttribute : ValidatorAttributeBase, IAsyncPropertyValidator, IAsyncParameterValidator
+    public sealed class ValidatePropertiesAttribute : ValidatorAttributeBase, IAsyncPropertyValidator, IAsyncParameterValidator
     {
         private MethodInfo? ContainingMethod { get; set; }
 

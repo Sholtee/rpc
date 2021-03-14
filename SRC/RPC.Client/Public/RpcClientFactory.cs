@@ -242,7 +242,9 @@ namespace Solti.Utils.Rpc
                     throw new RpcException(Resources.RPC_FAILED, (Exception) ctor(new object?[] { exception.Message }));
             }
 
+            #pragma warning disable CA2201 // Since there is no concrete error type we have to fall back to Exception
             throw new RpcException(Resources.RPC_FAILED, new Exception(exception.Message));
+            #pragma warning restore CA2201
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
     <Configurations>Debug;Release;Perf</Configurations>
     <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>CA2007</NoWarn>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>

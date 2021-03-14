@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -163,8 +162,9 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Processes HTTP requests asynchronously.
         /// </summary>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        protected override async Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation) 
+        #pragma warning disable CS3001 // ILogger is not CLS-compliant
+        protected override async Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
+        #pragma warning restore CS3001
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -226,7 +226,9 @@ namespace Solti.Utils.Rpc
                 throw;
             }
 
+            #pragma warning disable CA1031 // We have to catch all kind of exceptions here
             catch (Exception ex)
+            #pragma warning restore CA1031
             {
                 //
                 // Kulomben valid valasz fogja tartalmazni a hibat.
@@ -241,8 +243,9 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
-        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger) 
+        #pragma warning disable CS3001 // ILogger is not CLS-compliant
+        protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger)
+        #pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
             if (context == null) 
                 throw new ArgumentNullException(nameof(context));

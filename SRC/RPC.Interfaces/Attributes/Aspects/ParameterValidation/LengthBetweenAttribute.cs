@@ -17,12 +17,12 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Ensures that the string representation of a parameter or property matches the given pattern.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public class LengthBetweenAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
+    public sealed class LengthBetweenAttribute : ValidatorAttributeBase, IParameterValidator, IPropertyValidator
     {
         /// <summary>
         /// Creates a new <see cref="LengthBetweenAttribute"/> instance.
         /// </summary>
-        public LengthBetweenAttribute(uint min = 0, uint max = uint.MaxValue) : base(supportsNull: false) 
+        public LengthBetweenAttribute(int min = 0, int max = int.MaxValue) : base(supportsNull: false) 
         {
             Min = min;
             Max = max;
@@ -34,12 +34,12 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The minimum length of the value.
         /// </summary>
-        public uint Min { get; }
+        public int Min { get; }
 
         /// <summary>
         /// The maximum length of the value.
         /// </summary>
-        public uint Max { get; }
+        public int Max { get; }
 
         /// <summary>
         /// See <see cref="IParameterValidator.ParameterValidationErrorMessage"/>.

@@ -91,12 +91,16 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// See <see cref="ILogger.IsEnabled(LogLevel)"/>.
         /// </summary>
+        #pragma warning disable CS3001 // LogLevel is not CLS-compliant
         public bool IsEnabled(LogLevel logLevel) => true;
+        #pragma warning restore CS3001
 
         /// <summary>
         /// See <see cref="ILogger.Log{TState}(LogLevel, EventId, TState, Exception, Func{TState, Exception, string})"/>.
         /// </summary>
+        #pragma warning disable CS3001 // LogLevel & EventId are not CLS-compliant
         public virtual void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        #pragma warning restore CS3001
         {
             if (!IsEnabled(logLevel)) return;
 

@@ -103,7 +103,9 @@ namespace Solti.Utils.Rpc.Internals
             
             netsh.WaitForExit();
             if (netsh.ExitCode != 0)
+                #pragma warning disable CA2201 // Do not change the exception type to preserve backward compatibility
                 throw new Exception(Errors.NETSH_INVOCATION_FAILED);
+                #pragma warning restore CA2201
         }
         #endregion
 
@@ -271,7 +273,9 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
-        protected virtual Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellationToken)
+        #pragma warning disable CS3001 // ILogger is not CLS-compliant
+        protected virtual Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
+        #pragma warning restore CS3001
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -327,7 +331,9 @@ namespace Solti.Utils.Rpc.Internals
         /// If set it defines the delegate that will be used for creating logger instances. 
         /// </summary>
         /// <remarks>Every session will have its own logger instance.</remarks>
+        #pragma warning disable CS3003 // ILogger is not CLS-compliant
         public Func<ILogger>? LoggerFactory { get; set; } = () => TraceLogger.Create<WebService>();
+        #pragma warning restore CS3003
 
         /// <summary>
         /// Starts the Web Service.
@@ -354,7 +360,9 @@ namespace Solti.Utils.Rpc.Internals
 
                 FListener = null;
 
+                #pragma warning disable CA1508 // There is not dead conditional code
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
+                #pragma warning restore CA1508
                 {
                     AddUrlReservation(url);
                     FNeedToRemoveUrlReservation = true;

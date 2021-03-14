@@ -32,7 +32,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             netsh.WaitForExit();
 
             if (netsh.ExitCode != 0)
+                #pragma warning disable CA2201 // To preserve backward compatibility keep throwing simple Exception only
                 throw new Exception(string.Format(Errors.Culture, Errors.SC_INVOCATION_FAILED, netsh.ExitCode));
+                #pragma warning restore CA2201
         }
 
         internal bool Install { get; set; }
@@ -48,8 +50,8 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             {
                 var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{Process.GetCurrentProcess().MainModule.FileName}\" start= {(Host.AutoStart ? "auto" : "demand")}");
                 
-                if (Host.Description != null)
-                    sb.Append($" displayname= \"{Host.Description ?? string.Empty}\"");
+                if (Host.Description is not null)
+                    sb.Append($" displayname= \"{Host.Description}\"");
                 if (Host.Dependencies.Any())
                     sb.Append($" depend= {string.Join("/", Host.Dependencies)}");
 

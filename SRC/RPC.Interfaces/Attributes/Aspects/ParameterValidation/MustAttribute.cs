@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -17,17 +18,26 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Ensures that the value a parameter or property passes the given validation.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public class MustAttribute : ValidatorAttributeBase, IAsyncParameterValidator, IAsyncPropertyValidator
+    public sealed class MustAttribute : ValidatorAttributeBase, IAsyncParameterValidator, IAsyncPropertyValidator
     {
         private IPredicate Predicate { get; }
 
         /// <summary>
         /// Creates a new <see cref="MustAttribute"/> class.
         /// </summary>
-        public MustAttribute(Type predicate) : base(supportsNull: true) => Predicate = (IPredicate) (predicate
-            .GetConstructor(Type.EmptyTypes) ?? throw new ArgumentException(Errors.PARAMETERLESS_CTOR_REQUIRED, nameof(predicate)))
-            .ToStaticDelegate()
-            .Invoke(Array.Empty<object?>());
+        [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments", Justification = "See 'Predicate' property")]
+        public MustAttribute(Type predicate) : base(supportsNull: true)
+        {
+            if (predicate is null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            ConstructorInfo? ctor = predicate.GetConstructor(Type.EmptyTypes) ?? 
+                throw new ArgumentException(Errors.PARAMETERLESS_CTOR_REQUIRED, nameof(predicate));
+
+            Predicate = (IPredicate) ctor
+               .ToStaticDelegate()
+               .Invoke(Array.Empty<object?>());
+        }
 
         /// <summary>
         /// See <see cref="IPropertyValidator.PropertyValidationErrorMessage"/>.

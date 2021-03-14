@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 namespace Solti.Utils.Rpc.Hosting.Internals
 {
     [SuppressMessage("Design", "CA1060:Move pinvokes to native methods class")]
+    [SuppressMessage("Security", "CA5392:Use DefaultDllImportSearchPaths attribute for P/Invokes")]
     internal static class ProcessExtensions
     {
         /// <summary>
@@ -32,7 +33,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
             private IntPtr UniqueProcessId;
             private IntPtr InheritedFromUniqueProcessId;
 
-            [DllImport("ntdll.dll")]
+            [DllImport("ntdll.dll")]          
             private static extern int NtQueryInformationProcess(IntPtr processHandle, int processInformationClass, ref ProcessBasicInformation processInformation, int processInformationLength, out int returnLength);
 
             public static int GetParentPid()

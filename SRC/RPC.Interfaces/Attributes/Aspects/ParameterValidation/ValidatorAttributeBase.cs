@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Solti.Utils.Rpc.Interfaces
@@ -15,6 +16,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Base class for validator attributes e.g.: <see cref="NotNullAttribute"/>.
     /// </summary>
+    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix")]
     public abstract class ValidatorAttributeBase: Attribute, IConditionalValidatior, ICustomValidator
     {
         private IConditionalValidatior? ShouldRunImpl;

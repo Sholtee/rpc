@@ -50,7 +50,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                         .ToArray();
 
                 if (missingDependencies.Any())
+                    #pragma warning disable CA2201 // To preserve backward compatibility keep throwing simple Exception only
                     throw new Exception(string.Format(Errors.Culture, Errors.DEPENDENCY_NOT_AVAILABLE, string.Join(",", missingDependencies)));
+                    #pragma warning restore CA2201
 
                 bool depsAvailable = Task.WaitAll
                 (
@@ -61,7 +63,9 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                     TimeSpan.FromSeconds(10) // TODO: ezt konfiguralhatova tenni
                 );
                 if (!depsAvailable)
+                    #pragma warning disable CA2201 // Like above...
                     throw new Exception(Errors.DEPENDENCY_NOT_RUNNING);
+                    #pragma warning restore CA2201
             }
 
             Console.Title = Host.Name;

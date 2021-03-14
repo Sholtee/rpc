@@ -14,7 +14,10 @@ namespace Solti.Utils.Rpc.Hosting.Internals
     {
         internal DefaultHostRunner(IHost host, HostConfiguration configuration) : base(host, configuration) { }
 
-        public override void Start() => throw new Exception(Errors.NO_HOSTING);
+        public override void Start() =>
+            #pragma warning disable CA2201 // To preserve backward compatibility keep throwing simple Exception only
+            throw new Exception(Errors.NO_HOSTING);
+            #pragma warning restore CA2201
 
         public override void Stop()
         {

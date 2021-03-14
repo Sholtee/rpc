@@ -23,9 +23,9 @@ namespace Solti.Utils.Rpc.Interfaces
 
             return new Version
             {
-                Major = (uint) src.ProductMajorPart,
-                Minor = (uint) src.ProductMinorPart,
-                Patch = (uint) src.ProductBuildPart
+                Major = src.ProductMajorPart,
+                Minor = src.ProductMinorPart,
+                Patch = src.ProductBuildPart
             };
         }
 
@@ -39,9 +39,9 @@ namespace Solti.Utils.Rpc.Interfaces
 
             return new Version
             {
-                Major = (uint) src.Major,
-                Minor = (uint) src.Minor,
-                Patch = (uint) src.Build
+                Major = src.Major,
+                Minor = src.Minor,
+                Patch = src.Build
             };
         }
 
@@ -59,16 +59,16 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The major version.
         /// </summary>
-        public uint Major { get; set; }
+        public int Major { get; set; }
 
         /// <summary>
         /// The minor version.
         /// </summary>
-        public uint Minor { get; set; }
+        public int Minor { get; set; }
         
         /// <summary>
         /// The patch version.
         /// </summary>
-        public uint Patch { get; set; }
+        public int Patch { get; set; }
     }
 }

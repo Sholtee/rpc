@@ -81,7 +81,9 @@ namespace Solti.Utils.Rpc.Hosting
         public bool AutoStart { get; protected set; }
 
         /// <inheritdoc/>
+        #pragma warning disable CS3003 // ILogger is not CLS-compliant
         public ILogger? Logger { get; protected set; } = TraceLogger.Create<AppHostBase>();
+        #pragma warning restore CS3003
 
         IEnumerable<string> IHost.Dependencies => Dependencies;
 
