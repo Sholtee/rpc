@@ -54,7 +54,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
             var ex = Assert.Throws<ValidationException>(() => module.DoSomething(null, null));
-            Assert.That(ex.Name, Is.EqualTo("arg1"));
+            Assert.That(ex.TargetName, Is.EqualTo("arg1"));
             Assert.That(ex.Message, Is.EqualTo(Errors.NULL_PARAM));
         }
 
@@ -72,10 +72,10 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomething("kutya", null));
             Assert.That(ex.InnerExceptions.Count, Is.EqualTo(2));
             Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ValidationException>());
-            Assert.That(((ValidationException) ex.InnerExceptions[0]).Name, Is.EqualTo("arg1"));
+            Assert.That(((ValidationException) ex.InnerExceptions[0]).TargetName, Is.EqualTo("arg1"));
             Assert.That(((ValidationException) ex.InnerExceptions[0]).Message, Is.EqualTo("ooops"));
             Assert.That(ex.InnerExceptions[1], Is.InstanceOf<ValidationException>());
-            Assert.That(((ValidationException) ex.InnerExceptions[1]).Name, Is.EqualTo("arg2"));
+            Assert.That(((ValidationException) ex.InnerExceptions[1]).TargetName, Is.EqualTo("arg2"));
         }
 
         [Test]

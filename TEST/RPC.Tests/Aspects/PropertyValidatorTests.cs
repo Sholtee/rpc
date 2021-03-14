@@ -88,7 +88,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             {
                 Value2 = null
             }));
-            Assert.That(ex.Name, Is.EqualTo(nameof(MyParameter2.Value2)));
+            Assert.That(ex.TargetName, Is.EqualTo(nameof(MyParameter2.Value2)));
 
             ex = Assert.Throws<ValidationException>(() => module.DoSomething(new MyParameter2
             {
@@ -98,7 +98,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 },
                 Value3 = new object()
             }));
-            Assert.That(ex.Name, Is.EqualTo(nameof(MyParameter1.Value1)));
+            Assert.That(ex.TargetName, Is.EqualTo(nameof(MyParameter1.Value1)));
 
             ex = Assert.Throws<ValidationException>(() => module.DoSomething(new MyParameter2
             {
@@ -108,7 +108,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 },
                 Value3 = null
             }));
-            Assert.That(ex.Name, Is.EqualTo(nameof(MyParameter2.Value3)));
+            Assert.That(ex.TargetName, Is.EqualTo(nameof(MyParameter2.Value3)));
         }
 
         [Test]
@@ -129,9 +129,9 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             AggregateException ex = Assert.Throws<AggregateException>(() => module.DoSomethingElse(new MyParameter2()));
             Assert.That(ex.InnerExceptions.Count, Is.EqualTo(2));
             Assert.That(ex.InnerExceptions[0], Is.InstanceOf<ValidationException>());
-            Assert.That(((ValidationException) ex.InnerExceptions[0]).Name, Is.EqualTo(nameof(MyParameter2.Value2)));
+            Assert.That(((ValidationException) ex.InnerExceptions[0]).TargetName, Is.EqualTo(nameof(MyParameter2.Value2)));
             Assert.That(ex.InnerExceptions[1], Is.InstanceOf<ValidationException>());
-            Assert.That(((ValidationException) ex.InnerExceptions[1]).Name, Is.EqualTo(nameof(MyParameter2.Value3)));
+            Assert.That(((ValidationException) ex.InnerExceptions[1]).TargetName, Is.EqualTo(nameof(MyParameter2.Value3)));
         }
 
         [Test]

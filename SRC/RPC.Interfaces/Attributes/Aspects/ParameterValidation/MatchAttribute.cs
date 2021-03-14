@@ -37,7 +37,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (!Regex.Match(value!.ToString()).Success)
                 throw new ValidationException(PropertyValidationErrorMessage) 
                 {
-                    Name = prop.Name
+                    TargetName = prop.Name
                 };
         }
 
@@ -51,7 +51,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (!Regex.Match(value!.ToString()).Success)
                 throw new ValidationException(ParameterValidationErrorMessage)
                 {
-                    Name = param.Name
+                    TargetName = param.Name
                 };
         }
     }

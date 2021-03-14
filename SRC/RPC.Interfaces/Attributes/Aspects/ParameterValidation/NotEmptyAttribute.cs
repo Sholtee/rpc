@@ -34,7 +34,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (value is IEnumerable enumerable && !enumerable.Cast<object>().Any())
                 throw new ValidationException(PropertyValidationErrorMessage) 
                 {
-                    Name = prop.Name
+                    TargetName = prop.Name
                 };
         }
 
@@ -48,7 +48,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (value is IEnumerable enumerable && !enumerable.Cast<object>().Any())
                 throw new ValidationException(ParameterValidationErrorMessage)
                 {
-                    Name = param.Name
+                    TargetName = param.Name
                 };
         }
     }

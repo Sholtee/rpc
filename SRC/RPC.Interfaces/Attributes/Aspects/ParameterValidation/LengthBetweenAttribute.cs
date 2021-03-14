@@ -60,7 +60,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (count < Min || count > Max)
                 throw new ValidationException(ParameterValidationErrorMessage)
                 {
-                    Name = param.Name
+                    TargetName = param.Name
                 };
         }
 
@@ -71,7 +71,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (count < Min || count > Max)
                 throw new ValidationException(PropertyValidationErrorMessage)
                 {
-                    Name = prop.Name
+                    TargetName = prop.Name
                 };
         }
     }

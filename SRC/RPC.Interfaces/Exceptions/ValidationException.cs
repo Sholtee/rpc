@@ -13,9 +13,9 @@ namespace Solti.Utils.Rpc.Interfaces
     public class ValidationException : Exception
     {
         /// <summary>
-        /// The name of member on which the validation failed.
+        /// The name of parameter or property on which the validation failed.
         /// </summary>
-        public string? Name { get; set; }
+        public string? TargetName { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="ValidationException"/> instance.

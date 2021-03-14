@@ -49,7 +49,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (!Predicate.Execute(value, currentScope))
                 throw new ValidationException(PropertyValidationErrorMessage)
                 {
-                    Name = prop.Name
+                    TargetName = prop.Name
                 };
         }
 
@@ -62,7 +62,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (!valid)
                 throw new ValidationException(PropertyValidationErrorMessage)
                 {
-                    Name = prop.Name
+                    TargetName = prop.Name
                 };
         }
 
@@ -76,7 +76,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (!Predicate.Execute(value, currentScope))
                 throw new ValidationException(ParameterValidationErrorMessage)
                 {
-                    Name = param.Name
+                    TargetName = param.Name
                 };
         }
 
@@ -89,7 +89,7 @@ namespace Solti.Utils.Rpc.Interfaces
             if (!valid)
                 throw new ValidationException(ParameterValidationErrorMessage)
                 {
-                    Name = param.Name
+                    TargetName = param.Name
                 };
         }
     }
