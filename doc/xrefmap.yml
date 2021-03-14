@@ -1365,12 +1365,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
   fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
   nameWithType: LengthBetweenAttribute
-- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.UInt32,System.UInt32)
-  name: LengthBetweenAttribute(UInt32, UInt32)
-  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_System_UInt32_System_UInt32_
-  commentId: M:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.UInt32,System.UInt32)
-  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.LengthBetweenAttribute(System.UInt32, System.UInt32)
-  nameWithType: LengthBetweenAttribute.LengthBetweenAttribute(UInt32, UInt32)
+- uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.Int32,System.Int32)
+  name: LengthBetweenAttribute(Int32, Int32)
+  href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_System_Int32_System_Int32_
+  commentId: M:Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor(System.Int32,System.Int32)
+  fullName: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.LengthBetweenAttribute(System.Int32, System.Int32)
+  nameWithType: LengthBetweenAttribute.LengthBetweenAttribute(Int32, Int32)
 - uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.#ctor*
   name: LengthBetweenAttribute
   href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html#Solti_Utils_Rpc_Interfaces_LengthBetweenAttribute__ctor_
@@ -1903,6 +1903,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
   fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
   nameWithType: RequiredRolesAttribute
+- uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Object)
+  name: RequiredRolesAttribute(Object)
+  href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Object_
+  commentId: M:Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Object)
+  fullName: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(System.Object)
+  nameWithType: RequiredRolesAttribute.RequiredRolesAttribute(Object)
 - uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.#ctor(System.Object[])
   name: RequiredRolesAttribute(Object[])
   href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html#Solti_Utils_Rpc_Interfaces_RequiredRolesAttribute__ctor_System_Object___
