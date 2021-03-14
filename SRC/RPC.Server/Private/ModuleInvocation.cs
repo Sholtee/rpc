@@ -55,7 +55,7 @@ namespace Solti.Utils.Rpc.Internals
             .GetProperty("DebugView", BindingFlags.Instance | BindingFlags.NonPublic) // DebugView property internal, tudja fasz miert
             .ToGetter();
 
-        private readonly HashSet<Type> FModules = new HashSet<Type>();
+        private readonly HashSet<Type> FModules = new();
 
         private readonly JsonSerializerOptions FSerializerOptions;
 
@@ -92,22 +92,24 @@ namespace Solti.Utils.Rpc.Internals
             )
         );
 
-        private static async Task<object?> DoInvoke(Task<object?[]> getArgs, Func<object?[], object> invocation)
+        private static async Task<object?> DoInvoke(Task<object?[]> getArgs, Func<object?[], object> invocation, Type originalReturnType)
         {
             object result = invocation(await getArgs);
+            if (result is not Task task)
+                return result;
 
-            if (result is Task task)
-            {
-                await task;
+            await task;
 
-                Type taskType = task.GetType();
+            //
+            // Ne task.GetType()-ot hasznaljuk:
+            //   https://stackoverflow.com/questions/17824863/what-is-the-type-voidtaskresult-as-it-relates-to-async-methods
+            //
 
-                return taskType.IsGenericType
-                    ? taskType.GetProperty(nameof(Task<object?>.Result)).ToGetter().Invoke(task)
-                    : null;
-            }
+            Debug.Assert(typeof(Task).IsAssignableFrom(originalReturnType));
 
-            return result;
+            return originalReturnType.IsGenericType
+                ? originalReturnType.GetProperty(nameof(Task<object?>.Result)).ToGetter().Invoke(task)
+                : null;
         }
 
         internal static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type iface) =>
@@ -236,7 +238,7 @@ namespace Solti.Utils.Rpc.Internals
                         )
                     );
 
-                List<Expression> invocationBlock = new List<Expression>();
+                List<Expression> invocationBlock = new();
 
                 if (ifaceMethod.ReturnType != typeof(void))
                     //
@@ -275,13 +277,14 @@ namespace Solti.Utils.Rpc.Internals
 
                     Expression.Invoke
                     (
-                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Task<object?>>) DoInvoke),
+                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Type, Task<object?>>) DoInvoke),
                         getArgs,
                         Expression.Lambda<Func<object?[], object?>>
                         (
                            Expression.Block(invocationBlock),
                            args
-                        )
+                        ),
+                        Expression.Constant(ifaceMethod.ReturnType)
                     )
                 );
             }
