@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Solti.Utils.Rpc.Server.Sample.Interfaces</AssemblyName>
+    <RootNamespace>Solti.Utils.Rpc.Server.Sample.Interfaces</RootNamespace>
+    <Authors>Denes Solti</Authors>
+    <Configurations>Debug;Release;Perf</Configurations>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>
+    <Product>RPC.NET.Server.Sample.Interfaces</Product>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(LibVersion)' != ''">
+    <PackageReference Include="RPC.NET.Interfaces" Version="$(LibVersion)"></PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(LibVersion)' == ''">
+    <ProjectReference Include="..\..\SRC\RPC.Interfaces\RPC.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

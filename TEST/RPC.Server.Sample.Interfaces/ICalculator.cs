@@ -5,9 +5,9 @@
 ********************************************************************************/
 using System.Threading.Tasks;
 
-namespace Solti.Utils.Rpc.Server.Sample
+namespace Solti.Utils.Rpc.Server.Sample.Interfaces
 {
-    using Interfaces;
+    using Rpc.Interfaces;
 
     [ParameterValidatorAspect]
     public interface ICalculator

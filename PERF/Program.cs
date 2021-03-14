@@ -11,7 +11,7 @@ using BenchmarkDotNet.Running;
 
 namespace Solti.Utils.Rpc.Perf
 {
-    using Server.Sample;
+    using Server.Sample.Interfaces;
 
     class Program
     {

@@ -35,7 +35,7 @@
     <ProjectReference Include="..\..\SRC\RPC.Interfaces\RPC.Interfaces.csproj" />
     <ProjectReference Include="..\..\SRC\RPC.Client\RPC.Client.csproj" />
     <ProjectReference Include="..\..\SRC\RPC.Server\RPC.Server.csproj" />
-    <ProjectReference Include="..\RPC.Server.Sample\RPC.Server.Sample.csproj" />
+    <ProjectReference Include="..\RPC.Server.Sample.Interfaces\RPC.Server.Sample.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

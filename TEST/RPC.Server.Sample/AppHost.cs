@@ -10,6 +10,7 @@ namespace Solti.Utils.Rpc.Server.Sample
 {
     using Interfaces;
     using Hosting;
+    using Rpc.Interfaces;
 
     public class AppHost : AppHostBase
     {

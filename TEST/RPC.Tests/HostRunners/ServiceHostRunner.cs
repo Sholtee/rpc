@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Hosting.Tests
 {
-    using Server.Sample;
+    using Server.Sample.Interfaces;
 
     [TestFixture]
     public class ServiceHostRunnerTests

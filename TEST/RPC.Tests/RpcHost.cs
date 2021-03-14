@@ -16,7 +16,7 @@ namespace Solti.Utils.Rpc.Tests
 {
     using Interfaces;
     using Properties;
-    using Server.Sample;
+    using Server.Sample.Interfaces;
 
     [TestFixture]
     public class RpcHostTests

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Solti.Utils.Rpc.Server.Sample
 {
     using Interfaces;
+    using Rpc.Interfaces;
 
     internal class Calculator : ICalculator
     {

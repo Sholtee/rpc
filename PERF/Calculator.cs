@@ -10,7 +10,7 @@ using BenchmarkDotNet.Attributes;
 namespace Solti.Utils.Rpc.Perf
 {
     using static Consts;
-    using Server.Sample;
+    using Server.Sample.Interfaces;
 
     [MemoryDiagnoser]
     public class Calculator
