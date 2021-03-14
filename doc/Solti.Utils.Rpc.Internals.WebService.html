@@ -254,6 +254,37 @@
   </table>
   <h3 id="methods">Methods
   </h3>
+  <a id="Solti_Utils_Rpc_Internals_WebService_AddSslCert_" data-uid="Solti.Utils.Rpc.Internals.WebService.AddSslCert*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_AddSslCert_System_Net_IPEndPoint_System_String_" data-uid="Solti.Utils.Rpc.Internals.WebService.AddSslCert(System.Net.IPEndPoint,System.String)">AddSslCert(IPEndPoint, String)</h4>
+  <div class="markdown level1 summary"><p>Binds an SSL certificate to the given IP and port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AddSslCert(IPEndPoint ipPort, string certHash)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.ipendpoint">IPEndPoint</a></td>
+        <td><span class="parametername">ipPort</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">certHash</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Internals_WebService_AddUrlReservation_" data-uid="Solti.Utils.Rpc.Internals.WebService.AddUrlReservation*"></a>
   <h4 id="Solti_Utils_Rpc_Internals_WebService_AddUrlReservation_System_String_" data-uid="Solti.Utils.Rpc.Internals.WebService.AddUrlReservation(System.String)">AddUrlReservation(String)</h4>
   <div class="markdown level1 summary"><p>Adds an URL reservation. For more information see <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx</a></p>
@@ -442,6 +473,32 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Internals_WebService_RemoveSslCert_" data-uid="Solti.Utils.Rpc.Internals.WebService.RemoveSslCert*"></a>
+  <h4 id="Solti_Utils_Rpc_Internals_WebService_RemoveSslCert_System_Net_IPEndPoint_" data-uid="Solti.Utils.Rpc.Internals.WebService.RemoveSslCert(System.Net.IPEndPoint)">RemoveSslCert(IPEndPoint)</h4>
+  <div class="markdown level1 summary"><p>Removes the bound SSL certificate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RemoveSslCert(IPEndPoint ipPort)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.ipendpoint">IPEndPoint</a></td>
+        <td><span class="parametername">ipPort</span></td>
         <td></td>
       </tr>
     </tbody>

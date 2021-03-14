@@ -2464,6 +2464,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Internals.WebService
   fullName: Solti.Utils.Rpc.Internals.WebService
   nameWithType: WebService
+- uid: Solti.Utils.Rpc.Internals.WebService.AddSslCert(System.Net.IPEndPoint,System.String)
+  name: AddSslCert(IPEndPoint, String)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddSslCert_System_Net_IPEndPoint_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.AddSslCert(System.Net.IPEndPoint,System.String)
+  fullName: Solti.Utils.Rpc.Internals.WebService.AddSslCert(System.Net.IPEndPoint, System.String)
+  nameWithType: WebService.AddSslCert(IPEndPoint, String)
+- uid: Solti.Utils.Rpc.Internals.WebService.AddSslCert*
+  name: AddSslCert
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddSslCert_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.AddSslCert
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.AddSslCert
+  nameWithType: WebService.AddSslCert
 - uid: Solti.Utils.Rpc.Internals.WebService.AddUrlReservation(System.String)
   name: AddUrlReservation(String)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddUrlReservation_System_String_
@@ -2581,6 +2594,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.WebService.ProcessUnhandledException
   nameWithType: WebService.ProcessUnhandledException
+- uid: Solti.Utils.Rpc.Internals.WebService.RemoveSslCert(System.Net.IPEndPoint)
+  name: RemoveSslCert(IPEndPoint)
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_RemoveSslCert_System_Net_IPEndPoint_
+  commentId: M:Solti.Utils.Rpc.Internals.WebService.RemoveSslCert(System.Net.IPEndPoint)
+  fullName: Solti.Utils.Rpc.Internals.WebService.RemoveSslCert(System.Net.IPEndPoint)
+  nameWithType: WebService.RemoveSslCert(IPEndPoint)
+- uid: Solti.Utils.Rpc.Internals.WebService.RemoveSslCert*
+  name: RemoveSslCert
+  href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_RemoveSslCert_
+  commentId: Overload:Solti.Utils.Rpc.Internals.WebService.RemoveSslCert
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.WebService.RemoveSslCert
+  nameWithType: WebService.RemoveSslCert
 - uid: Solti.Utils.Rpc.Internals.WebService.RemoveUrlReservation(System.String)
   name: RemoveUrlReservation(String)
   href: Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_RemoveUrlReservation_System_String_
