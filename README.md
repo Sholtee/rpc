@@ -1,7 +1,7 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc/master) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master)
 > Simple, lightweight RPC implementation for .NET
 
-**This documentation refers the version 2.X of the library**
+**This documentation refers the version 3.X of the library**
 
 |Name|Package|
 |:--:|:--:|
