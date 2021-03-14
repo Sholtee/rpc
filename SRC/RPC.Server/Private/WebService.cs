@@ -149,7 +149,6 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Calls the <see cref="Process(HttpListenerContext, ILogger?, CancellationToken)"/> method in a safe manner.
         /// </summary>
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Every type of exceptions should be caught.")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
             if (context == null)
@@ -207,7 +206,9 @@ namespace Solti.Utils.Rpc.Internals
 
                 logger?.LogInformation(Trace.REQUEST_PROCESSED);
             }
-            catch(Exception ex)
+            #pragma warning disable CA1031 // We have to catch all kind of exceptions here
+            catch (Exception ex)
+            #pragma warning restore CA1031
             {
                 logger?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
@@ -394,7 +395,6 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         public virtual void Stop()
         {
             if (!IsStarted) return;
@@ -420,7 +420,9 @@ namespace Solti.Utils.Rpc.Internals
                 {
                     RemoveUrlReservation(Url!);
                 }
+                #pragma warning disable CA1031 // This method should not throw
                 catch { }
+                #pragma warning restore CA1031
 
                 FNeedToRemoveUrlReservation = false;
             }
