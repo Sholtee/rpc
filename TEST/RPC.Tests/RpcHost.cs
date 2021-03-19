@@ -21,16 +21,17 @@ namespace Solti.Utils.Rpc.Tests
     [TestFixture]
     public class RpcHostTests
     {
-        const string Host = "http://localhost:1986/api/";
+        private static readonly string
+            Host = "http://localhost:1986/api/",
+            EXE_PATCH = Path.ChangeExtension(typeof(ICalculator).Assembly.Location.Replace(".Interfaces", string.Empty, StringComparison.OrdinalIgnoreCase), "exe");
 
         public Process HostProcess { get; private set; }
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            var psi = new ProcessStartInfo("dotnet")
+            var psi = new ProcessStartInfo(EXE_PATCH)
             {
-                Arguments = Path.ChangeExtension(typeof(ICalculator).Assembly.Location.Replace(".Interfaces", string.Empty, StringComparison.OrdinalIgnoreCase), "dll"),
                 UseShellExecute = false,
                 RedirectStandardOutput = true
             };
