@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet build &quot;..\Test\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --no-restore --nologo --configuration Release" />
+    <Exec Command="dotnet build &quot;..\Test\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --nologo --configuration Release" />
   </Target>
   
 </Project>
