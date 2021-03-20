@@ -36,3 +36,6 @@
   - *fixed:* Attempt to deserialize NULL as a value type in `RpcClientFactory.InvokeServiceAsync()`
 - 2.2.0:
   - *added:* `[RpcService|RpcClientFactory].SerializerOptions` property
+- 3.0.0:
+  - *introduced:* Built-in aspects
+  - *upgraded:* **ProxyGen.NET** to v4, **Injector.NET** to v4
