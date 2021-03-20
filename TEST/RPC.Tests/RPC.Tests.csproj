@@ -33,8 +33,8 @@
     <ProjectReference Include="..\RPC.Server.Sample.Interfaces\RPC.Server.Sample.Interfaces.csproj" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet build &quot;..\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --nologo --configuration Debug" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="start /wait /min dotnet build &quot;..\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --nologo --configuration Debug" />
   </Target>
 
 </Project>
