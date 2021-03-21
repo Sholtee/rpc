@@ -9,12 +9,24 @@
    ...
    const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
    ```
+   Optionally you can hook into the invocation process for instance, to bind your [loader](https://loading.io/css/ ):
+   ```js
+   factory.invoke.decorate(async function(...args) {
+       _yourLoaderService.activated++;
+       try
+       {
+           return await this.$base(...args);
+       } finally {
+           _yourLoaderService.activated--;
+       }
+   });
+   ```
 3. Set up the API connection:
    ```js
    const Calculator = factory.createConnection('ICalculator');
    Calculator
      .registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/)
-	 .registerProperty('PI');
+     .registerProperty('PI');
    ```
 4. Invoke the API:
    ```js

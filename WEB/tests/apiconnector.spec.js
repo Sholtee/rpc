@@ -96,6 +96,51 @@ describe('ApiConnectionFactory', () => {
 
             expect(headers['my-header']).toBe('value');
         });
+
+        it('may be overridden', done => {
+            let decoratorCalled = 0;
+
+            factory.invoke.decorate(function(...args) {
+                decoratorCalled++;
+                /* eslint-disable no-invalid-this */
+                return this.$base(...args);
+                /* eslint-enable no-invalid-this */
+            });
+
+            server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
+            factory.invoke('ICalculator', 'Add', [1, 1]).then(result => {
+                expect(result).toBe(2);
+                expect(decoratorCalled).toBe(1);
+                done();
+            });
+            server.respond();
+        });
+
+        it('may be overridden more than once', done => {
+            let
+                firstDecoratorCalled = 0,
+                secondDecoratorCalled = 0;
+
+            /* eslint-disable no-invalid-this */
+            factory.invoke.decorate(function(...args) {
+                firstDecoratorCalled++;
+                return this.$base(...args);
+            });
+            factory.invoke.decorate(function(...args) {
+                secondDecoratorCalled++;
+                return this.$base(...args);
+            });
+            /* eslint-enable no-invalid-this */
+
+            server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
+            factory.invoke('ICalculator', 'Add', [1, 1]).then(result => {
+                expect(result).toBe(2);
+                expect(firstDecoratorCalled).toBe(1);
+                expect(secondDecoratorCalled).toBe(1);
+                done();
+            });
+            server.respond();
+        });
     });
 
     describe('API connection', () => {

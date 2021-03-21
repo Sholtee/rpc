@@ -10,54 +10,8 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
     sessionId: null,
     headers: {},
     timeout: 0,
-    invoke(module, method, args = []) {
-      return new Promise((resolve, reject) => {
-        const url = new URL(urlBase);
-        url.searchParams.append('module', module);
-        url.searchParams.append('method', method);
-
-        if (this.sessionId)
-          url.searchParams.append('sessionId', this.sessionId);
-
-        const xhr = xhrFactory();
-
-        xhr.open('POST', url.toString(), true);
-        xhr.timeout = this.timeout;
-
-        for (const [key, value] of Object.entries({...this.headers, 'Content-Type': 'application/json'})) {
-          xhr.setRequestHeader(key, value.toString());
-        }
-
-        xhr.onload = onResponse.bind(xhr, resolve, reject);
-        xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
-
-        xhr.send(JSON.stringify(args));
-      });
-    },
-    createConnection(module) {
-      const owner = this;
-
-      return Object.assign(function ApiConnection() {}, {
-        registerMethod(name, alias) {
-          this.prototype[alias || name] = (...args) => owner.invoke(module, name, args);
-
-          //
-          // A hivasok lancba fuzhetoek legyenek
-          //
-
-          return this;
-        },
-        registerProperty(name, alias) {
-          Object.defineProperty(this.prototype, alias || name, {
-            enumerable: true,
-            get: () =>  owner.invoke(module, `get_${name}`),
-            set: val => owner.invoke(module, `set_${name}`, [val])
-          });
-          return this;
-        },
-        module
-      });
-    }
+    invoke: overridable(this, invoke),
+    createConnection: overridable(this, createConnection)
   });
 
   Object.defineProperty(this, 'serviceVersion', {
@@ -68,54 +22,126 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
   });
 
   /* eslint-disable no-invalid-this */
-  function onError(reject) {
-    reject(this.statusText);
-  }
+  function invoke(module, method, args = []) {
+    return new Promise((resolve, reject) => {
+      const url = new URL(urlBase);
+      url.searchParams.append('module', module);
+      url.searchParams.append('method', method);
 
-  function onResponse(resolve, reject) {
-    const response = this.response || this.responseText;
+      if (this.sessionId)
+        url.searchParams.append('sessionId', this.sessionId);
 
-    if (this.status !== 200) {
-      reject(`Status inappropriate: ${this.status} (${this.statusText})`);
-      return;
+      const xhr = xhrFactory();
+
+      xhr.open('POST', url.toString(), true);
+      xhr.timeout = this.timeout;
+
+      for (const [key, value] of Object.entries({...this.headers, 'Content-Type': 'application/json'})) {
+        xhr.setRequestHeader(key, value.toString());
+      }
+
+      xhr.onload = onResponse.bind(xhr, resolve, reject);
+      xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
+
+      xhr.send(JSON.stringify(args));
+    });
+
+    function onError(reject) {
+      reject(this.statusText);
     }
 
-    switch (this.getResponseHeader('Content-Type')) {
-      case 'text/html': {
-        reject(response);
-        break;
+    function onResponse(resolve, reject) {
+      const response = this.response || this.responseText;
+
+      if (this.status !== 200) {
+        reject(`Status inappropriate: ${this.status} (${this.statusText})`);
+        return;
       }
-      case 'application/json': {
-        const parsed = JSON.parse(response);
 
-        if (typeof parsed === 'object') {
-          const exception = getProp(parsed, 'Exception');
-
-          if (exception) {
-            reject(exception);
-            break;
-          }
-
-          //
-          // NULL is jo ertek
-          //
-
-          const result = getProp(parsed, 'Result');
-
-          if (typeof result !== 'undefined') {
-            resolve(result);
-            break;
-          }
+      switch (this.getResponseHeader('Content-Type')) {
+        case 'text/html': {
+          reject(response);
+          break;
         }
+        case 'application/json': {
+          const parsed = JSON.parse(response);
+
+          if (typeof parsed === 'object') {
+            const exception = getProp(parsed, 'Exception');
+
+            if (exception) {
+              reject(exception);
+              break;
+            }
+
+            //
+            // NULL is jo ertek
+            //
+
+            const result = getProp(parsed, 'Result');
+
+            if (typeof result !== 'undefined') {
+              resolve(result);
+              break;
+            }
+          }
+
+          //
+          // Nem kell break, tudatos
+          //
+        }
+        // eslint-disable-next-line no-fallthrough
+        default: {
+          reject(RESPONSE_NOT_VALID);
+          break;
+        }
+      }
+    }
+  }
+
+  function createConnection(module) {
+    const owner = this;
+
+    return Object.assign(function ApiConnection() {}, {
+      registerMethod(name, alias) {
+        this.prototype[alias || name] = (...args) => owner.invoke(module, name, args);
 
         //
-        // Nem kell break, tudatos
+        // A hivasok lancba fuzhetoek legyenek
         //
-      }
-      // eslint-disable-next-line no-fallthrough
-      default: {
-        reject(RESPONSE_NOT_VALID);
-        break;
+
+        return this;
+      },
+      registerProperty(name, alias) {
+        Object.defineProperty(this.prototype, alias || name, {
+          enumerable: true,
+          get: () =>  owner.invoke(module, `get_${name}`),
+          set: val => owner.invoke(module, `set_${name}`, [val])
+        });
+        return this;
+      },
+      module
+    });
+  }
+
+  function overridable(obj, fn) {
+    return Object.assign(fn, {
+      decorate: decorate.bind(obj, fn.name)
+    });
+
+    function decorate(fn, newFn) {
+      const oldFn = this[fn];
+
+      Object.defineProperty(decorator, 'name', {value: fn}); // "decorator.name = fn" nem mukodik
+      overridable(this, this[fn] = decorator);
+
+      function decorator(...args) {
+        this.$base = oldFn;
+        try {
+          return newFn.apply(this, args);
+        } finally {
+          delete this.$base;
+        }
       }
     }
   }
