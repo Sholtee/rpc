@@ -7,7 +7,7 @@ export const
     REQUEST_TIMED_OUT = 'Request timed out';
 
 // class
-export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new XMLHttpRequest()) {
+export function ApiConnectionFactory(urlBase, /*can be mocked*/ fetch = window.fetch) {
   Object.assign(this, {
     sessionId: null,
     headers: {},
@@ -25,91 +25,77 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
 
   /* eslint-disable no-invalid-this */
   function invoke(module, method, args = []) {
-    return new Promise((resolve, reject) => {
-      const url = new URL(urlBase);
-      url.searchParams.append('module', module);
-      url.searchParams.append('method', method);
+    const url = new URL(urlBase);
 
-      if (this.sessionId)
-        url.searchParams.append('sessionId', this.sessionId);
+    url.searchParams.append('module', module);
+    url.searchParams.append('method', method);
 
-      const xhr = xhrFactory();
+    if (this.sessionId)
+      url.searchParams.append('sessionId', this.sessionId);
 
-      xhr.open('POST', url.toString(), true);
-      xhr.timeout = this.timeout;
-
-      for (const [key, value] of Object.entries({...this.headers, 'Content-Type': 'application/json'})) {
-        xhr.setRequestHeader(key, value.toString());
-      }
-
-      xhr.onload = onResponse.bind(xhr, resolve, reject);
-      xhr.onerror = onError.bind(xhr, reject);
-      xhr.ontimeout = onTimeout.bind(xhr, reject);
-
-      xhr.send(JSON.stringify(args));
+    const post = fetch(url.toString(), {
+      method: 'POST',
+      headers: {...this.headers, 'Content-Type': 'application/json'},
+      body: JSON.stringify(args)
     });
 
-    function onError(reject) {
-      reject(this.statusText);
+    return (this.timeout <= 0 ? post : addTimeout(post, this.timeout)).then(response => {
+      if (!response.ok)
+        //
+        // Biztonsagos a then() agban kivetelt dobni: https://javascript.info/promise-error-handling
+        //
+
+        // eslint-disable-next-line no-throw-literal
+        throw `Status inappropriate: ${response.status} (${response.statusText})`;
+
+      switch (response.headers.get('Content-Type').toLowerCase()) {
+        case 'text/html':
+          //
+          // Nem gond h Promise-t adunk vissza: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+          //
+
+          return response.text().then(txt => {
+            throw txt;
+          });
+        case 'application/json':
+          return response.json().then(json => {
+            if (typeof json === 'object') {
+              const exception = getProp(json, 'Exception');
+              if (exception)
+                throw  exception;
+
+              //
+              // NULL is jo ertek
+              //
+
+              const result = getProp(json, 'Result');
+              if (typeof result !== 'undefined')
+                return result;
+            }
+            throw RESPONSE_NOT_VALID;
+          });
+        default:
+          throw RESPONSE_NOT_VALID;
+      }
+    });
+
+    function addTimeout(promise, timeout) {
+      let handle;
+      return Promise
+        .race([
+          promise,
+          new Promise((_, reject) => {
+            handle = setTimeout(() => reject(REQUEST_TIMED_OUT), timeout);
+          })
+        ])
+        .finally(() => clearTimeout(handle));
     }
 
-    function onTimeout(reject) {
-      reject(REQUEST_TIMED_OUT);
-    }
-
-    function onResponse(resolve, reject) {
-      const response = this.response || this.responseText;
-
-      if (this.status !== 200) {
-        reject(`Status inappropriate: ${this.status} (${this.statusText})`);
-        return;
-      }
-
-      switch (this.getResponseHeader('Content-Type')) {
-        case 'text/html': {
-          reject(response);
-          break;
-        }
-        case 'application/json': {
-          const parsed = JSON.parse(response);
-
-          if (typeof parsed === 'object') {
-            const exception = getProp(parsed, 'Exception');
-
-            if (exception) {
-              reject(exception);
-              break;
-            }
-
-            //
-            // NULL is jo ertek
-            //
-
-            const result = getProp(parsed, 'Result');
-
-            if (typeof result !== 'undefined') {
-              resolve(result);
-              break;
-            }
-          }
-
-          //
-          // Nem kell break, tudatos
-          //
-        }
-        // eslint-disable-next-line no-fallthrough
-        default: {
-          reject(RESPONSE_NOT_VALID);
-          break;
-        }
-      }
-
-      function getProp(obj, prop) { // nem kis-nagy betu erzekeny
-        let key;
-        for (key in obj) {
-          if (key.toLowerCase() === prop.toLowerCase()) {
-            return obj[key];
-          }
+    function getProp(obj, prop) { // nem kis-nagy betu erzekeny
+      let key;
+      for (key in obj) {
+        if (key.toLowerCase() === prop.toLowerCase()) {
+          return obj[key];
         }
       }
     }

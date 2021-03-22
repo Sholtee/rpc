@@ -40,7 +40,8 @@
     "karma-junit-reporter": "^2.0.1",
     "karma-sinon": "^1.0.5",
     "matchdep": "^2.0.0",
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.2",
+    "whatwg-fetch": "^3.6.2"
   },
   "engines": {
     "node": ">=0.8.0"

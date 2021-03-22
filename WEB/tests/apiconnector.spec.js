@@ -2,7 +2,16 @@
 *  apiconnector.spec.js                                                         *
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
-const {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT} = window.apiconnector;
+
+/*
+for (let file in window.__karma__.files) {
+    console.log(file);
+}
+*/
+
+const
+    {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT} = window.apiconnector,
+    {fetch: fetchPoly} = window.WHATWGFetch; // SinonJS csak XHR-t tud fake-elni
 
 describe('ApiConnectionFactory', () => {
     const noop = function() {};
@@ -11,12 +20,12 @@ describe('ApiConnectionFactory', () => {
     // Proxy generalas az elso megszolitaskor sokaig tarthat (ha a generalt asm-ek gyorsitotarazasa nincs beallitva)
     //
 
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
 
     let factory;
 
     beforeEach(() => {
-        factory = new ApiConnectionFactory('http://localhost:1986/api');
+        factory = new ApiConnectionFactory('http://localhost:1986/api', fetchPoly);
     });
 
     describe('invoke()', () => {

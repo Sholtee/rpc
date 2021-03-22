@@ -18,11 +18,12 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             module:  pkg.module,
             version: pkg.version,
             dirs: {
-                app:       `${dir}/src`,
-                artifacts: `${dir}/artifacts`,
-                dist:      `${dir}/dist`,
-                tests:     `${dir}/tests`,
-                tmp:       `${dir}/.tmp`
+                app:          `${dir}/src`,
+                artifacts:    `${dir}/artifacts`,
+                dist:         `${dir}/dist`,
+                tests:        `${dir}/tests`,
+                tmp:          `${dir}/.tmp`,
+                node_modules: `${dir}/node_modules`
             }
         },
         clean: {
@@ -98,7 +99,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             dist: {
                 options: {
                     sourceType: 'module',
-                    plugins: ['<%= babel.__umd_transform%>', 'remove-comments', ['add-header-comment', {header: [`rpcdotnet-connector v${pkg.version}`, 'Author: Denes Solti']}]]
+                    plugins: ['<%= babel.__umd_transform%>', 'remove-comments', ['add-header-comment', {header: [`${pkg.name} v${pkg.version}`, 'Author: Denes Solti']}]]
                 },
                 files: {
                     '<%= project.dirs.dist %>/<%= project.module %>.js': '<%= project.dirs.app %>/**/*.js'
@@ -109,9 +110,10 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             test: {
                 basePath: '',
                 frameworks: ['detectBrowsers', 'jasmine', 'sinon'],
-                files: [
-                    {src: ['<%= project.dirs.tmp %>/**/*.js'], served: true}
-                ],
+                files: [{
+                    src: ['<%= project.dirs.node_modules %>/whatwg-fetch/dist/fetch.umd.js', '<%= project.dirs.tmp %>/**/*.js'],
+                    served: true
+                }],
                 exclude: [],
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
