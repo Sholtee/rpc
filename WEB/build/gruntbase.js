@@ -66,15 +66,16 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             }
         },
         babel: {
-            __module_transform: ['@babel/plugin-transform-modules-umd', {moduleId: '<%= project.module %>'}],
+            __umd_transform: ['@babel/plugin-transform-modules-umd', {moduleId: '<%= project.module %>'}],
             options: {
                 //sourceMap: true,
-                presets: ['@babel/preset-env']
+                presets: ['@babel/preset-env'],
+                //comments: false  // Ne hasznaljuk mert kiszedi a file header-t is
             },
             app: {
                 options: {
                     sourceType: 'module',
-                    plugins: ['istanbul', '<%= babel.__module_transform%>']
+                    plugins: ['istanbul', '<%= babel.__umd_transform%>']
                 },
                 files: [{
                     expand: true,
@@ -97,7 +98,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             dist: {
                 options: {
                     sourceType: 'module',
-                    plugins: ['<%= babel.__module_transform%>']
+                    plugins: ['<%= babel.__umd_transform%>', 'remove-comments', ['add-header-comment', {header: [`rpcdotnet-connector v${pkg.version}`, 'Author: Denes Solti']}]]
                 },
                 files: {
                     '<%= project.dirs.dist %>/<%= project.module %>.js': '<%= project.dirs.app %>/**/*.js'
