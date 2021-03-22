@@ -96,6 +96,15 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
           break;
         }
       }
+
+      function getProp(obj, prop) { // nem kis-nagy betu erzekeny
+        let key;
+        for (key in obj) {
+          if (key.toLowerCase() === prop.toLowerCase()) {
+            return obj[key];
+          }
+        }
+      }
     }
   }
 
@@ -146,13 +155,4 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
     }
   }
   /* eslint-enable no-invalid-this */
-
-  function getProp(obj, prop) { // nem kis-nagy betu erzekeny
-    let key;
-    for (key in obj) {
-      if (key.toLowerCase() === prop.toLowerCase()) {
-        return obj[key];
-      }
-    }
-  }
 }
