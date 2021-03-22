@@ -2,7 +2,7 @@
 *  apiconnector.spec.js                                                         *
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
-const {ApiConnectionFactory, RESPONSE_NOT_VALID} = window.apiconnector;
+const {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT} = window.apiconnector;
 
 describe('ApiConnectionFactory', () => {
     const noop = function() {};
@@ -207,6 +207,22 @@ describe('ApiConnectionFactory', () => {
             });
         });
 
+        //
+        // SinonJS nem tamogatja a timeout hasznalatat, ezert itt teszteljuk
+        //
+
+        it('should timeout', done => {
+            factory.timeout = 1;
+            const Calculator = factory
+                .createConnection('ICalculator')
+                .registerMethod('TimeConsumingOperation', 'timeConsumingOperation');
+
+            const inst = new Calculator();
+            inst.timeConsumingOperation().catch(e => {
+                expect(e).toBe(REQUEST_TIMED_OUT);
+                done();
+            });
+        });
     });
 
     describe('version', () => {

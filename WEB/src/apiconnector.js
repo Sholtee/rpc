@@ -2,7 +2,9 @@
 *  apiconnector.js                                                              *
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
-export const RESPONSE_NOT_VALID = 'Server response could not be processed';
+export const
+    RESPONSE_NOT_VALID = 'Server response could not be processed',
+    REQUEST_TIMED_OUT = 'Request timed out';
 
 // class
 export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () => new XMLHttpRequest()) {
@@ -41,13 +43,18 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
       }
 
       xhr.onload = onResponse.bind(xhr, resolve, reject);
-      xhr.onerror = xhr.ontimeout = onError.bind(xhr, reject);
+      xhr.onerror = onError.bind(xhr, reject);
+      xhr.ontimeout = onTimeout.bind(xhr, reject);
 
       xhr.send(JSON.stringify(args));
     });
 
     function onError(reject) {
       reject(this.statusText);
+    }
+
+    function onTimeout(reject) {
+      reject(REQUEST_TIMED_OUT);
     }
 
     function onResponse(resolve, reject) {

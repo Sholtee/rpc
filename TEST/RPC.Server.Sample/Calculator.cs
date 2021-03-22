@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Server.Sample
@@ -22,6 +23,9 @@ namespace Solti.Utils.Rpc.Server.Sample
             return Task.FromResult(a + b);
         }
         public int ParseInt(string val) => int.Parse(val);
+
+        public void TimeConsumingOperation() => Thread.Sleep(3000);
+
         public double PI => Math.PI;
     }
 }

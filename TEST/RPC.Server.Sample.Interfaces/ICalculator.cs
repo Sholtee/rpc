@@ -16,5 +16,6 @@ namespace Solti.Utils.Rpc.Server.Sample.Interfaces
         Task<int> AddAsync(int a, int b);
         double PI { get; }
         int ParseInt([NotNull] string val);
+        void TimeConsumingOperation();
     }
 }
