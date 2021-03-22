@@ -124,8 +124,11 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ xhrFactory = () 
       registerProperty(name, alias) {
         Object.defineProperty(this.prototype, alias || name, {
           enumerable: true,
-          get: () =>  owner.invoke(module, `get_${name}`),
-          set: val => owner.invoke(module, `set_${name}`, [val])
+          get: () =>  owner.invoke(module, `get_${name}`)
+
+          //
+          // Direkt nincs setter, mivel azon nem tudnank await-elni
+          //
         });
         return this;
       },
