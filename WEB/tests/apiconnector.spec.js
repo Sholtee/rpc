@@ -69,6 +69,17 @@ describe('ApiConnectionFactory', () => {
             server.respond();
         });
 
+        it('should send the session ID', done => {
+            server.respondWith('POST', /http:\/\/localhost:1986\/api\?module=IGetMySessionIdBack&method=GetBack/, xhr =>
+                xhr.respond(200, { 'Content-Type': 'application/json' }, `{"Exception": null, "Result": "${new URL(xhr.url).searchParams.get('sessionId')}"}`));
+            factory.sessionId = 'cica';
+            factory.invoke('IGetMySessionIdBack', 'GetBack').then(result => {
+                expect(result).toBe('cica');
+                done();
+            });
+            server.respond();
+        });
+
         it('should set the content type', () => {
             let headers = {};
 
