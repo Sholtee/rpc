@@ -35,3 +35,5 @@
    calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
    const PI = await calculator.PI;
    ```
+### Version history
+Can be found [here](https://github.com/Sholtee/rpc/tree/master/WEB/history.md ).
