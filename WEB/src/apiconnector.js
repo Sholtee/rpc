@@ -7,7 +7,7 @@ export const
     REQUEST_TIMED_OUT = 'Request timed out';
 
 // class
-export function ApiConnectionFactory(urlBase, /*can be mocked*/ fetch = window.fetch) {
+export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = window.fetch, URL = window.URL}) {
   Object.assign(this, {
     sessionId: null,
     headers: {},

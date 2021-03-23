@@ -11,7 +11,7 @@ for (let file in window.__karma__.files) {
 
 const
     {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT} = window.apiconnector,
-    {fetch: fetchPoly} = window.WHATWGFetch; // SinonJS csak XHR-t tud fake-elni
+    {fetch} = window.WHATWGFetch; // SinonJS csak XHR-t tud fake-elni
 
 describe('ApiConnectionFactory', () => {
     const noop = function() {};
@@ -25,7 +25,7 @@ describe('ApiConnectionFactory', () => {
     let factory;
 
     beforeEach(() => {
-        factory = new ApiConnectionFactory('http://localhost:1986/api', fetchPoly);
+        factory = new ApiConnectionFactory('http://localhost:1986/api', {fetch});
     });
 
     describe('invoke()', () => {
