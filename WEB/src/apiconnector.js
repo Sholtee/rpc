@@ -30,7 +30,7 @@ export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = window.
     url.searchParams.append('module', module);
     url.searchParams.append('method', method);
 
-    if (this.sessionId)
+    if (this.sessionId != null)
       url.searchParams.append('sessionId', this.sessionId);
 
     const post = fetch(url.toString(), {
