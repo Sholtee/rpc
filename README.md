@@ -236,6 +236,8 @@
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
 
+[Version history](https://github.com/Sholtee/rpc/tree/master/history.md ).
+
 [Examples](https://github.com/Sholtee/rpc/blob/master/TEST/RPC.Tests/Rpc.cs )
 
 [Sample server](https://github.com/Sholtee/rpc/tree/master/TEST/RPC.Server.Sample )
