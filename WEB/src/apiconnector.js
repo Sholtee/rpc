@@ -9,7 +9,7 @@ export const
   SIGNATURE_NOT_MATCH = 'The elements of the parameters array do not match the signature of the method';
 
 // class
-export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = window.fetch, URL = window.URL}) {
+export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = window.fetch, URL = window.URL} = {}) {
   Object.assign(this, {
     sessionId: null,
     headers: {},
@@ -160,7 +160,7 @@ Object.assign(ApiConnectionFactory.prototype, {
 });
 
 Object.assign(ApiConnectionFactory, {
-  fromSchema(config, {fetch = window.fetch, URL = window.URL}) {
+  fromSchema(config, {fetch = window.fetch, URL = window.URL} = {}) {
     return typeof config === 'string'
       ? fetch(config).then(response => response.json()).then(createApi)
       : createApi(config);
