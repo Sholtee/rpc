@@ -110,10 +110,18 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             test: {
                 basePath: '',
                 frameworks: ['detectBrowsers', 'jasmine', 'sinon'],
-                files: [{
-                    src: ['<%= project.dirs.node_modules %>/whatwg-fetch/dist/fetch.umd.js', '<%= project.dirs.tmp %>/**/*.js'],
-                    served: true
-                }],
+                files: [
+                    {
+                        src: ['<%= project.dirs.node_modules %>/whatwg-fetch/dist/fetch.umd.js', '<%= project.dirs.tmp %>/**/*.js'],
+                        included: true,
+                        served: true
+                    },
+                    {
+                        src: ['<%= project.dirs.tests %>/api.json'],
+                        included: false,
+                        served: true
+                    }
+                ],
                 exclude: [],
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,

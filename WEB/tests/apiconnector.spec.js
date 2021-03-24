@@ -251,7 +251,7 @@ describe('ApiConnectionFactory', () => {
             });
         });
 
-        it('may be overridden', done => {
+        it('should have overridable methods', done => {
             const Calculator = factory
                 .createConnection('ICalculator')
                 .registerMethod('Add', 'add');
@@ -301,7 +301,7 @@ describe('ApiConnectionFactory.fromSchema', () => {
             }
         };
 
-        const api = ApiConnectionFactory.fromSchema(config, {fetch});
+        const api = ApiConnectionFactory.fromSchema(config);
         api.calculator.add(1, 1).then(result => {
             expect(result).toEqual(2);
             done();
@@ -324,7 +324,7 @@ describe('ApiConnectionFactory.fromSchema', () => {
             }
         };
 
-        const api = ApiConnectionFactory.fromSchema(config, {fetch});
+        const api = ApiConnectionFactory.fromSchema(config);
         api.calculator.add(1, 2).then(result => {
             expect(result).toEqual(3);
 
@@ -348,10 +348,23 @@ describe('ApiConnectionFactory.fromSchema', () => {
             }
         };
 
-        const api = ApiConnectionFactory.fromSchema(config, {fetch});
+        const api = ApiConnectionFactory.fromSchema(config);
         api.calculator.PI.then(result => {
             expect(result).toEqual(Math.PI);
             done();
+        });
+    });
+
+    it('should fetch the config', done => {
+        ApiConnectionFactory.fromSchema('base/tests/api.json').then(api => {
+            api.calculator.add(1, 2).then(result => {
+                expect(result).toEqual(3);
+
+                api.calculator.add('cica').catch(e => {
+                    expect(e).toBe(SIGNATURE_NOT_MATCH);
+                    done();
+                });
+            });
         });
     });
 });

@@ -1,0 +1,14 @@
+{
+  "urlBase": "http://localhost:1986/api",
+  "modules": {
+    "ICalculator": {
+      "alias": "calculator",
+      "methods": {
+        "Add": {
+          "alias": "add",
+          "layout": ["Number", "Number"]
+        }
+      }
+    }
+  }
+}
