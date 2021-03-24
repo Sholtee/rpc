@@ -11,22 +11,28 @@
    ```
    Optionally you can hook into the invocation process for instance, to bind your [loader](https://loading.io/css/ ):
    ```js
-   factory.invoke.decorate(async function(...args) {
-       _yourLoaderService.activated++;
-       try
-       {
-           return await this.$base(...args);
-       } finally {
-           _yourLoaderService.activated--;
-       }
+   ApiConnectionFactory.decorate('invoke', async function(...args) {
+     _yourLoaderService.activated++;
+     try {
+       return await this.$base(...args);
+     } finally {
+       _yourLoaderService.activated--;
+     }
    });
    ```
 3. Set up the API connection:
    ```js
    const Calculator = factory.createConnection('ICalculator');
    Calculator
-     .registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/)
+     .registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/, [Number, Number] /*optional layout*/)
      .registerProperty('PI');
+   ```
+   Optionally you may decorate the registered methods:
+   ```js
+   Calculator.decorate('add', function(...args) {
+     // do some cool stuff here
+     return this.$base(...args);
+   });
    ```
 4. Invoke the API:
    ```js

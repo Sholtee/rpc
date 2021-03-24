@@ -10,7 +10,7 @@ for (let file in window.__karma__.files) {
 */
 
 const
-    {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT} = window.apiconnector,
+    {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT, SIGNATURE_NOT_MATCH} = window.apiconnector,
     {fetch} = window.WHATWGFetch; // SinonJS csak XHR-t tud fake-elni
 
 describe('ApiConnectionFactory', () => {
@@ -120,7 +120,7 @@ describe('ApiConnectionFactory', () => {
         it('may be overridden', done => {
             let decoratorCalled = 0;
 
-            factory.invoke.decorate(function(...args) {
+            factory.constructor.decorate('invoke', function(...args) {
                 decoratorCalled++;
                 /* eslint-disable no-invalid-this */
                 return this.$base(...args);
@@ -142,11 +142,11 @@ describe('ApiConnectionFactory', () => {
                 secondDecoratorCalled = 0;
 
             /* eslint-disable no-invalid-this */
-            factory.invoke.decorate(function(...args) {
+            factory.constructor.decorate('invoke', function(...args) {
                 firstDecoratorCalled++;
                 return this.$base(...args);
             });
-            factory.invoke.decorate(function(...args) {
+            factory.constructor.decorate('invoke', function(...args) {
                 secondDecoratorCalled++;
                 return this.$base(...args);
             });
@@ -208,6 +208,8 @@ describe('ApiConnectionFactory', () => {
                 .registerMethod('ParseInt');
 
             const inst = new Calculator();
+
+            // eslint-disable-next-line new-cap
             inst.ParseInt('cica').catch(e => {
                 expect('Message' in e).toBeTrue();
                 expect(typeof e.TypeName).toBe('string');
@@ -232,6 +234,22 @@ describe('ApiConnectionFactory', () => {
                 done();
             });
         });
+
+        it('may validate the layout', done => {
+            const Calculator = factory
+                .createConnection('ICalculator')
+                .registerMethod('Add', 'add', [Number, 'Number']);
+
+            const inst = new Calculator();
+            inst.add(1, 2).then(result => {
+                expect(result).toEqual(3);
+
+                inst.add(1, 'cica').catch(e => {
+                    expect(e).toBe(SIGNATURE_NOT_MATCH);
+                    done();
+                });
+            });
+        });
     });
 
     describe('version', () => {
@@ -241,6 +259,53 @@ describe('ApiConnectionFactory', () => {
                 expect(typeof version.Minor).toBe('number');
                 expect(typeof version.Patch).toBe('number');
             });
+        });
+    });
+});
+
+describe('ApiConnectionFactory.fromSchema', () => {
+    it('should declare methods', done => {
+        const config = {
+            urlBase: 'http://localhost:1986/api',
+            modules: {
+                'ICalculator': {
+                    alias: 'calculator',
+                    methods: {
+                        Add: {
+                            alias: 'add',
+                            layout: [Number, 'Number']
+                        }
+                    }
+                }
+            }
+        };
+
+        const api = ApiConnectionFactory.fromSchema(config, {fetch});
+        console.log(api);
+
+        api.calculator.add(1, 1).then(result => {
+            expect(result).toEqual(2);
+            done();
+        });
+    });
+
+    it('should declare properties', done => {
+        const config = {
+            urlBase: 'http://localhost:1986/api',
+            modules: {
+                'ICalculator': {
+                    alias: 'calculator',
+                    properties: {
+                        PI: true
+                    }
+                }
+            }
+        };
+
+        const api = ApiConnectionFactory.fromSchema(config, {fetch});
+        api.calculator.PI.then(result => {
+            expect(result).toEqual(Math.PI);
+            done();
         });
     });
 });

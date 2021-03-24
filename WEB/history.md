@@ -12,4 +12,6 @@
   - *breaking:* Starting from this version, the library uses the *Fetch API* (instead of `XMLHttpRequest`), so the second (optional) parameter of `ApiConnectionFactory` takes the `fetch()` function.
   - *breaking:* Dropped setter support (since it can not be awaited). To invoke setters call their underlying functions (`set_xXx()`) directly.
   - *introduced:* Decorators
+  - *introduced:* Layout validation
+  - *introduced:* Schema API
   - *fixed:* Missing error message on timeout
