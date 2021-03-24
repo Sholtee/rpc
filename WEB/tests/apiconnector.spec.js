@@ -250,6 +250,28 @@ describe('ApiConnectionFactory', () => {
                 });
             });
         });
+
+        it('may be overridden', done => {
+            const Calculator = factory
+                .createConnection('ICalculator')
+                .registerMethod('Add', 'add');
+
+            let decoratorCalled = 0;
+
+            Calculator.decorate('add', function(...args) {
+                decoratorCalled++;
+                /* eslint-disable no-invalid-this */
+                return this.$base(...args);
+                /* eslint-enable no-invalid-this */
+            });
+
+            const inst = new Calculator();
+            inst.add(1, 1).then(result => {
+                expect(result).toBe(2);
+                expect(decoratorCalled).toBe(1);
+                done();
+            });
+        });
     });
 
     describe('version', () => {
