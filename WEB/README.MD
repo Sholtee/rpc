@@ -1,13 +1,14 @@
 # RpcDotNet-Connector
 > This package provides the functionality for invoking [RPC.NET](https://github.com/Sholtee/rpc ) services.
 
+**This documentation refers the version 2.X of the library**
 ## How to use it
 1. Reference this library via *jsdelivr*: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@2.x.x/dist/apiconnector.js"></script>` or install as an *NPM* package: `npm install --save-prod rpcdotnet-connector`
 2. Create a connection factory:
    ```js
    const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'rpcdotnet-connector'" 
    ...
-   const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api/');
+   const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
    ```
    Optionally you can hook into the invocation process for instance, to bind your [loader](https://loading.io/css/ ):
    ```js
@@ -41,5 +42,34 @@
    calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
    const PI = await calculator.PI;
    ```
+## Schema API
+A schema describes the layout of the remote API. It can be a JavaScript object, or a JSON file:
+```json
+{
+  "urlBase": "http://localhost:1986/api",
+  "modules": {
+    "ICalculator": {
+      "alias": "calculator",
+      "methods": {
+        "Add": {
+          "alias": "add",
+          "layout": ["Number", "Number"]
+        }
+      },
+      "properties": {
+         "PI": true
+      }
+    }
+  }
+}
+```
+Loading the schema is just a simple line:
+```js
+const api = ApiConnectionFactory.fromSchema(schemaObject); // NOT async
+// or
+const api = await ApiConnectionFactory.fromSchema('path/to/schema.json');
+...
+let result = await api.calculator.add(1, 5);
+```
 ### Version history
 Can be found [here](https://github.com/Sholtee/rpc/tree/master/WEB/history.md ).
