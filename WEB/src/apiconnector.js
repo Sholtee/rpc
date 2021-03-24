@@ -8,6 +8,24 @@ export const
   REQUEST_TIMED_OUT = 'Request timed out',
   SIGNATURE_NOT_MATCH = 'The elements of the parameters array do not match the signature of the method';
 
+// class
+export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = window.fetch, URL = window.URL}) {
+  Object.assign(this, {
+    sessionId: null,
+    headers: {},
+    timeout: 0,
+    $urlBase: urlBase,
+    $backend: {fetch, URL}
+  });
+
+  Object.defineProperty(this, 'serviceVersion', {
+    enumerable: false,
+    get() {
+      return this.invoke('IServiceDescriptor', 'get_Version');
+    }
+  });
+}
+
 //
 // Ezeket a prototipuson definialjuk h dekoralhatoak legyenek
 //
@@ -156,8 +174,8 @@ Object.assign(ApiConnectionFactory, {
         const ModuleType = factory.createConnection(module);
 
         if (descriptor.methods)
-          Object.entries(descriptor.methods).forEach(([method, {alias}]) =>
-            ModuleType.registerMethod(method, alias));
+          Object.entries(descriptor.methods).forEach(([method, {alias, layout}]) =>
+            ModuleType.registerMethod(method, alias, layout));
 
         if (descriptor.properties)
           Object.entries(descriptor.properties).forEach(([property, {alias}]) =>
@@ -171,24 +189,6 @@ Object.assign(ApiConnectionFactory, {
   },
   decorate
 });
-
-// class
-export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = window.fetch, URL = window.URL}) {
-  Object.assign(this, {
-    sessionId: null,
-    headers: {},
-    timeout: 0,
-    $urlBase: urlBase,
-    $backend: {fetch, URL}
-  });
-
-  Object.defineProperty(this, 'serviceVersion', {
-    enumerable: false,
-    get() {
-      return this.invoke('IServiceDescriptor', 'get_Version');
-    }
-  });
-}
 
 /* eslint-disable no-invalid-this */
 function decorate(fn, newFn) {

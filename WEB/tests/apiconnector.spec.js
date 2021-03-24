@@ -272,6 +272,28 @@ describe('ApiConnectionFactory.fromSchema', () => {
                     alias: 'calculator',
                     methods: {
                         Add: {
+                            alias: 'add'
+                        }
+                    }
+                }
+            }
+        };
+
+        const api = ApiConnectionFactory.fromSchema(config, {fetch});
+        api.calculator.add(1, 1).then(result => {
+            expect(result).toEqual(2);
+            done();
+        });
+    });
+
+    it('should process the layout property', done => {
+        const config = {
+            urlBase: 'http://localhost:1986/api',
+            modules: {
+                'ICalculator': {
+                    alias: 'calculator',
+                    methods: {
+                        Add: {
                             alias: 'add',
                             layout: [Number, 'Number']
                         }
@@ -281,11 +303,13 @@ describe('ApiConnectionFactory.fromSchema', () => {
         };
 
         const api = ApiConnectionFactory.fromSchema(config, {fetch});
-        console.log(api);
+        api.calculator.add(1, 2).then(result => {
+            expect(result).toEqual(3);
 
-        api.calculator.add(1, 1).then(result => {
-            expect(result).toEqual(2);
-            done();
+            api.calculator.add('cica').catch(e => {
+                expect(e).toBe(SIGNATURE_NOT_MATCH);
+                done();
+            });
         });
     });
 
