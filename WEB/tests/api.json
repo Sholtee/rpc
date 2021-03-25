@@ -7,7 +7,11 @@
         "Add": {
           "alias": "add",
           "layout": ["Number", "Number"]
-        }
+        },
+        "ParseInt": "parseInt"
+      },
+      "properties": {
+        "PI": true
       }
     }
   }

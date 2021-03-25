@@ -15,3 +15,7 @@
   - *introduced:* Layout validation
   - *introduced:* Schema API
   - *fixed:* Missing error message on timeout
+- 2.0.1:
+  - *fixed:* Incorrect binding
+- 2.0.2:
+  - *introduced:* In the schema, member aliases may be defined with a shorthand

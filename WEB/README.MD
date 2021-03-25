@@ -54,7 +54,8 @@ A schema describes the layout of the remote API. It can be a JavaScript object, 
         "Add": {
           "alias": "add",
           "layout": ["Number", "Number"]
-        }
+        },
+        "ParseInt": "parseInt"
       },
       "properties": {
          "PI": true

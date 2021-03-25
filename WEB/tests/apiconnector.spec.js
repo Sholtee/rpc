@@ -367,4 +367,13 @@ describe('ApiConnectionFactory.fromSchema', () => {
             });
         });
     });
+
+    it('should fetch the config 2', done => {
+        ApiConnectionFactory.fromSchema('base/tests/api.json').then(api => {
+            api.calculator.parseInt('1986').then(result => {
+                expect(result).toEqual(1986);
+                done();
+            });
+        });
+    });
 });

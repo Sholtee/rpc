@@ -174,12 +174,24 @@ Object.assign(ApiConnectionFactory, {
         const ModuleType = factory.createConnection(module);
 
         if (descriptor.methods)
-          Object.entries(descriptor.methods).forEach(([method, {alias, layout}]) =>
-            ModuleType.registerMethod(method, alias, layout));
+          Object.entries(descriptor.methods).forEach(([method, descriptor]) => {
+            if (typeof descriptor === 'string') {
+              ModuleType.registerMethod(method, descriptor);
+            } else {
+              const {alias, layout} = descriptor; // jol kezeli azt az esetet ha descriptor == true
+              ModuleType.registerMethod(method, alias, layout);
+            }
+          });
 
         if (descriptor.properties)
-          Object.entries(descriptor.properties).forEach(([property, {alias}]) =>
-            ModuleType.registerProperty(property, alias));
+          Object.entries(descriptor.properties).forEach(([property, descriptor]) => {
+            if (typeof descriptor === 'string') {
+              ModuleType.registerProperty(property, descriptor);
+            } else {
+              const {alias} = descriptor; // jol kezeli azt az esetet ha descriptor == true
+              ModuleType.registerProperty(property, alias);
+            }
+          });
 
         api[descriptor.alias || module] = new ModuleType();
       });
