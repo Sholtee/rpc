@@ -4,11 +4,15 @@
 **This documentation refers the version 2.X of the library**
 ## How to use it
 1. Reference this library via *jsdelivr*: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@2.x.x/dist/apiconnector.js"></script>` or install as an *NPM* package: `npm install --save-prod rpcdotnet-connector`
-2. Create a connection factory:
+2. Create and configure a connection factory:
    ```js
    const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'rpcdotnet-connector'" 
    ...
    const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
+   // Setting the following properties is not required
+   factory.sessionId = 'xXx';
+   factory.timeout = 5000; // ms
+   factory.headers['my-custom-header'] = 'kerekesfacapa';
    ```
    Optionally you can hook into the invocation process for instance, to bind your [loader](https://loading.io/css/ ):
    ```js
@@ -70,6 +74,7 @@ const api = ApiConnectionFactory.fromSchema(schemaObject); // NOT async
 // or
 const api = await ApiConnectionFactory.fromSchema('path/to/schema.json');
 ...
+api.$factory.sessionId = 'xXx';
 let result = await api.calculator.add(1, 5);
 ```
 ### Version history
