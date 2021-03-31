@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Moq;
@@ -176,6 +177,51 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 IModule module = injector.Get<IModule>();
 
                 Assert.That(module, Is.InstanceOf<TransactionManager<IModule>>());
+            }
+        }
+
+        [Test]
+        public void TransactionManager_ShouldNotCompleteUntilTheTransactionIsDone() 
+        {
+            bool inTransaction = false;
+
+            var mockTransaction = new Mock<IDbTransaction>(MockBehavior.Strict);
+            mockTransaction
+                .Setup(tr => tr.Commit())
+                .Callback(() => Thread.Sleep(10));
+            mockTransaction
+                .Setup(tr => tr.Dispose())
+                .Callback(() => inTransaction = false);
+
+            var mockDbConnection = new Mock<IDbConnection>(MockBehavior.Strict);
+            mockDbConnection
+                .Setup(conn => conn.BeginTransaction(IsolationLevel.Unspecified))
+                .Returns(() =>
+                {
+                    inTransaction = true;
+                    return mockTransaction.Object;
+                });
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.DoSomethingAsync())
+                .Returns(async () => 
+                {
+                    await Task.Delay(10);
+                    return 0;
+                });
+
+            Type proxyType = ProxyGenerator<IModule, TransactionManager<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, new Lazy<IDbConnection>(() => mockDbConnection.Object))!;
+
+            for (int i = 0; i < 100; i++)
+            {
+                Assert.DoesNotThrowAsync(async () =>
+                {
+                    await module.DoSomethingAsync();
+                    Assert.False(inTransaction);
+                });
             }
         }
     }
