@@ -18,7 +18,7 @@ namespace Solti.Utils.Rpc.Internals
         // metodus nem jatszik
         //
 
-        public static Task Decorate(Func<Task> original, Type returnType, Func<Task> decorator)
+        public static Task Before(Func<Task> original, Type returnType, Func<Task> decorator)
         {
             if (returnType == typeof(Task))
             {

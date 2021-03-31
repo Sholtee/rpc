@@ -62,7 +62,7 @@ namespace Solti.Utils.Rpc.Aspects
                 return base.Invoke(method, args, extra);
             }
 
-            return AsyncExtensions.Decorate
+            return AsyncExtensions.Before
             (
                 () => (Task) base.Invoke(method, args, extra)!,
                 method.ReturnType, 

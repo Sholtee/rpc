@@ -60,7 +60,7 @@ namespace Solti.Utils.Rpc.Aspects
             //
 
             if (typeof(Task).IsAssignableFrom(method.ReturnType) && AsyncRoleManager is not null)
-                return AsyncExtensions.Decorate
+                return AsyncExtensions.Before
                 (
                     () => (Task) base.Invoke(method, args, extra)!, 
                     method.ReturnType, 
