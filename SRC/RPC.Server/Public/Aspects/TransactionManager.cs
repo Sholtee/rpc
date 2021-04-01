@@ -85,17 +85,20 @@ namespace Solti.Utils.Rpc.Aspects
             {
                 using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
 
+                object? result;
+
                 try
                 {
-                    object? result = base.Invoke(method, args, extra);
-                    transaction.Commit();
-                    return result;
+                    result = base.Invoke(method, args, extra);
                 }
                 catch 
                 {
                     transaction.Rollback();
                     throw;
                 }
+
+                transaction.Commit();
+                return result;
             }
         }
     }
