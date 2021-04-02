@@ -5,14 +5,14 @@
 ********************************************************************************/
 using System;
 using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Aspects
 {
     using Interfaces;
+    using Primitives;
     using Proxy;
 
     /// <summary>
@@ -34,7 +34,6 @@ namespace Solti.Utils.Rpc.Aspects
             FConnection = dbConn ?? throw new ArgumentNullException(nameof(dbConn));
 
         /// <inheritdoc/>
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
         public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
         {
             if (method is null)
@@ -44,42 +43,61 @@ namespace Solti.Utils.Rpc.Aspects
             if (ta is null)
                 return base.Invoke(method, args, extra);
 
-            return typeof(Task).IsAssignableFrom(method.ReturnType)
-                ? InvokeAsync()
-                : Invoke();
-
-            Task InvokeAsync()
+            if (typeof(Task) == method.ReturnType)
             {
-                IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
+                return InvokeAsync();
 
-                //
-                // Nem tudjuk h van e es ha igen milyen tipusu a visszateres ezert a ContinueWith()-es varazslas
-                //
-
-                Task task = (Task) base.Invoke(method, args, extra)!;
-                task.ContinueWith(t => 
+                async Task InvokeAsync()
                 {
-                    if (!t.IsCompleted) return; 
-         
-                    switch (t.Status)
-                    {
-                        case TaskStatus.RanToCompletion:
-                            transaction.Commit();
-                            break;
-                        case TaskStatus.Canceled:
-                        case TaskStatus.Faulted:
-                            transaction.Rollback();
-                            break;
-                        default:
-                            Debug.Fail($"Unexpected state {t.Status}");
-                            break;
-                    }
-   
-                    transaction.Dispose();
-                }, default, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+                    using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
 
-                return task;
+                    try
+                    {
+                        await (Task) base.Invoke(method, args, extra)!;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+
+                    transaction.Commit();
+                }
             }
+
+            if (typeof(Task).IsAssignableFrom(method.ReturnType)) // Task<>
+            {
+                Func<Task<object>> invokeAsync = InvokeAsync<object>;
+
+                return (Task) invokeAsync
+                    .Method
+                    .GetGenericMethodDefinition()
+                    .MakeGenericMethod(method.ReturnType.GetGenericArguments().Single())
+                    .ToInstanceDelegate()
+                    .Invoke(invokeAsync.Target, Array.Empty<object?>());
+
+                async Task<T> InvokeAsync<T>()
+                {
+                    using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
+
+                    T result;
+
+                    try
+                    {
+                        result = await (Task<T>) base.Invoke(method, args, extra)!;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+
+                    transaction.Commit();
+                    return result;
+                }
+            }
+
+            return Invoke();
 
             object? Invoke()
             {

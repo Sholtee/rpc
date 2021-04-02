@@ -119,10 +119,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         }
 
         [Test]
-        public void TransactionManager_ShouldNotCallCommitOnFaultyAsyncInvocation()
+        public void TransactionManager_ShouldNotCallCommitOnFaultyAsyncInvocation1()
         {
             var mockTransaction = new Mock<IDbTransaction>(MockBehavior.Strict);
             mockTransaction.Setup(tr => tr.Dispose());
+            mockTransaction.Setup(tr => tr.Rollback());
 
             var mockDbConnection = new Mock<IDbConnection>(MockBehavior.Strict);
             mockDbConnection
@@ -142,6 +143,35 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             mockDbConnection.Verify(conn => conn.BeginTransaction(IsolationLevel.Unspecified), Times.Once);
             mockTransaction.Verify(tr => tr.Commit(), Times.Never);
+            mockTransaction.Verify(tr => tr.Rollback(), Times.Once);
+        }
+
+        [Test]
+        public void TransactionManager_ShouldNotCallCommitOnFaultyAsyncInvocation2()
+        {
+            var mockTransaction = new Mock<IDbTransaction>(MockBehavior.Strict);
+            mockTransaction.Setup(tr => tr.Dispose());
+            mockTransaction.Setup(tr => tr.Rollback());
+
+            var mockDbConnection = new Mock<IDbConnection>(MockBehavior.Strict);
+            mockDbConnection
+                .Setup(conn => conn.BeginTransaction(IsolationLevel.Unspecified))
+                .Returns(mockTransaction.Object);
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(m => m.DoSomethingAsync())
+                .Throws(new Exception("cica"));
+
+            Type proxyType = ProxyGenerator<IModule, TransactionManager<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule)Activator.CreateInstance(proxyType, mockModule.Object, new Lazy<IDbConnection>(() => mockDbConnection.Object))!;
+
+            Assert.ThrowsAsync<Exception>(module.DoSomethingAsync);
+
+            mockDbConnection.Verify(conn => conn.BeginTransaction(IsolationLevel.Unspecified), Times.Once);
+            mockTransaction.Verify(tr => tr.Commit(), Times.Never);
+            mockTransaction.Verify(tr => tr.Rollback(), Times.Once);
         }
 
         [Test]
