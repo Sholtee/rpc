@@ -39,3 +39,5 @@
 - 3.0.0:
   - *introduced:* Built-in aspects
   - *upgraded:* **ProxyGen.NET** to v4, **Injector.NET** to v4
+- 3.0.1:
+  - *fixed:* Exceptions thrown by `TransactionManager` could not be caught in certain cases
