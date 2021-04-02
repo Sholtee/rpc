@@ -33,7 +33,7 @@ namespace Solti.Utils.Rpc.Internals
 
             if (typeof(Task).IsAssignableFrom(returnType)) // Task<>
             {
-                Func<Task<object>> invokeAsync = InvokeAsyncHavingResult<object>;
+                Func<Task<object>> invokeAsync = InvokeAsync<object>;
 
                 return (Task) invokeAsync
                     .Method
@@ -42,7 +42,7 @@ namespace Solti.Utils.Rpc.Internals
                     .ToInstanceDelegate()
                     .Invoke(invokeAsync.Target, Array.Empty<object?>());
 
-                async Task<T> InvokeAsyncHavingResult<T>()
+                async Task<T> InvokeAsync<T>()
                 {
                     await decorator();
                     return await (Task<T>) original();
