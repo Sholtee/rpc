@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Perf</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <!--BenchmarkDotNet requires the exe and csproj name to be equal-->
     <AssemblyName>RPC.Perf</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Perf</RootNamespace>

@@ -7,7 +7,7 @@
     <AssemblyName>Solti.Utils.Rpc.Server.Sample</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Server.Sample</RootNamespace>
     <Authors>Denes Solti</Authors>
-    <Configurations>Debug;Release;Perf</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

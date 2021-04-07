@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Perf", "PERF\RPC.Perf.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Server.Sample", "TEST\RPC.Server.Sample\RPC.Server.Sample.csproj", "{29590C53-75E1-43A7-80D7-9298CCC2E06E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPC.Server.Sample.Interfaces", "TEST\RPC.Server.Sample.Interfaces\RPC.Server.Sample.Interfaces.csproj", "{80139F5E-525B-4FB4-A98A-87C47B5A6015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPC.Server.Sample.Interfaces", "TEST\RPC.Server.Sample.Interfaces\RPC.Server.Sample.Interfaces.csproj", "{80139F5E-525B-4FB4-A98A-87C47B5A6015}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,18 +54,18 @@ Global
 		{1FBD13AD-02C2-4959-8C84-F80927BE8F44}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Perf|Any CPU.ActiveCfg = Perf|Any CPU
-		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Perf|Any CPU.Build.0 = Perf|Any CPU
-		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Release|Any CPU.ActiveCfg = Perf|Any CPU
+		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Perf|Any CPU.ActiveCfg = Release|Any CPU
+		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Perf|Any CPU.Build.0 = Release|Any CPU
+		{B95B397C-E87F-4E9E-91AD-1DF11D183754}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{29590C53-75E1-43A7-80D7-9298CCC2E06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29590C53-75E1-43A7-80D7-9298CCC2E06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29590C53-75E1-43A7-80D7-9298CCC2E06E}.Perf|Any CPU.ActiveCfg = Release|Any CPU
 		{29590C53-75E1-43A7-80D7-9298CCC2E06E}.Perf|Any CPU.Build.0 = Release|Any CPU
-		{29590C53-75E1-43A7-80D7-9298CCC2E06E}.Release|Any CPU.ActiveCfg = Perf|Any CPU
+		{29590C53-75E1-43A7-80D7-9298CCC2E06E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Perf|Any CPU.ActiveCfg = Debug|Any CPU
-		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Perf|Any CPU.Build.0 = Debug|Any CPU
+		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Perf|Any CPU.ActiveCfg = Release|Any CPU
+		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Perf|Any CPU.Build.0 = Release|Any CPU
 		{80139F5E-525B-4FB4-A98A-87C47B5A6015}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
