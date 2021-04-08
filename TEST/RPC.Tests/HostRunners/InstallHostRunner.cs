@@ -63,6 +63,27 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         }
 
         [Test]
+        public void Install_ShouldRevertTheServiceInstallationOnError([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");
+
+            var ex = new Exception();
+
+            var mockAppHost = new Mock<AppHost>(MockBehavior.Loose);
+            mockAppHost
+                .Setup(h => h.OnInstall())
+                .Callback(() => 
+                {
+                    Assert.That(ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService"), Is.Not.Null);
+                    throw ex;
+                });
+
+            Exception bubbled = Assert.Throws<Exception>(() => InvokeRunner(mockAppHost.Object, configuration, install: true));
+            Assert.AreSame(ex, bubbled);
+            Assert.That(ServiceController.GetServices().SingleOrDefault(svc => svc.ServiceName == "MyService"), Is.Null);
+        }
+
+        [Test]
         public void Uninstall_ShouldUninstallTheService([Values(HostConfiguration.Debug, HostConfiguration.Release)] HostConfiguration configuration)
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT) Assert.Ignore("The related feature is Windows exclusive.");

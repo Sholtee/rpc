@@ -37,9 +37,37 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 #pragma warning restore CA2201
         }
 
-        internal bool Install { get; set; }
+        private string GetSafeServiceName() => Host.Name.Replace(' ', '_');
 
-        internal bool Uninstall { get; set; }
+        private void DeleteService() => InvokeScm($"delete {GetSafeServiceName()}");
+
+        private void InstallService() 
+        {
+            var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{Process.GetCurrentProcess().MainModule.FileName}\" start= {(Host.AutoStart ? "auto" : "demand")}");
+
+            if (Host.Description is not null)
+                sb.Append($" displayname= \"{Host.Description}\"");
+            if (Host.Dependencies.Any())
+                sb.Append($" depend= {string.Join("/", Host.Dependencies)}");
+
+            InvokeScm(sb.ToString());
+        }
+
+        internal bool Install 
+        { 
+            get;
+#if DEBUG
+            set;
+#endif
+        }
+
+        internal bool Uninstall 
+        { 
+            get;
+#if DEBUG
+            set;
+#endif
+        }
 
         internal InstallHostRunner_WinNT(IHost host, HostConfiguration configuration) : base(host, configuration) { }
         #endregion
@@ -48,29 +76,27 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         {
             if (Install)
             {
-                var sb = new StringBuilder($"create {GetSafeServiceName()} binPath= \"{Process.GetCurrentProcess().MainModule.FileName}\" start= {(Host.AutoStart ? "auto" : "demand")}");
-                
-                if (Host.Description is not null)
-                    sb.Append($" displayname= \"{Host.Description}\"");
-                if (Host.Dependencies.Any())
-                    sb.Append($" depend= {string.Join("/", Host.Dependencies)}");
+                InstallService();
 
-                InvokeScm(sb.ToString());
-                Host.OnInstall();
+                try
+                {
+                    Host.OnInstall();
+                }
+                catch 
+                {
+                    DeleteService();
+                    throw;
+                }
             }
 
             if (Uninstall) 
             {
-                InvokeScm($"delete {GetSafeServiceName()}");
                 Host.OnUninstall();
-            }
-
-            string GetSafeServiceName() => Host.Name.Replace(' ', '_');
+                DeleteService();
+            }          
         }
 
-        public override void Stop()
-        {
-        }
+        public override void Stop() {}
 
         #region Factory
         private sealed class FactoryImpl : IHostRunnerFactory
