@@ -37,8 +37,4 @@
     <ProjectReference Include="..\Test\RPC.Server.Sample.Interfaces\RPC.Server.Sample.Interfaces.csproj" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="start /wait /min dotnet build &quot;..\Test\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --nologo --configuration Release" />
-  </Target>
-  
 </Project>
