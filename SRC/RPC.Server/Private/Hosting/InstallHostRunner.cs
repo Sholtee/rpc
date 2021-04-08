@@ -14,9 +14,21 @@ namespace Solti.Utils.Rpc.Hosting.Internals
     internal class InstallHostRunner : HostRunner
     {
         #region Private
-        internal bool Install { get; set; }
+        internal bool Install
+        {
+            get;
+#if DEBUG
+            set;
+#endif
+        }
 
-        internal bool Uninstall { get; set; }
+        internal bool Uninstall
+        {
+            get;
+#if DEBUG
+            set;
+#endif
+        }
 
         internal InstallHostRunner(IHost host, HostConfiguration configuration) : base(host, configuration) { }
         #endregion
