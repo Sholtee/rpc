@@ -6,7 +6,7 @@
     <IsTestProject>true</IsTestProject>
     <AssemblyName>Solti.Utils.Rpc.Tests</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Tests</RootNamespace>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <Configurations>Debug</Configurations>
     <OutputType>Library</OutputType>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>

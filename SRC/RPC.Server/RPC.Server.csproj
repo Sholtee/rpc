@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
+    <Compile Include="..\Common\IsExternalInit.cs" Link="Properties\IsExternalInit.cs" />
   </ItemGroup>
 
   <ItemGroup>

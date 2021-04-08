@@ -17,17 +17,13 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         internal bool Install
         {
             get;
-#if DEBUG
-            set;
-#endif
+            init;
         }
 
         internal bool Uninstall
         {
             get;
-#if DEBUG
-            set;
-#endif
+            init;
         }
 
         internal InstallHostRunner(IHost host, HostConfiguration configuration) : base(host, configuration) { }
