@@ -41,3 +41,5 @@
   - *upgraded:* **ProxyGen.NET** to v4, **Injector.NET** to v4
 - 3.0.1:
   - *fixed:* Exceptions thrown by `TransactionManager` could not be caught in certain cases
+- 3.0.2:
+  - *fixed:* Proper cleanup on failed service installation
