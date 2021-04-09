@@ -221,8 +221,8 @@ See [here](https://github.com/Sholtee/rpc/blob/master/WEB/README.MD )
    ```
 2. Register the certificate (requires PowerShell)
    ```ps
-   $certpw = ConvertTo-SecureString -String "cica" -Force –AsPlainText
-   Import-PfxCertificate –FilePath certificate.p12 Cert:\LocalMachine\My -Password $certpwd
+   $certpw = ConvertTo-SecureString -String "cica" -Force -AsPlainText
+   Import-PfxCertificate -FilePath certificate.p12 Cert:\LocalMachine\My -Password $certpwd
    ```
 3. Get the certificate hash (requires PowerShell)
    ```ps
