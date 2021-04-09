@@ -214,21 +214,15 @@ See [here](https://github.com/Sholtee/rpc/blob/master/WEB/README.MD )
    - You can invoke it with `-install` to install your app as a local service (`-uninstall` does the opposite)
    - It can run as a local service (started by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager )) - if it was installed previously
 ## How to listen on HTTPS (Windows only)
-1. If you don't have your own, create a self-signed certificate (requires OpenSSL)
-   ```cmd
-   openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
-   openssl pkcs12 -inkey key.pem -in certificate.pem -export -out certificate.p12
-   ```
-2. Register the certificate (requires PowerShell)
+Requires [this](https://github.com/Sholtee/rpc.boilerplate/blob/master/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
+1. If you don't have your own, create a self-signed certificate
    ```ps
-   $certpw = ConvertTo-SecureString -String "cica" -Force -AsPlainText
-   Import-PfxCertificate -FilePath certificate.p12 Cert:\LocalMachine\My -Password $certpwd
+   Create-SelfSignedCertificate -OutDir ".\Cert" -Password "cica"
    ```
-3. Get the certificate hash (requires PowerShell)
+2. Register the certificate
    ```ps
-   dir Cert:\LocalMachine\My
+   Bind-Certificate -P12Cert ".Cert\certificate.p12" -Password "cica" -IpPort "127.0.0.1:1986"
    ```
-4. Register the certificate with [this](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddSslCert_System_Net_IPEndPoint_System_String_ ) API
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
 
