@@ -67,7 +67,7 @@
    There are some control attributes that can be applied on (module) interface methods:
    - `AliasAttribute`: Specifies the alias of the method. Useful if your module has overloaded methods.
    - `IgnoreAttribute`: Marks the method "remotely invisible".
-   - [Aspects](https://github.com/Sholtee/injector#aspects ) also supported. The built-in aspects are the followings:
+   - [Aspects](https://github.com/Sholtee/injector#aspects ) are also supported. The built-in aspects are the followings:
      - `ParameterValidatorAspectAttribute`:
 	 ```csharp
      [ParameterValidatorAspect]
@@ -78,7 +78,7 @@
        void ConditionallyValidated([NotNull(Condition = typeof(IfLoggedIn))] string arg);
      }
 
-     public enum MyEnum
+     public enum MyRoles
      {
        Anonymous = 0,
        LoggedInUser = 1
@@ -87,10 +87,10 @@
      public class IfLoggedIn : IConditionalValidatior
      {
        public bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) =>
-         currentScope.Get<IRoleManager>().GetAssignedRoles(null).Equals(MyEnum.LoggedInUser);
+         currentScope.Get<IRoleManager>().GetAssignedRoles(null).Equals(MyRoles.LoggedInUser);
      }
 	 ```
-	 The complete list of available parameter/property validators can be found [here](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects/ParameterValidation )
+	 The complete list of available parameter/property validators are [here](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects/ParameterValidation )
 	 
      - `TransactionAspectAttribute`:
      ```csharp
@@ -228,8 +228,10 @@ Requires [this](https://github.com/Sholtee/rpc.boilerplate/blob/master/cert.ps1 
 
 [Version history](https://github.com/Sholtee/rpc/tree/master/history.md )
 
-[Examples](https://github.com/Sholtee/rpc/blob/master/TEST/RPC.Tests/Rpc.cs )
+[Server boilerplate](https://github.com/Sholtee/rpc.boilerplate ) (comprehensive)
 
-[Sample server](https://github.com/Sholtee/rpc/tree/master/TEST/RPC.Server.Sample )
+[Sample server](https://github.com/Sholtee/rpc/tree/master/TEST/RPC.Server.Sample ) (used in tests)
+
+[Tests](https://github.com/Sholtee/rpc/blob/master/TEST/RPC.Tests/Rpc.cs ) (remote module invocation related)
 
 [Benchmark results](https://sholtee.github.io/rpc/perf/ )
