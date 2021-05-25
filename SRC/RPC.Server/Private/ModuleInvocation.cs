@@ -92,7 +92,7 @@ namespace Solti.Utils.Rpc.Internals
             )
         );
 
-        private static async Task<object?> DoInvoke(Task<object?[]> getArgs, Func<object?[], object> invocation, Type originalReturnType)
+        private static async Task<object?> DoInvoke(Task<object?[]> getArgs, Func<object?[], object> invocation, Func<Task, object?> getResult)
         {
             object result = invocation(await getArgs);
             if (result is not Task task)
@@ -100,16 +100,7 @@ namespace Solti.Utils.Rpc.Internals
 
             await task;
 
-            //
-            // Ne task.GetType()-ot hasznaljuk:
-            //   https://stackoverflow.com/questions/17824863/what-is-the-type-voidtaskresult-as-it-relates-to-async-methods
-            //
-
-            Debug.Assert(typeof(Task).IsAssignableFrom(originalReturnType));
-
-            return originalReturnType.IsGenericType
-                ? originalReturnType.GetProperty(nameof(Task<object?>.Result)).ToGetter().Invoke(task)
-                : null;
+            return getResult(task);
         }
 
         internal static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type iface) =>
@@ -129,6 +120,33 @@ namespace Solti.Utils.Rpc.Internals
                 //
 
                 .Distinct();
+
+        //
+        // (injector, ctx) =>
+        // {
+        //   switch (ctx.Module)
+        //   {
+        //     case "moduleA":
+        //     {
+        //       switch (ctx.Method)
+        //       {
+        //         case "Method_1":
+        //            return DoInvoke
+        //            (
+        //              deserializer(context.Payload, context.Cancellation),
+        //              args => ((IModuleA) injector.Get(typeof(IModuleA), null)).Method_1((T0) arg0, (T1) arg1, ...),
+        //              task => (object) ((Task<TResult>) task).Result | null
+        //            );
+        //         ...
+        //         default:
+        //           throw new MissingMethodException(ctx.Method);
+        //       }
+        //     }
+        //     ...
+        //     default:
+        //       throw new MissingModuleException(ctx.Module);
+        //   }
+        // }
 
         private Expression<ModuleInvocation> BuildExpression(IEnumerable<Type> interfaces) 
         {
@@ -277,14 +295,14 @@ namespace Solti.Utils.Rpc.Internals
 
                     Expression.Invoke
                     (
-                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Type, Task<object?>>) DoInvoke),
+                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Func<Task, object?>, Task<object?>>) DoInvoke),
                         getArgs,
                         Expression.Lambda<Func<object?[], object?>>
                         (
                            Expression.Block(invocationBlock),
                            args
                         ),
-                        Expression.Constant(ifaceMethod.ReturnType)
+                        BuildGetResultDelegate(ifaceMethod.ReturnType)
                     )
                 );
             }
@@ -294,6 +312,37 @@ namespace Solti.Utils.Rpc.Internals
                 context,
                 typeof(IRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name)
             );
+
+            static LambdaExpression BuildGetResultDelegate(Type returnType) 
+            {
+                ParameterExpression task = Expression.Parameter(typeof(Task), nameof(task));
+
+                BlockExpression block = !typeof(Task).IsAssignableFrom(returnType) || returnType == typeof(Task)
+                    //
+                    // task => null;
+                    //
+
+                    ? Expression.Block(Expression.Default(typeof(object)))
+
+                    //
+                    // task => (object) ((Task<TResult>) task).Result;
+                    //
+
+                    : Expression.Block
+                    (
+                        Expression.Convert
+                        (
+                            Expression.Property
+                            (
+                                Expression.Convert(task, returnType),
+                                returnType.GetProperty(nameof(Task<object>.Result))
+                            ),
+                            typeof(object)
+                        )
+                    );
+
+                return Expression.Lambda<Func<Task, object>>(block, task);
+            }
         }
         #endregion
 
