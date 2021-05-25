@@ -59,10 +59,8 @@ namespace Solti.Utils.Rpc
             public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra) => Owner.InvokeService(method, args);
         }
 
-        private static Type GenerateTypedResponseTo(MethodInfo method) 
+        private static Type GenerateTypedResponseTo(Type returnType) => Cache.GetOrAdd(returnType, () =>
         {
-            Type returnType = method.ReturnType;
-
             if (returnType == typeof(void) || returnType == typeof(Task))
                 returnType = typeof(object);
             else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
@@ -73,7 +71,7 @@ namespace Solti.Utils.Rpc
                 : typeof(ReferenceRpcResponse<>);
 
             return responseType.MakeGenericType(returnType);
-        }
+        });
 
         private async Task<Version> GetServiceVersion() => await (await CreateClient<IServiceDescriptor>()).Version;
         #endregion
@@ -172,7 +170,7 @@ namespace Solti.Utils.Rpc
                         IRpcResonse result =  (IRpcResonse) await JsonSerializer.DeserializeAsync
                         (
                             stm,
-                            GenerateTypedResponseTo(method),
+                            GenerateTypedResponseTo(method.ReturnType),
                             SerializerOptions
                         );
                         if (result.Exception != null) ProcessRemoteError(result.Exception);
