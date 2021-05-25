@@ -51,10 +51,6 @@ namespace Solti.Utils.Rpc.Internals
         #region Private
         private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
 
-        private static readonly Func<object, object?> GetDebugView = typeof(Expression)
-            .GetProperty("DebugView", BindingFlags.Instance | BindingFlags.NonPublic) // DebugView property internal, tudja fasz miert
-            .ToGetter();
-
         private readonly HashSet<Type> FModules = new();
 
         private readonly JsonSerializerOptions FSerializerOptions;
@@ -436,7 +432,7 @@ namespace Solti.Utils.Rpc.Internals
         public ModuleInvocation Build()
         {
             Expression<ModuleInvocation> moduleInvocation = BuildExpression(FModules);
-            Debug.WriteLine($"ModuleInvocation built:{Environment.NewLine}{GetDebugView(moduleInvocation)}");
+            Debug.WriteLine($"ModuleInvocation built:{Environment.NewLine}{moduleInvocation.GetDebugView()}");
 
             ModuleInvocation result = moduleInvocation.Compile();
 
