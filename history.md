@@ -43,3 +43,7 @@
   - *fixed:* Exceptions thrown by `TransactionManager` could not be caught in certain cases
 - 3.0.2:
   - *fixed:* Proper cleanup on failed service installation
+- 3.0.3:
+  - *fixed:* Possible `InvalidCastException` in `RpcClientFactory.InvokeService()`
+  - *upgraded:* Dependencies
+  - *enhanced:* Server performance (generated `ModuleInvocation`s are *reflection* free)
