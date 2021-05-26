@@ -10,7 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +19,7 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Interfaces;
     using Primitives.Patterns;
+    using Primitives.Threading;
     using Properties;
 
     /// <summary>
@@ -37,6 +37,8 @@ namespace Solti.Utils.Rpc.Internals
         private Thread? FListenerThread;
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "This field is disposed correctly, see Stop() method")]
         private CancellationTokenSource? FListenerCancellation;
+
+        private readonly ExclusiveBlock FExclusiveBlock = new();
 
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
@@ -296,6 +298,7 @@ namespace Solti.Utils.Rpc.Internals
             {
                 if (IsStarted)
                     Stop();
+                FExclusiveBlock.Dispose();
             }
 
             base.Dispose(disposeManaged);
@@ -339,95 +342,100 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Starts the Web Service.
         /// </summary>
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public virtual void Start(string url)
         {
-            if (IsStarted)
-                return;
-
-            createcore:
-            FListener = CreateCore(url);
-
-            try
+            using (FExclusiveBlock.Enter())
             {
-                FListener.Start();
-            }
-            catch (Exception ex) 
-            {
-                //
-                // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
-                // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
-                //
+                if (IsStarted)
+                    return;
 
-                FListener = null;
+                createcore:
+                FListener = CreateCore(url);
 
-                #pragma warning disable CA1508 // There is not dead conditional code
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
-                #pragma warning restore CA1508
+                try
                 {
-                    AddUrlReservation(url);
-                    FNeedToRemoveUrlReservation = true;
+                    FListener.Start();
+                }
+                catch (Exception ex)
+                {
+                    //
+                    // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
+                    // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
+                    //
+
+                    FListener = null;
+
+                    #pragma warning disable CA1508 // There is no dead conditional code
+                    if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
+                    #pragma warning restore CA1508
+                    {
+                        AddUrlReservation(url);
+                        FNeedToRemoveUrlReservation = true;
+
+                        //
+                        // Megprobaljuk ujra letrehozni.
+                        //
+
+                        goto createcore;
+                    }
 
                     //
-                    // Megprobaljuk ujra letrehozni.
+                    // Ha nem URL rezervacios gondunk volt akkor tovabb dobjuk a kivetelt
                     //
 
-                    goto createcore;
+                    throw;
                 }
 
-                //
-                // Ha nem URL rezervacios gondunk volt akkor tovabb dobjuk a kivetelt
-                //
+                FListenerCancellation = new CancellationTokenSource();
 
-                throw;
+                FListenerThread = new Thread(Listen);
+                FListenerThread.Start();
+
+                Url = url;
             }
-
-            FListenerCancellation = new CancellationTokenSource();
-
-            FListenerThread = new Thread(Listen);
-            FListenerThread.Start();
-
-            Url = url;
         }
 
         /// <summary>
         /// Shuts down the Web Service.
         /// </summary>
-        [MethodImpl(MethodImplOptions.Synchronized)]
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
         public virtual void Stop()
         {
-            if (!IsStarted) return;
-
-            FListenerCancellation!.Cancel();
-
-            FListenerThread!.Join();
-            FListenerThread = null;
-
-            FListener!.Close();
-            FListener = null;
-
-            //
-            // Lehet Dispose()-olni mert a feldolgozok nem kozvetlenul hivatkozzak.
-            //
-
-            FListenerCancellation.Dispose();
-            FListenerCancellation = null;
-
-            if (FNeedToRemoveUrlReservation)
+            using (FExclusiveBlock.Enter())
             {
-                try
+                if (!IsStarted)
+                    return;
+
+                FListenerCancellation!.Cancel();
+
+                FListenerThread!.Join();
+                FListenerThread = null;
+
+                FListener!.Close();
+                FListener = null;
+
+                //
+                // Lehet Dispose()-olni mert a feldolgozok nem kozvetlenul hivatkozzak.
+                //
+
+                FListenerCancellation.Dispose();
+                FListenerCancellation = null;
+
+                if (FNeedToRemoveUrlReservation)
                 {
-                    RemoveUrlReservation(Url!);
+                    try
+                    {
+                        RemoveUrlReservation(Url!);
+                    }
+                    #pragma warning disable CA1031 // This method should not throw
+                    catch { }
+                    #pragma warning restore CA1031
+
+                    FNeedToRemoveUrlReservation = false;
                 }
-                #pragma warning disable CA1031 // This method should not throw
-                catch { }
-                #pragma warning restore CA1031
 
-                FNeedToRemoveUrlReservation = false;
+                Url = null;
             }
-
-            Url = null;
         }
 
         /// <summary>
