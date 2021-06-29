@@ -105,7 +105,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 .GetCommandLineArgs()
                 .Any(arg => arg.ToUpperInvariant() == name);
 
-            public bool IsCompatible(IHost host) => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.UserInteractive && (Install || Uninstall);
+            public bool IsCompatible(IHost host) => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && HostRunner.IsInteractive && (Install || Uninstall);
 
             public IHostRunner CreateRunner(IHost host, HostConfiguration configuration) => new InstallHostRunner_WinNT(host, configuration) 
             {

@@ -34,6 +34,16 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
+        /// Gets the value indicating whether the host is running in user interactive mode.
+        /// </summary>
+        protected static bool IsInteractive =>
+            //
+            // Environment.UserInteractive legyen felulirhato
+            //
+
+            Environment.GetEnvironmentVariable("USER_INTERACTIVE")?.ToUpperInvariant() is "TRUE" || Environment.UserInteractive;
+
+        /// <summary>
         /// The host related to this runner.
         /// </summary>
         public IHost Host { get; }

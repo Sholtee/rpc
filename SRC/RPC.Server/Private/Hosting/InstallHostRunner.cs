@@ -54,7 +54,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
                 .Any(arg => arg.ToUpperInvariant() == name);
 
             public bool IsCompatible(IHost host) =>
-                Environment.UserInteractive &&
+                HostRunner.IsInteractive &&
                 (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || ArgSet("-NOSERVICE")) &&
                 (Install || Uninstall);
 
