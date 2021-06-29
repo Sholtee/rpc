@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IAsyncParameterValidator
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IAsyncParameterValidator
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.46.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Interfaces_IAsyncParameterValidator" data-uid="Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator" class="text-break">Interface IAsyncParameterValidator
+  </h1>
+  <div class="markdown level0 summary"><p>Defines an abstract, asynchronous parameter validator.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_ParameterValidationErrorMessage">IParameterValidator.ParameterValidationErrorMessage</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IParameterValidator.html#Solti_Utils_Rpc_Interfaces_IParameterValidator_Validate_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_">IParameterValidator.Validate(ParameterInfo, Object, IInjector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html#Solti_Utils_Rpc_Interfaces_ICustomValidator_SupportsNull">ICustomValidator.SupportsNull</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Interfaces_IAsyncParameterValidator_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IAsyncParameterValidator : IParameterValidator, ICustomValidator</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Interfaces_IAsyncParameterValidator_ValidateAsync_" data-uid="Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IAsyncParameterValidator_ValidateAsync_System_Reflection_ParameterInfo_System_Object_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Interfaces.IAsyncParameterValidator.ValidateAsync(System.Reflection.ParameterInfo,System.Object,Solti.Utils.DI.Interfaces.IInjector)">ValidateAsync(ParameterInfo, Object, IInjector)</h4>
+  <div class="markdown level1 summary"><p>Defines the asynchronous layout of the validator method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ValidateAsync(ParameterInfo param, object value, IInjector currentScope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.parameterinfo">ParameterInfo</a></td>
+        <td><span class="parametername">param</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">currentScope</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
