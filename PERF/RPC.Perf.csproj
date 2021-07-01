@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.*" />
-    <PackageReference Include="Injector.NET" Version="4.*" />
+    <PackageReference Include="Injector.NET" Version="5.*" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(LibVersion)' != ''">

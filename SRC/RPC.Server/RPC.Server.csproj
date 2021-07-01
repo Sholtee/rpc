@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Injector.NET" Version="4.*" />
+    <PackageReference Include="Injector.NET" Version="5.*" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.*" />
     <PackageReference Include="Solti.Utils.Primitives" Version="2.*" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.*" />
