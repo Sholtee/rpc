@@ -49,3 +49,5 @@
   - *enhanced:* Server performance (generated `ModuleInvocation`s are *reflection* free)
 - 3.0.4:
   - *fixed:* Host could not determine (in certain circumstances) whether it was running in user interactive mode
+- 4.0.0:
+  - *updated:* **Injector.NET**
