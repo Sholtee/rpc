@@ -107,7 +107,7 @@ namespace Solti.Utils.Rpc.Hosting.Internals
         #region Factory
         private sealed class FactoryImpl : IHostRunnerFactory
         {
-            public bool IsCompatible(IHost host) => Environment.UserInteractive;
+            public bool IsCompatible(IHost host) => HostRunner.IsInteractive;
 
             public IHostRunner CreateRunner(IHost host, HostConfiguration configuration) => new ConsoleHostRunner(host, configuration);
         }
