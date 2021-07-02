@@ -51,3 +51,5 @@
   - *fixed:* Host could not determine (in certain circumstances) whether it was running in user interactive mode
 - 4.0.0:
   - *updated:* **Injector.NET**
+- 4.0.1:
+  - *fixed:* Host could not determine (in certain circumstances) whether it was running in user interactive mode (pt2)
