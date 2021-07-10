@@ -9,6 +9,7 @@ namespace Solti.Utils.Rpc.Server.Sample.Interfaces
 {
     using Rpc.Interfaces;
 
+    [LoggerAspect]
     [ParameterValidatorAspect]
     public interface ICalculator
     {

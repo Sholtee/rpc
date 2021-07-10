@@ -4,8 +4,6 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -150,7 +148,7 @@ namespace Solti.Utils.Rpc
         /// <inheritdoc/>
         protected override void SetAcHeaders(HttpListenerContext context)
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             base.SetAcHeaders(context);
@@ -166,7 +164,7 @@ namespace Solti.Utils.Rpc
         protected override async Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
         #pragma warning restore CS3001
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             cancellation.ThrowIfCancellationRequested();
@@ -178,7 +176,7 @@ namespace Solti.Utils.Rpc
             // Eloellenorzesek HTTP hibat generalnak -> NE a try-catch blokkban legyenek
             //
 
-            if (request.HttpMethod.ToUpperInvariant() != "POST")
+            if (request.HttpMethod.ToUpperInvariant() is not "POST")
             {
                 throw new HttpException
                 {
@@ -190,7 +188,7 @@ namespace Solti.Utils.Rpc
             // Content-Type lehet NULL a kodolas viszont nem
             //
 
-            if (request.ContentType?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) != true || request.ContentEncoding.WebName != "utf-8")
+            if (request.ContentType?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) is not true || request.ContentEncoding.WebName is not "utf-8")
             {
                 throw new HttpException
                 {
@@ -247,10 +245,10 @@ namespace Solti.Utils.Rpc
         protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger)
         #pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
-            if (context == null) 
+            if (context is null) 
                 throw new ArgumentNullException(nameof(context));
 
-            if (FModuleInvocation == null)
+            if (FModuleInvocation is null)
                 throw new InvalidOperationException();
 
             await using IInjector injector = Container.CreateInjector();
@@ -261,37 +259,10 @@ namespace Solti.Utils.Rpc
 
             injector.UnderlyingContainer.Instance(context);
 
-            if (logger != null)
+            if (logger is not null)
                 injector.UnderlyingContainer.Instance(logger);
 
-            //
-            // Naplozzuk a metodus hivast.
-            //
-
-            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
-            {
-                [nameof(context.Module)]    = context.Module,
-                [nameof(context.Method)]    = context.Method,
-                [nameof(context.SessionId)] = context.SessionId ?? "NULL"
-            });
-
-            logger?.LogInformation(Trace.BEGINNING_INVOCATION);
-            var stopWatch = Stopwatch.StartNew();
-
-            try
-            {
-                object? result = await FModuleInvocation(injector, context);
-
-                logger?.LogInformation(string.Format(Trace.Culture, Trace.INVOCATION_SUCCESSFUL, stopWatch.ElapsedMilliseconds));
-                stopWatch.Stop();
-
-                return result;
-            }
-            catch (Exception ex) 
-            {
-                logger?.LogError(ex, Trace.INVOCATION_FAILED);
-                throw;
-            }
+            return await FModuleInvocation(injector, context);
         }
 
         /// <summary>
@@ -299,7 +270,7 @@ namespace Solti.Utils.Rpc
         /// </summary>
         protected virtual async Task CreateResponse(object? result, HttpListenerResponse response, CancellationToken cancellation)
         {
-            if (response == null) 
+            if (response is null) 
                 throw new ArgumentNullException(nameof(response));
 
             switch (result)
