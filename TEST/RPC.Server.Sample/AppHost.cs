@@ -28,8 +28,12 @@ namespace Solti.Utils.Rpc.Server.Sample
 
             if (Environment.GetCommandLineArgs().Any(arg => arg.ToLowerInvariant() == "-nolog"))
             {
-                RpcService.LoggerFactory = null;
-                Logger = null;
+                //
+                // VoidLogger-t hasznaljunk NULL helyett mivel az egyes szervizeken lehet LoggerAspect
+                //
+
+                RpcService.LoggerFactory = () => VoidLogger.Instance;
+                Logger = VoidLogger.Instance;
             }
             else
             {
