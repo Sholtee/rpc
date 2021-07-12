@@ -21,7 +21,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
     [TestFixture]
     public class LoggerTests
     {
-        [LoggerAspect]
+        [ModuleLoggerAspect]
         public interface IModule
         {
             void DoSomething(string arg1, object arg2);

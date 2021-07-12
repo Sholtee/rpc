@@ -16,7 +16,8 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Marks a module or service to be logged.
     /// </summary>
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
-    public sealed class LoggerAspectAttribute: AspectAttribute
+    [SuppressMessage("Performance", "CA1813:Avoid unsealed attributes")]
+    public class LoggerAspectAttribute: AspectAttribute
     {
         /// <summary>
         /// Creates a new <see cref="LoggerAspectAttribute"/> instance.
@@ -30,13 +31,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Creates a new <see cref="LoggerAspectAttribute"/> instance.
         /// </summary>
-        public LoggerAspectAttribute() => DefaultLoggers = new LoggerBase[]
-        {
-            new ModuleMethodScopeLogger(),         
-            new ExceptionLogger(),
-            new ParameterLogger(),
-            new StopWatchLogger()
-        };
+        public LoggerAspectAttribute(): this(Array.Empty<Type>()) { }
 
         /// <summary>
         /// The default loggers. This value can be overridden per methods by the <see cref="LoggersAttribute"/>. 

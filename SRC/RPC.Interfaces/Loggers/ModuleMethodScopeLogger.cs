@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* LoggerBase.cs                                                                 *
+* ModuleMethodScopeLogger.cs                                                    *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -14,7 +14,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Creates a new log scope containing the module and method name and the session id.
     /// </summary>
     /// <remarks>This logger is intended to be used on modules only.</remarks>
-    public sealed class ModuleMethodScopeLogger : LoggerBase
+    public sealed class ModuleMethodScopeLogger: LoggerBase
     {
         /// <inheritdoc/>
         public override object? Invoke(LogContext context, Func<object?> callNext)
@@ -26,6 +26,7 @@ namespace Solti.Utils.Rpc.Interfaces
                 [nameof(cntx.Module)]    = cntx.Module,
                 [nameof(cntx.Method)]    = cntx.Method,
                 [nameof(cntx.SessionId)] = cntx.SessionId ?? "NULL"
+                // TODO: modul nev
             });
 
             return callNext();

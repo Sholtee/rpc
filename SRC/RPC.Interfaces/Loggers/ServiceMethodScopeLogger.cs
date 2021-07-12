@@ -1,37 +1,29 @@
 ﻿/********************************************************************************
-* StopWatchLogger.cs                                                            *
+* ServiceMethodScopeLogger.cs                                                   *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Diagnostics;
-
-using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
-    using Properties;
-
     /// <summary>
-    /// Logs the invocation duration.
+    /// Creates a new log scope containing the service and method name.
     /// </summary>
-    public sealed class StopWatchLogger: LoggerBase
+    public sealed class ServiceMethodScopeLogger: LoggerBase
     {
         /// <inheritdoc/>
         public override object? Invoke(LogContext context, Func<object?> callNext)
         {
-            Stopwatch stopWatch = Stopwatch.StartNew();
-
-            try
+            using IDisposable? logScope = context.Logger.BeginScope(new Dictionary<string, object>
             {
-                return callNext();
-            }
-            finally
-            {
-                context.Logger.LogInformation(Trace.TIME_ELAPSED, stopWatch.ElapsedMilliseconds);
+                ["Service"] = context.Method.ReflectedType,
+                ["Method"] = context.Method
+                // TODO: szerviz nev
+            });
 
-                stopWatch.Stop();
-            }
+            return callNext();
         }
     }
 }
