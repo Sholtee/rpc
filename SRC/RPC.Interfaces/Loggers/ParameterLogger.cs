@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Linq;
 
 using Microsoft.Extensions.Logging;
 
@@ -12,22 +13,22 @@ namespace Solti.Utils.Rpc.Interfaces
     using Properties;
 
     /// <summary>
-    /// Logs the unhandled exceptions.
+    /// Logs the invocation parameters.
     /// </summary>
-    public sealed class ExceptionLogger: LoggerBase
+    public sealed class ParameterLogger : LoggerBase
     {
         /// <inheritdoc/>
         public override object? Invoke(LogContext context, Func<object?> callNext)
         {
-            try
-            {
-                return callNext();
-            }
-            catch (Exception ex)
-            {
-                context.Logger.LogError(Trace.UNHANDLED_EXCEPTION, ex);
-                throw;
-            }
+            context.Logger.LogInformation
+            (
+                Trace.PARAMZ,
+                string.Join($",{Environment.NewLine}", context
+                    .Method
+                    .GetParameters()
+                    .Select((para, i) => $"{para.Name}:{context.Args[i]?.ToString() ?? "NULL"}"))
+            );
+            return callNext();
         }
     }
 }

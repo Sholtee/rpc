@@ -13,7 +13,7 @@ namespace Solti.Utils.Rpc.Interfaces
     using DI.Interfaces;
 
     /// <summary>
-    /// Marks a service to be logged.
+    /// Marks a module or service to be logged.
     /// </summary>
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
     public sealed class LoggerAspectAttribute: AspectAttribute
@@ -21,7 +21,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Creates a new <see cref="LoggerAspectAttribute"/> instance.
         /// </summary>
-        [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments", Justification = "<Pending>")]
+        [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments")]
         public LoggerAspectAttribute(params Type[] defaultLoggers) => DefaultLoggers = defaultLoggers
             .Select(Activator.CreateInstance)
             .Cast<LoggerBase>()
@@ -32,8 +32,9 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public LoggerAspectAttribute() => DefaultLoggers = new LoggerBase[]
         {
-            new ModuleMethodScopeLogger(),
+            new ModuleMethodScopeLogger(),         
             new ExceptionLogger(),
+            new ParameterLogger(),
             new StopWatchLogger()
         };
 

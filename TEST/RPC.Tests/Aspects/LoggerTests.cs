@@ -30,7 +30,28 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             void DoSomethingElse();
         }
 
-        public Mock<ILogger> Logger { get; set; }
+        private class LogForwarder : ILogger
+        {
+            public Func<object, IDisposable> BeginScope { get; }
+
+            public Action<LogLevel, EventId, string> Log { get; }
+
+            public LogForwarder(Func<object, IDisposable> beginScope, Action<LogLevel, EventId, string> log)
+            {
+                BeginScope = beginScope;
+                Log = log;
+            }
+
+            IDisposable ILogger.BeginScope<TState>(TState state) => BeginScope(state);
+
+            bool ILogger.IsEnabled(LogLevel logLevel) => true;
+
+            void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) => Log(logLevel, eventId, formatter(state, exception));
+        }
+
+        public Mock<Func<object, IDisposable>> BeginScope { get; set; }
+
+        public Mock<Action<LogLevel, EventId, string>> Log { get; set; }
 
         public Mock<IInjector> Injector { get; set; }
 
@@ -39,9 +60,10 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         [SetUp]
         public void SetupTest()
         {
-            Logger = new Mock<ILogger>(MockBehavior.Loose);
-            Injector = new Mock<IInjector>(MockBehavior.Strict);
-            Module = new Mock<IModule>(MockBehavior.Loose);
+            BeginScope = new(MockBehavior.Strict);
+            Log = new(MockBehavior.Strict);
+            Injector = new (MockBehavior.Strict);
+            Module = new (MockBehavior.Loose);
         }
 
         [Test]
@@ -53,28 +75,41 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             int callOrder = 0;
 
-            Logger
-                .Setup(l => l.BeginScope(It.Is<Dictionary<string, object>>(d => d["Module"].ToString() == nameof(IModule) && d["Method"].ToString() == nameof(IModule.DoSomething) && d["SessionId"].ToString() == "cica")))
+            BeginScope
+                .Setup(fn => fn(It.Is<Dictionary<string, object>>(d => d["Module"].ToString() == nameof(IModule) && d["Method"].ToString() == nameof(IModule.DoSomething) && d["SessionId"].ToString() == "cica")))
                 .Returns<Dictionary<string, object>>(_ => 
                 {
                     Assert.That(callOrder++, Is.EqualTo(0));
                     return new Disposable();
                 });
-            /*
-            Logger
-                .Setup(l => l.Log(LogLevel.Information, It.Is<string>(s => s.StartsWith("Time elapsed:"))))
-                .Callback<string>(_ => Assert.That(callOrder++, Is.EqualTo(1)));
-            */
+            Log
+                .Setup(fn => fn(LogLevel.Information, default, $"Parameters: arg1:cica,{Environment.NewLine}arg2:1"))
+                .Callback<LogLevel, EventId, string>((_, _, _) => Assert.That(callOrder++, Is.EqualTo(1)));
+            Log
+                .Setup(fn => fn(LogLevel.Information, default, It.Is<string>(s => s.StartsWith("Time elapsed:"))))
+                .Callback<LogLevel, EventId, string>((_, _, _) => Assert.That(callOrder++, Is.EqualTo(2)));
             Type proxyType = ProxyGenerator<IModule, Logger<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, Module.Object, Injector.Object, Logger.Object);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, Module.Object, Injector.Object, new LogForwarder(BeginScope.Object, Log.Object));
             Assert.DoesNotThrow(() => module.DoSomething("cica", 1));
-            Assert.That(callOrder, Is.EqualTo(1));
+            Assert.That(callOrder, Is.EqualTo(3));
         }
 
         [Test]
         public void DefaultLoggers_CanBeOverridden()
         {
+            Injector
+                .Setup(i => i.Get(typeof(IRequestContext), null))
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, default));
+
+            BeginScope
+                .Setup(fn => fn(It.Is<Dictionary<string, object>>(d => d["Module"].ToString() == nameof(IModule) && d["Method"].ToString() == nameof(IModule.DoSomething) && d["SessionId"].ToString() == "cica")))
+                .Returns(new Disposable());
+
+            Type proxyType = ProxyGenerator<IModule, Logger<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule)Activator.CreateInstance(proxyType, Module.Object, Injector.Object, new LogForwarder(BeginScope.Object, Log.Object));
+            Assert.DoesNotThrow(() => module.DoSomethingElse());
         }
     }
 }

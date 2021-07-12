@@ -15,7 +15,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Logs the invocation duration.
     /// </summary>
-    public sealed class StopWatchLogger : LoggerBase
+    public sealed class StopWatchLogger: LoggerBase
     {
         /// <inheritdoc/>
         public override object? Invoke(LogContext context, Func<object?> callNext)
@@ -28,7 +28,7 @@ namespace Solti.Utils.Rpc.Interfaces
             }
             finally
             {
-                context.Logger.LogInformation(string.Format(Trace.Culture, Trace.TIME_ELAPSED, stopWatch.ElapsedMilliseconds));
+                context.Logger.LogInformation(Trace.TIME_ELAPSED, stopWatch.ElapsedMilliseconds);
 
                 stopWatch.Stop();
             }

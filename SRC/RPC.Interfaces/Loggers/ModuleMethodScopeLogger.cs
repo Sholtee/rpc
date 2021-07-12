@@ -13,6 +13,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Creates a new log scope containing the module and method name and the session id.
     /// </summary>
+    /// <remarks>This logger is intended to be used on modules only.</remarks>
     public sealed class ModuleMethodScopeLogger : LoggerBase
     {
         /// <inheritdoc/>

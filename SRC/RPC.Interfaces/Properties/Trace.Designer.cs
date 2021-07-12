@@ -61,6 +61,15 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameters: {0}.
+        /// </summary>
+        internal static string PARAMZ {
+            get {
+                return ResourceManager.GetString("PARAMZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time elapsed: {0}ms.
         /// </summary>
         internal static string TIME_ELAPSED {

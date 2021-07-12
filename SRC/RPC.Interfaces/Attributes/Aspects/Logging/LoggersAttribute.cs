@@ -14,7 +14,6 @@ namespace Solti.Utils.Rpc.Interfaces
     /// Collects the related loogers.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false)]
-    #pragma warning disable CS3015 // Type has no accessible constructors which use only CLS-compliant types
     public sealed class LoggersAttribute : Attribute
     {
         /// <summary>
@@ -30,5 +29,10 @@ namespace Solti.Utils.Rpc.Interfaces
             .Select(Activator.CreateInstance)
             .Cast<LoggerBase>()
             .ToArray();
+
+        /// <summary>
+        /// Creates a new <see cref="LoggersAttribute"/> instance.
+        /// </summary>>
+        public LoggersAttribute() => Value = Array.Empty<LoggerBase>();
     }
 }
