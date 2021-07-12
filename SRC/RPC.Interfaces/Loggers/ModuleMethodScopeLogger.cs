@@ -26,7 +26,6 @@ namespace Solti.Utils.Rpc.Interfaces
                 [nameof(cntx.Module)]    = cntx.Module,
                 [nameof(cntx.Method)]    = cntx.Method,
                 [nameof(cntx.SessionId)] = cntx.SessionId ?? "NULL"
-                // TODO: modul nev
             });
 
             return callNext();
