@@ -32,7 +32,7 @@ namespace Solti.Utils.Rpc.Internals
         #region Private
         private bool FNeedToRemoveUrlReservation;
 
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#System_Net_HttpListener_System_IDisposable_Dispose")]
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#remarks")]
         private HttpListener? FListener;
         private Thread? FListenerThread;
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "This field is disposed correctly, see Stop() method")]
@@ -265,10 +265,10 @@ namespace Solti.Utils.Rpc.Internals
             response.ContentLength64 = buffer.Length;
             await response.OutputStream.WriteAsync
             (
-#if NETSTANDARD2_0
-                buffer, 0, buffer.Length
-#else
+#if NETSTANDARD2_1_OR_GREATER
                 buffer.AsMemory(0, buffer.Length)
+#else
+                buffer, 0, buffer.Length
 #endif
             );
         }

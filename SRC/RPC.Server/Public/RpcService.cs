@@ -312,7 +312,7 @@ namespace Solti.Utils.Rpc
                     await stream.CopyToAsync
                     (
                         response.OutputStream
-#if !NETSTANDARD2_0
+#if NETSTANDARD2_1_OR_GREATER
                         , cancellation
 #endif
                     );      
