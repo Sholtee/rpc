@@ -63,7 +63,7 @@ namespace Solti.Utils.Rpc.Hosting
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
 
-            host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name, configuration));
+            //host.Logger?.LogInformation(string.Format(Trace.Culture, Trace.STARTING_HOST_WITH, GetType().Name, configuration));
         }
 
         /// <summary>

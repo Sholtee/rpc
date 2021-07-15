@@ -10,12 +10,12 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Tests
 {
+    using DI.Interfaces;
     using Internals;   
 
     [TestFixture]
@@ -27,14 +27,14 @@ namespace Solti.Utils.Rpc.Tests
 
         private class DummyWebService : WebService 
         {
-            protected override Task Process(HttpListenerContext context, ILogger logger, CancellationToken cancellation)
+            protected override Task Process(HttpListenerContext context, IInjector injector, CancellationToken cancellation)
             {
                 if (OnRequest != null)
                 {
                     return OnRequest.Invoke(context, cancellation);
                 }
 
-                return base.Process(context, logger, cancellation);
+                return base.Process(context, injector, cancellation);
             }
 
             public Func<HttpListenerContext, CancellationToken, Task> OnRequest { get; set; }

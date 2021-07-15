@@ -60,7 +60,7 @@ namespace Solti.Utils.Rpc.Tests
         public void Teardown() 
         {
             Server.Dispose();
-            Server.Container.Dispose();
+            Server.ServiceContainer.Dispose();
             Server = null;
 
             ClientFactory.Dispose();
@@ -422,7 +422,7 @@ namespace Solti.Utils.Rpc.Tests
         public async Task Module_MayHaveDependencies([ValueSource(nameof(Lifetimes))] Lifetime lifetime) 
         {
             int factoryRequested = 0;
-            Server.Container.Factory(injector => 
+            Server.ServiceContainer.Factory(injector => 
             {
                 var mockService = new Mock<IGuid>(MockBehavior.Strict);
                 mockService
@@ -595,7 +595,7 @@ namespace Solti.Utils.Rpc.Tests
             var mockDisposable = new Mock<IDisposable>(MockBehavior.Strict);
             mockDisposable.Setup(d => d.Dispose());
 
-            Server.Container.Factory(i => mockDisposable.Object, Lifetime.Transient);
+            Server.ServiceContainer.Factory(i => mockDisposable.Object, Lifetime.Transient);
             Server.Start(Host);
 
             IDisposable proxy = await ClientFactory.CreateClient<IDisposable>();

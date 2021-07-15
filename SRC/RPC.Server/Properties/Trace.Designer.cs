@@ -196,24 +196,6 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Starting RPC service....
-        /// </summary>
-        internal static string STARTING_RPC_SERVICE {
-            get {
-                return ResourceManager.GetString("STARTING_RPC_SERVICE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to start the RPC service..
-        /// </summary>
-        internal static string STARTING_RPC_SERVICE_FAILED {
-            get {
-                return ResourceManager.GetString("STARTING_RPC_SERVICE_FAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Terminating host..
         /// </summary>
         internal static string TERMINATING_HOST {

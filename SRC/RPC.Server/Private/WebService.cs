@@ -17,6 +17,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Internals
 {
+    using DI;
+    using DI.Interfaces;
     using Interfaces;
     using Primitives.Patterns;
     using Primitives.Threading;
@@ -43,9 +45,20 @@ namespace Solti.Utils.Rpc.Internals
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
-            ILogger? logger = LoggerFactory?.Invoke();
+            //
+            // Ez az injector csak a listener thread-hez tartozik, ezen a metoduson kivul TILOS hasznalni.
+            //
 
-            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
+            using IInjector injector = ServiceContainer.CreateInjector();
+
+            ILogger? logger = injector.TryGet<ILogger>();
+
+            //
+            // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
+            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
+            //
+
+            using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
             {
                 [nameof(Url)] = Url!
             });
@@ -57,6 +70,10 @@ namespace Solti.Utils.Rpc.Internals
             for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;) 
             {
                 logger?.LogInformation(Trace.REQUEST_AVAILABLE);
+
+                //
+                // Uj Task-ban hivjuk a feldolgozot.
+                //
 
                 getContext.ContinueWith
                 (
@@ -90,7 +107,7 @@ namespace Solti.Utils.Rpc.Internals
 
         private static void InvokeNetsh(string arguments) 
         {
-            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            if (Environment.OSVersion.Platform is not PlatformID.Win32NT)
                 throw new PlatformNotSupportedException();
 
             var psi = new ProcessStartInfo("netsh", arguments)
@@ -109,15 +126,47 @@ namespace Solti.Utils.Rpc.Internals
                 throw new Exception(Errors.NETSH_INVOCATION_FAILED);
                 #pragma warning restore CA2201
         }
+
+        private async Task AddTimeout(Func<CancellationToken, Task> fn)
+        {
+            //
+            // A feldolgozonak ket esetben kell leallnia:
+            //   1) Adott idointervallumon belul nem sikerult a feladatat elvegeznie
+            //   2) Maga a WebService kerul leallitasra
+            //
+
+            using CancellationTokenSource
+                taskCancellation = new(),
+                linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(taskCancellation.Token, FListenerCancellation!.Token);
+
+            Task task = fn(linkedCancellation.Token);
+
+            if (await Task.WhenAny(task, Task.Delay(Timeout)) != task)
+                //
+                // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
+                //
+
+                taskCancellation.Cancel();
+
+            //
+            // Itt a kovetkezo esetek lehetnek:
+            //   1) A feldolgozo idoben befejezte a feladatat, az "await" mar nem fog varakozni, jok vagyunk
+            //   2) A feldolgozo megszakizasra kerult (a kiszolgalo leallitasa vagy idotullepes maitt) -> OperationCanceledException
+            //   3) Vmi egyeb kivetel adodott a feldolgozoban
+            //
+
+            await task;
+        }
         #endregion
 
         #region Protected
         /// <summary>
         /// Sets the "Access-Control-XxX" headers.
         /// </summary>
+        /// <remarks>This method may be called parallelly.</remarks>
         protected virtual void SetAcHeaders(HttpListenerContext context) 
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             HttpListenerResponse response = context.Response;
@@ -139,7 +188,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         protected static bool IsPreflight(HttpListenerContext context)
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             return context
@@ -149,16 +198,24 @@ namespace Solti.Utils.Rpc.Internals
         }
 
         /// <summary>
-        /// Calls the <see cref="Process(HttpListenerContext, ILogger?, CancellationToken)"/> method in a safe manner.
+        /// Calls the <see cref="Process(HttpListenerContext, IInjector, CancellationToken)"/> method in a safe manner.
         /// </summary>
+        /// <remarks>This method may be called parallelly.</remarks>
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            ILogger? logger = LoggerFactory?.Invoke();
+            await using IInjector injector = ServiceContainer.CreateInjector();
 
-            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object> 
+            ILogger? logger = injector.TryGet<ILogger>();
+
+            //
+            // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
+            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
+            //
+
+            using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object> 
             {
                 ["RequestId"]      = context.Request.RequestTraceIdentifier,
                 ["RemoteEndPoint"] = context.Request.RemoteEndPoint,
@@ -178,33 +235,7 @@ namespace Solti.Utils.Rpc.Internals
                     return;
                 }
 
-                //
-                // A feldolgozonak ket esetben kell leallnia:
-                //   1) Adott idointervallumon belul nem sikerult a feladatat elvegeznie
-                //   2) Maga a WebService kerul leallitasra
-                //
-
-                using CancellationTokenSource
-                    processorCancellation = new CancellationTokenSource(),
-                    cancel = CancellationTokenSource.CreateLinkedTokenSource(processorCancellation.Token, FListenerCancellation!.Token);
-
-                Task processor = Process(context, logger, cancel.Token);
-
-                if (await Task.WhenAny(processor, Task.Delay(Timeout)) != processor)
-                    //
-                    // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
-                    //
-
-                    processorCancellation.Cancel();
-
-                //
-                // Itt a kovetkezo esetek lehetnek:
-                //   1) A feldolgozo idoben befejezte a feladatat, az "await" mar nem fog varakozni, jok vagyunk
-                //   2) A feldolgozo megszakizasra kerult (a kiszolgalo leallitasa vagy idotullepes maitt) -> OperationCanceledException
-                //   3) Vmi egyeb kivetel adodott a feldolgozoban
-                //
-
-                await processor;
+                await AddTimeout(cancel => Process(context, injector, cancel));
 
                 logger?.LogInformation(Trace.REQUEST_PROCESSED);
             }
@@ -214,16 +245,17 @@ namespace Solti.Utils.Rpc.Internals
             {
                 logger?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
-                await ProcessUnhandledException(ex, context);
+                await AddTimeout(cancel => ProcessUnhandledException(ex, context, injector, cancel));
             }
         }
 
         /// <summary>
         /// Processes exceptions unhandled by user code.
         /// </summary>
-        protected virtual async Task ProcessUnhandledException(Exception ex, HttpListenerContext context) 
+        /// <remarks>This method may be called parallelly.</remarks>
+        protected virtual async Task ProcessUnhandledException(Exception ex, HttpListenerContext context, IInjector injector, CancellationToken cancellation) 
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             try
@@ -234,7 +266,7 @@ namespace Solti.Utils.Rpc.Internals
                 // Http kivetelek megadhatjak a hiba kodjat.
                 //
 
-                response.StatusCode = (int)((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
+                response.StatusCode = (int) ((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
 
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
@@ -276,11 +308,10 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// When overridden in the derived class it processes the incoming HTTP request.
         /// </summary>
-        #pragma warning disable CS3001 // ILogger is not CLS-compliant
-        protected virtual Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
-        #pragma warning restore CS3001
+        /// <remarks>This method may be called parallelly.</remarks>
+        protected virtual Task Process(HttpListenerContext context, IInjector injector, CancellationToken cancellation)
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;
@@ -298,6 +329,7 @@ namespace Solti.Utils.Rpc.Internals
             {
                 if (IsStarted)
                     Stop();
+                ServiceContainer.Dispose();
                 FExclusiveBlock.Dispose();
             }
 
@@ -306,6 +338,21 @@ namespace Solti.Utils.Rpc.Internals
         #endregion
 
         #region Public
+        /// <summary>
+        /// Creates a new <see cref="WebService"/> instance.
+        /// </summary>
+        /// <remarks>The <paramref name="serviceContainer"/> is disposed when the owner <see cref="WebService"/> gets released.</remarks>
+        public WebService(IServiceContainer serviceContainer) => ServiceContainer = serviceContainer ?? throw new ArgumentNullException(nameof(serviceContainer));
+
+        /// <summary>
+        /// Creates a new <see cref="WebService"/> instance.
+        /// </summary>
+        public WebService()
+        {
+            ServiceContainer = new ServiceContainer();
+            ServiceContainer.Factory<ILogger>(i => TraceLogger.Create<WebService>(), Lifetime.Scoped);
+        }
+
         /// <summary>
         /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
         /// </summary>
@@ -317,7 +364,7 @@ namespace Solti.Utils.Rpc.Internals
         public bool IsListening => FListener?.IsListening == true && FListenerThread?.IsAlive == true;
 
         /// <summary>
-        /// The maximum amount of time that is available for the service to serve the request.
+        /// The maximum amount of time that is available for the service to serve a request.
         /// </summary>
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
@@ -330,14 +377,6 @@ namespace Solti.Utils.Rpc.Internals
         /// The URL on which the Web Service is listening.
         /// </summary>  
         public string? Url { get; private set; }
-
-        /// <summary>
-        /// If set it defines the delegate that will be used for creating logger instances. 
-        /// </summary>
-        /// <remarks>Every session will have its own logger instance.</remarks>
-        #pragma warning disable CS3003 // ILogger is not CLS-compliant
-        public Func<ILogger>? LoggerFactory { get; set; } = () => TraceLogger.Create<WebService>();
-        #pragma warning restore CS3003
 
         /// <summary>
         /// Starts the Web Service.
@@ -437,6 +476,11 @@ namespace Solti.Utils.Rpc.Internals
                 Url = null;
             }
         }
+
+        /// <summary>
+        /// The <see cref="IServiceContainer"/> associated to this service.
+        /// </summary>
+        public IServiceContainer ServiceContainer { get; }
 
         /// <summary>
         /// Adds an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx

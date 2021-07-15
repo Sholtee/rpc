@@ -24,7 +24,7 @@ namespace Solti.Utils.Rpc.Hosting
     using Properties;
 
     /// <summary>
-    /// Represents the an app host that can be invoked by RPC
+    /// Represents the an app host that can be invoked through RPC.
     /// </summary>
     public abstract class AppHostBase: Disposable, IHost
     {
@@ -80,11 +80,6 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public bool AutoStart { get; protected set; }
 
-        /// <inheritdoc/>
-        #pragma warning disable CS3003 // ILogger is not CLS-compliant
-        public ILogger? Logger { get; protected set; } = TraceLogger.Create<AppHostBase>();
-        #pragma warning restore CS3003
-
         IEnumerable<string> IHost.Dependencies => Dependencies;
 
         /// <summary>
@@ -104,7 +99,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary> 
         public virtual void OnInstall()
         {
-            Logger?.LogInformation(Trace.INSTALLING_HOST);
+            //Logger?.LogInformation(Trace.INSTALLING_HOST);
 
             OnRegisterServices(FContainer);
         }
@@ -114,7 +109,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnUninstall()
         {
-            Logger?.LogInformation(Trace.UNINSTALLING_HOST);
+            //Logger?.LogInformation(Trace.UNINSTALLING_HOST);
 
             OnRegisterServices(FContainer);
         }
@@ -154,7 +149,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart(HostConfiguration configuration)
         {
-            Logger?.LogInformation(Trace.STARTING_HOST);
+            //Logger?.LogInformation(Trace.STARTING_HOST);
 
             try
             {
@@ -167,9 +162,9 @@ namespace Solti.Utils.Rpc.Hosting
 
                 RpcService.Start(Url);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger?.LogError(ex, Trace.STARTING_HOST_FAILED);
+                //Logger?.LogError(ex, Trace.STARTING_HOST_FAILED);
                 throw;
             }
         }
@@ -179,7 +174,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStop()
         {
-            Logger?.LogInformation(Trace.TERMINATING_HOST);
+            //Logger?.LogInformation(Trace.TERMINATING_HOST);
 
             RpcService.Stop();
         }
@@ -192,7 +187,7 @@ namespace Solti.Utils.Rpc.Hosting
             if (ex == null)
                 throw new ArgumentNullException(nameof(ex));
 
-            Logger?.LogError(ex, Trace.UNHANDLED_EXCEPTION);
+            //Logger?.LogError(ex, Trace.UNHANDLED_EXCEPTION);
         }
 
         /// <summary>

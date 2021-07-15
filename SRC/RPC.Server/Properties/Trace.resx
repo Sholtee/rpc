@@ -162,12 +162,6 @@
   <data name="STARTING_HOST_WITH" xml:space="preserve">
     <value>Starting host with {0} (Configuration = {1}).</value>
   </data>
-  <data name="STARTING_RPC_SERVICE" xml:space="preserve">
-    <value>Starting RPC service...</value>
-  </data>
-  <data name="STARTING_RPC_SERVICE_FAILED" xml:space="preserve">
-    <value>Failed to start the RPC service.</value>
-  </data>
   <data name="TERMINATING_HOST" xml:space="preserve">
     <value>Terminating host.</value>
   </data>

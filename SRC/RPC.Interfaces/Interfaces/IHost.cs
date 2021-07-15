@@ -6,8 +6,6 @@
 using System;
 using System.Collections.Generic;
 
-using Microsoft.Extensions.Logging;
-
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
@@ -34,13 +32,6 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Services that must run.
         /// </summary>
         IEnumerable<string> Dependencies { get; }
-
-        /// <summary>
-        /// The <see cref="ILogger"/> related to the host.
-        /// </summary>       
-        #pragma warning disable CS3003 // ILogger is not CLS-compliant
-        ILogger? Logger { get; }
-        #pragma warning restore CS3003
 
         /// <summary>
         /// Invoked on service installation.

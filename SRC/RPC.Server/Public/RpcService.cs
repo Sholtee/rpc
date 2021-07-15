@@ -12,8 +12,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Logging;
-
 namespace Solti.Utils.Rpc
 {
     using DI;
@@ -21,7 +19,6 @@ namespace Solti.Utils.Rpc
 
     using Interfaces;
     using Internals;
-    using Properties;
 
     /// <summary>
     /// Implements the core RPC service functionality.
@@ -33,11 +30,6 @@ namespace Solti.Utils.Rpc
         private ModuleInvocation? FModuleInvocation;
 
         #region Public
-        /// <summary>
-        /// The <see cref="IServiceContainer"/> associated with this service.
-        /// </summary>
-        public IServiceContainer Container { get; }
-
         /// <summary>
         /// Controls the <see cref="JsonSerializer"/> related to this RPC service.
         /// </summary>
@@ -57,12 +49,10 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder) : base()
+        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder) : base(container ?? throw new ArgumentNullException(nameof(container)))
         {
-            Container = container ?? throw new ArgumentNullException(nameof(container));
             FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
             FSerializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
-            LoggerFactory = () => TraceLogger.Create<RpcService>();
         }
 
         /// <summary>
@@ -88,7 +78,7 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            Container.Service<TInterface, TImplementation>(Lifetime.Scoped);
+            ServiceContainer.Service<TInterface, TImplementation>(Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
@@ -100,7 +90,7 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            Container.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
+            ServiceContainer.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
@@ -112,24 +102,13 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            ILogger? logger = LoggerFactory?.Invoke();
-            logger?.LogInformation(Trace.STARTING_RPC_SERVICE);
+            //
+            // Elsonek hivjuk h ha megformed akkor a kiszolgalo el se induljon.
+            //
 
-            try
-            {
-                //
-                // Elsonek hivjuk h ha megformed akkor a kiszolgalo el se induljon.
-                //
+            FModuleInvocation = FModuleInvocationBuilder.Build();
 
-                FModuleInvocation = FModuleInvocationBuilder.Build();
-
-                base.Start(url);
-            }
-            catch (Exception ex) 
-            {
-                logger?.LogError(ex, Trace.STARTING_RPC_SERVICE_FAILED);
-                throw;
-            }
+            base.Start(url);
         }
 
         /// <summary>
@@ -157,12 +136,8 @@ namespace Solti.Utils.Rpc
             context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Content-Length";
         }
 
-        /// <summary>
-        /// Processes HTTP requests asynchronously.
-        /// </summary>
-        #pragma warning disable CS3001 // ILogger is not CLS-compliant
-        protected override async Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
-        #pragma warning restore CS3001
+        /// <inheritdoc/>
+        protected override async Task Process(HttpListenerContext context, IInjector injector, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -181,7 +156,7 @@ namespace Solti.Utils.Rpc
                 throw new HttpException
                 {
                     Status = HttpStatusCode.MethodNotAllowed
-                };
+                };           
             }
 
             //
@@ -200,7 +175,7 @@ namespace Solti.Utils.Rpc
 
             try
             {
-                result = await InvokeModule(new RequestContext(request, cancellation), logger);
+                result = await InvokeModule(new RequestContext(request, cancellation), injector);
             }
 
             catch (OperationCanceledException ex)
@@ -241,26 +216,22 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
-        #pragma warning disable CS3001 // ILogger is not CLS-compliant
-        protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger)
-        #pragma warning restore CS3001 // Argument type is not CLS-compliant
+        protected async virtual Task<object?> InvokeModule(IRequestContext context, IInjector injector)
         {
             if (context is null) 
                 throw new ArgumentNullException(nameof(context));
 
+            if (injector is null)
+                throw new ArgumentNullException(nameof(injector));
+
             if (FModuleInvocation is null)
                 throw new InvalidOperationException();
-
-            await using IInjector injector = Container.CreateInjector();
 
             //
             // A kontextust es a naplozat elerhetik a modulok fuggosegkent.
             //
 
             injector.UnderlyingContainer.Instance(context);
-
-            if (logger is not null)
-                injector.UnderlyingContainer.Instance(logger);
 
             return await FModuleInvocation(injector, context);
         }
@@ -283,7 +254,7 @@ namespace Solti.Utils.Rpc
                     await stream.CopyToAsync
                     (
                         response.OutputStream
-#if !NETSTANDARD2_0
+#if NETSTANDARD2_1_OR_GREATER
                         , cancellation
 #endif
                     );      
