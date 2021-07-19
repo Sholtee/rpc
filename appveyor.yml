@@ -7,7 +7,7 @@
 #############################################################################
 
 # common configuration for ALL branches
-image: Previous Visual Studio 2019
+image: Visual Studio 2019
 
 environment:
   COVERALLS_REPO_TOKEN:  
