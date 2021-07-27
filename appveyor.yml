@@ -53,8 +53,11 @@ test_script:
   - ps: Test
 
 after_test:
-  - ps: Push-Test-Results
-
+  - ps: |
+      Push-Test-Results
+      # it's time to merge the coverage reports
+      Invoke-WebRequest -Uri "https://coveralls.io/webhook?repo_token=$($Env:COVERALLS_REPO_TOKEN)" -Method Post -Body (@{payload=@{status="done";build_num=$Env:APPVEYOR_BUILD_NUMBER}} | ConvertTo-Json)
+  
 # after build failure or success
 on_finish:
   - ps: |

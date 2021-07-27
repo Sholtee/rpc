@@ -172,7 +172,8 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             coveralls: {
                 COVERALLS_SERVICE_NAME: 'appveyor',
                 COVERALLS_GIT_BRANCH: () => process.env.APPVEYOR_REPO_BRANCH,
-                COVERALLS_SERVICE_JOB_ID: () => process.env.APPVEYOR_JOB_ID
+                COVERALLS_SERVICE_JOB_ID: () => process.env.APPVEYOR_JOB_ID,
+                COVERALLS_PARALLEL: true
             }
         },
         coveralls: {
