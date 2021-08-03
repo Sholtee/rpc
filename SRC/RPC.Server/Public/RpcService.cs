@@ -106,9 +106,7 @@ namespace Solti.Utils.Rpc
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
-        /// <summary>
-        /// See <see cref="WebService.Start(string)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public override void Start(string url)
         {
             if (IsStarted)
@@ -134,9 +132,7 @@ namespace Solti.Utils.Rpc
             }
         }
 
-        /// <summary>
-        /// See <see cref="WebService.Stop"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public override void Stop()
         {
             if (!IsStarted)

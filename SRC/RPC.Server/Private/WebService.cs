@@ -40,32 +40,43 @@ namespace Solti.Utils.Rpc.Internals
 
         private readonly ExclusiveBlock FExclusiveBlock = new();
 
+        private int FActiveRequests;
+
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
-            ILogger? logger = LoggerFactory?.Invoke();
-
-            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
+            try
             {
-                [nameof(Url)] = Url!
-            });
+                ILogger? logger = LoggerFactory?.Invoke();
 
-            logger?.LogInformation(Trace.SERVICE_STARTED);
+                using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
+                {
+                    [nameof(Url)] = Url!
+                });
 
-            Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
+                logger?.LogInformation(Trace.SERVICE_STARTED);
 
-            for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;) 
-            {
-                logger?.LogInformation(Trace.REQUEST_AVAILABLE);
+                Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
 
-                getContext.ContinueWith
-                (
-                    t => SafeCallContextProcessor(t.Result),
-                    TaskContinuationOptions.OnlyOnRanToCompletion
-                );
+                for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;)
+                {
+                    logger?.LogInformation(Trace.REQUEST_AVAILABLE);
+
+                    getContext.ContinueWith
+                    (
+                        t => SafeCallContextProcessor(t.Result),
+                        TaskContinuationOptions.OnlyOnRanToCompletion
+                    );
+                }
+
+                logger?.LogInformation(Trace.SERVICE_TERMINATED);
             }
-
-            logger?.LogInformation(Trace.SERVICE_TERMINATED);
+            #pragma warning disable CA1031 // We have to catch all kind of exceptions here
+            catch (Exception ex)
+            #pragma warning restore CA1031
+            {
+                System.Diagnostics.Trace.WriteLine(string.Format(Trace.Culture, Trace.EXCEPTION_IN_LISTENER_THREAD, ex));
+            }
         }
 
         private static HttpListener CreateCore(string url) 
@@ -148,30 +159,31 @@ namespace Solti.Utils.Rpc.Internals
                 .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
         }
 
+
         /// <summary>
         /// Calls the <see cref="Process(HttpListenerContext, ILogger?, CancellationToken)"/> method in a safe manner.
         /// </summary>
+        [SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
+            Interlocked.Increment(ref FActiveRequests);
 
             ILogger? logger = LoggerFactory?.Invoke();
 
-            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object> 
+            using IDisposable? scope = logger?.BeginScope(new Dictionary<string, object>
             {
-                ["RequestId"]      = context.Request.RequestTraceIdentifier,
+                ["RequestId"] = context.Request.RequestTraceIdentifier,
                 ["RemoteEndPoint"] = context.Request.RemoteEndPoint,
-                ["TimeStamp"]      = DateTime.UtcNow
+                ["TimeStamp"] = DateTime.UtcNow
             });
 
             try
             {
                 logger?.LogInformation(Trace.BEGIN_REQUEST_PROCESSING);
-                
+
                 SetAcHeaders(context);
 
-                if (IsPreflight(context)) 
+                if (IsPreflight(context))
                 {
                     logger?.LogInformation(Trace.PREFLIGHT_REQUEST);
                     context.Response.Close();
@@ -215,6 +227,10 @@ namespace Solti.Utils.Rpc.Internals
                 logger?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
                 await ProcessUnhandledException(ex, context);
+            }
+            finally
+            {
+                Interlocked.Decrement(ref FActiveRequests);
             }
         }
 
@@ -309,7 +325,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
         /// </summary>
-        public bool IsStarted => FListenerThread != null;
+        public bool IsStarted => FListenerThread is not null;
 
         /// <summary>
         /// Returns true if the Web Service is listening.
@@ -399,17 +415,37 @@ namespace Solti.Utils.Rpc.Internals
         /// Shuts down the Web Service.
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        public virtual void Stop()
+        public virtual void Stop() => Stop(TimeSpan.MaxValue);
+
+        /// <summary>
+        /// Shuts down the Web Service.
+        /// </summary>
+        [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
+        public virtual void Stop(TimeSpan timeout)
         {
             using (FExclusiveBlock.Enter())
             {
                 if (!IsStarted)
                     return;
 
+                //
+                // Nem fogadunk tobb kerest valamint jelezzuk a meg aktiv feldolgozoknak h alljanak le.
+                //
+
                 FListenerCancellation!.Cancel();
 
                 FListenerThread!.Join();
                 FListenerThread = null;
+
+                //
+                // Mielott magat a mogottes kiszolgalot leallitanak megvarjuk amig minden meg elo keres lezarasra kerul.
+                //
+
+                SpinWait.SpinUntil(() => FActiveRequests == 0, timeout);
+
+                //
+                // Kiszolgalo leallitasa.
+                //
 
                 FListener!.Close();
                 FListener = null;
