@@ -163,9 +163,11 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Calls the <see cref="Process(HttpListenerContext, ILogger?, CancellationToken)"/> method in a safe manner.
         /// </summary>
-        [SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
         protected async virtual Task SafeCallContextProcessor(HttpListenerContext context) 
         {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
             Interlocked.Increment(ref FActiveRequests);
 
             ILogger? logger = LoggerFactory?.Invoke();
@@ -239,7 +241,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         protected virtual async Task ProcessUnhandledException(Exception ex, HttpListenerContext context) 
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             try
@@ -255,6 +257,12 @@ namespace Solti.Utils.Rpc.Internals
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
                     response.ContentType = "text/html";
+
+                    //
+                    // Itt ne hasznaljuk az FListenerCancellation-t mivel lehet h pont a feldolgozo megszakitasa miatt kerultunk ide. Ilyen
+                    // esetben a TaskCanceledException-t is gond nelkul szeretnenk feldolgozni.
+                    //
+
                     await WriteResponseString(response, ex.Message);
                 }
 
@@ -262,7 +270,7 @@ namespace Solti.Utils.Rpc.Internals
             }
 
             //
-            // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
+            // Ha menet kozben a kiszolgalo vmiert felszabaditasra kerult akkor a kivetelt megesszuk.
             //
 
             catch (ObjectDisposedException) { }
@@ -273,7 +281,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         protected async static Task WriteResponseString(HttpListenerResponse response, string responseString) 
         {
-            if (response == null)
+            if (response is null)
                 throw new ArgumentNullException(nameof(response));
 
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
@@ -296,7 +304,7 @@ namespace Solti.Utils.Rpc.Internals
         protected virtual Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
         #pragma warning restore CS3001
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             context.Response.StatusCode = (int) HttpStatusCode.NoContent;

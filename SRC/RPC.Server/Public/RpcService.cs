@@ -162,7 +162,7 @@ namespace Solti.Utils.Rpc
         protected override async Task Process(HttpListenerContext context, ILogger? logger, CancellationToken cancellation)
         #pragma warning restore CS3001
         {
-            if (context == null)
+            if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             cancellation.ThrowIfCancellationRequested();
@@ -201,7 +201,7 @@ namespace Solti.Utils.Rpc
                 result = await InvokeModule(new RequestContext(request, cancellation), logger);
             }
 
-            catch (OperationCanceledException ex)
+            catch (OperationCanceledException ex) // ez megeszi a TaskCanceledException-t is
             {
                 //
                 // Mivel itt mar "cancellation.IsCancellationRequested" jo esellyel igaz ezert h a CreateResponse() ne 
@@ -243,10 +243,10 @@ namespace Solti.Utils.Rpc
         protected async virtual Task<object?> InvokeModule(IRequestContext context, ILogger? logger)
         #pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
-            if (context == null) 
+            if (context is null) 
                 throw new ArgumentNullException(nameof(context));
 
-            if (FModuleInvocation == null)
+            if (FModuleInvocation is null)
                 throw new InvalidOperationException();
 
             await using IInjector injector = Container.CreateInjector();
@@ -257,7 +257,7 @@ namespace Solti.Utils.Rpc
 
             injector.UnderlyingContainer.Instance(context);
 
-            if (logger != null)
+            if (logger is not null)
                 injector.UnderlyingContainer.Instance(logger);
 
             //
@@ -295,7 +295,7 @@ namespace Solti.Utils.Rpc
         /// </summary>
         protected virtual async Task CreateResponse(object? result, HttpListenerResponse response, CancellationToken cancellation)
         {
-            if (response == null) 
+            if (response is null) 
                 throw new ArgumentNullException(nameof(response));
 
             switch (result)
