@@ -415,7 +415,7 @@ namespace Solti.Utils.Rpc.Internals
         /// Shuts down the Web Service.
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        public virtual void Stop() => Stop(TimeSpan.MaxValue);
+        public virtual void Stop() => Stop(TimeSpan.FromMinutes(2));
 
         /// <summary>
         /// Shuts down the Web Service.
@@ -434,7 +434,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 FListenerCancellation!.Cancel();
 
-                FListenerThread!.Join();
+                FListenerThread!.Join(); // ez utan mar biztosan nem kezdodik ujabb keres-feldolgozas
                 FListenerThread = null;
 
                 //
