@@ -23,6 +23,7 @@ environment:
   APPVEYOR_RDP_PASSWORD:
     secure: IvxSZoWD+DpqNjUP7mFjPA==
   COVERALLS_PARALLEL: true
+  DEBUG_CI: true
 
 branches:
   # blacklist
