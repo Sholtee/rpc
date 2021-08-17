@@ -19,7 +19,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             version: pkg.version,
             dirs: {
                 app:          `${dir}/src`,
-                artifacts:    `${dir}/artifacts`,
+                artifacts:    `${dir}/../artifacts`,
                 dist:         `${dir}/dist`,
                 tests:        `${dir}/tests`,
                 tmp:          `${dir}/.tmp`,
@@ -137,7 +137,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     'karma-coverage-istanbul-reporter'
                 ],
                 junitReporter: {
-                    outputDir: '<%= project.dirs.artifacts %>'
+                    outputDir: '<%= project.dirs.artifacts %>/junit'
                 },
                 coverageIstanbulReporter: {
                     reports: ['lcov'],
@@ -161,7 +161,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                         'Content-Type': 'text/xml'
                     }
                 },
-                filter: '<%= project.dirs.artifacts %>/*.xml',
+                filter: '<%= project.dirs.artifacts %>/junit/*.xml',
                 get files() {
                     // a "files" property nem tartalmazhat kifejteseket (pl.: *.xml) -> "filter" hack
                     return getTestResults(this.filter);
@@ -208,7 +208,6 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
 
     registerTask('test', () => task.run([ // grunt test [--target=xXx.spec.js]
         'clean:tmp',
-        'clean:artifacts',
         'eslint:app',
         'eslint:tests',
         'babel:app',
