@@ -22,8 +22,6 @@ environment:
     secure: Z6F+xZzdZzc5DMYB/4J0KUhyoTzTlXH75ciGl7hFH9s=
   APPVEYOR_RDP_PASSWORD:
     secure: IvxSZoWD+DpqNjUP7mFjPA==
-  COVERALLS_PARALLEL: true
-  DEBUG_CI: true
 
 branches:
   # blacklist
@@ -57,8 +55,6 @@ test_script:
 after_test:
   - ps: |
       Push-Test-Results
-      # it's time to merge the coverage reports
-      Invoke-WebRequest -Uri "https://coveralls.io/webhook?repo_token=$($Env:COVERALLS_REPO_TOKEN)" -Method Post -Body (@{payload=@{status="done";build_num=$Env:APPVEYOR_JOB_ID}} | ConvertTo-Json)
   
 # after build failure or success
 on_finish:
