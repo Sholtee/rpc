@@ -22,7 +22,6 @@ environment:
     secure: Z6F+xZzdZzc5DMYB/4J0KUhyoTzTlXH75ciGl7hFH9s=
   APPVEYOR_RDP_PASSWORD:
     secure: IvxSZoWD+DpqNjUP7mFjPA==
-  DEBUG_CI: true
 
 branches:
   # blacklist
