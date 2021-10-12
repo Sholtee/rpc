@@ -48,24 +48,21 @@ namespace Solti.Utils.Rpc.Aspects
         public ParameterValidator(TInterface target, IInjector currentScope) : this(target, currentScope, typeof(TInterface).GetCustomAttribute<ParameterValidatorAspectAttribute>()?.Aggregate ?? false) { }
 
         /// <inheritdoc/>
-        public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
+        public override object? Invoke(InvocationContext context)
         {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method));
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
 
-            if (args == null)
-                throw new ArgumentNullException(nameof(args));
-
-            if (!typeof(Task).IsAssignableFrom(method.ReturnType))
+            if (!typeof(Task).IsAssignableFrom(context.Method.ReturnType))
             {
                 Validate();
-                return base.Invoke(method, args, extra);
+                return base.Invoke(context);
             }
 
             return AsyncExtensions.Before
             (
-                () => (Task) base.Invoke(method, args, extra)!,
-                method.ReturnType, 
+                () => (Task) base.Invoke(context)!,
+                context.Method.ReturnType, 
                 ValidateAsync
             );
 
@@ -73,11 +70,11 @@ namespace Solti.Utils.Rpc.Aspects
             {
                 List<ValidationException> exceptions = new();
 
-                foreach (Func<IInjector, object?[], Task> validate in GetValidators(method))
+                foreach (Func<IInjector, object?[], Task> validate in GetValidators(context.Method))
                 {
                     try
                     {
-                        await validate(CurrentScope, args);
+                        await validate(CurrentScope, context.Args);
                     }
                     catch (ValidationException validationError) when (Aggregate)
                     {
@@ -116,11 +113,11 @@ namespace Solti.Utils.Rpc.Aspects
             {
                 List<ValidationException> exceptions = new();
 
-                foreach (Action<IInjector, object?[]> validate in GetValidators(method))
+                foreach (Action<IInjector, object?[]> validate in GetValidators(context.Method))
                 {
                     try
                     {
-                        validate(CurrentScope, args);
+                        validate(CurrentScope, context.Args);
                     }
                     catch (ValidationException validationError) when (Aggregate)
                     {

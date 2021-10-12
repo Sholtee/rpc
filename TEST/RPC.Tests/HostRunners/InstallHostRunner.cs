@@ -10,6 +10,8 @@ using System.ServiceProcess;
 using Moq;
 using NUnit.Framework;
 
+#pragma warning disable CA1416 // Validate platform compatibility
+
 namespace Solti.Utils.Rpc.Hosting.Tests
 {
     using Interfaces;

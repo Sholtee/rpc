@@ -12,7 +12,6 @@ namespace Solti.Utils.Rpc.Perf
 {
     using static Consts;
 
-    using DI;
     using DI.Interfaces;
 
     using Internals;
@@ -32,8 +31,6 @@ namespace Solti.Utils.Rpc.Perf
             public void Foo() { }
         }
 
-        private IServiceContainer Container { get; set; }
-
         private static Stream Payload { get; } = CreatePayload();
 
         private static Stream CreatePayload() 
@@ -52,28 +49,29 @@ namespace Solti.Utils.Rpc.Perf
 
         private Internals.ModuleInvocation Invoke { get; set; }
 
+        private IScopeFactory ScopeFactory { get; set; }
+
         private IRequestContext Context { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup() 
         {
-            Container = new ServiceContainer();
-            Container.Service<IModule, Module>(Lifetime.Scoped);
-
             var bldr = new ModuleInvocationBuilder();
             bldr.AddModule<IModule>();
             Invoke = bldr.Build();
+
+            ScopeFactory = DI.ScopeFactory.Create(svcs => svcs.Service<IModule, Module>(Lifetime.Scoped));
 
             Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload, default);
         }
 
         [GlobalCleanup]
-        public void GlobalCleanup() => Container.Dispose();
+        public void GlobalCleanup() => ScopeFactory?.Dispose();
 
         [Benchmark(Baseline = true, OperationsPerInvoke = OperationsPerInvoke)]
         public void DirectInvocation()
         {
-            using IInjector injector = Container.CreateInjector();
+            using IInjector injector = ScopeFactory.CreateScope();
 
             for (int i = 0; i < OperationsPerInvoke; i++)
             {
@@ -84,7 +82,7 @@ namespace Solti.Utils.Rpc.Perf
         [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
         public void UsingTheBuiltDelegate() 
         {
-            using IInjector injector = Container.CreateInjector();
+            using IInjector injector = ScopeFactory.CreateScope();
 
             for (int i = 0; i < OperationsPerInvoke; i++)
             {

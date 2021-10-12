@@ -30,15 +30,39 @@ namespace Solti.Utils.Rpc
     /// </summary>
     public class RpcService : WebService, IModuleRegistry
     {
+        private const string META_REQUEST = nameof(META_REQUEST);
+
         private readonly ModuleInvocationBuilder FModuleInvocationBuilder;
         private readonly JsonSerializerOptions FSerializerOptions;
         private ModuleInvocation? FModuleInvocation;
+        private IScopeFactory? FScopeFactory;
+
+        private sealed class MetaReaderServiceEntry : AbstractServiceEntry
+        {
+            private object? FInstance;
+
+            private MetaReaderServiceEntry(MetaReaderServiceEntry original, IServiceRegistry owner) : base(original.Interface, original.Name, null, owner)
+            {
+                MetaName = original.MetaName;
+                State = ServiceEntryStates.Built;
+            }
+
+            public MetaReaderServiceEntry(Type @interface, string metaName) : base(@interface, null, null, null) => MetaName = metaName;
+
+            public string MetaName { get; }
+
+            public override object CreateInstance(IInjector scope) => throw new InvalidOperationException();
+
+            public override object GetSingleInstance() => FInstance ??= (Owner as IInjector ?? throw new InvalidOperationException()).Meta(MetaName)!;
+
+            public override AbstractServiceEntry CopyTo(IServiceRegistry owner) => new MetaReaderServiceEntry(this, owner);
+        }
 
         #region Public
         /// <summary>
-        /// The <see cref="IServiceContainer"/> associated with this service.
+        /// The <see cref="IServiceCollection"/> associated with this service.
         /// </summary>
-        public IServiceContainer Container { get; }
+        public IServiceCollection ServiceCollection { get; }
 
         /// <summary>
         /// Controls the <see cref="JsonSerializer"/> related to this RPC service.
@@ -59,28 +83,30 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder) : base()
+        public RpcService(IServiceCollection serviceCollection, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder) : base()
         {
-            Container = container ?? throw new ArgumentNullException(nameof(container));
+            ServiceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
             FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
             FSerializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
             LoggerFactory = () => TraceLogger.Create<RpcService>();
+
+            ServiceCollection.Register(new MetaReaderServiceEntry(typeof(IRequestContext), META_REQUEST));
         }
 
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder) : this(container, new JsonSerializerOptions(), moduleInvocationBuilder) {}
+        public RpcService(IServiceCollection serviceCollection, ModuleInvocationBuilder moduleInvocationBuilder) : this(serviceCollection, new JsonSerializerOptions(), moduleInvocationBuilder) {}
 
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions) : this(container, serializerOptions, new ModuleInvocationBuilder(serializerOptions)) {}
+        public RpcService(IServiceCollection serviceCollection, JsonSerializerOptions serializerOptions) : this(serviceCollection, serializerOptions, new ModuleInvocationBuilder(serializerOptions)) {}
 
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container) : this(container, new JsonSerializerOptions()) { }
+        public RpcService(IServiceCollection serviceCollection) : this(serviceCollection, new JsonSerializerOptions()) { }
 
         /// <summary>
         /// See <see cref="IModuleRegistry.Register{TInterface, TImplementation}"/>.
@@ -90,7 +116,7 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            Container.Service<TInterface, TImplementation>(Lifetime.Scoped);
+            ServiceCollection.Service<TInterface, TImplementation>(Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
@@ -102,7 +128,7 @@ namespace Solti.Utils.Rpc
             if (IsStarted)
                 throw new InvalidOperationException();
 
-            Container.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
+            ServiceCollection.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
             FModuleInvocationBuilder.AddModule<TInterface>();
         }
 
@@ -122,6 +148,7 @@ namespace Solti.Utils.Rpc
                 //
 
                 FModuleInvocation = FModuleInvocationBuilder.Build();
+                FScopeFactory = ScopeFactory.Create(ServiceCollection);
 
                 base.Start(url);
             }
@@ -143,6 +170,13 @@ namespace Solti.Utils.Rpc
         #endregion
 
         #region Protected
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposeManaged)
+        {
+            base.Dispose(disposeManaged); // leallitja a kiszolgalot
+            FScopeFactory?.Dispose();
+        }
+
         /// <inheritdoc/>
         protected override void SetAcHeaders(HttpListenerContext context)
         {
@@ -249,16 +283,13 @@ namespace Solti.Utils.Rpc
             if (FModuleInvocation is null)
                 throw new InvalidOperationException();
 
-            await using IInjector injector = Container.CreateInjector();
+            await using IInjector injector = FScopeFactory!.CreateScope();
 
             //
-            // A kontextust es a naplozat elerhetik a modulok fuggosegkent.
+            // A kontextust elerhetik a modulok fuggosegkent.
             //
 
-            injector.UnderlyingContainer.Instance(context);
-
-            if (logger is not null)
-                injector.UnderlyingContainer.Instance(logger);
+            injector.Meta(META_REQUEST, context);
 
             //
             // Naplozzuk a metodus hivast.

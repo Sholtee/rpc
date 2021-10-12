@@ -19,7 +19,7 @@ namespace Solti.Utils.Rpc.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -66,6 +66,15 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string CONTENT_TYPE_NOT_SUPPORTED {
             get {
                 return ResourceManager.GetString("CONTENT_TYPE_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The content returned by the remote server is malformed..
+        /// </summary>
+        internal static string MALFORMED_CONTENT {
+            get {
+                return ResourceManager.GetString("MALFORMED_CONTENT", resourceCulture);
             }
         }
         

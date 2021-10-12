@@ -120,6 +120,9 @@
   <data name="CONTENT_TYPE_NOT_SUPPORTED" xml:space="preserve">
     <value>Content type not supported.</value>
   </data>
+  <data name="MALFORMED_CONTENT" xml:space="preserve">
+    <value>The content returned by the remote server is malformed.</value>
+  </data>
   <data name="RPC_FAILED" xml:space="preserve">
     <value>Remote Procedure Call failed. See inner exception for details.</value>
   </data>

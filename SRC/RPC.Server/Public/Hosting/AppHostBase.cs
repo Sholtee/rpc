@@ -28,26 +28,26 @@ namespace Solti.Utils.Rpc.Hosting
     /// </summary>
     public abstract class AppHostBase: Disposable, IHost
     {
-        private readonly IServiceContainer FContainer;
+        private readonly IServiceCollection FServices;
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(IServiceContainer container, RpcService rpcService)
+        protected AppHostBase(IServiceCollection services, RpcService rpcService)
         {
-            FContainer = container ?? throw new ArgumentNullException(nameof(container));
+            FServices = services ?? throw new ArgumentNullException(nameof(services));
             RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));
         }
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(IServiceContainer container) : this(container, new RpcService(container ?? throw new ArgumentNullException(nameof(container)))) {}
+        protected AppHostBase(IServiceCollection services) : this(services, new RpcService(services ?? throw new ArgumentNullException(nameof(services)))) {}
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        protected AppHostBase(): this(new ServiceContainer()) {}
+        protected AppHostBase(): this(new ServiceCollection()) {}
 
         /// <summary>
         /// The name of the host.
@@ -95,18 +95,13 @@ namespace Solti.Utils.Rpc.Hosting
             : (ICollection<string>) Array.Empty<string>();
 
         /// <summary>
-        /// Creates a new <see cref="IInjector"/>.
-        /// </summary>
-        protected IInjector CreateInjector() => FContainer.CreateInjector();
-
-        /// <summary>
         /// Invoked on service installation.
         /// </summary> 
         public virtual void OnInstall()
         {
             Logger?.LogInformation(Trace.INSTALLING_HOST);
 
-            OnRegisterServices(FContainer);
+            OnRegisterServices(FServices);
         }
 
         /// <summary>
@@ -116,7 +111,7 @@ namespace Solti.Utils.Rpc.Hosting
         {
             Logger?.LogInformation(Trace.UNINSTALLING_HOST);
 
-            OnRegisterServices(FContainer);
+            OnRegisterServices(FServices);
         }
 
         /// <summary>
@@ -133,7 +128,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Place of service registration routines.
         /// </summary>
-        public virtual void OnRegisterServices(IServiceContainer container) 
+        public virtual void OnRegisterServices(IServiceCollection container) 
         {
             container
                 .Instance<IReadOnlyList<string>>("CommandLineArgs", Environment.GetCommandLineArgs())
@@ -160,7 +155,7 @@ namespace Solti.Utils.Rpc.Hosting
             {
                 if (!Initialized)
                 {
-                    OnRegisterServices(FContainer);
+                    OnRegisterServices(FServices);
                     OnRegisterModules(RpcService);
                     Initialized = true;
                 }
@@ -203,7 +198,6 @@ namespace Solti.Utils.Rpc.Hosting
             if (disposeManaged)
             {
                 RpcService.Dispose();
-                FContainer.Dispose();
             }
             base.Dispose(disposeManaged);
         }

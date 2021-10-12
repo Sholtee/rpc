@@ -34,16 +34,16 @@ namespace Solti.Utils.Rpc.Aspects
             FConnection = dbConn ?? throw new ArgumentNullException(nameof(dbConn));
 
         /// <inheritdoc/>
-        public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
+        public override object? Invoke(InvocationContext context)
         {
-            if (method is null)
-                throw new ArgumentNullException(nameof(method));
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
 
-            TransactionalAttribute? ta = method.GetCustomAttribute<TransactionalAttribute>();
+            TransactionalAttribute? ta = context.Method.GetCustomAttribute<TransactionalAttribute>();
             if (ta is null)
-                return base.Invoke(method, args, extra);
+                return base.Invoke(context);
 
-            if (typeof(Task) == method.ReturnType)
+            if (typeof(Task) == context.Method.ReturnType)
             {
                 return InvokeAsync();
 
@@ -53,7 +53,7 @@ namespace Solti.Utils.Rpc.Aspects
 
                     try
                     {
-                        await (Task) base.Invoke(method, args, extra)!;
+                        await (Task) base.Invoke(context)!;
                     }
                     catch
                     {
@@ -65,14 +65,14 @@ namespace Solti.Utils.Rpc.Aspects
                 }
             }
 
-            if (typeof(Task).IsAssignableFrom(method.ReturnType)) // Task<>
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType)) // Task<>
             {
                 Func<Task<object>> invokeAsync = InvokeAsync<object>;
 
                 return (Task) invokeAsync
                     .Method
                     .GetGenericMethodDefinition()
-                    .MakeGenericMethod(method.ReturnType.GetGenericArguments().Single())
+                    .MakeGenericMethod(context.Method.ReturnType.GetGenericArguments().Single())
                     .ToInstanceDelegate()
                     .Invoke(invokeAsync.Target, Array.Empty<object?>());
 
@@ -84,7 +84,7 @@ namespace Solti.Utils.Rpc.Aspects
 
                     try
                     {
-                        result = await (Task<T>) base.Invoke(method, args, extra)!;
+                        result = await (Task<T>) base.Invoke(context)!;
                     }
                     catch
                     {
@@ -107,7 +107,7 @@ namespace Solti.Utils.Rpc.Aspects
 
                 try
                 {
-                    result = base.Invoke(method, args, extra);
+                    result = base.Invoke(context);
                 }
                 catch 
                 {

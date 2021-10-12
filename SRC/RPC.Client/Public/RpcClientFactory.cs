@@ -56,7 +56,7 @@ namespace Solti.Utils.Rpc
             /// <summary>
             /// Forwards the intercepted method calls to the <see cref="Owner"/>.
             /// </summary>
-            public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra) => Owner.InvokeService(method, args);
+            public override object? Invoke(InvocationContext context) => Owner.InvokeService(context.Method, context.Args);
         }
 
         private static Type GenerateTypedResponseTo(Type returnType) => Cache.GetOrAdd(returnType, () =>
@@ -167,13 +167,19 @@ namespace Solti.Utils.Rpc
                 case "application/json":
                     using (Stream stm = await response.Content.ReadAsStreamAsync())
                     {
-                        IRpcResonse result =  (IRpcResonse) await JsonSerializer.DeserializeAsync
+                        IRpcResonse? result =  (IRpcResonse?) await JsonSerializer.DeserializeAsync
                         (
                             stm,
                             GenerateTypedResponseTo(method.ReturnType),
                             SerializerOptions
                         );
-                        if (result.Exception != null) ProcessRemoteError(result.Exception);
+
+                        if (result is null)
+                            throw new RpcException(Resources.MALFORMED_CONTENT);
+
+                        if (result.Exception is not null)
+                            ProcessRemoteError(result.Exception);
+
                         return result.Result;
                     }
                 case "application/octet-stream":
