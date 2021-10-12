@@ -24,10 +24,7 @@
     "grunt-babel": " ^8.0.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-uglify-es": "^3.3.0",
-    "grunt-coveralls": "^2.0.0",
-    "grunt-env": "^1.0.1",
     "grunt-eslint": "^22.0.0",
-    "grunt-http-upload": "^0.3.2",
     "grunt-karma": "^4.0.0",
     "grunt-replace-regex": "^1.0.3",
     "grunt-run": "^0.8.1",
@@ -48,8 +45,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "build": "grunt build",
-    "pushresults": "grunt pushresults",
-    "pushcoverage": "grunt pushcoverage"
+    "build": "grunt build"
   }
 }
