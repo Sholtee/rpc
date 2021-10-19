@@ -56,10 +56,13 @@ namespace Solti.Utils.Rpc.Internals
 
                 logger?.LogInformation(Trace.SERVICE_STARTED);
 
-                Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
-
-                for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;)
+                do
                 {
+                    Task<HttpListenerContext> getContext = FListener!.GetContextAsync();
+
+                    if (WaitHandle.WaitAny(new WaitHandle[] { FListenerCancellation!.Token.WaitHandle, ((IAsyncResult) getContext).AsyncWaitHandle }) == 0)
+                        break;
+
                     logger?.LogInformation(Trace.REQUEST_AVAILABLE);
 
                     getContext.ContinueWith
@@ -67,7 +70,7 @@ namespace Solti.Utils.Rpc.Internals
                         t => SafeCallContextProcessor(t.Result),
                         TaskContinuationOptions.OnlyOnRanToCompletion
                     );
-                }
+                } while (true);
 
                 logger?.LogInformation(Trace.SERVICE_TERMINATED);
             }
