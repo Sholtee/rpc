@@ -40,35 +40,35 @@ namespace Solti.Utils.Rpc.Aspects
         }
 
         /// <inheritdoc/>
-        public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
+        public override object? Invoke(InvocationContext context)
         {
-            if (method is null)
-                throw new ArgumentNullException(nameof(method));
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
 
-            RequiredRolesAttribute? attr = method.GetCustomAttribute<RequiredRolesAttribute>();
+            RequiredRolesAttribute? attr = context.Method.GetCustomAttribute<RequiredRolesAttribute>();
 
             //
             // Meg ha nem is szukseges szerep a metodus meghivasahoz, akkor is muszaj h szerepeljen az attributum
             //
 
             if (attr is null)
-                throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
+                throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, context.Method.Name));
 
             //
             // Aszinkron szerep validalas csak akkor jatszik h hozza kapcsolodo logika implementalva lett
             // (kulonben aszinkron metodusnal is szinkron szerep validalas van)
             //
 
-            if (typeof(Task).IsAssignableFrom(method.ReturnType) && AsyncRoleManager is not null)
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType) && AsyncRoleManager is not null)
                 return AsyncExtensions.Before
                 (
-                    () => (Task) base.Invoke(method, args, extra)!, 
-                    method.ReturnType, 
+                    () => (Task) base.Invoke(context)!, 
+                    context.Method.ReturnType, 
                     async () => Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
                 );
 
             Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
-            return base.Invoke(method, args, extra);
+            return base.Invoke(context);
 
             void Validate(Enum availableRoles)
             {

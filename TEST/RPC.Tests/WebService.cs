@@ -39,7 +39,7 @@ namespace Solti.Utils.Rpc.Tests
 
             public Func<HttpListenerContext, CancellationToken, Task> OnRequest { get; set; }
 
-            public DummyWebService() => OnRequest = (context, _) =>
+            public DummyWebService(WebServiceDescriptor webServiceDescriptor = null ): base(webServiceDescriptor ?? new WebServiceDescriptor { Url = TestUrl }) => OnRequest = (context, _) =>
             {
                 HttpListenerResponse response = context.Response;
 
@@ -59,8 +59,6 @@ namespace Solti.Utils.Rpc.Tests
         [SetUp]
         public void SetupFixture() 
         {
-            Svc = new DummyWebService();
-            Svc.Start(TestUrl);
         }
 
         [TearDown]
@@ -70,8 +68,7 @@ namespace Solti.Utils.Rpc.Tests
             Svc = null;
         }
 
-        [Test]
-        public async Task Service_ShouldHandleRequests() 
+        private static async Task InvokeService()
         {
             using var client = new HttpClient();
 
@@ -83,15 +80,31 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public void Service_ShouldHandleRequestsAsynchronously() =>
+        public async Task Service_ShouldHandleRequests() 
+        {
+            Svc = new DummyWebService();
+            Svc.Start();
+
+            await InvokeService();
+        }
+
+        [Test]
+        public void Service_ShouldHandleRequestsAsynchronously()
+        {
+            Svc = new DummyWebService();
+            Svc.Start();
+
             Assert.DoesNotThrowAsync(() => Task.WhenAll(Enumerable
-                .Repeat<Func<Task>>(Service_ShouldHandleRequests, 100)
+                .Repeat<Func<Task>>(InvokeService, 100)
                 .Select(_ => _())));
+        }
 
         [Test]
         public async Task Service_ShouldHandleExceptions() 
         {
+            Svc = new DummyWebService();
             Svc.OnRequest = (_, __) => throw new Exception();
+            Svc.Start();
 
             using var client = new HttpClient();
 
@@ -106,6 +119,9 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_CanBeRestarted() 
         {
+            Svc = new DummyWebService();
+            Svc.Start();
+
             Assert.That(Svc.IsStarted);
             Assert.That(Svc.IsListening);
 
@@ -114,7 +130,7 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(!Svc.IsStarted);
             Assert.That(!Svc.IsListening);
 
-            Assert.DoesNotThrow(() => Svc.Start(TestUrl));
+            Assert.DoesNotThrow(() => Svc.Start());
 
             Assert.That(Svc.IsStarted);
             Assert.That(Svc.IsListening);
@@ -123,20 +139,22 @@ namespace Solti.Utils.Rpc.Tests
             // ujrainditas utan is mukodik
             //
 
-            await Service_ShouldHandleRequests();
+            await InvokeService();
         }
 
         [Test]
         public void Start_ShouldValidateTheUrl() 
         {
-            using var svc = new WebService();
-            Assert.Throws<ArgumentException>(() => svc.Start("invalid"));
+            using var svc = new WebService(new WebServiceDescriptor { Url = "invalid" });
+            Assert.Throws<ArgumentException>(svc.Start);
         }
 
         [Test]
         public async Task Service_ShouldReturnHttp200ByDefault() 
         {
+            Svc = new DummyWebService();
             Svc.OnRequest = null;
+            Svc.Start();
 
             using var client = new HttpClient();
 
@@ -153,8 +171,9 @@ namespace Solti.Utils.Rpc.Tests
 
             var mockProcessor = new Mock<Func<HttpListenerContext, CancellationToken, Task>>(MockBehavior.Strict);
 
+            Svc = new DummyWebService(new WebServiceDescriptor { Url = TestUrl, AllowedOrigins = new[] { origin } });
             Svc.OnRequest = mockProcessor.Object;
-            Svc.AllowedOrigins.Add(origin);
+            Svc.Start();
 
             using var client = new HttpClient();
 
@@ -173,7 +192,9 @@ namespace Solti.Utils.Rpc.Tests
         {
             var mockProcessor = new Mock<Func<HttpListenerContext, CancellationToken, Task>>(MockBehavior.Strict);
 
+            Svc = new DummyWebService();
             Svc.OnRequest = mockProcessor.Object;
+            Svc.Start();
 
             using var client = new HttpClient();
 
@@ -195,12 +216,13 @@ namespace Solti.Utils.Rpc.Tests
         {
             Task processor = null;
 
+            Svc = new DummyWebService(new WebServiceDescriptor { Url = TestUrl, Timeout = TimeSpan.FromSeconds(1) });
             Svc.OnRequest = (context, cancellation) => processor = Task.Factory.StartNew(() => 
             {
                 using var evt = new ManualResetEventSlim();
                 evt.Wait(cancellation);
             }, TaskCreationOptions.LongRunning);
-            Svc.Timeout = TimeSpan.FromSeconds(1);
+            Svc.Start();
 
             using var client = new HttpClient();
 

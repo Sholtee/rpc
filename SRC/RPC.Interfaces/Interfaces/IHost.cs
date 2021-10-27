@@ -34,22 +34,22 @@ namespace Solti.Utils.Rpc.Interfaces
         IEnumerable<string> Dependencies { get; }
 
         /// <summary>
-        /// Invoked on service installation.
+        /// Invoked on host installation.
         /// </summary>
         void OnInstall();
 
         /// <summary>
-        /// Invoked on service removal.
+        /// Invoked on host removal.
         /// </summary>
         void OnUninstall();
 
         /// <summary>
-        /// Invoked on service startup.
+        /// Invoked on host startup.
         /// </summary>
         void OnStart(HostConfiguration configuration);
 
         /// <summary>
-        /// Invoked on service termination.
+        /// Invoked on host termination.
         /// </summary>
         void OnStop();
 

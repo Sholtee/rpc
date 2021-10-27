@@ -43,16 +43,19 @@ namespace Solti.Utils.Rpc.Aspects
         }
 
         /// <inheritdoc/>
-        public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra)
+        public override object? Invoke(InvocationContext context)
         {
-            IReadOnlyList<LoggerBase> targets = method.GetCustomAttribute<LoggersAttribute>()?.Value ?? typeof(TInterface).GetCustomAttribute<LoggerAspectAttribute>().DefaultLoggers;
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            IReadOnlyList<LoggerBase> targets = context.Method.GetCustomAttribute<LoggersAttribute>()?.Value ?? typeof(TInterface).GetCustomAttribute<LoggerAspectAttribute>().DefaultLoggers;
             int i = 0;
 
             return CallNext();
 
             object? CallNext() => i == targets.Count
-                ? base.Invoke(method, args, extra)
-                : targets[i++].Invoke(new LogContext { Method = method, Member = extra, Args = args, Scope = CurrentScope, Logger = ConcreteLogger }, CallNext);
+                ? base.Invoke(context)
+                : targets[i++].Invoke(new LogContext { Method = context.Method, Member = context.Member, Args = context.Args, Scope = CurrentScope, Logger = ConcreteLogger }, CallNext);
         }
     }
 }

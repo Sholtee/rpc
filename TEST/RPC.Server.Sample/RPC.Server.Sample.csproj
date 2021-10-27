@@ -8,7 +8,7 @@
     <RootNamespace>Solti.Utils.Rpc.Server.Sample</RootNamespace>
     <Authors>Denes Solti</Authors>
     <Configurations>Debug;Release</Configurations>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>

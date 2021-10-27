@@ -10,6 +10,8 @@ using System.ServiceProcess;
 using Moq;
 using NUnit.Framework;
 
+#pragma warning disable CA1416 // Validate platform compatibility
+
 namespace Solti.Utils.Rpc.Hosting.Tests
 {
     using Interfaces;
@@ -21,8 +23,6 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         public class AppHost : AppHostBase
         {
             public sealed override string Name => "MyService";
-
-            public override string Url => throw new NotImplementedException();
 
             public AppHost() : base() => Dependencies.Add("LanmanWorkstation");
         }

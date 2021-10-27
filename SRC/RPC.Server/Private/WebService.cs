@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -17,7 +18,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Internals
 {
-    using DI;
     using DI.Interfaces;
     using Interfaces;
     using Primitives.Patterns;
@@ -34,7 +34,7 @@ namespace Solti.Utils.Rpc.Internals
         #region Private
         private bool FNeedToRemoveUrlReservation;
 
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#System_Net_HttpListener_System_IDisposable_Dispose")]
+        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#remarks")]
         private HttpListener? FListener;
         private Thread? FListenerThread;
         [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "This field is disposed correctly, see Stop() method")]
@@ -42,47 +42,75 @@ namespace Solti.Utils.Rpc.Internals
 
         private readonly ExclusiveBlock FExclusiveBlock = new();
 
+        private int FActiveRequests;
+
         [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
         private void Listen()
         {
-            //
-            // Ez az injector csak a listener thread-hez tartozik, ezen a metoduson kivul TILOS hasznalni.
-            //
-
-            using IInjector injector = ServiceContainer.CreateInjector();
-
-            ILogger? logger = injector.TryGet<ILogger>();
-
-            //
-            // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
-            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
-            //
-
-            using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
+            try
             {
-                [nameof(Url)] = Url!
-            });
-
-            logger?.LogInformation(Trace.SERVICE_STARTED);
-
-            Task isTerminated = Task.Factory.StartNew(FListenerCancellation!.Token.WaitHandle.WaitOne, TaskCreationOptions.LongRunning);
-
-            for (Task<HttpListenerContext> getContext; Task.WaitAny(isTerminated, getContext = FListener!.GetContextAsync()) == 1;) 
-            {
-                logger?.LogInformation(Trace.REQUEST_AVAILABLE);
-
                 //
-                // Uj Task-ban hivjuk a feldolgozot.
+                // Ez az injector csak a listener thread-hez tartozik, ezen a metoduson kivul TILOS hasznalni.
                 //
 
-                getContext.ContinueWith
-                (
-                    t => SafeCallContextProcessor(t.Result),
-                    TaskContinuationOptions.OnlyOnRanToCompletion
-                );
+                using IInjector injector = ScopeFactory.CreateScope();
+
+                ILogger? logger = injector.TryGet<ILogger>();
+
+                //
+                // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
+                // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
+                //
+
+                using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
+                {
+                    [nameof(Descriptor.Url)] = Descriptor.Url
+                });
+
+                logger?.LogInformation(Trace.SERVICE_STARTED);
+
+                do
+                {
+                    Task<HttpListenerContext> getContext = FListener!.GetContextAsync();
+
+                    if (WaitHandle.WaitAny(new WaitHandle[] { FListenerCancellation!.Token.WaitHandle, ((IAsyncResult) getContext).AsyncWaitHandle }) == 0)
+                        break;
+
+                    switch (getContext.Status)
+                    {
+                        case TaskStatus.RanToCompletion:
+                            logger?.LogInformation(Trace.REQUEST_AVAILABLE);
+
+                            Interlocked.Increment(ref FActiveRequests);
+                            try
+                            {
+                                //
+                                // Uj Task-ban hivjuk a feldolgozot.
+                                //
+
+                                #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                                SafeCallContextProcessor(getContext.Result);
+                                #pragma warning restore CS4014
+                            }
+                            finally
+                            {
+                                Interlocked.Decrement(ref FActiveRequests);
+                            }
+                            break;
+                        case TaskStatus.Faulted:
+                            logger?.LogError(getContext.Exception.ToString());
+                            break;
+                    }
+                } while (true);
+
+                logger?.LogInformation(Trace.SERVICE_TERMINATED);
             }
-
-            logger?.LogInformation(Trace.SERVICE_TERMINATED);
+            #pragma warning disable CA1031 // We have to catch all kind of exceptions here
+            catch (Exception ex)
+            #pragma warning restore CA1031
+            {
+                System.Diagnostics.Trace.WriteLine(string.Format(Trace.Culture, Trace.EXCEPTION_IN_LISTENER_THREAD, ex));
+            }
         }
 
         private static HttpListener CreateCore(string url) 
@@ -141,7 +169,7 @@ namespace Solti.Utils.Rpc.Internals
 
             Task task = fn(linkedCancellation.Token);
 
-            if (await Task.WhenAny(task, Task.Delay(Timeout)) != task)
+            if (await Task.WhenAny(task, Task.Delay(Descriptor.Timeout)) != task)
                 //
                 // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
                 //
@@ -173,7 +201,7 @@ namespace Solti.Utils.Rpc.Internals
 
             string? origin = context.Request.Headers.Get("Origin");
 
-            if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
+            if (!string.IsNullOrEmpty(origin) && Descriptor.AllowedOrigins.Contains(origin))
             {
                 response.Headers["Access-Control-Allow-Origin"] = origin;
                 response.Headers["Vary"] = "Origin";
@@ -197,6 +225,7 @@ namespace Solti.Utils.Rpc.Internals
                 .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
         }
 
+
         /// <summary>
         /// Calls the <see cref="Process(HttpListenerContext, IInjector, CancellationToken)"/> method in a safe manner.
         /// </summary>
@@ -206,7 +235,7 @@ namespace Solti.Utils.Rpc.Internals
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            await using IInjector injector = ServiceContainer.CreateInjector();
+            await using IInjector injector = ScopeFactory.CreateScope();
 
             ILogger? logger = injector.TryGet<ILogger>();
 
@@ -217,18 +246,18 @@ namespace Solti.Utils.Rpc.Internals
 
             using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object> 
             {
-                ["RequestId"]      = context.Request.RequestTraceIdentifier,
+                ["RequestId"] = context.Request.RequestTraceIdentifier,
                 ["RemoteEndPoint"] = context.Request.RemoteEndPoint,
-                ["TimeStamp"]      = DateTime.UtcNow
+                ["TimeStamp"] = DateTime.UtcNow
             });
 
             try
             {
                 logger?.LogInformation(Trace.BEGIN_REQUEST_PROCESSING);
-                
+
                 SetAcHeaders(context);
 
-                if (IsPreflight(context)) 
+                if (IsPreflight(context))
                 {
                     logger?.LogInformation(Trace.PREFLIGHT_REQUEST);
                     context.Response.Close();
@@ -271,6 +300,12 @@ namespace Solti.Utils.Rpc.Internals
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
                     response.ContentType = "text/html";
+
+                    //
+                    // Itt ne hasznaljuk az FListenerCancellation-t mivel lehet h pont a feldolgozo megszakitasa miatt kerultunk ide. Ilyen
+                    // esetben a TaskCanceledException-t is gond nelkul szeretnenk feldolgozni.
+                    //
+
                     await WriteResponseString(response, ex.Message);
                 }
 
@@ -278,7 +313,7 @@ namespace Solti.Utils.Rpc.Internals
             }
 
             //
-            // Ha menet kozben a kiszolgalo leallitasra kerult akkor a kivetelt megesszuk.
+            // Ha menet kozben a kiszolgalo vmiert felszabaditasra kerult akkor a kivetelt megesszuk.
             //
 
             catch (ObjectDisposedException) { }
@@ -289,7 +324,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         protected async static Task WriteResponseString(HttpListenerResponse response, string responseString) 
         {
-            if (response == null)
+            if (response is null)
                 throw new ArgumentNullException(nameof(response));
 
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
@@ -297,10 +332,10 @@ namespace Solti.Utils.Rpc.Internals
             response.ContentLength64 = buffer.Length;
             await response.OutputStream.WriteAsync
             (
-#if NETSTANDARD2_0
-                buffer, 0, buffer.Length
-#else
+#if NETSTANDARD2_1_OR_GREATER
                 buffer.AsMemory(0, buffer.Length)
+#else
+                buffer, 0, buffer.Length
 #endif
             );
         }
@@ -329,11 +364,20 @@ namespace Solti.Utils.Rpc.Internals
             {
                 if (IsStarted)
                     Stop();
-                ServiceContainer.Dispose();
+                ScopeFactory.Dispose();
                 FExclusiveBlock.Dispose();
             }
 
             base.Dispose(disposeManaged);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="WebService"/> instance.
+        /// </summary>
+        protected WebService(WebServiceDescriptor descriptor, IScopeFactory scopeFactory)
+        {
+            ScopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
+            Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
         }
         #endregion
 
@@ -341,47 +385,32 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Creates a new <see cref="WebService"/> instance.
         /// </summary>
-        /// <remarks>The <paramref name="serviceContainer"/> is disposed when the owner <see cref="WebService"/> gets released.</remarks>
-        public WebService(IServiceContainer serviceContainer) => ServiceContainer = serviceContainer ?? throw new ArgumentNullException(nameof(serviceContainer));
-
-        /// <summary>
-        /// Creates a new <see cref="WebService"/> instance.
-        /// </summary>
-        public WebService()
-        {
-            ServiceContainer = new ServiceContainer();
-            ServiceContainer.Factory<ILogger>(i => TraceLogger.Create<WebService>(), Lifetime.Scoped);
-        }
+        public WebService(WebServiceDescriptor descriptor) : this(descriptor, DI.ScopeFactory.Create(svcs => svcs.Factory<ILogger>(i => TraceLogger.Create<WebService>(), Lifetime.Scoped))) { }
 
         /// <summary>
         /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
         /// </summary>
-        public bool IsStarted => FListenerThread != null;
+        public bool IsStarted => FListenerThread is not null;
 
         /// <summary>
         /// Returns true if the Web Service is listening.
         /// </summary>
-        public bool IsListening => FListener?.IsListening == true && FListenerThread?.IsAlive == true;
+        public bool IsListening => FListener?.IsListening is true && FListenerThread?.IsAlive is true;
 
         /// <summary>
-        /// The maximum amount of time that is available for the service to serve a request.
+        /// Returns the <see cref="WebServiceDescriptor"/> related to this instance.
         /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
+        public WebServiceDescriptor Descriptor { get; }
 
         /// <summary>
-        /// See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+        /// Returns the <see cref="IScopeFactory"/> related to this instance.
         /// </summary>
-        public ICollection<string> AllowedOrigins { get; } = new List<string>();
-
-        /// <summary>
-        /// The URL on which the Web Service is listening.
-        /// </summary>  
-        public string? Url { get; private set; }
+        public IScopeFactory ScopeFactory { get; }
 
         /// <summary>
         /// Starts the Web Service.
         /// </summary>
-        public virtual void Start(string url)
+        public void Start()
         {
             using (FExclusiveBlock.Enter())
             {
@@ -389,7 +418,7 @@ namespace Solti.Utils.Rpc.Internals
                     return;
 
                 createcore:
-                FListener = CreateCore(url);
+                FListener = CreateCore(Descriptor.Url);
 
                 try
                 {
@@ -408,7 +437,7 @@ namespace Solti.Utils.Rpc.Internals
                     if (Environment.OSVersion.Platform == PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode == 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
                     #pragma warning restore CA1508
                     {
-                        AddUrlReservation(url);
+                        AddUrlReservation(Descriptor.Url);
                         FNeedToRemoveUrlReservation = true;
 
                         //
@@ -429,8 +458,6 @@ namespace Solti.Utils.Rpc.Internals
 
                 FListenerThread = new Thread(Listen);
                 FListenerThread.Start();
-
-                Url = url;
             }
         }
 
@@ -438,17 +465,37 @@ namespace Solti.Utils.Rpc.Internals
         /// Shuts down the Web Service.
         /// </summary>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
-        public virtual void Stop()
+        public void Stop() => Stop(TimeSpan.FromMinutes(2));
+
+        /// <summary>
+        /// Shuts down the Web Service.
+        /// </summary>
+        [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
+        public void Stop(TimeSpan timeout)
         {
             using (FExclusiveBlock.Enter())
             {
                 if (!IsStarted)
                     return;
 
+                //
+                // Nem fogadunk tobb kerest valamint jelezzuk a meg aktiv feldolgozoknak h alljanak le.
+                //
+
                 FListenerCancellation!.Cancel();
 
-                FListenerThread!.Join();
+                FListenerThread!.Join(); // ez utan mar biztosan nem kezdodik ujabb keres-feldolgozas
                 FListenerThread = null;
+
+                //
+                // Mielott magat a mogottes kiszolgalot leallitanak megvarjuk amig minden meg elo keres lezarasra kerul.
+                //
+
+                SpinWait.SpinUntil(() => FActiveRequests == 0, timeout);
+
+                //
+                // Kiszolgalo leallitasa.
+                //
 
                 FListener!.Close();
                 FListener = null;
@@ -464,7 +511,7 @@ namespace Solti.Utils.Rpc.Internals
                 {
                     try
                     {
-                        RemoveUrlReservation(Url!);
+                        RemoveUrlReservation(Descriptor.Url);
                     }
                     #pragma warning disable CA1031 // This method should not throw
                     catch { }
@@ -472,15 +519,8 @@ namespace Solti.Utils.Rpc.Internals
 
                     FNeedToRemoveUrlReservation = false;
                 }
-
-                Url = null;
             }
         }
-
-        /// <summary>
-        /// The <see cref="IServiceContainer"/> associated to this service.
-        /// </summary>
-        public IServiceContainer ServiceContainer { get; }
 
         /// <summary>
         /// Adds an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx

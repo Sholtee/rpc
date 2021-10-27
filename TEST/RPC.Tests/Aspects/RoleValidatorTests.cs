@@ -188,20 +188,16 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
 
-            using (IServiceContainer container = new ServiceContainer())
-            {
-                container
-                    .Factory(injector => mockModule.Object, Lifetime.Scoped)
-                    .Factory(injector => mockRoleManager.Object, Lifetime.Scoped);
+            using IScopeFactory scopeFacrory = ScopeFactory.Create(svcs => svcs
+                .Factory(injector => mockModule.Object, Lifetime.Scoped)
+                .Factory(injector => mockRoleManager.Object, Lifetime.Scoped)
+                .Instance(mockRequest.Object));
 
-                IInjector injector = container.CreateInjector();
-                injector.UnderlyingContainer
-                    .Instance(mockRequest.Object);
+            using IInjector injector = scopeFacrory.CreateScope();
 
-                IModule module = injector.Get<IModule>();
+            IModule module = injector.Get<IModule>();
 
-                Assert.That(module, Is.InstanceOf<RoleValidator<IModule>>());
-            }
+            Assert.That(module, Is.InstanceOf<RoleValidator<IModule>>());
         }
     }
 }

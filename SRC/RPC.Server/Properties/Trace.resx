@@ -123,6 +123,9 @@
   <data name="BEGIN_REQUEST_PROCESSING" xml:space="preserve">
     <value>Begin request processing.</value>
   </data>
+  <data name="EXCEPTION_IN_LISTENER_THREAD" xml:space="preserve">
+    <value>Listener thread stopped due to an unhandled exception: {0}</value>
+  </data>
   <data name="INSTALLING_HOST" xml:space="preserve">
     <value>Installing host.</value>
   </data>

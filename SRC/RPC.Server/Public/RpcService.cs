@@ -5,7 +5,6 @@
 ********************************************************************************/
 using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -14,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc
 {
-    using DI;
     using DI.Interfaces;
 
     using Interfaces;
@@ -23,107 +21,21 @@ namespace Solti.Utils.Rpc
     /// <summary>
     /// Implements the core RPC service functionality.
     /// </summary>
-    public class RpcService : WebService, IModuleRegistry
+    public class RpcService : WebService
     {
-        private readonly ModuleInvocationBuilder FModuleInvocationBuilder;
+        private readonly ModuleInvocation FModuleInvocation;
         private readonly JsonSerializerOptions FSerializerOptions;
-        private ModuleInvocation? FModuleInvocation;
 
-        #region Public
-        /// <summary>
-        /// Controls the <see cref="JsonSerializer"/> related to this RPC service.
-        /// </summary>
-        /// <remarks>Don't change serialization options after the first module was registered. These options will be applied to serialization and deserialization as well.</remarks>
-        public JsonSerializerOptions SerializerOptions 
-        {
-            //
-            // A modul metodusokhoz tartozo kontextus tartalmazza a beallitasok masolatat -> modul regisztralas
-            // utan mar nem jo otlet modositani.
-            //
-
-            get => !FModuleInvocationBuilder.Modules.Any()
-                ? FSerializerOptions
-                : throw new InvalidOperationException(); // TODO: message
-        }
-
+        #region Protected
         /// <summary>
         /// Creates a new <see cref="RpcService"/> instance.
         /// </summary>
-        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder) : base(container ?? throw new ArgumentNullException(nameof(container)))
+        protected internal RpcService(WebServiceDescriptor descriptor, IScopeFactory scopeFactory, ModuleInvocation moduleInvocation, JsonSerializerOptions serializerOptions) : base(descriptor, scopeFactory)
         {
-            FModuleInvocationBuilder = moduleInvocationBuilder ?? throw new ArgumentNullException(nameof(moduleInvocationBuilder));
+            FModuleInvocation = moduleInvocation ?? throw new ArgumentNullException(nameof(moduleInvocation));
             FSerializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
         }
 
-        /// <summary>
-        /// Creates a new <see cref="RpcService"/> instance.
-        /// </summary>
-        public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder) : this(container, new JsonSerializerOptions(), moduleInvocationBuilder) {}
-
-        /// <summary>
-        /// Creates a new <see cref="RpcService"/> instance.
-        /// </summary>
-        public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions) : this(container, serializerOptions, new ModuleInvocationBuilder(serializerOptions)) {}
-
-        /// <summary>
-        /// Creates a new <see cref="RpcService"/> instance.
-        /// </summary>
-        public RpcService(IServiceContainer container) : this(container, new JsonSerializerOptions()) { }
-
-        /// <summary>
-        /// See <see cref="IModuleRegistry.Register{TInterface, TImplementation}"/>.
-        /// </summary>
-        public void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface
-        {
-            if (IsStarted)
-                throw new InvalidOperationException();
-
-            ServiceContainer.Service<TInterface, TImplementation>(Lifetime.Scoped);
-            FModuleInvocationBuilder.AddModule<TInterface>();
-        }
-
-        /// <summary>
-        /// See <see cref="IModuleRegistry.Register{TInterface}(Func{IInjector, TInterface})"/>.
-        /// </summary>
-        public void Register<TInterface>(Func<IInjector, TInterface> factory) where TInterface : class
-        {
-            if (IsStarted)
-                throw new InvalidOperationException();
-
-            ServiceContainer.Factory(factory ?? throw new ArgumentNullException(nameof(factory)), Lifetime.Scoped);
-            FModuleInvocationBuilder.AddModule<TInterface>();
-        }
-
-        /// <summary>
-        /// See <see cref="WebService.Start(string)"/>.
-        /// </summary>
-        public override void Start(string url)
-        {
-            if (IsStarted)
-                throw new InvalidOperationException();
-
-            //
-            // Elsonek hivjuk h ha megformed akkor a kiszolgalo el se induljon.
-            //
-
-            FModuleInvocation = FModuleInvocationBuilder.Build();
-
-            base.Start(url);
-        }
-
-        /// <summary>
-        /// See <see cref="WebService.Stop"/>.
-        /// </summary>
-        public override void Stop()
-        {
-            if (!IsStarted)
-                throw new InvalidOperationException();
-
-            base.Stop();
-        }
-        #endregion
-
-        #region Protected
         /// <inheritdoc/>
         protected override void SetAcHeaders(HttpListenerContext context)
         {
@@ -178,7 +90,7 @@ namespace Solti.Utils.Rpc
                 result = await InvokeModule(new RequestContext(request, cancellation), injector);
             }
 
-            catch (OperationCanceledException ex)
+            catch (OperationCanceledException ex) // ez megeszi a TaskCanceledException-t is
             {
                 //
                 // Mivel itt mar "cancellation.IsCancellationRequested" jo esellyel igaz ezert h a CreateResponse() ne 
@@ -224,14 +136,11 @@ namespace Solti.Utils.Rpc
             if (injector is null)
                 throw new ArgumentNullException(nameof(injector));
 
-            if (FModuleInvocation is null)
-                throw new InvalidOperationException();
-
             //
-            // A kontextust es a naplozat elerhetik a modulok fuggosegkent.
+            // A kontextust elerhetik a modulok fuggosegkent.
             //
 
-            injector.UnderlyingContainer.Instance(context);
+            injector.Meta(RpcServiceBuilder.META_REQUEST, context);
 
             return await FModuleInvocation(injector, context);
         }

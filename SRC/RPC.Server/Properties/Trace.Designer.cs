@@ -79,6 +79,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Listener thread stopped due to an unhandled exception: {0}.
+        /// </summary>
+        internal static string EXCEPTION_IN_LISTENER_THREAD {
+            get {
+                return ResourceManager.GetString("EXCEPTION_IN_LISTENER_THREAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing host..
         /// </summary>
         internal static string INSTALLING_HOST {

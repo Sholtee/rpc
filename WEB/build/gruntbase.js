@@ -19,7 +19,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             version: pkg.version,
             dirs: {
                 app:          `${dir}/src`,
-                artifacts:    `${dir}/artifacts`,
+                artifacts:    `${dir}/../artifacts`,
                 dist:         `${dir}/dist`,
                 tests:        `${dir}/tests`,
                 tmp:          `${dir}/.tmp`,
@@ -137,7 +137,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                     'karma-coverage-istanbul-reporter'
                 ],
                 junitReporter: {
-                    outputDir: '<%= project.dirs.artifacts %>'
+                    outputDir: '<%= project.dirs.artifacts %>/junit'
                 },
                 coverageIstanbulReporter: {
                     reports: ['lcov'],
@@ -152,38 +152,12 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 }
             }
         },
-        http_upload: {
-            testresults: {
-                options: {
-                    url: `https://ci.appveyor.com/api/testresults/junit/${process.env.APPVEYOR_JOB_ID}`,
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/xml'
-                    }
-                },
-                filter: '<%= project.dirs.artifacts %>/*.xml',
-                get files() {
-                    // a "files" property nem tartalmazhat kifejteseket (pl.: *.xml) -> "filter" hack
-                    return getTestResults(this.filter);
-                }
-            },
-        },
-        env: {
-            coveralls: {
-                COVERALLS_SERVICE_NAME: 'appveyor',
-                COVERALLS_GIT_BRANCH: () => process.env.APPVEYOR_REPO_BRANCH,
-                COVERALLS_SERVICE_JOB_ID: () => process.env.APPVEYOR_JOB_ID
-            }
-        },
-        coveralls: {
-            src: '<%= project.dirs.artifacts %>/lcov.info'
-        },
         replace: { // coveralls.io a repo gyokerebol keres
             lcov: {
                 options: {
                     patterns: [{
                         match: /^SF:([\w\\/.]+)$/gm,
-                        replacement: (m, path) => `SF:WEB\\${path}`
+                        replacement: (m, path) => `SF:\\WEB\\${path}`
                     }]
                 },
                 files: [{
@@ -207,28 +181,14 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
 
     registerTask('test', () => task.run([ // grunt test [--target=xXx.spec.js]
         'clean:tmp',
-        'clean:artifacts',
         'eslint:app',
         'eslint:tests',
         'babel:app',
         'babel:tests',
         'run:server', // a szulo process terminalasaval o is eltavozik
-        'karma:test'
+        'karma:test',
+        'replace:lcov'
     ]));
-
-    registerTask('pushresults', () => task.run([ // grunt pushresults
-        'http_upload:testresults'
-    ]));
-
-    registerTask('pushcoverage', () => {  // grunt pushcoverage
-        process.chdir('../'); // kell h a "coveralls" task megfeleloen mukodjon
-
-        task.run([
-            'env:coveralls',
-            'replace:lcov',
-            'coveralls'
-        ]);
-    });
 
     registerTask('build', () => task.run([ // grunt build
         'clean:dist',

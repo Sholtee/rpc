@@ -8,14 +8,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-using Microsoft.Extensions.Logging;
-
 namespace Solti.Utils.Rpc.Hosting
 {
     using Interfaces;
     using Internals;
     using Primitives.Patterns;
-    using Properties;
 
     /// <summary>
     /// Defines an abstract host runner.

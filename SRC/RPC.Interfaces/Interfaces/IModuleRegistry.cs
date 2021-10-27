@@ -17,11 +17,11 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Registers a module.
         /// </summary>
-        void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface;
+        IModuleRegistry Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface;
 
         /// <summary>
         /// Registers a module.
         /// </summary>
-        void Register<TInterface>(Func<IInjector, TInterface> factory) where TInterface : class;
+        IModuleRegistry Register<TInterface>(Func<IInjector, TInterface> factory) where TInterface : class;
     }
 }
