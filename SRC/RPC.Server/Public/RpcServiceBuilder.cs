@@ -25,7 +25,9 @@ namespace Solti.Utils.Rpc
 
         private readonly ModuleRegistry FModuleRegistry;
         private readonly ServiceCollection FServiceCollection;
-        private WebServiceDescriptor FWebServiceDescriptor = new();
+
+        private WebServiceDescriptor? FWebServiceDescriptor;
+        private ScopeOptions? FScopeOptions;
 
         private sealed class MetaReaderServiceEntry : AbstractServiceEntry
         {
@@ -129,6 +131,15 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// 
         /// </summary>
+        public RpcServiceBuilder ConfigureScope(ScopeOptions scopeOptions)
+        {
+            FScopeOptions = scopeOptions ?? throw new ArgumentNullException(nameof(scopeOptions));
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public RpcServiceBuilder ConfigureSerializer(JsonSerializerOptions serializerOptions)
         {
             FModuleRegistry.SerializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
@@ -138,6 +149,12 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Builds a new <see cref="RpcService"/> instance.
         /// </summary>
-        public virtual RpcService Build() => new RpcService(FWebServiceDescriptor, ScopeFactory.Create(FServiceCollection), FModuleRegistry.Build(), FModuleRegistry.SerializerOptions);
+        public virtual RpcService Build() => new RpcService
+        (
+            FWebServiceDescriptor ?? new WebServiceDescriptor(),
+            ScopeFactory.Create(FServiceCollection, FScopeOptions ?? new ScopeOptions()),
+            FModuleRegistry.Build(),
+            FModuleRegistry.SerializerOptions
+        );
     }
 }
