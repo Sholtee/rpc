@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Solti.Utils.Rpc
 {
@@ -16,6 +17,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// The URL on which the WEB server will listen.
         /// </summary>
+        [SuppressMessage("Design", "CA1056:URI properties should not be strings", Justification = "URI is parsed by the HttpListener class")]
         public string Url { get; init; } = "http://localhost:1986";
 
         /// <summary>
