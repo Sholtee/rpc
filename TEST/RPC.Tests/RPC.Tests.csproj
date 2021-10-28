@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="start /wait /min dotnet build &quot;..\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --nologo --configuration Debug" />
+    <Exec Command="dotnet build &quot;..\RPC.Server.Sample\RPC.Server.Sample.csproj&quot; --nologo --configuration Debug &gt; &quot;..\..\Artifacts\server_build.txt&quot;" />
   </Target>
 
 </Project>
