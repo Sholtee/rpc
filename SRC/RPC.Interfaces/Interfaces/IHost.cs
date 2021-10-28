@@ -6,8 +6,6 @@
 using System;
 using System.Collections.Generic;
 
-using Microsoft.Extensions.Logging;
-
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
@@ -36,29 +34,22 @@ namespace Solti.Utils.Rpc.Interfaces
         IEnumerable<string> Dependencies { get; }
 
         /// <summary>
-        /// The <see cref="ILogger"/> related to the host.
-        /// </summary>       
-        #pragma warning disable CS3003 // ILogger is not CLS-compliant
-        ILogger? Logger { get; }
-        #pragma warning restore CS3003
-
-        /// <summary>
-        /// Invoked on service installation.
+        /// Invoked on host installation.
         /// </summary>
         void OnInstall();
 
         /// <summary>
-        /// Invoked on service removal.
+        /// Invoked on host removal.
         /// </summary>
         void OnUninstall();
 
         /// <summary>
-        /// Invoked on service startup.
+        /// Invoked on host startup.
         /// </summary>
         void OnStart(HostConfiguration configuration);
 
         /// <summary>
-        /// Invoked on service termination.
+        /// Invoked on host termination.
         /// </summary>
         void OnStop();
 

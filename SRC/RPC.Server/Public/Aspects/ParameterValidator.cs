@@ -91,7 +91,7 @@ namespace Solti.Utils.Rpc.Aspects
 
                 static IReadOnlyCollection<Func<IInjector, object?[], Task>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Func<IInjector, object?[], Task>>(method, (param, validator) => async (currentScope, args) =>
                 {
-                    if (validator is IConditionalValidatior conditional && !conditional.ShouldRun(method, currentScope))
+                    if ((validator as IConditionalValidatior)?.ShouldRun(method, currentScope) is false)
                         return;
 
                     object? value = args[param.Position];
@@ -134,7 +134,7 @@ namespace Solti.Utils.Rpc.Aspects
 
                 static IReadOnlyCollection<Action<IInjector, object?[]>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Action<IInjector, object?[]>>(method, (param, validator) => (currentScope, args) =>
                 {
-                    if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(method, currentScope))
+                    if ((validator as IConditionalValidatior)?.ShouldRun(method, currentScope) is not false)
                     {
                         object? value = args[param.Position];
 

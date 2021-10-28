@@ -9,7 +9,7 @@ namespace Solti.Utils.Rpc.Server.Sample.Interfaces
 {
     using Rpc.Interfaces;
 
-    [ParameterValidatorAspect]
+    [ModuleLoggerAspect, ParameterValidatorAspect]
     public interface ICalculator
     {
         int Add(int a, int b);

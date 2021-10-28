@@ -47,27 +47,23 @@ namespace Solti.Utils.Rpc.Tests
 
         public RpcService Server { get; set; }
 
-        public RpcServiceBuilder ServerBuilder { get; set; }
-
         public RpcClientFactory ClientFactory { get; set; }
 
         [SetUp]
         public void Setup()
         {
-            ServerBuilder = new RpcServiceBuilder().ConfigureWebService(new WebServiceDescriptor { Url = Host});
+            Server = new RpcService(new ServiceCollection());
             ClientFactory = new RpcClientFactory(Host);
-        }
-
-        protected void StartServer()
-        {
-            Server = ServerBuilder.Build();
-            Server.Start();
         }
 
         [TearDown]
         public void Teardown() 
         {
-            Server?.Dispose();
+            Server.Dispose();
+<<<<<<< HEAD
+            Server.ServiceContainer.Dispose();
+=======
+>>>>>>> v5
             Server = null;
 
             ClientFactory.Dispose();
@@ -82,13 +78,13 @@ namespace Solti.Utils.Rpc.Tests
 
             IRequestContext context = null;
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => 
+            Server.Register(injector => 
             {
                 context = injector.Get<IRequestContext>();
 
                 return mockModule.Object;
-            }));
-            StartServer();
+            });
+            Server.Start(Host);
 
             ClientFactory.SessionId = "cica";
 
@@ -109,13 +105,13 @@ namespace Solti.Utils.Rpc.Tests
 
             ILogger logger = null;
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector =>
+            Server.Register(injector =>
             {
                 logger = injector.Get<ILogger>();
 
                 return mockModule.Object;
-            }));
-            StartServer();
+            });
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
             proxy.Dummy();
@@ -131,8 +127,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Add(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns<int, int>((a, b) => a + b);
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
             Assert.That(proxy.Add(1, 2), Is.EqualTo(3));
@@ -148,8 +144,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Add(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns<int, int>((a, b) => a + b);
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             await Task.WhenAll
             (
@@ -176,8 +172,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns<int, int>((a, b) => Task.FromResult(a + b));
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             await Task.WhenAll
             (
@@ -204,8 +200,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns<int, int>((a, b) => Task<int>.Factory.StartNew(() => a + b));
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -227,8 +223,8 @@ namespace Solti.Utils.Rpc.Tests
                 .SetupSet(i => i.Prop = 1986)
                 .Callback<int>(val => prop = val);
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -244,8 +240,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Async())
                 .Returns(Task.CompletedTask);
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -265,8 +261,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.AddAsync(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(Task.FromException<int>(new InvalidOperationException("cica")));
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -287,8 +283,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Add(1, 1))
                 .Callback(() => throw new InvalidOperationException("cica"));
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -309,8 +305,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.GetStream())
                 .Returns(stm);
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -338,8 +334,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.GetStreamAsync())
                 .Returns(Task.FromResult((Stream) stm));
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -353,18 +349,17 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Server_ShouldTimeout() 
         {
-            ServerBuilder
-                .ConfigureWebService(new WebServiceDescriptor { Url = Host, Timeout = TimeSpan.FromSeconds(1) })
-                .ConfigureModules(registry => registry.Register(injector =>
-                {
-                    var mockModule = new Mock<IModule>(MockBehavior.Strict);
-                    mockModule
-                        .Setup(i => i.Faulty())
-                        .Returns(Task.Factory.StartNew(() => new ManualResetEventSlim().Wait(injector.Get<IRequestContext>().Cancellation)));
+            Server.Timeout = TimeSpan.FromSeconds(1);
+            Server.Register(i =>
+            {
+                var mockModule = new Mock<IModule>(MockBehavior.Strict);
+                mockModule
+                    .Setup(i => i.Faulty())
+                    .Returns(Task.Factory.StartNew(() => new ManualResetEventSlim().Wait(i.Get<IRequestContext>().Cancellation)));
 
-                    return mockModule.Object;
-                }));
-            StartServer();
+                return mockModule.Object;
+            });
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -375,8 +370,8 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Server_ShouldValidateTheRequest() 
         {
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => new Mock<IModule>(MockBehavior.Strict).Object));
-            StartServer();
+            Server.Register(i => new Mock<IModule>(MockBehavior.Strict).Object);
+            Server.Start(Host);
 
             using var client = new HttpClient();
 
@@ -399,8 +394,8 @@ namespace Solti.Utils.Rpc.Tests
                     Status = HttpStatusCode.Unauthorized
                 });
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
 
@@ -430,7 +425,11 @@ namespace Solti.Utils.Rpc.Tests
         public async Task Module_MayHaveDependencies([ValueSource(nameof(Lifetimes))] Lifetime lifetime) 
         {
             int factoryRequested = 0;
-            ServerBuilder.ConfigureServices(svcs => svcs.Factory(injector => 
+<<<<<<< HEAD
+            Server.ServiceContainer.Factory(injector => 
+=======
+            Server.ServiceCollection.Factory(injector => 
+>>>>>>> v5
             {
                 var mockService = new Mock<IGuid>(MockBehavior.Strict);
                 mockService
@@ -439,10 +438,10 @@ namespace Solti.Utils.Rpc.Tests
 
                 factoryRequested++;
                 return mockService.Object;
-            }, lifetime));
+            }, lifetime);
 
             int moduleRequested = 0;
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector =>
+            Server.Register(injector => 
             {
                 var mockModule = new Mock<IModule>(MockBehavior.Strict);
                 mockModule
@@ -451,9 +450,9 @@ namespace Solti.Utils.Rpc.Tests
 
                 moduleRequested++;
                 return mockModule.Object;
-            }));
+            });
 
-            StartServer();
+            Server.Start(Host);
 
             await Task.WhenAll(Enumerable.Repeat(0, 20).Select(_ => InvokeModule()));
 
@@ -483,8 +482,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Faulty())
                 .Returns(Task.Factory.StartNew(evt.Wait));
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             ClientFactory.Timeout = TimeSpan.FromSeconds(1);
 
@@ -514,8 +513,8 @@ namespace Solti.Utils.Rpc.Tests
 
             mockModule.Setup(i => i.Method_2());
 
-            ServerBuilder.ConfigureModules(registry => registry.Register(injector => mockModule.Object));
-            StartServer();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IDummy proxy = await ClientFactory.CreateClient<IDummy>();
 
@@ -553,8 +552,8 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Client_MaySendCustomHeaders() 
         {
-            ServerBuilder.ConfigureModules(registry => registry.Register<IGetMyHeaderBack, GetMyHeaderBack>());
-            StartServer();
+            Server.Register<IGetMyHeaderBack, GetMyHeaderBack>();
+            Server.Start(Host);
 
             ClientFactory.CustomHeaders.Add("cica", "mica");
             IGetMyHeaderBack proxy = await ClientFactory.CreateClient<IGetMyHeaderBack>();
@@ -591,8 +590,8 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Client_MaySendCustomParameters()
         {
-            ServerBuilder.ConfigureModules(registry => registry.Register<IGetMyParamBack, GetMyParamBack>());
-            StartServer();
+            Server.Register<IGetMyParamBack, GetMyParamBack>();
+            Server.Start(Host);
 
             using var clientFactory = new MyFactory(Host);
 
@@ -605,8 +604,12 @@ namespace Solti.Utils.Rpc.Tests
             var mockDisposable = new Mock<IDisposable>(MockBehavior.Strict);
             mockDisposable.Setup(d => d.Dispose());
 
-            ServerBuilder.ConfigureServices(svcs => svcs.Factory(i => mockDisposable.Object, Lifetime.Transient));
-            StartServer();
+<<<<<<< HEAD
+            Server.ServiceContainer.Factory(i => mockDisposable.Object, Lifetime.Transient);
+=======
+            Server.ServiceCollection.Factory(i => mockDisposable.Object, Lifetime.Transient);
+>>>>>>> v5
+            Server.Start(Host);
 
             IDisposable proxy = await ClientFactory.CreateClient<IDisposable>();
 
@@ -629,11 +632,9 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(m => m.MethodHavingComplexArg(It.IsAny<Complex>()))
                 .Returns<Complex>(arg => arg);
 
-            ServerBuilder
-                .ConfigureSerializer(new JsonSerializerOptions { PropertyNamingPolicy = new LowerCasePolicy() })
-                .ConfigureModules(registry => registry.Register(i => mockModule.Object));
-
-            StartServer();
+            Server.SerializerOptions.PropertyNamingPolicy = new LowerCasePolicy();
+            Server.Register(i => mockModule.Object);
+            Server.Start(Host);
 
             IModule proxy = await ClientFactory.CreateClient<IModule>();
             Complex ret = proxy.MethodHavingComplexArg(new Complex { PropA = "cica", PropB = 1986 });

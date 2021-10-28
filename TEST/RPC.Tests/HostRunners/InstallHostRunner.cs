@@ -24,8 +24,6 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         {
             public sealed override string Name => "MyService";
 
-            public override string Url => throw new NotImplementedException();
-
             public AppHost() : base() => Dependencies.Add("LanmanWorkstation");
         }
 
