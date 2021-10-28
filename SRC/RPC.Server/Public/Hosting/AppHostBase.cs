@@ -48,12 +48,12 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// The description of the host.
         /// </summary>
-        public string? Description { get; protected set; }
+        public string? Description { get; protected init; }
 
         /// <summary>
         /// Indicates if the host should be started automatically.
         /// </summary>
-        public bool AutoStart { get; protected set; }
+        public bool AutoStart { get; protected init; }
 
         IEnumerable<string> IHost.Dependencies => Dependencies;
 
