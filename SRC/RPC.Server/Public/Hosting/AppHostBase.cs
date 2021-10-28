@@ -5,13 +5,14 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace Solti.Utils.Rpc.Hosting
+namespace Solti.Utils.Rpc
 {
     using Interfaces;
+
     using Primitives.Patterns;
+    using Rpc.Internals;
 
     /// <summary>
     /// Represents the an app host that can be invoked through RPC.
@@ -21,7 +22,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// The host builder.
         /// </summary>
-        protected RpcServiceBuilder ServiceBuilder { get; } = new();
+        protected RpcServiceBuilder ServiceBuilder { get; } = new RpcServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
 
         /// <inheritdoc/>
         protected override void Dispose(bool disposeManaged)
