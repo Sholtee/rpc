@@ -41,7 +41,7 @@ namespace Solti.Utils.Rpc
         /// </summary>
         /// <remarks>This is an internal class, you should never use it.</remarks>
         [SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "ProxyGen.NET requires types to be visible.")]
-        public class MethodCallForwarder<TInterface> : InterfaceInterceptor<TInterface> where TInterface: class
+        public class MethodCallForwarder<TInterface> : InterfaceInterceptor<TInterface> where TInterface : class
         {
             /// <summary>
             /// The owner of this entity.
@@ -56,7 +56,13 @@ namespace Solti.Utils.Rpc
             /// <summary>
             /// Forwards the intercepted method calls to the <see cref="Owner"/>.
             /// </summary>
-            public override object? Invoke(MethodInfo method, object?[] args, MemberInfo extra) => Owner.InvokeService(method, args);
+            public override object? Invoke(InvocationContext context)
+            {
+                if (context is null)
+                    throw new ArgumentNullException(nameof(context));
+
+                return Owner.InvokeService(context.Method, context.Args);
+            }
         }
 
         private static Type GenerateTypedResponseTo(Type returnType) => Cache.GetOrAdd(returnType, () =>
@@ -82,7 +88,7 @@ namespace Solti.Utils.Rpc
         /// </summary>
         protected virtual string GetMemberId(MemberInfo member)
         {
-            if (member == null)
+            if (member is null)
                 throw new ArgumentNullException(nameof(member));
 
             return member.GetId();
@@ -93,7 +99,7 @@ namespace Solti.Utils.Rpc
         /// </summary>
         protected virtual IDictionary<string, string> GetRequestParameters(MethodInfo method) 
         {
-            if (method == null)
+            if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
             var paramz = new Dictionary<string, string>
@@ -113,10 +119,10 @@ namespace Solti.Utils.Rpc
         [SuppressMessage("Globalization", "CA1304:Specify CultureInfo")]
         protected virtual async Task<object?> InvokeServiceAsync(MethodInfo method, object?[] args)
         {
-            if (method == null)
+            if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             //
@@ -167,13 +173,19 @@ namespace Solti.Utils.Rpc
                 case "application/json":
                     using (Stream stm = await response.Content.ReadAsStreamAsync())
                     {
-                        IRpcResonse result =  (IRpcResonse) await JsonSerializer.DeserializeAsync
+                        IRpcResonse? result =  (IRpcResonse?) await JsonSerializer.DeserializeAsync
                         (
                             stm,
                             GenerateTypedResponseTo(method.ReturnType),
                             SerializerOptions
                         );
-                        if (result.Exception != null) ProcessRemoteError(result.Exception);
+
+                        if (result is null)
+                            throw new RpcException(Resources.MALFORMED_CONTENT);
+
+                        if (result.Exception is not null)
+                            ProcessRemoteError(result.Exception);
+
                         return result.Result;
                     }
                 case "application/octet-stream":
@@ -188,7 +200,7 @@ namespace Solti.Utils.Rpc
         /// </summary>
         protected virtual object? InvokeService(MethodInfo method, object?[] args)
         {
-            if (method == null)
+            if (method is null)
                 throw new ArgumentNullException(nameof(method));
 
             Task<object?> getResult = InvokeServiceAsync(method, args);
@@ -225,18 +237,18 @@ namespace Solti.Utils.Rpc
         /// </summary>
         protected virtual void ProcessRemoteError(ExceptionInfo exception) 
         {
-            if (exception == null)
+            if (exception is null)
                 throw new ArgumentNullException(nameof(exception));
 
             Type? remoteException = Type.GetType(exception.TypeName, throwOnError: false);
             
-            if (remoteException != null && typeof(Exception).IsAssignableFrom(remoteException))
+            if (remoteException is not null && typeof(Exception).IsAssignableFrom(remoteException))
             {
                 Func<object?[], object>? ctor = remoteException
                     .GetConstructor(new[] { typeof(string) })
                     ?.ToStaticDelegate();
 
-                if (ctor != null) 
+                if (ctor is not null) 
                     throw new RpcException(Resources.RPC_FAILED, (Exception) ctor(new object?[] { exception.Message }));
             }
 
@@ -290,7 +302,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Headers sent along with each request.
         /// </summary>
-        /// <remarks>You should not set "content-type", it is done by te system automatically.</remarks>
+        /// <remarks>You should not set "content-type", it is done by the system automatically.</remarks>
         public IDictionary<string, string> CustomHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>

@@ -4,50 +4,36 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.InteropServices;
-
-using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Hosting
 {
-    using DI;
-    using DI.Interfaces;
-
-    using Rpc.Interfaces;
-    using Rpc.Internals;
+    using Interfaces;
 
     using Primitives.Patterns;
-    using Properties;
+    using Rpc.Internals;
 
     /// <summary>
-    /// Represents the an app host that can be invoked by RPC
+    /// Represents the an app host that can be invoked through RPC.
     /// </summary>
     public abstract class AppHostBase: Disposable, IHost
     {
-        private readonly IServiceContainer FContainer;
-
         /// <summary>
-        /// Creates a new instance.
+        /// The host builder.
         /// </summary>
-        protected AppHostBase(IServiceContainer container, RpcService rpcService)
+        protected RpcServiceBuilder ServiceBuilder { get; } = new RpcServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
+
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposeManaged)
         {
-            FContainer = container ?? throw new ArgumentNullException(nameof(container));
-            RpcService = rpcService ?? throw new ArgumentNullException(nameof(rpcService));
+            RpcService?.Stop();
+
+            if (disposeManaged)
+                RpcService?.Dispose();
+
+            base.Dispose(disposeManaged);
         }
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        protected AppHostBase(IServiceContainer container) : this(container, new RpcService(container ?? throw new ArgumentNullException(nameof(container)))) {}
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        protected AppHostBase(): this(new ServiceContainer()) {}
 
         /// <summary>
         /// The name of the host.
@@ -55,35 +41,19 @@ namespace Solti.Utils.Rpc.Hosting
         public abstract string Name { get; }
 
         /// <summary>
-        /// The URL on which the RPC service will listen.
-        /// </summary>
-        [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
-        public abstract string Url { get; }
-
-        /// <summary>
         /// The related <see cref="Rpc.RpcService"/>.
         /// </summary>
-        public RpcService RpcService { get; }
-
-        /// <summary>
-        /// Indicates whether this host was initialized or not.
-        /// </summary>
-        public bool Initialized { get; private set; }
+        public RpcService? RpcService { get; private set; }
 
         /// <summary>
         /// The description of the host.
         /// </summary>
-        public string? Description { get; protected set; }
+        public string? Description { get; protected init; }
 
         /// <summary>
         /// Indicates if the host should be started automatically.
         /// </summary>
-        public bool AutoStart { get; protected set; }
-
-        /// <inheritdoc/>
-        #pragma warning disable CS3003 // ILogger is not CLS-compliant
-        public ILogger? Logger { get; protected set; } = TraceLogger.Create<AppHostBase>();
-        #pragma warning restore CS3003
+        public bool AutoStart { get; protected init; }
 
         IEnumerable<string> IHost.Dependencies => Dependencies;
 
@@ -95,18 +65,11 @@ namespace Solti.Utils.Rpc.Hosting
             : (ICollection<string>) Array.Empty<string>();
 
         /// <summary>
-        /// Creates a new <see cref="IInjector"/>.
-        /// </summary>
-        protected IInjector CreateInjector() => FContainer.CreateInjector();
-
-        /// <summary>
         /// Invoked on service installation.
         /// </summary> 
         public virtual void OnInstall()
         {
-            Logger?.LogInformation(Trace.INSTALLING_HOST);
-
-            OnRegisterServices(FContainer);
+            //Logger?.LogInformation(Trace.INSTALLING_HOST);
         }
 
         /// <summary>
@@ -114,39 +77,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnUninstall()
         {
-            Logger?.LogInformation(Trace.UNINSTALLING_HOST);
-
-            OnRegisterServices(FContainer);
-        }
-
-        /// <summary>
-        /// Place of module registration routines.
-        /// </summary>
-        public virtual void OnRegisterModules(IModuleRegistry registry)
-        {
-            if (registry == null)
-                throw new ArgumentNullException(nameof(registry));
-
-            registry.Register<IServiceDescriptor, ServiceDescriptor>();
-        }
-
-        /// <summary>
-        /// Place of service registration routines.
-        /// </summary>
-        public virtual void OnRegisterServices(IServiceContainer container) 
-        {
-            container
-                .Instance<IReadOnlyList<string>>("CommandLineArgs", Environment.GetCommandLineArgs())
-                .Instance("EnvironmentVariables", GetEnvironmentVariables());
-
-            IReadOnlyDictionary<object, object> GetEnvironmentVariables() 
-            {
-                IDictionary variables = Environment.GetEnvironmentVariables();
-                return variables
-                    .Keys
-                    .Cast<object>()
-                    .ToDictionary(key => key, key => variables[key]);
-            }
+            //Logger?.LogInformation(Trace.UNINSTALLING_HOST);
         }
 
         /// <summary>
@@ -154,22 +85,16 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStart(HostConfiguration configuration)
         {
-            Logger?.LogInformation(Trace.STARTING_HOST);
+            //Logger?.LogInformation(Trace.STARTING_HOST);
 
             try
             {
-                if (!Initialized)
-                {
-                    OnRegisterServices(FContainer);
-                    OnRegisterModules(RpcService);
-                    Initialized = true;
-                }
-
-                RpcService.Start(Url);
+                RpcService ??= ServiceBuilder.Build();
+                RpcService.Start();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger?.LogError(ex, Trace.STARTING_HOST_FAILED);
+                //Logger?.LogError(ex, Trace.STARTING_HOST_FAILED);
                 throw;
             }
         }
@@ -179,9 +104,9 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnStop()
         {
-            Logger?.LogInformation(Trace.TERMINATING_HOST);
+            //Logger?.LogInformation(Trace.TERMINATING_HOST);
 
-            RpcService.Stop();
+            RpcService?.Stop();
         }
 
         /// <summary>
@@ -189,23 +114,10 @@ namespace Solti.Utils.Rpc.Hosting
         /// </summary>
         public virtual void OnUnhandledException(Exception ex)
         {
-            if (ex == null)
+            if (ex is null)
                 throw new ArgumentNullException(nameof(ex));
 
-            Logger?.LogError(ex, Trace.UNHANDLED_EXCEPTION);
-        }
-
-        /// <summary>
-        /// See <see cref="IDisposable.Dispose"/>.
-        /// </summary>
-        protected override void Dispose(bool disposeManaged)
-        {
-            if (disposeManaged)
-            {
-                RpcService.Dispose();
-                FContainer.Dispose();
-            }
-            base.Dispose(disposeManaged);
+            //Logger?.LogError(ex, Trace.UNHANDLED_EXCEPTION);
         }
     }
 }

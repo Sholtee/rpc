@@ -53,8 +53,6 @@ namespace Solti.Utils.Rpc.Internals
 
         private readonly HashSet<Type> FModules = new();
 
-        private readonly JsonSerializerOptions FSerializerOptions;
-
         //
         // {throw new Exception(...); return null;}
         //
@@ -362,7 +360,7 @@ namespace Solti.Utils.Rpc.Internals
             if (ifaceMethod == null)
                 throw new ArgumentNullException(nameof(ifaceMethod));
 
-            var serializer = new MultiTypeArraySerializer(FSerializerOptions, ifaceMethod
+            var serializer = new MultiTypeArraySerializer(SerializerOptions, ifaceMethod
                 .GetParameters()
                 .Select(param => param.ParameterType)
                 .ToArray());
@@ -427,6 +425,11 @@ namespace Solti.Utils.Rpc.Internals
         public IReadOnlyCollection<Type> Modules => FModules;
 
         /// <summary>
+        /// Returns the <see cref="JsonSerializerOptions"/> associated with the delegate being built.
+        /// </summary>
+        public JsonSerializerOptions SerializerOptions { get; set; } = new JsonSerializerOptions();
+
+        /// <summary>
         /// Builds a <see cref="ModuleInvocation"/> instance.
         /// </summary>
         public ModuleInvocation Build()
@@ -443,11 +446,6 @@ namespace Solti.Utils.Rpc.Internals
             ModuleInvocationExtensions.RelatedModules.Add(result, FModules.ToArray());
             return result;
         }
-
-        /// <summary>
-        /// Creates a new <see cref="ModuleInvocationBuilder"/> instance.
-        /// </summary>
-        public ModuleInvocationBuilder(JsonSerializerOptions? serializerOptions = null) => FSerializerOptions = serializerOptions ?? new JsonSerializerOptions();
         #endregion
     }
 }

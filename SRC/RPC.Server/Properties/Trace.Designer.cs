@@ -79,6 +79,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Listener thread stopped due to an unhandled exception: {0}.
+        /// </summary>
+        internal static string EXCEPTION_IN_LISTENER_THREAD {
+            get {
+                return ResourceManager.GetString("EXCEPTION_IN_LISTENER_THREAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing host..
         /// </summary>
         internal static string INSTALLING_HOST {
@@ -192,24 +201,6 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string STARTING_HOST_WITH {
             get {
                 return ResourceManager.GetString("STARTING_HOST_WITH", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Starting RPC service....
-        /// </summary>
-        internal static string STARTING_RPC_SERVICE {
-            get {
-                return ResourceManager.GetString("STARTING_RPC_SERVICE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to start the RPC service..
-        /// </summary>
-        internal static string STARTING_RPC_SERVICE_FAILED {
-            get {
-                return ResourceManager.GetString("STARTING_RPC_SERVICE_FAILED", resourceCulture);
             }
         }
         

@@ -9,12 +9,13 @@
   
   <ItemGroup>
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
+    <Compile Include="..\Common\IsExternalInit.cs" Link="Properties\IsExternalInit.cs" />
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.*" />
-    <PackageReference Include="Injector.NET.Interfaces" Version="5.*" />
-    <PackageReference Include="Solti.Utils.Primitives" Version="2.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.*" />
+    <PackageReference Include="Injector.NET.Interfaces" Version="6.0-preview*" />
+    <PackageReference Include="Solti.Utils.Primitives" Version="6.*" />
   </ItemGroup>
   
   <ItemGroup>
@@ -23,12 +24,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Trace.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Trace.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   
   <ItemGroup>
     <EmbeddedResource Update="Properties\Errors.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Trace.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Trace.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   

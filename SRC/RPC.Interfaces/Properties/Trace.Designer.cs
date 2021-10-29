@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Solti.Utils.Rpc.Properties {
+namespace Solti.Utils.Rpc.Interfaces.Properties {
     using System;
     
     
@@ -19,17 +19,17 @@ namespace Solti.Utils.Rpc.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class Trace {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Trace() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Solti.Utils.Rpc.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Solti.Utils.Rpc.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Solti.Utils.Rpc.Interfaces.Properties.Trace", typeof(Trace).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,29 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Content type not supported..
+        ///   Looks up a localized string similar to Parameters: {0}.
         /// </summary>
-        internal static string CONTENT_TYPE_NOT_SUPPORTED {
+        internal static string PARAMZ {
             get {
-                return ResourceManager.GetString("CONTENT_TYPE_NOT_SUPPORTED", resourceCulture);
+                return ResourceManager.GetString("PARAMZ", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The content returned by the remote server is malformed..
+        ///   Looks up a localized string similar to Time elapsed: {0}ms.
         /// </summary>
-        internal static string MALFORMED_CONTENT {
+        internal static string TIME_ELAPSED {
             get {
-                return ResourceManager.GetString("MALFORMED_CONTENT", resourceCulture);
+                return ResourceManager.GetString("TIME_ELAPSED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remote Procedure Call failed. See inner exception for details..
+        ///   Looks up a localized string similar to Unhandled exception: {0}.
         /// </summary>
-        internal static string RPC_FAILED {
+        internal static string UNHANDLED_EXCEPTION {
             get {
-                return ResourceManager.GetString("RPC_FAILED", resourceCulture);
+                return ResourceManager.GetString("UNHANDLED_EXCEPTION", resourceCulture);
             }
         }
     }

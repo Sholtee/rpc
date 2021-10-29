@@ -123,6 +123,9 @@
   <data name="BEGIN_REQUEST_PROCESSING" xml:space="preserve">
     <value>Begin request processing.</value>
   </data>
+  <data name="EXCEPTION_IN_LISTENER_THREAD" xml:space="preserve">
+    <value>Listener thread stopped due to an unhandled exception: {0}</value>
+  </data>
   <data name="INSTALLING_HOST" xml:space="preserve">
     <value>Installing host.</value>
   </data>
@@ -161,12 +164,6 @@
   </data>
   <data name="STARTING_HOST_WITH" xml:space="preserve">
     <value>Starting host with {0} (Configuration = {1}).</value>
-  </data>
-  <data name="STARTING_RPC_SERVICE" xml:space="preserve">
-    <value>Starting RPC service...</value>
-  </data>
-  <data name="STARTING_RPC_SERVICE_FAILED" xml:space="preserve">
-    <value>Failed to start the RPC service.</value>
   </data>
   <data name="TERMINATING_HOST" xml:space="preserve">
     <value>Terminating host.</value>

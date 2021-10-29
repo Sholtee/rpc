@@ -6,42 +6,39 @@
 using System;
 using System.Linq;
 
+using Microsoft.Extensions.Logging;
+
 namespace Solti.Utils.Rpc.Server.Sample
 {
-    using Interfaces;
     using Hosting;
-    using Rpc.Interfaces;
+    using Interfaces;
+
+    using DI.Interfaces;
 
     public class AppHost : AppHostBase
     {
         public override string Name => "Calculator";
 
-        public override string Url => "http://localhost:1986/api/";
-
-        public AppHost() : base()
-        {
-            RpcService.AllowedOrigins.Add("http://localhost:1987");
-
-            //
-            // A naplozas kikapcsolhato mivel az a teljesitmeny teszteket negativan befolyasolja.
-            //
-
-            if (Environment.GetCommandLineArgs().Any(arg => arg.ToLowerInvariant() == "-nolog"))
+        public AppHost() => ServiceBuilder
+            .ConfigureWebService(new WebServiceDescriptor
             {
-                RpcService.LoggerFactory = null;
-                Logger = null;
-            }
-            else
+                Url = "http://localhost:1986/api/",
+                AllowedOrigins = new[] 
+                {
+                    "http://localhost:1987"
+                }
+            })
+            .ConfigureServices(services =>
             {
-                RpcService.LoggerFactory = ConsoleLogger.Create<AppHost>;
-                Logger = RpcService.LoggerFactory();
-            }
-        }
+                //
+                // A naplozas kikapcsolhato mivel az a teljesitmeny teszteket negativan befolyasolja.
+                //
 
-        public override void OnRegisterModules(IModuleRegistry registry)
-        {
-            base.OnRegisterModules(registry);
-            registry.Register<ICalculator, Calculator>();
-        }
+                if (!Environment.GetCommandLineArgs().Any(arg => arg.ToLowerInvariant() is "-nolog"))
+                {
+                    services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Singleton);
+                }
+            })
+            .ConfigureModules(modules => modules.Register<ICalculator, Calculator>());
     }
 }

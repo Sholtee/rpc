@@ -3,12 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-namespace Solti.Utils.Rpc.Server.Sample
-{
-    using Hosting;
+using Solti.Utils.Rpc.Hosting;
+using Solti.Utils.Rpc.Server.Sample;
 
-    class Program
-    {
-        static void Main() => HostRunner.Run<AppHost>();
-    }
-}
+HostRunner.Run<AppHost>();

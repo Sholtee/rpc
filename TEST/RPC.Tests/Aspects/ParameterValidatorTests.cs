@@ -83,15 +83,12 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
 
-            using (IServiceContainer container = new ServiceContainer())
-            {
-                container.Factory(injector => mockModule.Object, Lifetime.Scoped);
+            using IScopeFactory scopeFactory = ScopeFactory.Create(svcs => svcs.Factory(injector => mockModule.Object, Lifetime.Scoped));
 
-                IInjector injector = container.CreateInjector();
-                IModule module = injector.Get<IModule>();
+            using IInjector injector = scopeFactory.CreateScope();
+            IModule module = injector.Get<IModule>();
 
-                Assert.That(module, Is.InstanceOf<ParameterValidator<IModule>>());
-            }
+            Assert.That(module, Is.InstanceOf<ParameterValidator<IModule>>());
         }
 
         [Test]

@@ -52,7 +52,7 @@ namespace Solti.Utils.Rpc.Internals
         {
             return JsonSerializer
                 .DeserializeAsync<object?[]>(json, SerializerOptions, cancellation)
-                .AsTask();
+                .AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
         }
 #if DEBUG
         public object?[] Deserialize(string json) 
