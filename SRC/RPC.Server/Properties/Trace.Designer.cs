@@ -19,7 +19,7 @@ namespace Solti.Utils.Rpc.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Trace {
@@ -70,47 +70,11 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beginning invocation....
-        /// </summary>
-        internal static string BEGINNING_INVOCATION {
-            get {
-                return ResourceManager.GetString("BEGINNING_INVOCATION", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Listener thread stopped due to an unhandled exception: {0}.
         /// </summary>
         internal static string EXCEPTION_IN_LISTENER_THREAD {
             get {
                 return ResourceManager.GetString("EXCEPTION_IN_LISTENER_THREAD", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Installing host..
-        /// </summary>
-        internal static string INSTALLING_HOST {
-            get {
-                return ResourceManager.GetString("INSTALLING_HOST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invocation failed..
-        /// </summary>
-        internal static string INVOCATION_FAILED {
-            get {
-                return ResourceManager.GetString("INVOCATION_FAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invocation successful in {0}ms..
-        /// </summary>
-        internal static string INVOCATION_SUCCESSFUL {
-            get {
-                return ResourceManager.GetString("INVOCATION_SUCCESSFUL", resourceCulture);
             }
         }
         
@@ -174,60 +138,6 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string SERVICE_TERMINATED {
             get {
                 return ResourceManager.GetString("SERVICE_TERMINATED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Starting host....
-        /// </summary>
-        internal static string STARTING_HOST {
-            get {
-                return ResourceManager.GetString("STARTING_HOST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host starting failed..
-        /// </summary>
-        internal static string STARTING_HOST_FAILED {
-            get {
-                return ResourceManager.GetString("STARTING_HOST_FAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Starting host with {0} (Configuration = {1})..
-        /// </summary>
-        internal static string STARTING_HOST_WITH {
-            get {
-                return ResourceManager.GetString("STARTING_HOST_WITH", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Terminating host..
-        /// </summary>
-        internal static string TERMINATING_HOST {
-            get {
-                return ResourceManager.GetString("TERMINATING_HOST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unhandled exception in host..
-        /// </summary>
-        internal static string UNHANDLED_EXCEPTION {
-            get {
-                return ResourceManager.GetString("UNHANDLED_EXCEPTION", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uninstalling host..
-        /// </summary>
-        internal static string UNINSTALLING_HOST {
-            get {
-                return ResourceManager.GetString("UNINSTALLING_HOST", resourceCulture);
             }
         }
     }

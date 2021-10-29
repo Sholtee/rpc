@@ -117,23 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BEGINNING_INVOCATION" xml:space="preserve">
-    <value>Beginning invocation...</value>
-  </data>
   <data name="BEGIN_REQUEST_PROCESSING" xml:space="preserve">
     <value>Begin request processing.</value>
   </data>
   <data name="EXCEPTION_IN_LISTENER_THREAD" xml:space="preserve">
     <value>Listener thread stopped due to an unhandled exception: {0}</value>
-  </data>
-  <data name="INSTALLING_HOST" xml:space="preserve">
-    <value>Installing host.</value>
-  </data>
-  <data name="INVOCATION_FAILED" xml:space="preserve">
-    <value>Invocation failed.</value>
-  </data>
-  <data name="INVOCATION_SUCCESSFUL" xml:space="preserve">
-    <value>Invocation successful in {0}ms.</value>
   </data>
   <data name="PREFLIGHT_REQUEST" xml:space="preserve">
     <value>Preflight request, processor won't be called.</value>
@@ -155,23 +143,5 @@
   </data>
   <data name="SERVICE_TERMINATED" xml:space="preserve">
     <value>Service terminated.</value>
-  </data>
-  <data name="STARTING_HOST" xml:space="preserve">
-    <value>Starting host...</value>
-  </data>
-  <data name="STARTING_HOST_FAILED" xml:space="preserve">
-    <value>Host starting failed.</value>
-  </data>
-  <data name="STARTING_HOST_WITH" xml:space="preserve">
-    <value>Starting host with {0} (Configuration = {1}).</value>
-  </data>
-  <data name="TERMINATING_HOST" xml:space="preserve">
-    <value>Terminating host.</value>
-  </data>
-  <data name="UNHANDLED_EXCEPTION" xml:space="preserve">
-    <value>Unhandled exception in host.</value>
-  </data>
-  <data name="UNINSTALLING_HOST" xml:space="preserve">
-    <value>Uninstalling host.</value>
   </data>
 </root>
