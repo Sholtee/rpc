@@ -19,9 +19,6 @@ namespace Solti.Utils.Rpc.Hosting
     /// </summary>
     public abstract class AppHostBase: Disposable, IHost
     {
-        private readonly RpcServiceBuilder FServiceBuilder = new RpcServiceBuilder()
-            .ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
-
         /// <inheritdoc/>
         protected override void Dispose(bool disposeManaged)
         {
@@ -84,7 +81,7 @@ namespace Solti.Utils.Rpc.Hosting
         {
             if (RpcService is null)
             {
-                RpcServiceBuilder serviceBuilder = new();
+                RpcServiceBuilder serviceBuilder = new RpcServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
                 OnBuildService(serviceBuilder);
                 RpcService = serviceBuilder.Build();
             }
