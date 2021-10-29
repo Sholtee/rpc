@@ -19,7 +19,7 @@ namespace Solti.Utils.Rpc.Aspects
     using Proxy;
 
     /// <summary>
-    /// Contains logging realted logic.
+    /// Defines an interceptor that is responsible for logging.
     /// </summary>
     public class Logger<TInterface> : InterfaceInterceptor<TInterface> where TInterface : class
     {
