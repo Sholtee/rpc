@@ -57,7 +57,6 @@
     <div><span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
-    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -68,7 +67,7 @@
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SafeCallContextProcessor_System_Net_HttpListenerContext_">WebService.SafeCallContextProcessor(HttpListenerContext)</a>
     </div>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_System_Exception_System_Net_HttpListenerContext_">WebService.ProcessUnhandledException(Exception, HttpListenerContext)</a>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ProcessUnhandledException_System_Exception_System_Net_HttpListenerContext_Solti_Utils_DI_Interfaces_IInjector_System_Threading_CancellationToken_">WebService.ProcessUnhandledException(Exception, HttpListenerContext, IInjector, CancellationToken)</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_WriteResponseString_System_Net_HttpListenerResponse_System_String_">WebService.WriteResponseString(HttpListenerResponse, String)</a>
@@ -83,16 +82,19 @@
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_IsListening">WebService.IsListening</a>
     </div>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Timeout">WebService.Timeout</a>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Descriptor">WebService.Descriptor</a>
     </div>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AllowedOrigins">WebService.AllowedOrigins</a>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_ScopeFactory">WebService.ScopeFactory</a>
     </div>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Url">WebService.Url</a>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Start">WebService.Start()</a>
     </div>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_LoggerFactory">WebService.LoggerFactory</a>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Stop">WebService.Stop()</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Stop_System_TimeSpan_">WebService.Stop(TimeSpan)</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_AddUrlReservation_System_String_">WebService.AddUrlReservation(String)</a>
@@ -108,6 +110,9 @@
     </div>
     <div>
       <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.AsyncDispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.BeforeDispose()</span>
     </div>
     <div>
       <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.CheckNotDisposed()</span>
@@ -147,18 +152,18 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_RpcService_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RpcService : WebService, IDisposableEx, IDisposable, IAsyncDisposable, IModuleRegistry</code></pre>
+    <pre><code class="lang-csharp hljs">public class RpcService : WebService, IDisposableEx, IDisposable, IAsyncDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_RpcService__ctor_" data-uid="Solti.Utils.Rpc.RpcService.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)">RpcService(IServiceContainer)</h4>
+  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_Rpc_WebServiceDescriptor_Solti_Utils_DI_Interfaces_IScopeFactory_Solti_Utils_Rpc_Internals_ModuleInvocation_System_Text_Json_JsonSerializerOptions_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.Rpc.WebServiceDescriptor,Solti.Utils.DI.Interfaces.IScopeFactory,Solti.Utils.Rpc.Internals.ModuleInvocation,System.Text.Json.JsonSerializerOptions)">RpcService(WebServiceDescriptor, IScopeFactory, ModuleInvocation, JsonSerializerOptions)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RpcService(IServiceContainer container)</code></pre>
+    <pre><code class="lang-csharp hljs">protected RpcService(WebServiceDescriptor descriptor, IScopeFactory scopeFactory, ModuleInvocation moduleInvocation, JsonSerializerOptions serializerOptions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -171,65 +176,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcService__ctor_" data-uid="Solti.Utils.Rpc.RpcService.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)">RpcService(IServiceContainer, ModuleInvocationBuilder)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RpcService(IServiceContainer container, ModuleInvocationBuilder moduleInvocationBuilder)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.WebServiceDescriptor.html">WebServiceDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html">ModuleInvocationBuilder</a></td>
-        <td><span class="parametername">moduleInvocationBuilder</span></td>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IScopeFactory</span></td>
+        <td><span class="parametername">scopeFactory</span></td>
         <td></td>
       </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcService__ctor_" data-uid="Solti.Utils.Rpc.RpcService.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_System_Text_Json_JsonSerializerOptions_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions)">RpcService(IServiceContainer, JsonSerializerOptions)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
       <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a></td>
+        <td><span class="parametername">moduleInvocation</span></td>
         <td></td>
       </tr>
       <tr>
@@ -239,95 +197,6 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_RpcService__ctor_" data-uid="Solti.Utils.Rpc.RpcService.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_System_Text_Json_JsonSerializerOptions_Solti_Utils_Rpc_Internals_ModuleInvocationBuilder_" data-uid="Solti.Utils.Rpc.RpcService.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,System.Text.Json.JsonSerializerOptions,Solti.Utils.Rpc.Internals.ModuleInvocationBuilder)">RpcService(IServiceContainer, JsonSerializerOptions, ModuleInvocationBuilder)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RpcService(IServiceContainer container, JsonSerializerOptions serializerOptions, ModuleInvocationBuilder moduleInvocationBuilder)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
-        <td><span class="parametername">serializerOptions</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.html">ModuleInvocationBuilder</a></td>
-        <td><span class="parametername">moduleInvocationBuilder</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Solti_Utils_Rpc_RpcService_Container_" data-uid="Solti.Utils.Rpc.RpcService.Container*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_Container" data-uid="Solti.Utils.Rpc.RpcService.Container">Container</h4>
-  <div class="markdown level1 summary"><p>The <span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span> associated with this service.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IServiceContainer Container { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcService_SerializerOptions_" data-uid="Solti.Utils.Rpc.RpcService.SerializerOptions*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_SerializerOptions" data-uid="Solti.Utils.Rpc.RpcService.SerializerOptions">SerializerOptions</h4>
-  <div class="markdown level1 summary"><p>Controls the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializer">JsonSerializer</a> related to this RPC service.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public JsonSerializerOptions SerializerOptions { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Solti_Utils_Rpc_RpcService_SerializerOptions_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Don&apos;t change serialization options after the first module was registered. These options will be applied to serialization and deserialization as well.</p>
-</div>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_RpcService_CreateResponse_" data-uid="Solti.Utils.Rpc.RpcService.CreateResponse*"></a>
@@ -382,13 +251,13 @@
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_RpcService_InvokeModule_" data-uid="Solti.Utils.Rpc.RpcService.InvokeModule*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_Interfaces_IRequestContext_Microsoft_Extensions_Logging_ILogger_" data-uid="Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.Interfaces.IRequestContext,Microsoft.Extensions.Logging.ILogger)">InvokeModule(IRequestContext, ILogger)</h4>
+  <h4 id="Solti_Utils_Rpc_RpcService_InvokeModule_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.RpcService.InvokeModule(Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.DI.Interfaces.IInjector)">InvokeModule(IRequestContext, IInjector)</h4>
   <div class="markdown level1 summary"><p>Invokes a module method described by the <code data-dev-comment-type="paramref" class="paramref">context</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual async Task&lt;object&gt; InvokeModule(IRequestContext context, ILogger logger)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual async Task&lt;object&gt; InvokeModule(IRequestContext context, IInjector injector)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -406,8 +275,8 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a></td>
-        <td><span class="parametername">logger</span></td>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">injector</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -428,13 +297,13 @@
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_RpcService_Process_" data-uid="Solti.Utils.Rpc.RpcService.Process*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_Microsoft_Extensions_Logging_ILogger_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext,Microsoft.Extensions.Logging.ILogger,System.Threading.CancellationToken)">Process(HttpListenerContext, ILogger, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Processes HTTP requests asynchronously.</p>
+  <h4 id="Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_Solti_Utils_DI_Interfaces_IInjector_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.RpcService.Process(System.Net.HttpListenerContext,Solti.Utils.DI.Interfaces.IInjector,System.Threading.CancellationToken)">Process(HttpListenerContext, IInjector, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>When overridden in the derived class it processes the incoming HTTP request.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override async Task Process(HttpListenerContext context, ILogger logger, CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override async Task Process(HttpListenerContext context, IInjector injector, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -452,8 +321,8 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a></td>
-        <td><span class="parametername">logger</span></td>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">injector</span></td>
         <td></td>
       </tr>
       <tr>
@@ -479,78 +348,10 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_Microsoft_Extensions_Logging_ILogger_System_Threading_CancellationToken_">WebService.Process(HttpListenerContext, ILogger, CancellationToken)</a></div>
-  <a id="Solti_Utils_Rpc_RpcService_Register_" data-uid="Solti.Utils.Rpc.RpcService.Register*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__" data-uid="Solti.Utils.Rpc.RpcService.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html#Solti_Utils_Rpc_Interfaces_IModuleRegistry_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</a>.</p>
+  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Process_System_Net_HttpListenerContext_Solti_Utils_DI_Interfaces_IInjector_System_Threading_CancellationToken_">WebService.Process(HttpListenerContext, IInjector, CancellationToken)</a></div>
+  <h5 id="Solti_Utils_Rpc_RpcService_Process_System_Net_HttpListenerContext_Solti_Utils_DI_Interfaces_IInjector_System_Threading_CancellationToken__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method may be called parallelly.</p>
 </div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt; factory)
-    where TInterface : class</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<span class="xref">Solti.Utils.DI.Interfaces.IInjector</span>, TInterface&gt;</td>
-        <td><span class="parametername">factory</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TInterface</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_RpcService_Register_" data-uid="Solti.Utils.Rpc.RpcService.Register*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_Register__2" data-uid="Solti.Utils.Rpc.RpcService.Register``2">Register&lt;TInterface, TImplementation&gt;()</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html#Solti_Utils_Rpc_Interfaces_IModuleRegistry_Register__2">Register&lt;TInterface, TImplementation&gt;()</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Register&lt;TInterface, TImplementation&gt;()
-    where TInterface : class where TImplementation : TInterface</code></pre>
-  </div>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TInterface</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TImplementation</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Solti_Utils_Rpc_RpcService_SetAcHeaders_" data-uid="Solti.Utils.Rpc.RpcService.SetAcHeaders*"></a>
   <h4 id="Solti_Utils_Rpc_RpcService_SetAcHeaders_System_Net_HttpListenerContext_" data-uid="Solti.Utils.Rpc.RpcService.SetAcHeaders(System.Net.HttpListenerContext)">SetAcHeaders(HttpListenerContext)</h4>
   <div class="markdown level1 summary"><p>Sets the &quot;Access-Control-XxX&quot; headers.</p>
@@ -579,45 +380,9 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_SetAcHeaders_System_Net_HttpListenerContext_">WebService.SetAcHeaders(HttpListenerContext)</a></div>
-  <a id="Solti_Utils_Rpc_RpcService_Start_" data-uid="Solti.Utils.Rpc.RpcService.Start*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_Start_System_String_" data-uid="Solti.Utils.Rpc.RpcService.Start(System.String)">Start(String)</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Start_System_String_">Start(String)</a>.</p>
+  <h5 id="Solti_Utils_Rpc_RpcService_SetAcHeaders_System_Net_HttpListenerContext__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method may be called parallelly.</p>
 </div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void Start(string url)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">url</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Start_System_String_">WebService.Start(String)</a></div>
-  <a id="Solti_Utils_Rpc_RpcService_Stop_" data-uid="Solti.Utils.Rpc.RpcService.Stop*"></a>
-  <h4 id="Solti_Utils_Rpc_RpcService_Stop" data-uid="Solti.Utils.Rpc.RpcService.Stop">Stop()</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Stop">Stop()</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void Stop()</code></pre>
-  </div>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Internals.WebService.html#Solti_Utils_Rpc_Internals_WebService_Stop">WebService.Stop()</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span>
@@ -627,9 +392,6 @@
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">System.IAsyncDisposable</a>
-  </div>
-  <div>
-      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a>
   </div>
 </article>
           </div>

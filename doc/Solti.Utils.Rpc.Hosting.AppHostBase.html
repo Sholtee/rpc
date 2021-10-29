@@ -42,7 +42,7 @@
   
   <h1 id="Solti_Utils_Rpc_Hosting_AppHostBase" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase" class="text-break">Class AppHostBase
   </h1>
-  <div class="markdown level0 summary"><p>Represents the an app host that can be invoked by RPC</p>
+  <div class="markdown level0 summary"><p>Represents the an app host that can be invoked through RPC.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -62,6 +62,9 @@
     <h5>Inherited Members</h5>
     <div>
       <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.AsyncDispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.BeforeDispose()</span>
     </div>
     <div>
       <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.CheckNotDisposed()</span>
@@ -103,74 +106,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public abstract class AppHostBase : Disposable, IDisposableEx, IAsyncDisposable, IHost, IDisposable</code></pre>
   </div>
-  <h3 id="constructors">Constructors
-  </h3>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor">AppHostBase()</h4>
-  <div class="markdown level1 summary"><p>Creates a new instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected AppHostBase()</code></pre>
-  </div>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer)">AppHostBase(IServiceContainer)</h4>
-  <div class="markdown level1 summary"><p>Creates a new instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected AppHostBase(IServiceContainer container)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_Solti_Utils_DI_Interfaces_IServiceContainer_Solti_Utils_Rpc_RpcService_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(Solti.Utils.DI.Interfaces.IServiceContainer,Solti.Utils.Rpc.RpcService)">AppHostBase(IServiceContainer, RpcService)</h4>
-  <div class="markdown level1 summary"><p>Creates a new instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected AppHostBase(IServiceContainer container, RpcService rpcService)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a></td>
-        <td><span class="parametername">rpcService</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="properties">Properties
   </h3>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_AutoStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.AutoStart*"></a>
@@ -245,54 +180,6 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Initialized_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Initialized*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Initialized" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Initialized">Initialized</h4>
-  <div class="markdown level1 summary"><p>Indicates whether this host was initialized or not.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Initialized { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Logger_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Logger*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Logger" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Logger">Logger</h4>
-  <div class="markdown level1 summary"><p>The <a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a> related to the host.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ILogger Logger { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Name_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Name*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Name" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Name">Name</h4>
   <div class="markdown level1 summary"><p>The name of the host.</p>
@@ -341,14 +228,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Url_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Url*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Url" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Url">Url</h4>
-  <div class="markdown level1 summary"><p>The URL on which the RPC service will listen.</p>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_ServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_ServiceBuilder" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder">ServiceBuilder</h4>
+  <div class="markdown level1 summary"><p>The host builder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract string Url { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected RpcServiceBuilder ServiceBuilder { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -360,41 +247,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateInjector_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateInjector" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.CreateInjector">CreateInjector()</h4>
-  <div class="markdown level1 summary"><p>Creates a new <span class="xref">Solti.Utils.DI.Interfaces.IInjector</span>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected IInjector CreateInjector()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Dispose_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dispose*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Dispose_System_Boolean_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dispose(System.Boolean)">Dispose(Boolean)</h4>
-  <div class="markdown level1 summary"><p>See <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#System_IDisposable_Dispose">Dispose()</a>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -428,58 +290,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public virtual void OnInstall()</code></pre>
   </div>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRegisterModules_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterModules*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRegisterModules_Solti_Utils_Rpc_Interfaces_IModuleRegistry_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterModules(Solti.Utils.Rpc.Interfaces.IModuleRegistry)">OnRegisterModules(IModuleRegistry)</h4>
-  <div class="markdown level1 summary"><p>Place of module registration routines.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnRegisterModules(IModuleRegistry registry)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></td>
-        <td><span class="parametername">registry</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRegisterServices_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRegisterServices_Solti_Utils_DI_Interfaces_IServiceContainer_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRegisterServices(Solti.Utils.DI.Interfaces.IServiceContainer)">OnRegisterServices(IServiceContainer)</h4>
-  <div class="markdown level1 summary"><p>Place of service registration routines.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnRegisterServices(IServiceContainer container)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceContainer</span></td>
-        <td><span class="parametername">container</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_Solti_Utils_Rpc_Interfaces_HostConfiguration_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)">OnStart(HostConfiguration)</h4>
   <div class="markdown level1 summary"><p>Invoked on service startup.</p>
