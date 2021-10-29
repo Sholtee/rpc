@@ -22,9 +22,11 @@ namespace Solti.Utils.Rpc.Hosting.Tests
     {
         public class AppHost : AppHostBase
         {
-            public sealed override string Name => "MyService";
-
-            public AppHost() : base() => Dependencies.Add("LanmanWorkstation");
+            public AppHost() : base()
+            {
+                Name = "MyService";
+                Dependencies.Add("LanmanWorkstation");
+            }
         }
 
         private static void InvokeRunner(IHost appHost, HostConfiguration configuration, bool install = false, bool uninstall = false) 

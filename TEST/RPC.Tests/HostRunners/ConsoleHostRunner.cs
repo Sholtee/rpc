@@ -21,8 +21,6 @@ namespace Solti.Utils.Rpc.Hosting.Tests
         private class BadDependencyAppHost : AppHostBase
         {
             public BadDependencyAppHost(string dep): base() => Dependencies.Add(dep);
-
-            public override string Name => throw new NotImplementedException();
         }
 
         [Test]
@@ -49,8 +47,6 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
         private class ConsoleAppHost : AppHostBase
         {
-            public override string Name => nameof(ConsoleAppHost);
-
             public ManualResetEventSlim Started { get; } = new ManualResetEventSlim();
 
             public override void OnStart(HostConfiguration configuration)
@@ -61,9 +57,11 @@ namespace Solti.Utils.Rpc.Hosting.Tests
 
             public ConsoleAppHost() : base()
             {
-                ServiceBuilder.ConfigureWebService(new WebServiceDescriptor { Url = "http://127.0.0.1:1986/api/" });
+                Name = nameof(ConsoleAppHost);
                 Dependencies.Add("LanmanWorkstation");
             }
+
+            public override void OnBuildService(RpcServiceBuilder serviceBuilder) => serviceBuilder.ConfigureWebService(new WebServiceDescriptor { Url = "http://127.0.0.1:1986/api/" });
 
             protected override void Dispose(bool disposeManaged)
             {

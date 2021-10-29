@@ -17,9 +17,9 @@ namespace Solti.Utils.Rpc.Server.Sample
 
     public class AppHost : AppHostBase
     {
-        public override string Name => "Calculator";
+        public AppHost() => Name = "Calculator";
 
-        public AppHost() => ServiceBuilder
+        public override void OnBuildService(RpcServiceBuilder serviceBuilder) => serviceBuilder
             .ConfigureWebService(new WebServiceDescriptor
             {
                 Url = "http://localhost:1986/api/",

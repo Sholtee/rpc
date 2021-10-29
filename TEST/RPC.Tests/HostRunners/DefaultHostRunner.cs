@@ -17,7 +17,6 @@ namespace Solti.Utils.Rpc.Hosting.Tests
     {
         private class AppHost : AppHostBase
         {
-            public override string Name => throw new NotImplementedException();
         }
 
         [Test]

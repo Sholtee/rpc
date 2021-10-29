@@ -19,10 +19,8 @@ namespace Solti.Utils.Rpc.Hosting
     /// </summary>
     public abstract class AppHostBase: Disposable, IHost
     {
-        /// <summary>
-        /// Returns the <see cref="RpcServiceBuilder"/> that is responsible for building the underlying <see cref="RpcService"/>.
-        /// </summary>
-        protected RpcServiceBuilder ServiceBuilder { get; } = new RpcServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
+        private readonly RpcServiceBuilder FServiceBuilder = new RpcServiceBuilder()
+            .ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
 
         /// <inheritdoc/>
         protected override void Dispose(bool disposeManaged)
@@ -36,14 +34,14 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
-        /// Returns the name of the host.
-        /// </summary>
-        public abstract string Name { get; }
-
-        /// <summary>
         /// Returns the underlying <see cref="Rpc.RpcService"/>.
         /// </summary>
         public RpcService? RpcService { get; private set; }
+
+        /// <summary>
+        /// Returns the name of the host.
+        /// </summary>
+        public string Name { get; protected init; } = "MyApp";
 
         /// <summary>
         /// Gets or sets description of the host.
@@ -65,59 +63,43 @@ namespace Solti.Utils.Rpc.Hosting
             : (ICollection<string>) Array.Empty<string>();
 
         /// <summary>
+        /// Invoked on service setup.
+        /// </summary>
+        public virtual void OnBuildService(RpcServiceBuilder serviceBuilder) { }
+
+        /// <summary>
         /// Invoked on service installation.
         /// </summary> 
-        public virtual void OnInstall()
-        {
-            //Logger?.LogInformation(Trace.INSTALLING_HOST);
-        }
+        public virtual void OnInstall() {}
 
         /// <summary>
         /// Invoked on service removal.
         /// </summary>
-        public virtual void OnUninstall()
-        {
-            //Logger?.LogInformation(Trace.UNINSTALLING_HOST);
-        }
+        public virtual void OnUninstall() {}
 
         /// <summary>
         /// Invoked on service startup.
         /// </summary>
         public virtual void OnStart(HostConfiguration configuration)
         {
-            //Logger?.LogInformation(Trace.STARTING_HOST);
+            if (RpcService is null)
+            {
+                RpcServiceBuilder serviceBuilder = new();
+                OnBuildService(serviceBuilder);
+                RpcService = serviceBuilder.Build();
+            }
 
-            try
-            {
-                RpcService ??= ServiceBuilder.Build();
-                RpcService.Start();
-            }
-            catch (Exception)
-            {
-                //Logger?.LogError(ex, Trace.STARTING_HOST_FAILED);
-                throw;
-            }
+            RpcService.Start();
         }
 
         /// <summary>
         /// Invoked on service termination.
         /// </summary>
-        public virtual void OnStop()
-        {
-            //Logger?.LogInformation(Trace.TERMINATING_HOST);
-
-            RpcService?.Stop();
-        }
+        public virtual void OnStop() => RpcService?.Stop();
 
         /// <summary>
         /// Invoked on unhandled exception.
         /// </summary>
-        public virtual void OnUnhandledException(Exception ex)
-        {
-            if (ex is null)
-                throw new ArgumentNullException(nameof(ex));
-
-            //Logger?.LogError(ex, Trace.UNHANDLED_EXCEPTION);
-        }
+        public virtual void OnUnhandledException(Exception ex) {}
     }
 }
