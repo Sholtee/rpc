@@ -302,7 +302,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Headers sent along with each request.
         /// </summary>
-        /// <remarks>You should not set "content-type", it is done by te system automatically.</remarks>
+        /// <remarks>You should not set "content-type", it is done by the system automatically.</remarks>
         public IDictionary<string, string> CustomHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>
