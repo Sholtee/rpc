@@ -53,3 +53,11 @@
   - *updated:* **Injector.NET**
 - 4.0.1:
   - *fixed:* Host could not determine (in certain circumstances) whether it was running in user interactive mode (pt2)
+- 5.0.0-preview1:
+  - *breaking:* Dropped (obsolete) `RpcClient` class
+  - *breaking:* Dropped `IHost.Logger` property (logging is done by aspects)
+  - *breaking:* `RpcService` cannot be constructed directly, new layout
+  - *breaking:* Removed some `AppHostBase` members: `Url|Logger|OnRegisterModules|OnRegisterServices` (host can be configured via the `ServiceBuilder`property)
+  - *introduced:* `RpcServiceBuilder` class
+  - *introduced:* Logging related aspects: `DataServiceLoggerAspect`, `LoggerAspect`, `ModuleLoggerAspect`, `ServiceLoggerAspect`
+  - *introduced:* Loggers: `ModuleMethodScopeLogger`, `ParameterLogger`, `ServiceMethodScopeLogger`, `StopWatchLogger`
