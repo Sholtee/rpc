@@ -187,7 +187,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract string Name { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -228,30 +228,6 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_ServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_ServiceBuilder" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder">ServiceBuilder</h4>
-  <div class="markdown level1 summary"><p>Returns the <a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a> that is responsible for building the underlying <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_RpcService">RpcService</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected RpcServiceBuilder ServiceBuilder { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Dispose_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dispose*"></a>
@@ -281,6 +257,32 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuildService_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuildService_Solti_Utils_Rpc_RpcServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService(Solti.Utils.Rpc.RpcServiceBuilder)">OnBuildService(RpcServiceBuilder)</h4>
+  <div class="markdown level1 summary"><p>Invoked on service setup.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnBuildService(RpcServiceBuilder serviceBuilder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a></td>
+        <td><span class="parametername">serviceBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall">OnInstall()</h4>
   <div class="markdown level1 summary"><p>Invoked on service installation.</p>

@@ -356,6 +356,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.Name
   nameWithType: AppHostBase.Name
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService(Solti.Utils.Rpc.RpcServiceBuilder)
+  name: OnBuildService(RpcServiceBuilder)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuildService_Solti_Utils_Rpc_RpcServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService(Solti.Utils.Rpc.RpcServiceBuilder)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService(Solti.Utils.Rpc.RpcServiceBuilder)
+  nameWithType: AppHostBase.OnBuildService(RpcServiceBuilder)
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService*
+  name: OnBuildService
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuildService_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService
+  nameWithType: AppHostBase.OnBuildService
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall
   name: OnInstall()
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall
@@ -434,19 +447,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.RpcService
   nameWithType: AppHostBase.RpcService
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder
-  name: ServiceBuilder
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_ServiceBuilder
-  commentId: P:Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder
-  nameWithType: AppHostBase.ServiceBuilder
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder*
-  name: ServiceBuilder
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_ServiceBuilder_
-  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.ServiceBuilder
-  nameWithType: AppHostBase.ServiceBuilder
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Interfaces#IHost#Dependencies
   name: IHost.Dependencies
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Solti_Utils_Rpc_Interfaces_IHost_Dependencies
