@@ -61,3 +61,5 @@
   - *introduced:* `RpcServiceBuilder` class
   - *introduced:* Logging related aspects: `DataServiceLoggerAspect`, `LoggerAspect`, `ModuleLoggerAspect`, `ServiceLoggerAspect`
   - *introduced:* Loggers: `ModuleMethodScopeLogger`, `ParameterLogger`, `ServiceMethodScopeLogger`, `StopWatchLogger`
+- 5.0.0-preview2:
+  - *introduced:* `AppHostBase.OnBuildService()` method
