@@ -31,6 +31,12 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
+        /// Creates a new <see cref="RpcServiceBuilder"/> instance.
+        /// </summary>
+        /// <remarks>Override this method if you want to use your own <see cref="Rpc.RpcService"/> and/or <see cref="RpcServiceBuilder"/> implementation.</remarks>
+        protected virtual RpcServiceBuilder CreateServiceBuilder() => new RpcServiceBuilder();
+
+        /// <summary>
         /// Returns the underlying <see cref="Rpc.RpcService"/>.
         /// </summary>
         public RpcService? RpcService { get; private set; }
@@ -81,7 +87,7 @@ namespace Solti.Utils.Rpc.Hosting
         {
             if (RpcService is null)
             {
-                RpcServiceBuilder serviceBuilder = new RpcServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
+                RpcServiceBuilder serviceBuilder = CreateServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
                 OnBuildService(serviceBuilder);
                 RpcService = serviceBuilder.Build();
             }
