@@ -304,6 +304,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.AutoStart
   nameWithType: AppHostBase.AutoStart
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
+  name: CreateServiceBuilder()
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder()
+  nameWithType: AppHostBase.CreateServiceBuilder()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder*
+  name: CreateServiceBuilder
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
+  nameWithType: AppHostBase.CreateServiceBuilder
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.Dependencies
   name: Dependencies
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_Dependencies
