@@ -82,20 +82,10 @@ namespace Solti.Utils.Rpc.Internals
                             logger?.LogInformation(Trace.REQUEST_AVAILABLE);
 
                             Interlocked.Increment(ref FActiveRequests);
-                            try
-                            {
-                                //
-                                // Uj Task-ban hivjuk a feldolgozot.
-                                //
 
-                                #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                                SafeCallContextProcessor(getContext.Result);
-                                #pragma warning restore CS4014
-                            }
-                            finally
-                            {
-                                Interlocked.Decrement(ref FActiveRequests);
-                            }
+                            SafeCallContextProcessor(getContext.Result)
+                                .ContinueWith(_ => Interlocked.Decrement(ref FActiveRequests), TaskContinuationOptions.ExecuteSynchronously);
+
                             break;
                         case TaskStatus.Faulted:
                             logger?.LogError(getContext.Exception.ToString());
