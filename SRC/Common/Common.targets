@@ -16,13 +16,15 @@
     <PackageTags>RPC;remote-procedure-call</PackageTags>
     <PackageReleaseNotes>See https://github.com/Sholtee/rpc/blob/master/history.md </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/sholtee/rpc</RepositoryUrl>
     <RepositoryBranch>$(CurrentBranch)</RepositoryBranch>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\icon.png" Pack="true" PackagePath=""/>
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
