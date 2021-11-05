@@ -55,7 +55,7 @@ namespace Solti.Utils.Rpc.Aspects
                 throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, context.Method.Name));
 
             //
-            // Aszinkron szerep validalas csak akkor jatszik h hozza kapcsolodo logika implementalva lett
+            // Aszinkron szerep validalas csak akkor jatszik ha a hozza kapcsolodo logika implementalva lett
             // (kulonben aszinkron metodusnal is szinkron szerep validalas van)
             //
 
