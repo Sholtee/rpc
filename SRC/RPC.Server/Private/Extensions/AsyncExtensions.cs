@@ -24,6 +24,12 @@ namespace Solti.Utils.Rpc.Internals
             return await (Task<T>) original();
         }
 
+        private static async Task Join(Func<Task> decorator, Func<Task> original)
+        {
+            await decorator();
+            await original();
+        }
+
         //
         // Ha kulonbozo visszateresu Task-okat akarunk osszefuzni akkor a TaskExtensions.Unwrap()
         // metodus nem jatszik
@@ -32,15 +38,7 @@ namespace Solti.Utils.Rpc.Internals
         public static Task Before(Func<Task> original, Type returnType, Func<Task> decorator)
         {
             if (returnType == typeof(Task))
-            {
-                return InvokeAsync();
-
-                async Task InvokeAsync()
-                {
-                    await decorator();
-                    await original();
-                }
-            }
+                return Join(decorator, original);
 
             if (typeof(Task).IsAssignableFrom(returnType)) // Task<>
             {
