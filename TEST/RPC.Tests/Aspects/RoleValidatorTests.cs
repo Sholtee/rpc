@@ -74,7 +74,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object, null);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
 
             if (data.ShouldThrow)
             {
@@ -111,7 +111,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, new Mock<IRoleManager>(MockBehavior.Strict).Object, mockRoleManager.Object);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
 
             if (data.ShouldThrow)
             {
@@ -149,7 +149,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object, null);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
 
             Assert.DoesNotThrow(module.Login);
 
@@ -168,7 +168,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
-            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object, null);
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
 
             Assert.Throws<InvalidOperationException>(module.MissingRequiredRoleAttribute, Errors.NO_ROLES_SPECIFIED);
         }
