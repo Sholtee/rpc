@@ -12,7 +12,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Indicates that the caller may have sufficient privileges to call the module methods.
     /// </summary>
-    /// <remarks>In order to use this aspect you have to implement and register the <see cref="IRoleManager"/> service. Optionally you may implement the <see cref="IAsyncRoleManager"/> interface as well. In this case async methods will be validated by async validation logic.</remarks>
+    /// <remarks>In order to use this aspect you have to implement and register the <see cref="IRoleManager"/> service.</remarks>
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
     public sealed class RoleValidatorAspectAttribute : AspectAttribute
     {

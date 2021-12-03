@@ -96,7 +96,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(m => m.PrintAsync())
                 .Returns(Task.FromResult("kutya"));
 
-            var mockRoleManager = new Mock<IAsyncRoleManager>(MockBehavior.Strict);
+            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
             mockRoleManager
                 .Setup(rm => rm.GetAssignedRolesAsync("cica", It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((Enum) data.Roles));

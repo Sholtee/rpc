@@ -20,23 +20,20 @@ namespace Solti.Utils.Rpc.Aspects
     /// <summary>
     /// Contains the role validation logic.
     /// </summary>
-    /// <remarks>In order to use this interceptor you have to implement and register the <see cref="IRoleManager"/> service. Optionally you may implement the <see cref="IAsyncRoleManager"/> interface as well. In this case async methods will be validated by async validation logic.</remarks>
+    /// <remarks>In order to use this interceptor you have to implement and register the <see cref="IRoleManager"/> service.</remarks>
     public class RoleValidator<TInterface>: InterfaceInterceptor<TInterface> where TInterface: class
     {
         private IRoleManager RoleManager { get; }
-
-        private IAsyncRoleManager? AsyncRoleManager { get; }
 
         private IRequestContext RequestContext { get; }
 
         /// <summary>
         /// Creates a new <see cref="RoleValidator{TInterface}"/> instance.
         /// </summary>
-        public RoleValidator(TInterface target, IRequestContext requestContext, IRoleManager roleManager, [Options(Optional = true)] IAsyncRoleManager? asyncRoleManager) : base(target)
+        public RoleValidator(TInterface target, IRequestContext requestContext, IRoleManager roleManager) : base(target)
         {
             RequestContext = requestContext ?? throw new ArgumentNullException(nameof(requestContext));
             RoleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));   
-            AsyncRoleManager = asyncRoleManager;
         }
 
         /// <inheritdoc/>
@@ -55,17 +52,15 @@ namespace Solti.Utils.Rpc.Aspects
                 throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, context.Method.Name));
 
             //
-            // Aszinkron szerep validalas csak akkor jatszik ha a hozza kapcsolodo logika implementalva lett
-            // (kulonben aszinkron metodusnal is szinkron szerep validalas van)
+            // Aszinkron metodusnal aszinkron validalunk.
             //
 
-            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType) && AsyncRoleManager is not null)
-                return AsyncExtensions.Before
-                (
-                    () => (Task) base.Invoke(context)!, 
-                    context.Method.ReturnType, 
-                    async () => Validate(await AsyncRoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
-                );
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType)) return AsyncExtensions.Before
+            (
+                () => (Task) base.Invoke(context)!, 
+                context.Method.ReturnType, 
+                async () => Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
+            );
 
             Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
             return base.Invoke(context);
