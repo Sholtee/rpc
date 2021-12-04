@@ -54,12 +54,13 @@ namespace Solti.Utils.Rpc.Aspects
             // Aszinkron metodusnal aszinkron validalunk.
             //
 
-            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType)) return AsyncExtensions.Before
-            (
-                () => (Task) base.Invoke(context)!, 
-                context.Method.ReturnType, 
-                async () => Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
-            );
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType))
+                return AsyncExtensions.Before
+                (
+                    () => (Task) base.Invoke(context)!, 
+                    context.Method.ReturnType, 
+                    async () => Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
+                );
 
             Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
             return base.Invoke(context);
