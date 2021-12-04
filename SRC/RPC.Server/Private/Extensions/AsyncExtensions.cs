@@ -14,17 +14,17 @@ namespace Solti.Utils.Rpc.Internals
 
     internal static class AsyncExtensions
     {
-        private static readonly MethodInfo FGenericJoin = ((Func<Func<Task>, Func<Task>, Task<object>>) Join<object>)
+        private static readonly MethodInfo FGenericBefore = ((Func<Func<Task>, Func<Task>, Task<object>>) Before<object>)
             .Method
             .GetGenericMethodDefinition();
 
-        private static async Task<T> Join<T>(Func<Task> decorator, Func<Task> original)
+        private static async Task<T> Before<T>(Func<Task> decorator, Func<Task> original)
         {
             await decorator();
             return await (Task<T>) original();
         }
 
-        private static async Task Join(Func<Task> decorator, Func<Task> original)
+        private static async Task Before(Func<Task> decorator, Func<Task> original)
         {
             await decorator();
             await original();
@@ -38,11 +38,11 @@ namespace Solti.Utils.Rpc.Internals
         public static Task Before(Func<Task> original, Type returnType, Func<Task> decorator)
         {
             if (returnType == typeof(Task))
-                return Join(decorator, original);
+                return Before(decorator, original);
 
             if (typeof(Task).IsAssignableFrom(returnType)) // Task<>
             {
-                Func<object?[], object> join = Cache.GetOrAdd(returnType, () => FGenericJoin
+                Func<object?[], object> join = Cache.GetOrAdd(returnType, () => FGenericBefore
                     .MakeGenericMethod(returnType.GetGenericArguments().Single())
                     .ToStaticDelegate());
 
