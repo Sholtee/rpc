@@ -18,13 +18,13 @@ namespace Solti.Utils.Rpc.Internals
             .Method
             .GetGenericMethodDefinition();
 
-        private static async Task<T> Before<T>(Func<Task> decorator, Func<Task> original)
+        private static async Task<T> Before<T>(Func<Task> original, Func<Task> decorator)
         {
             await decorator();
             return await (Task<T>) original();
         }
 
-        private static async Task Before(Func<Task> decorator, Func<Task> original)
+        private static async Task Before(Func<Task> original, Func<Task> decorator)
         {
             await decorator();
             await original();
@@ -38,15 +38,15 @@ namespace Solti.Utils.Rpc.Internals
         public static Task Before(Func<Task> original, Type returnType, Func<Task> decorator)
         {
             if (returnType == typeof(Task))
-                return Before(decorator, original);
+                return Before(original, decorator);
 
             if (typeof(Task).IsAssignableFrom(returnType)) // Task<>
             {
-                Func<object?[], object> join = Cache.GetOrAdd(returnType, () => FGenericBefore
+                Func<object?[], object> before = Cache.GetOrAdd(returnType, () => FGenericBefore
                     .MakeGenericMethod(returnType.GetGenericArguments().Single())
                     .ToStaticDelegate());
 
-                return (Task) join(new object[] { decorator, original });
+                return (Task) before(new object[] { original, decorator });
             }
 
             throw new NotSupportedException();
