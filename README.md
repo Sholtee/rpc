@@ -138,7 +138,7 @@
        [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
        void DoSomethingElse();
      }
-     // this is the shorthand for:
+     // the above is a shorthand for:
      [LoggerAspect(typeof(ModuleMethodScopeLogger), typeof(ExceptionLogger), typeof(ParameterLogger), typeof(StopWatchLogger))]  // this sets the default loggers
      public interface IModule
      {
