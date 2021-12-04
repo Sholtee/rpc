@@ -166,8 +166,12 @@ namespace Solti.Utils.Rpc
 #if NETSTANDARD2_1_OR_GREATER
                         , cancellation
 #endif
-                    );      
+                    );
+#if NETSTANDARD2_1_OR_GREATER
+                    await stream.DisposeAsync();
+#else
                     stream.Dispose();
+#endif
                     break;
                 case Exception ex:
                     response.ContentType = "application/json";
@@ -198,6 +202,6 @@ namespace Solti.Utils.Rpc
 
             response.Close();
         }
-        #endregion
+#endregion
     }
 }
