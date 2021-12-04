@@ -5,14 +5,13 @@
 ********************************************************************************/
 using System;
 using System.Data;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Aspects
 {
     using Interfaces;
-    using Primitives;
+    using Internals;
     using Proxy;
 
     /// <summary>
@@ -43,17 +42,21 @@ namespace Solti.Utils.Rpc.Aspects
             if (ta is null)
                 return base.Invoke(context);
 
-            if (typeof(Task) == context.Method.ReturnType)
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType)) // Task | Task<>
             {
-                return InvokeAsync();
+                Task? task = null;
 
-                async Task InvokeAsync()
+                return AsyncExtensions.Before(() => task!, context.Method.ReturnType, InvokeInTransactionAsync);
+
+                async Task InvokeInTransactionAsync()
                 {
                     using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
 
                     try
                     {
-                        await (Task) base.Invoke(context)!;
+                        task = (Task) base.Invoke(context)!;
+
+                        await task;
                     }
                     catch
                     {
@@ -65,41 +68,9 @@ namespace Solti.Utils.Rpc.Aspects
                 }
             }
 
-            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType)) // Task<>
-            {
-                Func<Task<object>> invokeAsync = InvokeAsync<object>;
+            return InvokeInTransaction();
 
-                return (Task) invokeAsync
-                    .Method
-                    .GetGenericMethodDefinition()
-                    .MakeGenericMethod(context.Method.ReturnType.GetGenericArguments().Single())
-                    .ToInstanceDelegate()
-                    .Invoke(invokeAsync.Target, Array.Empty<object?>());
-
-                async Task<T> InvokeAsync<T>()
-                {
-                    using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
-
-                    T result;
-
-                    try
-                    {
-                        result = await (Task<T>) base.Invoke(context)!;
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-
-                    transaction.Commit();
-                    return result;
-                }
-            }
-
-            return Invoke();
-
-            object? Invoke()
+            object? InvokeInTransaction()
             {
                 using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
 
