@@ -131,27 +131,27 @@
 	 ```
      - `LoggerAspectAttribute`:
      ```csharp
-    [ModuleLoggerAspect]
-    public interface IModule
-    {
-      void DoSomething(string arg1, object arg2);
-      [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
-      void DoSomethingElse();
-    }
-    // this is the shorthand for:
-    [LoggerAspect(typeof(ModuleMethodScopeLogger), typeof(ExceptionLogger), typeof(ParameterLogger), typeof(StopWatchLogger))]  // this sets the default loggers
-    public interface IModule
-    {
-      void DoSomething(string arg1, object arg2);
-      [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
-      void DoSomethingElse();
-    }
+     [ModuleLoggerAspect]
+     public interface IModule
+     {
+       void DoSomething(string arg1, object arg2);
+       [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
+       void DoSomethingElse();
+     }
+     // this is the shorthand for:
+     [LoggerAspect(typeof(ModuleMethodScopeLogger), typeof(ExceptionLogger), typeof(ParameterLogger), typeof(StopWatchLogger))]  // this sets the default loggers
+     public interface IModule
+     {
+       void DoSomething(string arg1, object arg2);
+       [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
+       void DoSomethingElse();
+     }
      ```
 	 
-    Note that these aspects are [naked](https://github.com/Sholtee/injector#naked-aspects )
+     Note that these aspects are [naked](https://github.com/Sholtee/injector#naked-aspects )
    
    These attributes are provided by the [RPC.NET.Interfaces](https://www.nuget.org/packages/rpc.net.interfaces ) package.
-3. Define and host your service
+3. Define and host your service:
    ```csharp
    using System;
    using System.Linq;   
