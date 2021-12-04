@@ -1,7 +1,7 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc/master) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/sholtee/rpc/master)
 > Simple, lightweight RPC implementation for .NET
 
-**This documentation refers the version 4.X of the library**
+**This documentation refers the version 5.X of the library**
 
 |Name|Package|
 |:--:|:--:|
@@ -40,7 +40,7 @@
      ```	 
    - If the remote method has a `Stream` return value (and the invocation was successful) then the *content-type* is `application/octet-stream` and the *response body* contains the raw data.
 ## Server example
-1. Install the [RPC.NET.Server](https://www.nuget.org/packages/rpc.net.server ) package. Since modules are stored in a `IServiceContainer` you may need to install the [Injector.NET](https://www.nuget.org/packages/injector.net/ ) package as well.
+1. Install the [RPC.NET.Server](https://www.nuget.org/packages/rpc.net.server ) package. Since modules are stored in a `IServiceCollection` you may need to install the [Injector.NET](https://www.nuget.org/packages/injector.net/ ) package as well.
 2. Define an interface and implementation for your module:
    ```csharp
    public interface ICalculator // Since clients may want to use it as well, it may be worth to put this interface into a common assembly
@@ -117,7 +117,7 @@
        Admin = 4
      }
 
-     [RoleValidatorAspect] // to usse this aspect you have to implement and register the IRoleManager interface
+     [RoleValidatorAspect] // to usse this aspect you have to implement and register the IRoleManager service
      public interface IModule
      {
        [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
@@ -126,14 +126,58 @@
        Task<string> PrintAsync();
        [RequiredRoles(MyRoles.Anonymous)]
        void Login();
-       void MissingRequiredRoleAttribute();
+       void MissingRequiredRoleAttribute(); // will throw since there is not RequiredRoles attribute
      }	 
 	 ```
+     - `LoggerAspectAttribute`:
+     ```csharp
+    [ModuleLoggerAspect]
+    public interface IModule
+    {
+      void DoSomething(string arg1, object arg2);
+      [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
+      void DoSomethingElse();
+    }
+    // this is the shorthand for:
+    [LoggerAspect(typeof(ModuleMethodScopeLogger), typeof(ExceptionLogger), typeof(ParameterLogger), typeof(StopWatchLogger))]  // this sets the default loggers
+    public interface IModule
+    {
+      void DoSomething(string arg1, object arg2);
+      [Loggers(typeof(ExceptionLogger), typeof(StopWatchLogger))] // overrides the default loggers
+      void DoSomethingElse();
+    }
+     ```
 	 
-     Note that these aspects are [naked](https://github.com/Sholtee/injector#naked-aspects )
+    Note that these aspects are [naked](https://github.com/Sholtee/injector#naked-aspects )
    
    These attributes are provided by the [RPC.NET.Interfaces](https://www.nuget.org/packages/rpc.net.interfaces ) package.
-3. Create the service `exe`:
+3. Define and host your service
+   ```csharp
+   using System;
+   using System.Linq;   
+   using Microsoft.Extensions.Logging;
+   using Solti.Utils.DI.Interfaces;
+   using Solti.Utils.Rpc.Hosting;
+   using Solti.Utils.Rpc.Interfaces;
+
+   public class AppHost : AppHostBase
+   {
+     public AppHost() => Name = "Calculator";
+
+     public override void OnBuildService(RpcServiceBuilder serviceBuilder) => serviceBuilder
+       .ConfigureWebService(new WebServiceDescriptor
+       {
+         Url = "http://localhost:1986/api/",
+         AllowedOrigins = new[] 
+         {
+           "http://localhost:1987"
+         }
+       })
+       .ConfigureServices(services => services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Singleton))
+       .ConfigureModules(modules => modules.Register<ICalculator, Calculator>());
+   }
+   ```
+4. Create the service `exe`:
    ```csharp
    using System;
    using Solti.Utils.DI;
@@ -141,18 +185,22 @@
    
    class Program
    {
-     static void Main(string[] args)
-     {
-       using var container = new ServiceContainer();
-       using var service = new RpcService(container);
-	   
-       service.Register<ICalculator, Calculator>();
-       service.Start("http://127.0.0.1:1986/api/");
-	   
-       Console.WriteLine("Press any key to terminate the server... ");
-	   Console.ReadLine();
-     }
+     static void Main(string[] args) => HostRunner.Run<AppHost>();
    }
+   ```
+5. The compiled executable can be used in several ways:
+   - You can simply run it to debug your app (Ctrl-C terminates the server)
+   - You can invoke it with `-install` to install your app as a local service (`-uninstall` does the opposite)
+   - It can run as a local service (started by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager )) - if it was installed previously
+## How to listen on HTTPS (Windows only)
+Requires [this](https://github.com/Sholtee/rpc.boilerplate/blob/master/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
+1. If you don't have your own, create a self-signed certificate
+   ```ps
+   Create-SelfSignedCertificate -OutDir ".\Cert" -Password "cica"
+   ```
+2. Register the certificate
+   ```ps
+   Bind-Certificate -P12Cert ".Cert\certificate.p12" -Password "cica" -IpPort "127.0.0.1:1986"
    ```
 ## Client example
 1. Install the [RPC.NET.Client](https://www.nuget.org/packages/rpc.net.client) package.
@@ -172,57 +220,6 @@
    ```
 ## JS client example
 See [here](https://github.com/Sholtee/rpc/blob/master/WEB/README.MD )
-## Hosting the server
-1. Create a console project that will host your app:
-   ```csharp
-   using Solti.Utils.Rpc;
-   using Solti.Utils.Rpc.Hosting;
-   using Solti.Utils.DI.Interfaces;
-   ...
-   public class CalculatorHost : AppHostBase
-   {
-     // You may need to set more properties (see documentation). These two are mandatory:
-	 
-     public override string Name => "Calculator";
-
-     public override string Url => "http://127.0.0.1:1986/api/";
-
-     public override void OnRegisterModules(IModuleRegistry registry)
-     {
-       base.OnRegisterModules(registry);
-       registry.Register<ICalculator, Calculator>();
-     }
-	 
-     public override void OnRegisterServices(IServiceCOntainer container)
-     {
-       base.OnRegisterServices(container);
-	   // Register app dependencies here. For more information about DI see: https://github.com/Sholtee/injector
-     }
-   }
-   ```
-2. Into `Program.cs` simply put the followings:
-   ```csharp
-   using Solti.Utils.Rpc.Hosting;
-   ...
-   class Program
-   {
-     static void Main() => HostRunner.Run<CalculatorHost>();
-   }
-   ```
-3. The compiled executable can be used in several ways:
-   - You can simply run it to debug your app (Ctrl-C terminates the server)
-   - You can invoke it with `-install` to install your app as a local service (`-uninstall` does the opposite)
-   - It can run as a local service (started by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager )) - if it was installed previously
-## How to listen on HTTPS (Windows only)
-Requires [this](https://github.com/Sholtee/rpc.boilerplate/blob/master/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
-1. If you don't have your own, create a self-signed certificate
-   ```ps
-   Create-SelfSignedCertificate -OutDir ".\Cert" -Password "cica"
-   ```
-2. Register the certificate
-   ```ps
-   Bind-Certificate -P12Cert ".Cert\certificate.p12" -Password "cica" -IpPort "127.0.0.1:1986"
-   ```
 ## Resources
 [API docs](https://sholtee.github.io/rpc )
 
