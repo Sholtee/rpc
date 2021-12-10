@@ -2695,6 +2695,83 @@ references:
   commentId: N:Solti.Utils.Rpc.Internals
   fullName: Solti.Utils.Rpc.Internals
   nameWithType: Solti.Utils.Rpc.Internals
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication
+  name: CommandLineApplication
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html
+  commentId: T:Solti.Utils.Rpc.Internals.CommandLineApplication
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication
+  nameWithType: CommandLineApplication
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.#ctor(System.Collections.Generic.IReadOnlyList{System.String})
+  name: CommandLineApplication(IReadOnlyList<String>)
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication__ctor_System_Collections_Generic_IReadOnlyList_System_String__
+  commentId: M:Solti.Utils.Rpc.Internals.CommandLineApplication.#ctor(System.Collections.Generic.IReadOnlyList{System.String})
+  name.vb: CommandLineApplication(IReadOnlyList(Of String))
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.CommandLineApplication(System.Collections.Generic.IReadOnlyList<System.String>)
+  fullName.vb: Solti.Utils.Rpc.Internals.CommandLineApplication.CommandLineApplication(System.Collections.Generic.IReadOnlyList(Of System.String))
+  nameWithType: CommandLineApplication.CommandLineApplication(IReadOnlyList<String>)
+  nameWithType.vb: CommandLineApplication.CommandLineApplication(IReadOnlyList(Of String))
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.#ctor*
+  name: CommandLineApplication
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.CommandLineApplication
+  nameWithType: CommandLineApplication.CommandLineApplication
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Args
+  name: Args
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Args
+  commentId: P:Solti.Utils.Rpc.Internals.CommandLineApplication.Args
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.Args
+  nameWithType: CommandLineApplication.Args
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Args*
+  name: Args
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Args_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.Args
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.Args
+  nameWithType: CommandLineApplication.Args
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments*
+  name: GetParsedArguments
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_GetParsedArguments_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments
+  nameWithType: CommandLineApplication.GetParsedArguments
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments``1
+  name: GetParsedArguments<T>()
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_GetParsedArguments__1
+  commentId: M:Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments``1
+  name.vb: GetParsedArguments(Of T)()
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments<T>()
+  fullName.vb: Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments(Of T)()
+  nameWithType: CommandLineApplication.GetParsedArguments<T>()
+  nameWithType.vb: CommandLineApplication.GetParsedArguments(Of T)()
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun
+  name: OnRun()
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnRun
+  commentId: M:Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun()
+  nameWithType: CommandLineApplication.OnRun()
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun*
+  name: OnRun
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnRun_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun
+  nameWithType: CommandLineApplication.OnRun
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Run
+  name: Run()
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Run
+  commentId: M:Solti.Utils.Rpc.Internals.CommandLineApplication.Run
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.Run()
+  nameWithType: CommandLineApplication.Run()
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Run*
+  name: Run
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Run_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.Run
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.Run
+  nameWithType: CommandLineApplication.Run
 - uid: Solti.Utils.Rpc.Internals.LoggerBase
   name: LoggerBase
   href: Solti.Utils.Rpc.Internals.LoggerBase.html
@@ -2919,6 +2996,47 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules
   nameWithType: ModuleInvocationExtensions.GetRelatedModules
+- uid: Solti.Utils.Rpc.Internals.VerbAttribute
+  name: VerbAttribute
+  href: Solti.Utils.Rpc.Internals.VerbAttribute.html
+  commentId: T:Solti.Utils.Rpc.Internals.VerbAttribute
+  fullName: Solti.Utils.Rpc.Internals.VerbAttribute
+  nameWithType: VerbAttribute
+- uid: Solti.Utils.Rpc.Internals.VerbAttribute.#ctor(System.String)
+  name: VerbAttribute(String)
+  href: Solti.Utils.Rpc.Internals.VerbAttribute.html#Solti_Utils_Rpc_Internals_VerbAttribute__ctor_System_String_
+  commentId: M:Solti.Utils.Rpc.Internals.VerbAttribute.#ctor(System.String)
+  fullName: Solti.Utils.Rpc.Internals.VerbAttribute.VerbAttribute(System.String)
+  nameWithType: VerbAttribute.VerbAttribute(String)
+- uid: Solti.Utils.Rpc.Internals.VerbAttribute.#ctor(System.String[])
+  name: VerbAttribute(String[])
+  href: Solti.Utils.Rpc.Internals.VerbAttribute.html#Solti_Utils_Rpc_Internals_VerbAttribute__ctor_System_String___
+  commentId: M:Solti.Utils.Rpc.Internals.VerbAttribute.#ctor(System.String[])
+  name.vb: VerbAttribute(String())
+  fullName: Solti.Utils.Rpc.Internals.VerbAttribute.VerbAttribute(System.String[])
+  fullName.vb: Solti.Utils.Rpc.Internals.VerbAttribute.VerbAttribute(System.String())
+  nameWithType: VerbAttribute.VerbAttribute(String[])
+  nameWithType.vb: VerbAttribute.VerbAttribute(String())
+- uid: Solti.Utils.Rpc.Internals.VerbAttribute.#ctor*
+  name: VerbAttribute
+  href: Solti.Utils.Rpc.Internals.VerbAttribute.html#Solti_Utils_Rpc_Internals_VerbAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.VerbAttribute.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.VerbAttribute.VerbAttribute
+  nameWithType: VerbAttribute.VerbAttribute
+- uid: Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
+  name: Verbs
+  href: Solti.Utils.Rpc.Internals.VerbAttribute.html#Solti_Utils_Rpc_Internals_VerbAttribute_Verbs
+  commentId: P:Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
+  fullName: Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
+  nameWithType: VerbAttribute.Verbs
+- uid: Solti.Utils.Rpc.Internals.VerbAttribute.Verbs*
+  name: Verbs
+  href: Solti.Utils.Rpc.Internals.VerbAttribute.html#Solti_Utils_Rpc_Internals_VerbAttribute_Verbs_
+  commentId: Overload:Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
+  nameWithType: VerbAttribute.Verbs
 - uid: Solti.Utils.Rpc.Internals.WebService
   name: WebService
   href: Solti.Utils.Rpc.Internals.WebService.html
