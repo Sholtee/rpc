@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AMBIGOUS_VERB" xml:space="preserve">
+    <value>More than one method is annotated with the same verb.</value>
+  </data>
   <data name="BYREF_PARAMETER" xml:space="preserve">
     <value>ByRef parameters are not supported.</value>
   </data>
