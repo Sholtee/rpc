@@ -95,7 +95,10 @@ namespace Solti.Utils.Rpc.Internals
 
             IReadOnlyList<MethodInfo> compatibleMethods = GetType()
                 .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
-                .Where(m => m.GetCustomAttribute<VerbAttribute>()?.Verbs.SequenceEqual(verbs, OrdinalIgnoreCaseComparer.Instance) is true)
+                .Where(m => m
+                    .GetCustomAttribute<VerbAttribute>()?
+                    .Verbs
+                    .SequenceEqual(verbs, OrdinalIgnoreCaseComparer.Instance) is true)
                 .ToArray();
 
             switch (compatibleMethods.Count)
@@ -106,14 +109,14 @@ namespace Solti.Utils.Rpc.Internals
                 case 1:
                     MethodInfo target = compatibleMethods[0];
                     if (target.GetParameters().Length > 0)
-                        throw new InvalidOperationException();
+                        throw new InvalidOperationException(Errors.NOT_PARAMETERLESS);
 
                     target
                         .ToInstanceDelegate()
                         .Invoke(this, Array.Empty<object?>());
                     break;
                 default:
-                    throw new InvalidOperationException(Errors.AMBIGOUS_VERB);
+                    throw new InvalidOperationException(Errors.AMBIGOUS_TARGET);
             };
         }
 

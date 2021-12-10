@@ -61,11 +61,11 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More than one method is annotated with the same verb..
+        ///   Looks up a localized string similar to More than one methods are annotated with the same verb..
         /// </summary>
-        internal static string AMBIGOUS_VERB {
+        internal static string AMBIGOUS_TARGET {
             get {
-                return ResourceManager.GetString("AMBIGOUS_VERB", resourceCulture);
+                return ResourceManager.GetString("AMBIGOUS_TARGET", resourceCulture);
             }
         }
         
@@ -183,6 +183,15 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string NOT_AN_INTERFACE {
             get {
                 return ResourceManager.GetString("NOT_AN_INTERFACE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The target method should not contains any parameters..
+        /// </summary>
+        internal static string NOT_PARAMETERLESS {
+            get {
+                return ResourceManager.GetString("NOT_PARAMETERLESS", resourceCulture);
             }
         }
         

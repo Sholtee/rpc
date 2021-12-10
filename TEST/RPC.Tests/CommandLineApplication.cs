@@ -12,6 +12,8 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using Internals;
+    using Properties;
+
 
     [TestFixture]
     public class CommandLineApplicationTests
@@ -87,6 +89,38 @@ namespace Solti.Utils.Rpc.Tests
             mockApp.Object.Run();
 
             mockApp.Verify(x => x.OnInstallService(), Times.Once);
+        }
+
+        public class BadCommandLineApplication : CommandLineApplication
+        {
+            public BadCommandLineApplication(IReadOnlyList<string> args) : base(args)
+            {
+            }
+
+            [Verb("install")]
+            public virtual void OnInstall() { }
+
+            [Verb("install")]
+            public virtual void OnInstallService() { }
+
+            [Verb("uninstall")]
+            public virtual void OnUninstall(object para) { }
+        }
+
+        [Test]
+        public void Run_ShouldThrowOnAmbigousTarget()
+        {
+            Mock<BadCommandLineApplication> mockApp = new(MockBehavior.Strict, new object[] { new string[] { "install" } });
+
+            Assert.Throws<InvalidOperationException>(mockApp.Object.Run, Errors.AMBIGOUS_TARGET);
+        }
+
+        [Test]
+        public void Run_ShouldThrowOnTargetHavingParameter()
+        {
+            Mock<BadCommandLineApplication> mockApp = new(MockBehavior.Strict, new object[] { new string[] { "uninstall" } });
+
+            Assert.Throws<InvalidOperationException>(mockApp.Object.Run, Errors.NOT_PARAMETERLESS);
         }
     }
 }
