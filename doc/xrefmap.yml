@@ -2746,6 +2746,19 @@ references:
   fullName.vb: Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments(Of T)()
   nameWithType: CommandLineApplication.GetParsedArguments<T>()
   nameWithType.vb: CommandLineApplication.GetParsedArguments(Of T)()
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Logger
+  name: Logger
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Logger
+  commentId: P:Solti.Utils.Rpc.Internals.CommandLineApplication.Logger
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.Logger
+  nameWithType: CommandLineApplication.Logger
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Logger*
+  name: Logger
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Logger_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.Logger
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.Logger
+  nameWithType: CommandLineApplication.Logger
 - uid: Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun
   name: OnRun()
   href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnRun
@@ -2759,6 +2772,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun
   nameWithType: CommandLineApplication.OnRun
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException(System.Exception)
+  name: OnUnhandledException(Exception)
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnUnhandledException_System_Exception_
+  commentId: M:Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException(System.Exception)
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException(System.Exception)
+  nameWithType: CommandLineApplication.OnUnhandledException(Exception)
+- uid: Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException*
+  name: OnUnhandledException
+  href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnUnhandledException_
+  commentId: Overload:Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException
+  nameWithType: CommandLineApplication.OnUnhandledException
 - uid: Solti.Utils.Rpc.Internals.CommandLineApplication.Run
   name: Run()
   href: Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Run
