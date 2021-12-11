@@ -10,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using Microsoft.Extensions.Logging;
+
 namespace Solti.Utils.Rpc.Internals
 {
     using Properties;
@@ -101,28 +103,47 @@ namespace Solti.Utils.Rpc.Internals
                     .SequenceEqual(verbs, OrdinalIgnoreCaseComparer.Instance) is true)
                 .ToArray();
 
-            switch (compatibleMethods.Count)
+            try
             {
-                case 0:
-                    OnRun();
-                    break;
-                case 1:
-                    MethodInfo target = compatibleMethods[0];
-                    if (target.GetParameters().Length > 0)
-                        throw new InvalidOperationException(Errors.NOT_PARAMETERLESS);
+                switch (compatibleMethods.Count)
+                {
+                    case 0:
+                        OnRun();
+                        break;
+                    case 1:
+                        MethodInfo target = compatibleMethods[0];
+                        if (target.GetParameters().Length > 0)
+                            throw new InvalidOperationException(Errors.NOT_PARAMETERLESS);
 
-                    target
-                        .ToInstanceDelegate()
-                        .Invoke(this, Array.Empty<object?>());
-                    break;
-                default:
-                    throw new InvalidOperationException(Errors.AMBIGOUS_TARGET);
-            };
+                        target
+                            .ToInstanceDelegate()
+                            .Invoke(this, Array.Empty<object?>());
+                        break;
+                    default:
+                        throw new InvalidOperationException(Errors.AMBIGOUS_TARGET);
+                };
+            }
+            #pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+            #pragma warning restore CA1031
+            {
+                OnUnhandledException(ex);
+            }
         }
 
         /// <summary>
         /// The default behavior.
         /// </summary>
         public virtual void OnRun() { }
+
+        /// <summary>
+        /// The logger related to this instance.
+        /// </summary>
+        public ILogger Logger { get; set; } = TraceLogger.Create<CommandLineApplication>();
+
+        /// <summary>
+        /// Called on unhandled exception
+        /// </summary>
+        public virtual void OnUnhandledException(Exception ex) => Logger.LogError(ex?.ToString() ?? "Unknown error");
     }
 }

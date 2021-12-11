@@ -111,16 +111,26 @@ namespace Solti.Utils.Rpc.Tests
         public void Run_ShouldThrowOnAmbigousTarget()
         {
             Mock<BadCommandLineApplication> mockApp = new(MockBehavior.Strict, new object[] { new string[] { "install" } });
+            mockApp
+                .Setup(x => x.OnUnhandledException(It.Is<InvalidOperationException>(ex => ex.Message == Errors.AMBIGOUS_TARGET)))
+                .CallBase();
 
-            Assert.Throws<InvalidOperationException>(mockApp.Object.Run, Errors.AMBIGOUS_TARGET);
+            Assert.DoesNotThrow(mockApp.Object.Run);
+
+            mockApp.Verify(x => x.OnUnhandledException(It.IsAny<InvalidOperationException>()), Times.Once);
         }
 
         [Test]
         public void Run_ShouldThrowOnTargetHavingParameter()
         {
             Mock<BadCommandLineApplication> mockApp = new(MockBehavior.Strict, new object[] { new string[] { "uninstall" } });
+            mockApp
+                .Setup(x => x.OnUnhandledException(It.Is<InvalidOperationException>(ex => ex.Message == Errors.NOT_PARAMETERLESS)))
+                .CallBase();
 
-            Assert.Throws<InvalidOperationException>(mockApp.Object.Run, Errors.NOT_PARAMETERLESS);
+            Assert.DoesNotThrow(mockApp.Object.Run);
+
+            mockApp.Verify(x => x.OnUnhandledException(It.IsAny<InvalidOperationException>()), Times.Once);
         }
     }
 }

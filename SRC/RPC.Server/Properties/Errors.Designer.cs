@@ -187,7 +187,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The target method should not contains any parameters..
+        ///   Looks up a localized string similar to The target method should not contain any parameters..
         /// </summary>
         internal static string NOT_PARAMETERLESS {
             get {

@@ -148,7 +148,7 @@
     <value>The module must be an interface.</value>
   </data>
   <data name="NOT_PARAMETERLESS" xml:space="preserve">
-    <value>The target method should not contains any parameters.</value>
+    <value>The target method should not contain any parameters.</value>
   </data>
   <data name="NO_HOSTING" xml:space="preserve">
     <value>No compatible hosting found.</value>
