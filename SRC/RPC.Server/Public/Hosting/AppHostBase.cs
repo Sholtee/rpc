@@ -5,36 +5,27 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace Solti.Utils.Rpc.Hosting
 {
-    using Interfaces;
-
-    using Primitives.Patterns;
+    using Rpc.Interfaces;
     using Rpc.Internals;
 
     /// <summary>
     /// Represents the base class of the host application.
     /// </summary>
-    public abstract class AppHostBase: Disposable, IHost
+    public partial class AppHostBase: CommandLineApplication
     {
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposeManaged)
-        {
-            RpcService?.Stop();
-
-            if (disposeManaged)
-                RpcService?.Dispose();
-
-            base.Dispose(disposeManaged);
-        }
+        /// <summary>
+        /// Creates a new <see cref="AppHostBase"/> instance.
+        /// </summary>
+        public AppHostBase(IReadOnlyList<string> args) : base(args) { }
 
         /// <summary>
         /// Creates a new <see cref="RpcServiceBuilder"/> instance.
         /// </summary>
         /// <remarks>Override this method if you want to use your own <see cref="Rpc.RpcService"/> and/or <see cref="RpcServiceBuilder"/> implementation.</remarks>
-        protected virtual RpcServiceBuilder CreateServiceBuilder() => new RpcServiceBuilder();
+        protected virtual RpcServiceBuilder CreateServiceBuilder() => new();
 
         /// <summary>
         /// Returns the underlying <see cref="Rpc.RpcService"/>.
@@ -42,53 +33,25 @@ namespace Solti.Utils.Rpc.Hosting
         public RpcService? RpcService { get; private set; }
 
         /// <summary>
-        /// Returns the name of the host.
-        /// </summary>
-        public string Name { get; protected init; } = "MyApp";
-
-        /// <summary>
-        /// Gets or sets description of the host.
-        /// </summary>
-        public string? Description { get; protected init; }
-
-        /// <summary>
-        /// Indicates if the host should be started automatically.
-        /// </summary>
-        public bool AutoStart { get; protected init; }
-
-        IEnumerable<string> IHost.Dependencies => Dependencies;
-
-        /// <summary>
-        /// Service dependencies that must run.
-        /// </summary>
-        protected ICollection<string> Dependencies { get; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
-            ? (ICollection<string>) new List<string>()
-            : (ICollection<string>) Array.Empty<string>();
-
-        /// <summary>
         /// Invoked on service setup.
         /// </summary>
-        public virtual void OnBuildService(RpcServiceBuilder serviceBuilder) { }
+        public virtual void OnConfigure(RpcServiceBuilder serviceBuilder)
+        {
+            if (serviceBuilder is null)
+                throw new ArgumentNullException(nameof(serviceBuilder));
+
+            serviceBuilder.ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
+        }
 
         /// <summary>
-        /// Invoked on service installation.
-        /// </summary> 
-        public virtual void OnInstall() {}
-
-        /// <summary>
-        /// Invoked on service removal.
+        /// Called on host start
         /// </summary>
-        public virtual void OnUninstall() {}
-
-        /// <summary>
-        /// Invoked on service startup.
-        /// </summary>
-        public virtual void OnStart(HostConfiguration configuration)
+        public virtual void OnStart()
         {
             if (RpcService is null)
             {
-                RpcServiceBuilder serviceBuilder = CreateServiceBuilder().ConfigureModules(registry => registry.Register<IServiceDescriptor, ServiceDescriptor>());
-                OnBuildService(serviceBuilder);
+                RpcServiceBuilder serviceBuilder = CreateServiceBuilder();
+                OnConfigure(serviceBuilder);
                 RpcService = serviceBuilder.Build();
             }
 
@@ -96,13 +59,8 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
-        /// Invoked on service termination.
+        /// Called on host termination
         /// </summary>
         public virtual void OnStop() => RpcService?.Stop();
-
-        /// <summary>
-        /// Invoked on unhandled exception.
-        /// </summary>
-        public virtual void OnUnhandledException(Exception ex) {}
     }
 }

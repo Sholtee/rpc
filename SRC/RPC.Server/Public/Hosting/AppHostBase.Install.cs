@@ -1,23 +1,24 @@
 ﻿/********************************************************************************
-* HostConfiguration.cs                                                          *
+* AppHostBase.cs                                                                *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Hosting
 {
-    /// <summary>
-    /// Describes the configuration in which the host runs.
-    /// </summary>
-    public enum HostConfiguration
+    using Rpc.Internals;
+
+    public partial class AppHostBase
     {
         /// <summary>
-        /// Debug
+        /// Called on app install.
         /// </summary>
-        Debug = 0,
+        [Verb("install")]
+        public virtual void OnInstall() { }
 
         /// <summary>
-        /// Release
+        /// Called on app uninstall.
         /// </summary>
-        Release
+        [Verb("uninstall")]
+        public virtual void OnUnInstall() { }
     }
 }

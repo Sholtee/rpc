@@ -144,6 +144,10 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Called on unhandled exception
         /// </summary>
-        public virtual void OnUnhandledException(Exception ex) => Logger.LogError(ex?.ToString() ?? "Unknown error");
+        public virtual void OnUnhandledException(Exception ex)
+        {
+            Logger.LogError(ex?.ToString() ?? "Unknown error");
+            Environment.Exit(-1);
+        }
     }
 }

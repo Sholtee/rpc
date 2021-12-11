@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Solti.Utils.Rpc
 {
     /// <summary>
-    /// 
+    /// Describes a WEB service
     /// </summary>
     public class WebServiceDescriptor
     {

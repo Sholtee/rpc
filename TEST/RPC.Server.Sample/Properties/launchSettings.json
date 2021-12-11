@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "RPC.Server.Sample": {
+      "commandName": "Project"
+    }
+  }
+}
