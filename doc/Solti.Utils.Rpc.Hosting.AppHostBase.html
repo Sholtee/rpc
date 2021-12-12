@@ -48,35 +48,25 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">Solti.Utils.Primitives.Patterns.Disposable</span></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html">CommandLineApplication</a></div>
     <div class="level2"><span class="xref">AppHostBase</span></div>
-  </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
-    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHost.html">IHost</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.AsyncDispose()</span>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Args">CommandLineApplication.Args</a>
     </div>
     <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.BeforeDispose()</span>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_GetParsedArguments__1">CommandLineApplication.GetParsedArguments&lt;T&gt;()</a>
     </div>
     <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.CheckNotDisposed()</span>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Run">CommandLineApplication.Run()</a>
     </div>
     <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose()</span>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_Logger">CommandLineApplication.Logger</a>
     </div>
     <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.DisposeAsync()</span>
-    </div>
-    <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Disposed</span>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnUnhandledException_System_Exception_">CommandLineApplication.OnUnhandledException(Exception)</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
@@ -104,106 +94,38 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AppHostBase : Disposable, IDisposableEx, IAsyncDisposable, IHost, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class AppHostBase : CommandLineApplication</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase__ctor_System_Collections_Generic_IReadOnlyList_System_String__" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">AppHostBase(IReadOnlyList&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html">AppHostBase</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AppHostBase(IReadOnlyList&lt;string&gt; args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_AutoStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.AutoStart*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_AutoStart" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.AutoStart">AutoStart</h4>
-  <div class="markdown level1 summary"><p>Indicates if the host should be started automatically.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool AutoStart { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Dependencies_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dependencies*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Dependencies" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dependencies">Dependencies</h4>
-  <div class="markdown level1 summary"><p>Service dependencies that must run.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected ICollection&lt;string&gt; Dependencies { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Description_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Description*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Description" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Gets or sets description of the host.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Name_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Name*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Name" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Returns the name of the host.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_RpcService_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.RpcService*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_RpcService" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.RpcService">RpcService</h4>
   <div class="markdown level1 summary"><p>Returns the underlying <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a>.</p>
@@ -257,41 +179,14 @@
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Override this method if you want to use your own <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> and/or <a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a> implementation.</p>
 </div>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Dispose_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dispose*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Dispose_System_Boolean_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Dispose(System.Boolean)">Dispose(Boolean)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void Dispose(bool disposeManaged)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">disposeManaged</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuildService_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuildService_Solti_Utils_Rpc_RpcServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuildService(Solti.Utils.Rpc.RpcServiceBuilder)">OnBuildService(RpcServiceBuilder)</h4>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.RpcServiceBuilder)">OnConfigure(RpcServiceBuilder)</h4>
   <div class="markdown level1 summary"><p>Invoked on service setup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnBuildService(RpcServiceBuilder serviceBuilder)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnConfigure(RpcServiceBuilder serviceBuilder)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -310,23 +205,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall">OnInstall()</h4>
-  <div class="markdown level1 summary"><p>Invoked on service installation.</p>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_Solti_Utils_Rpc_Hosting_Win32ServiceDescriptor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service(Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor)">OnConfigureWin32Service(Win32ServiceDescriptor)</h4>
+  <div class="markdown level1 summary"><p>Called on service install/uninstall.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnInstall()</code></pre>
-  </div>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_Solti_Utils_Rpc_Interfaces_HostConfiguration_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart(Solti.Utils.Rpc.Interfaces.HostConfiguration)">OnStart(HostConfiguration)</h4>
-  <div class="markdown level1 summary"><p>Invoked on service startup.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnStart(HostConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnConfigureWin32Service(Win32ServiceDescriptor descriptor)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -339,93 +225,60 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.HostConfiguration.html">HostConfiguration</a></td>
-        <td><span class="parametername">configuration</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.html">Win32ServiceDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall">OnInstall()</h4>
+  <div class="markdown level1 summary"><p>Called on app install.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Verb(&quot;install&quot;)]
+public virtual void OnInstall()</code></pre>
+  </div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRun*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRun">OnRun()</h4>
+  <div class="markdown level1 summary"><p>Starts the host as a command line application</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnRun()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnRun">CommandLineApplication.OnRun()</a></div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart">OnStart()</h4>
+  <div class="markdown level1 summary"><p>Called on host start</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnStart()</code></pre>
+  </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop">OnStop()</h4>
-  <div class="markdown level1 summary"><p>Invoked on service termination.</p>
+  <div class="markdown level1 summary"><p>Called on host termination</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public virtual void OnStop()</code></pre>
   </div>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnhandledException_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnhandledException_System_Exception_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnhandledException(System.Exception)">OnUnhandledException(Exception)</h4>
-  <div class="markdown level1 summary"><p>Invoked on unhandled exception.</p>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall">OnUnInstall()</h4>
+  <div class="markdown level1 summary"><p>Called on app uninstall.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnUnhandledException(Exception ex)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></td>
-        <td><span class="parametername">ex</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUninstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUninstall*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUninstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUninstall">OnUninstall()</h4>
-  <div class="markdown level1 summary"><p>Invoked on service removal.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnUninstall()</code></pre>
-  </div>
-  <h3 id="eii">Explicit Interface Implementations
-  </h3>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_Solti_Utils_Rpc_Interfaces_IHost_Dependencies_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Interfaces#IHost#Dependencies*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_Solti_Utils_Rpc_Interfaces_IHost_Dependencies" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.Solti#Utils#Rpc#Interfaces#IHost#Dependencies">IHost.Dependencies</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IEnumerable&lt;string&gt; IHost.Dependencies { get; }</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">System.IAsyncDisposable</a>
-  </div>
-  <div>
-      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHost.html">IHost</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+    <pre><code class="lang-csharp hljs">[Verb(&quot;uninstall&quot;)]
+public virtual void OnUnInstall()</code></pre>
   </div>
 </article>
           </div>
