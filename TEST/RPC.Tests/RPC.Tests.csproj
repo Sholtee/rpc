@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.*" />
     <PackageReference Include="NunitXml.TestLogger" Version="2.*" />
-    <PackageReference Include="Injector.NET.Interfaces" Version="6.0-preview*" />
+    <PackageReference Include="Injector.NET.Interfaces" Version="6.*" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="5.*" />
   </ItemGroup>
 
