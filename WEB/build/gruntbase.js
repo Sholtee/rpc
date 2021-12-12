@@ -173,7 +173,7 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 args: [],
                 options: {
                     wait: false,
-                    ready: /Server is running/g
+                    ready: /Service started/g
                 }
             }
         }

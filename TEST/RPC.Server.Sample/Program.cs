@@ -5,4 +5,4 @@
 ********************************************************************************/
 using Solti.Utils.Rpc.Server.Sample;
 
-new AppHost(args).Run();
+return new AppHost(args).Run();

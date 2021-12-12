@@ -113,7 +113,7 @@ namespace Solti.Utils.Rpc.Tests
             Mock<BadCommandLineApplication> mockApp = new(MockBehavior.Strict, new object[] { new string[] { "install" } });
             mockApp.Setup(x => x.OnUnhandledException(It.Is<InvalidOperationException>(ex => ex.Message == Errors.AMBIGOUS_TARGET)));
 
-            Assert.DoesNotThrow(mockApp.Object.Run);
+            Assert.DoesNotThrow(() => mockApp.Object.Run());
 
             mockApp.Verify(x => x.OnUnhandledException(It.IsAny<InvalidOperationException>()), Times.Once);
         }
@@ -124,7 +124,7 @@ namespace Solti.Utils.Rpc.Tests
             Mock<BadCommandLineApplication> mockApp = new(MockBehavior.Strict, new object[] { new string[] { "uninstall" } });
             mockApp.Setup(x => x.OnUnhandledException(It.Is<InvalidOperationException>(ex => ex.Message == Errors.NOT_PARAMETERLESS)));
 
-            Assert.DoesNotThrow(mockApp.Object.Run);
+            Assert.DoesNotThrow(() => mockApp.Object.Run());
 
             mockApp.Verify(x => x.OnUnhandledException(It.IsAny<InvalidOperationException>()), Times.Once);
         }

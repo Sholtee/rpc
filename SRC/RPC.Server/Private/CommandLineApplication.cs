@@ -89,22 +89,22 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Runs the application
         /// </summary>
-        public void Run()
+        public int Run()
         {
-            IReadOnlyList<string> verbs = Args
-                .TakeWhile(arg => !arg.StartsWith("-", StringComparison.Ordinal))
-                .ToArray();
-
-            IReadOnlyList<MethodInfo> compatibleMethods = GetType()
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
-                .Where(m => m
-                    .GetCustomAttribute<VerbAttribute>()?
-                    .Verbs
-                    .SequenceEqual(verbs, OrdinalIgnoreCaseComparer.Instance) is true)
-                .ToArray();
-
             try
             {
+                IReadOnlyList<string> verbs = Args
+                    .TakeWhile(arg => !arg.StartsWith("-", StringComparison.Ordinal))
+                    .ToArray();
+
+                IReadOnlyList<MethodInfo> compatibleMethods = GetType()
+                    .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
+                    .Where(m => m
+                        .GetCustomAttribute<VerbAttribute>()?
+                        .Verbs
+                        .SequenceEqual(verbs, OrdinalIgnoreCaseComparer.Instance) is true)
+                    .ToArray();
+
                 switch (compatibleMethods.Count)
                 {
                     case 0:
@@ -128,7 +128,10 @@ namespace Solti.Utils.Rpc.Internals
             #pragma warning restore CA1031
             {
                 OnUnhandledException(ex);
+                return -1;
             }
+
+            return 0;
         }
 
         /// <summary>
@@ -144,10 +147,6 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Called on unhandled exception
         /// </summary>
-        public virtual void OnUnhandledException(Exception ex)
-        {
-            Logger.LogError(ex?.ToString() ?? "Unknown error");
-            Environment.Exit(-1);
-        }
+        public virtual void OnUnhandledException(Exception ex) => Logger.LogError(ex?.ToString() ?? "Unknown error");
     }
 }

@@ -4,8 +4,6 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Hosting
 {
@@ -26,46 +24,21 @@ namespace Solti.Utils.Rpc.Hosting
 
             OnStart();
 
-            using CancellationTokenSource cancellationSrc = new();
-
-            CancellationToken cancellation = cancellationSrc.Token;
-
-            Console.CancelKeyPress += (_, e) =>
-            {
-                cancellationSrc.Cancel();
-
-                //
-                // E nelkul parhuzamosan ket modon probalnank leallitani az app-ot
-                //
-
-                e.Cancel = true;
-            };
-
             //
-            // A Console.ReadKey()-t nem lehet maskepp megszakitani mint ugy hogy kulon szalban hivjuk amit
-            // ki tudunk alola utni.
+            // Ne Console.WriteLine()-t hasznaljunk mert az elszall ha az output at lett iranyitva.
             //
 
-            Task task = Task.Factory.StartNew(() =>
-            {
-                Console.WriteLine(Trace.RUNNING);
-                while (true)
-                    //
-                    // Kell ahhoz hogy a Console.CancelKeyPress mukodjon
-                    //
-
-                    Console.ReadKey(intercept: true);
-            }, cancellation, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Console.Out.WriteLine(Trace.RUNNING);
 
             //
-            // Blokkolodunk amig a kiszolgalo leallitasra nem kerul
+            // Blokkolodunk amig a kiszolgalo leallitasra nem kerul (CTRL+ C-vel).
             //
 
-            WaitHandle.WaitAny(new WaitHandle[]
-            {
-                cancellation.WaitHandle,
-                ((IAsyncResult) task).AsyncWaitHandle
-            });
+            Func<int> readKey = Console.IsInputRedirected
+                ? Console.In.Read
+                : () => Console.ReadKey().KeyChar;
+
+            while (readKey() != '\x3') {}
 
             OnStop();
         }

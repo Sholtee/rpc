@@ -13,11 +13,7 @@ namespace Solti.Utils.Rpc.Server.Sample
     
     internal class ConsoleLogger : LoggerBase 
     {
-        protected override void LogCore(string message)
-        {
-            if (Environment.UserInteractive)
-                Console.WriteLine(message);
-        }
+        protected override void LogCore(string message) => Console.Out.WriteLine(message);
 
         public static ILogger Create<TCategory>() => new ConsoleLogger(GetDefaultCategory<TCategory>());
 

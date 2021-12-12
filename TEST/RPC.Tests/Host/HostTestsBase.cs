@@ -41,7 +41,9 @@ namespace Solti.Utils.Rpc.Hosting.Tests
             ProcessStartInfo psi = new(cmd)
             {
                 Arguments = args,
-                UseShellExecute = true
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true
             };
 
             return Process.Start(psi);
