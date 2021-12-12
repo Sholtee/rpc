@@ -63,3 +63,10 @@
   - *introduced:* Loggers: `ModuleMethodScopeLogger`, `ParameterLogger`, `ServiceMethodScopeLogger`, `StopWatchLogger`
 - 5.0.0-preview2:
   - *introduced:* `AppHostBase.OnBuildService()` method
+- 5.0.0-preview3:
+  - *introduced:* `AppHostBase.CreateServiceBuilder()` method
+  - *fixed:* Missing `await` in `WebService.Listen()`
+  - *breaking:* Merged `IRoleManager` and `IAsyncRoleManager` interfaces
+  - *improved:* `AsyncExtensions` performance
+- 5.0.0:
+  - *breaking:* `AppHostBase` rewritten from the scratch

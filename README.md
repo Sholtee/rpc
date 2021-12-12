@@ -162,19 +162,31 @@
 
    public class AppHost : AppHostBase
    {
-     public AppHost() => Name = "Calculator";
+     public AppHost(string[] args) : base(args) { }
 
-     public override void OnBuildService(RpcServiceBuilder serviceBuilder) => serviceBuilder
-       .ConfigureWebService(new WebServiceDescriptor
-       {
-         Url = "http://localhost:1986/api/",
-         AllowedOrigins = new[] 
+     public override void OnConfigureWin32Service(Win32ServiceDescriptor descriptor)
+     {
+       base.OnConfigureWin32Service(descriptor);
+
+       descriptor.Name = "Calculator";
+     }
+
+     public override void OnConfigure(RpcServiceBuilder serviceBuilder)
+     {
+       base.OnConfigure(serviceBuilder);
+
+       serviceBuilder
+         .ConfigureWebService(new WebServiceDescriptor
          {
-           "http://localhost:1987"
-         }
-       })
-       .ConfigureServices(services => services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Singleton))
-       .ConfigureModules(modules => modules.Register<ICalculator, Calculator>());
+           Url = "http://localhost:1986/api/",
+           AllowedOrigins = new[] 
+           {
+             "http://localhost:1987"
+           }
+         })
+         .ConfigureServices(services => services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Singleton))
+         .ConfigureModules(modules => modules.Register<ICalculator, Calculator>());
+     }
    }
    ```
 4. Create the service `exe`:
@@ -185,12 +197,12 @@
    
    class Program
    {
-     static void Main(string[] args) => HostRunner.Run<AppHost>();
+     static int Main(string[] args) => new AppHost(args).Run();
    }
    ```
 5. The compiled executable can be used in several ways:
    - You can simply run it to debug your app (Ctrl-C terminates the server)
-   - You can invoke it with `-install` to install your app as a local service (`-uninstall` does the opposite)
+   - You can invoke it with `service install` to install your app as a local service (`service uninstall` does the opposite)
    - It can run as a local service (started by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager )) - if it was installed previously
 ## How to listen on HTTPS (Windows only)
 Requires [this](https://github.com/Sholtee/rpc.boilerplate/blob/master/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
