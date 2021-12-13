@@ -205,7 +205,7 @@
    - You can invoke it with `service install` to install your app as a local service (`service uninstall` does the opposite)
    - It can run as a local service (started by [SCM](https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager )) - if it was installed previously
 ## How to listen on HTTPS (Windows only)
-Requires [this](https://github.com/Sholtee/rpc.boilerplate/blob/master/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
+Requires [this](https://raw.githubusercontent.com/Sholtee/rpc.boilerplate/master/BUILD/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
 1. If you don't have your own, create a self-signed certificate
    ```ps
    Create-SelfSignedCertificate -OutDir ".\Cert" -Password "cica"
