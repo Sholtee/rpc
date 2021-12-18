@@ -44,6 +44,11 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
+        /// Called when the <see cref="RpcService"/> is built successfully.
+        /// </summary>
+        public virtual void OnBuilt() {}
+
+        /// <summary>
         /// Called on host start
         /// </summary>
         public virtual void OnStart()
@@ -53,6 +58,7 @@ namespace Solti.Utils.Rpc.Hosting
                 RpcServiceBuilder serviceBuilder = CreateServiceBuilder();
                 OnConfigure(serviceBuilder);
                 RpcService = serviceBuilder.Build();
+                OnBuilt();
             }
 
             RpcService.Start();
