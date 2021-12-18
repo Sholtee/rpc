@@ -70,3 +70,6 @@
   - *improved:* `AsyncExtensions` performance
 - 5.0.0:
   - *breaking:* `AppHostBase` rewritten from the scratch
+- 5.0.1:
+  - *introduced:* `AppHostBase.OnBuilt()` method
+  - *done:* Console app host doesn't echo the pressed keys
