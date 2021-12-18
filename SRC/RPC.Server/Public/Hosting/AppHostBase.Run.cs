@@ -36,7 +36,7 @@ namespace Solti.Utils.Rpc.Hosting
 
             Func<int> readKey = Console.IsInputRedirected
                 ? Console.In.Read
-                : () => Console.ReadKey().KeyChar;
+                : () => Console.ReadKey(intercept: true).KeyChar;
 
             while (readKey() != '\x3') {}
 
