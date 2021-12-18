@@ -320,6 +320,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
   nameWithType: AppHostBase.CreateServiceBuilder
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
+  name: OnBuilt()
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt()
+  nameWithType: AppHostBase.OnBuilt()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt*
+  name: OnBuilt
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
+  nameWithType: AppHostBase.OnBuilt
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.RpcServiceBuilder)
   name: OnConfigure(RpcServiceBuilder)
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder_

@@ -150,6 +150,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_RpcService_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property is set only once, after successful service configuration.</p>
+</div>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder*"></a>
@@ -179,9 +182,21 @@
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Override this method if you want to use your own <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> and/or <a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a> implementation.</p>
 </div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt">OnBuilt()</h4>
+  <div class="markdown level1 summary"><p>Called once when the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_RpcService">RpcService</a> is built successfully.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnBuilt()</code></pre>
+  </div>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method if you need to implement one-time initialization logic that depends on the built service.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.RpcServiceBuilder)">OnConfigure(RpcServiceBuilder)</h4>
-  <div class="markdown level1 summary"><p>Invoked on service setup.</p>
+  <div class="markdown level1 summary"><p>Invoked once on service setup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -205,6 +220,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method to configure the RPC service being built.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_Solti_Utils_Rpc_Hosting_Win32ServiceDescriptor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service(Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor)">OnConfigureWin32Service(Win32ServiceDescriptor)</h4>
   <div class="markdown level1 summary"><p>Called on service install/uninstall.</p>
@@ -231,6 +249,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_Solti_Utils_Rpc_Hosting_Win32ServiceDescriptor__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method to configure the Win32 service being installed.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall">OnInstall()</h4>
   <div class="markdown level1 summary"><p>Called on app install.</p>
@@ -241,6 +262,9 @@
     <pre><code class="lang-csharp hljs">[Verb(&quot;install&quot;)]
 public virtual void OnInstall()</code></pre>
   </div>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method to implement app specific installation logic.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRun*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRun">OnRun()</h4>
   <div class="markdown level1 summary"><p>Starts the host as a command line application</p>
@@ -252,6 +276,9 @@ public virtual void OnInstall()</code></pre>
   </div>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Solti.Utils.Rpc.Internals.CommandLineApplication.html#Solti_Utils_Rpc_Internals_CommandLineApplication_OnRun">CommandLineApplication.OnRun()</a></div>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In most of cases you should not override this method.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStart">OnStart()</h4>
   <div class="markdown level1 summary"><p>Called on host start</p>
@@ -261,6 +288,9 @@ public virtual void OnInstall()</code></pre>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public virtual void OnStart()</code></pre>
   </div>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In most of cases you should not override this method. To configure your service instance use the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder_">OnConfigure(RpcServiceBuilder)</a> and <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt">OnBuilt()</a> methods.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop">OnStop()</h4>
   <div class="markdown level1 summary"><p>Called on host termination</p>
@@ -270,6 +300,9 @@ public virtual void OnInstall()</code></pre>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public virtual void OnStop()</code></pre>
   </div>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method if you need to do some resource cleanup.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall">OnUnInstall()</h4>
   <div class="markdown level1 summary"><p>Called on app uninstall.</p>
@@ -280,6 +313,9 @@ public virtual void OnInstall()</code></pre>
     <pre><code class="lang-csharp hljs">[Verb(&quot;uninstall&quot;)]
 public virtual void OnUnInstall()</code></pre>
   </div>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method to implement app specific uninstallation logic.</p>
+</div>
 </article>
           </div>
           
