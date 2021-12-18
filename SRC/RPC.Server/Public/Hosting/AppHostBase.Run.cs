@@ -14,6 +14,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Starts the host as a command line application
         /// </summary>
+        /// <remarks>In most of cases you should not override this method.</remarks>
         public override void OnRun()
         {
             //

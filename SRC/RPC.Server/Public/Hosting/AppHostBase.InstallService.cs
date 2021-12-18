@@ -80,6 +80,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Called on service install/uninstall.
         /// </summary>
+        /// <remarks>Override this method to configure the Win32 service being installed.</remarks>
         public virtual void OnConfigureWin32Service(Win32ServiceDescriptor descriptor) {}
     }
 }

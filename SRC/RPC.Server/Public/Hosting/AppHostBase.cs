@@ -30,11 +30,13 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Returns the underlying <see cref="Rpc.RpcService"/>.
         /// </summary>
+        /// <remarks>This property is set only once, after successful service configuration.</remarks>
         public RpcService? RpcService { get; private set; }
 
         /// <summary>
-        /// Invoked on service setup.
+        /// Invoked once on service setup.
         /// </summary>
+        /// <remarks>Override this method to configure the RPC service being built.</remarks>
         public virtual void OnConfigure(RpcServiceBuilder serviceBuilder)
         {
             if (serviceBuilder is null)
@@ -44,13 +46,15 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
-        /// Called when the <see cref="RpcService"/> is built successfully.
+        /// Called once when the <see cref="RpcService"/> is built successfully.
         /// </summary>
+        /// <remarks>Override this method if you need to implement one-time initialization logic that depends on the built service.</remarks>
         public virtual void OnBuilt() {}
 
         /// <summary>
         /// Called on host start
         /// </summary>
+        /// <remarks>In most of cases you should not override this method. To configure your service instance use the <see cref="OnConfigure(RpcServiceBuilder)"/> and <see cref="OnBuilt"/> methods.</remarks>
         public virtual void OnStart()
         {
             if (RpcService is null)
@@ -67,6 +71,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Called on host termination
         /// </summary>
+        /// <remarks>Override this method if you need to do some resource cleanup.</remarks>
         public virtual void OnStop() => RpcService?.Stop();
     }
 }
