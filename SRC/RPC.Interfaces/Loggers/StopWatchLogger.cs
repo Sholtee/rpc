@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
@@ -22,15 +23,32 @@ namespace Solti.Utils.Rpc.Interfaces
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType))
+            {
+                Task task = (Task) callNext()!;
+                task.ContinueWith
+                (
+                    _ => LogElapsedTime(),
+                    default,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default
+                );
+                return task;
+            }
+     
             try
             {
                 return callNext();
             }
             finally
             {
-                context.Logger.LogInformation(Trace.TIME_ELAPSED, stopWatch.ElapsedMilliseconds);
+                LogElapsedTime();
+            }
 
+            void LogElapsedTime()
+            {
                 stopWatch.Stop();
+                context.Logger.LogInformation(Trace.TIME_ELAPSED, stopWatch.ElapsedMilliseconds);
             }
         }
     }
