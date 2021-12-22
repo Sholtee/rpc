@@ -60,7 +60,7 @@ namespace Solti.Utils.Rpc
             HttpListenerResponse response = context.Response;
 
             //
-            // Eloellenorzesek HTTP hibat generalnak -> NE a try-catch blokkban legyenek
+            // Eloellenorzesek HTTP hibat generalnak -> NE a try-catch blokkban legyenek (a SafeCallContextProcessor() naplozni fogja)
             //
 
             if (request.HttpMethod.ToUpperInvariant() is not "POST")
@@ -72,7 +72,7 @@ namespace Solti.Utils.Rpc
             }
 
             //
-            // Content-Type lehet NULL a kodolas viszont nem
+            // Content-Type lehet NULL a kodolas viszont nem (a SafeCallContextProcessor() naplozni fogja)
             //
 
             if (request.ContentType?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) is not true || request.ContentEncoding.WebName is not "utf-8")
@@ -105,7 +105,7 @@ namespace Solti.Utils.Rpc
             catch (HttpException)
             {
                 //
-                // Egyedi HTTP hibakod is megadhato, ekkor nem szerializalunk.
+                // Egyedi HTTP hibakod is megadhato, ekkor nem szerializalunk (a SafeCallContextProcessor() naplozni fogja).
                 //
 
                 throw;
@@ -116,7 +116,7 @@ namespace Solti.Utils.Rpc
             #pragma warning restore CA1031
             {
                 //
-                // Kulomben valid valasz fogja tartalmazni a hibat.
+                // Kulonben valid valasz fogja tartalmazni a hibat.
                 //
 
                 result = ex;
