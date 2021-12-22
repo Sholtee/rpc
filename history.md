@@ -73,3 +73,5 @@
 - 5.0.1:
   - *introduced:* `AppHostBase.OnBuilt()` method
   - *done:* Console app host doesn't echo the pressed keys
+- 5.0.2:
+  - *fixed:* Missing `async` method support in `[Exception|StopWatch]Logger`
