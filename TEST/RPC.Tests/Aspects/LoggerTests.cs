@@ -111,5 +111,42 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             IModule module = (IModule)Activator.CreateInstance(proxyType, Module.Object, Injector.Object, new LogForwarder(BeginScope.Object, Log.Object));
             Assert.DoesNotThrow(() => module.DoSomethingElse());
         }
+
+        [Test]
+        public void ExceptionLogger_ShouldLog()
+        {
+            Module
+                .Setup(m => m.DoSomething(It.IsAny<string>(), It.IsAny<object>()))
+                .Throws(new Exception("This is the message"));
+
+            Injector
+                .Setup(i => i.Get(typeof(IRequestContext), null))
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, default));
+
+            int callOrder = 0;
+
+            BeginScope
+                .Setup(fn => fn(It.Is<Dictionary<string, object>>(d => d["Module"].ToString() == nameof(IModule) && d["Method"].ToString() == nameof(IModule.DoSomething) && d["SessionId"].ToString() == "cica")))
+                .Returns<Dictionary<string, object>>(_ =>
+                {
+                    Assert.That(callOrder++, Is.EqualTo(0));
+                    return new Disposable();
+                });
+            Log
+                .Setup(fn => fn(LogLevel.Information, default, $"Parameters: arg1:cica,{Environment.NewLine}arg2:1"))
+                .Callback<LogLevel, EventId, string>((_, _, _) => Assert.That(callOrder++, Is.EqualTo(1)));
+            Log
+                .Setup(fn => fn(LogLevel.Information, default, It.Is<string>(s => s.StartsWith("Time elapsed:"))))
+                .Callback<LogLevel, EventId, string>((_, _, _) => Assert.That(callOrder++, Is.EqualTo(2)));
+            Log
+                .Setup(fn => fn(LogLevel.Error, default, It.Is<string>(s => s.StartsWith("Unhandled exception: System.Exception: This is the message"))))
+                .Callback<LogLevel, EventId, string>((_, _, _) => Assert.That(callOrder++, Is.EqualTo(3)));
+
+            Type proxyType = ProxyGenerator<IModule, Logger<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule) Activator.CreateInstance(proxyType, Module.Object, Injector.Object, new LogForwarder(BeginScope.Object, Log.Object));
+            Assert.Throws<Exception>(() => module.DoSomething("cica", 1));
+            Assert.That(callOrder, Is.EqualTo(4));
+        }
     }
 }
