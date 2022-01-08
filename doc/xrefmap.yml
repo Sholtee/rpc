@@ -936,6 +936,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.Module
   nameWithType: IRequestContext.Module
+- uid: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
+  name: OriginalRequest
+  href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_OriginalRequest
+  commentId: P:Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
+  nameWithType: IRequestContext.OriginalRequest
+- uid: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest*
+  name: OriginalRequest
+  href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_OriginalRequest_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
+  nameWithType: IRequestContext.OriginalRequest
 - uid: Solti.Utils.Rpc.Interfaces.IRequestContext.Payload
   name: Payload
   href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_Payload
