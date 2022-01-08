@@ -25,6 +25,7 @@ namespace Solti.Utils.Rpc.Tests
     using DI;
     using DI.Interfaces;
     using Interfaces;
+    using Properties;
 
     [TestFixture]
     public class RpcTests
@@ -654,6 +655,44 @@ namespace Solti.Utils.Rpc.Tests
         private class LowerCasePolicy : JsonNamingPolicy
         {
             public override string ConvertName(string name) => name.ToLowerInvariant();
+        }
+
+        [Test]
+        public async Task Request_ShouldFailOnBadQueryParameters()
+        {
+            ServerBuilder.ConfigureModules(registry => registry.Register(injector => new Mock<IModule>(MockBehavior.Strict).Object));
+            StartServer();
+
+            using BadRpcClientFactory clientFactory = new(Host);
+
+            IModule module = await clientFactory.CreateClient<IModule>();
+
+            RpcException ex = Assert.Throws<RpcException>(() => module.Add(1, 1));
+            Assert.That(ex.InnerException, Is.TypeOf<InvalidOperationException>());
+            Assert.That(ex.InnerException.Message, Is.EqualTo(Errors.NO_MODULE));
+        }
+
+        private class BadRpcClientFactory : RpcClientFactory
+        {
+            public BadRpcClientFactory(string host) : base(host)
+            {
+            }
+
+            protected override IDictionary<string, string> GetRequestParameters(MethodInfo method)
+            {
+                if (method is null)
+                    throw new ArgumentNullException(nameof(method));
+
+                var paramz = new Dictionary<string, string>
+                {
+                    { "module_bad", GetMemberId(method.ReflectedType) },
+                    { "method", GetMemberId(method)}
+                };
+
+                if (SessionId != null) paramz.Add("sessionid", SessionId);
+
+                return paramz;
+            }
         }
     }
 }
