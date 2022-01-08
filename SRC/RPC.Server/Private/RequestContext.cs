@@ -16,8 +16,9 @@ namespace Solti.Utils.Rpc.Internals
     using Interfaces;
     using Properties;
 
-    internal class RequestContext : IRequestContext
+    internal sealed class RequestContext : IRequestContext
     {
+#if DEBUG || PERF
         internal RequestContext(string? sessionId, string module, string method, Stream payload, CancellationToken cancellation)
         {
             SessionId    = sessionId;
@@ -26,25 +27,27 @@ namespace Solti.Utils.Rpc.Internals
             Payload      = payload;
             Cancellation = cancellation;
 
-            Headers           = new Dictionary<string, string>();
-            RequestParameters = new Dictionary<string, string>();
-        }
+            FHeaders           = new Dictionary<string, string>();
+            FRequestParameters = new Dictionary<string, string>();
 
+            OriginalRequest = null!;
+        }
+#endif
         public RequestContext(HttpListenerRequest request, CancellationToken cancellation)
         {
             NameValueCollection paramz = request.QueryString;
-            RequestParameters = paramz.AllKeys.ToDictionary(key => key, key => paramz[key]);
 
             //
-            // Ne a RequestParameters-bol kerjuk le mert az kivetelt dob ha nincs elem adott kulccsal
+            // Szukseges parameterek lekerdezese (nem kis-nagy betu erzekeny).
             //
 
-            SessionId = paramz["sessionid"];
-            Module    = paramz["module"] ?? throw new InvalidOperationException(Errors.NO_MODULE);
-            Method    = paramz["method"] ?? throw new InvalidOperationException(Errors.NO_METHOD);
+            SessionId = paramz[nameof(SessionId)];
+            Module    = paramz[nameof(Module)] ?? throw new InvalidOperationException(Errors.NO_MODULE);
+            Method    = paramz[nameof(Method)] ?? throw new InvalidOperationException(Errors.NO_METHOD);
 
             Payload = request.InputStream;
-            Headers = request.Headers.AllKeys.ToDictionary(key => key, key => request.Headers[key]);
+
+            OriginalRequest = request;
 
             Cancellation = cancellation;
         }
@@ -59,8 +62,18 @@ namespace Solti.Utils.Rpc.Internals
 
         public CancellationToken Cancellation { get; }
 
-        public IReadOnlyDictionary<string, string> Headers { get; }
+        private Dictionary<string, string>? FHeaders;
+        public IReadOnlyDictionary<string, string> Headers => FHeaders ??= OriginalRequest
+            .Headers
+            .AllKeys
+            .ToDictionary(key => key, key => OriginalRequest.Headers[key]);
 
-        public IReadOnlyDictionary<string, string> RequestParameters { get; }
+        private Dictionary<string, string>? FRequestParameters;
+        public IReadOnlyDictionary<string, string> RequestParameters => FRequestParameters ??= OriginalRequest
+            .QueryString
+            .AllKeys
+            .ToDictionary(key => key, key => OriginalRequest.QueryString[key]);
+
+        public HttpListenerRequest OriginalRequest { get; }
     }
 }

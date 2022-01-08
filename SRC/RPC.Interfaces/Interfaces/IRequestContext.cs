@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Net;
 using System.Threading;
 
 namespace Solti.Utils.Rpc.Interfaces
@@ -51,5 +52,10 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Headers sent by the client
         /// </summary>
         IReadOnlyDictionary<string, string> Headers { get; }
+
+        /// <summary>
+        /// Gets the original request.
+        /// </summary>
+        HttpListenerRequest OriginalRequest { get; }
     }
 }
