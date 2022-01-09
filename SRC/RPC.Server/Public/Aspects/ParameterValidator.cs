@@ -20,7 +20,7 @@ namespace Solti.Utils.Rpc.Aspects
     /// <summary>
     /// Validates parameters on interface methods
     /// </summary>
-    public class ParameterValidator<TInterface> : InterfaceInterceptor<TInterface> where TInterface : class
+    public class ParameterValidator<TInterface> : AspectInterceptor<TInterface> where TInterface : class
     {
         /// <summary>
         /// Returns true if the validator should collect all the validation errors.
@@ -48,109 +48,108 @@ namespace Solti.Utils.Rpc.Aspects
         public ParameterValidator(TInterface target, IInjector currentScope) : this(target, currentScope, typeof(TInterface).GetCustomAttribute<ParameterValidatorAspectAttribute>()?.Aggregate ?? false) { }
 
         /// <inheritdoc/>
-        public override object? Invoke(InvocationContext context)
+        protected override object? Decorator(InvocationContext context, Func<object?> callNext)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            if (!typeof(Task).IsAssignableFrom(context.Method.ReturnType))
+            if (callNext is null)
+                throw new ArgumentNullException(nameof(callNext));
+
+            List<ValidationException> exceptions = new();
+
+            foreach (Action<IInjector, object?[]> validate in GetValidators(context.Method))
             {
-                Validate();
-                return base.Invoke(context);
+                try
+                {
+                    validate(CurrentScope, context.Args);
+                }
+                catch (ValidationException validationError) when (Aggregate)
+                {
+                    exceptions.Add(validationError);
+                }
+                catch (AggregateException validationErrors) when (Aggregate) // PropertyValidator tamogatas
+                {
+                    exceptions.AddRange(validationErrors.InnerExceptions.OfType<ValidationException>());
+                }
             }
 
-            return AsyncExtensions.Before
-            (
-                () => (Task) base.Invoke(context)!,
-                context.Method.ReturnType, 
-                ValidateAsync
-            );
+            if (exceptions.Any())
+                throw new AggregateException(exceptions);
 
-            async Task ValidateAsync()
+            return callNext();
+
+            static IReadOnlyCollection<Action<IInjector, object?[]>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Action<IInjector, object?[]>>(method, (param, validator) => (currentScope, args) =>
             {
-                List<ValidationException> exceptions = new();
-
-                foreach (Func<IInjector, object?[], Task> validate in GetValidators(context.Method))
+                if ((validator as IConditionalValidatior)?.ShouldRun(method, currentScope) is not false)
                 {
-                    try
-                    {
-                        await validate(CurrentScope, context.Args);
-                    }
-                    catch (ValidationException validationError) when (Aggregate)
-                    {
-                        exceptions.Add(validationError);
-                    }
-                    catch (AggregateException validationErrors) when (Aggregate) // PropertyValidator tamogatas
-                    {
-                        exceptions.AddRange(validationErrors.InnerExceptions.OfType<ValidationException>());
-                    }
-                }
-
-                if (exceptions.Any())
-                    throw new AggregateException(exceptions);
-
-                static IReadOnlyCollection<Func<IInjector, object?[], Task>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Func<IInjector, object?[], Task>>(method, (param, validator) => async (currentScope, args) =>
-                {
-                    if ((validator as IConditionalValidatior)?.ShouldRun(method, currentScope) is false)
-                        return;
-
                     object? value = args[param.Position];
 
-                    if (value is null && !validator.SupportsNull)
-                        return;
+                    if (value is not null || validator.SupportsNull)
+                        validator.Validate(param, value, currentScope);
+                }
+            });
+        }
 
-                    if (validator is IAsyncParameterValidator asyncValidator)
-                    {
-                        await asyncValidator.ValidateAsync(param, value, currentScope);
-                        return;
-                    }
+        /// <inheritdoc/>
+        protected override async Task<Task> DecoratorAsync(InvocationContext context, Func<Task> callNext)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
 
-                    validator.Validate(param, value, currentScope);
-                });
+
+            if (callNext is null)
+                throw new ArgumentNullException(nameof(callNext));
+
+            List<ValidationException> exceptions = new();
+
+            foreach (Func<IInjector, object?[], Task> validate in GetValidators(context.Method))
+            {
+                try
+                {
+                    await validate(CurrentScope, context.Args);
+                }
+                catch (ValidationException validationError) when (Aggregate)
+                {
+                    exceptions.Add(validationError);
+                }
+                catch (AggregateException validationErrors) when (Aggregate) // PropertyValidator tamogatas
+                {
+                    exceptions.AddRange(validationErrors.InnerExceptions.OfType<ValidationException>());
+                }
             }
 
-            void Validate()
-            {
-                List<ValidationException> exceptions = new();
+            if (exceptions.Any())
+                throw new AggregateException(exceptions);
 
-                foreach (Action<IInjector, object?[]> validate in GetValidators(context.Method))
+            return callNext();
+
+            static IReadOnlyCollection<Func<IInjector, object?[], Task>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Func<IInjector, object?[], Task>>(method, (param, validator) => async (currentScope, args) =>
+            {
+                if ((validator as IConditionalValidatior)?.ShouldRun(method, currentScope) is false)
+                    return;
+
+                object? value = args[param.Position];
+
+                if (value is null && !validator.SupportsNull)
+                    return;
+
+                if (validator is IAsyncParameterValidator asyncValidator)
                 {
-                    try
-                    {
-                        validate(CurrentScope, context.Args);
-                    }
-                    catch (ValidationException validationError) when (Aggregate)
-                    {
-                        exceptions.Add(validationError);
-                    }
-                    catch (AggregateException validationErrors) when (Aggregate) // PropertyValidator tamogatas
-                    {
-                        exceptions.AddRange(validationErrors.InnerExceptions.OfType<ValidationException>());
-                    }
+                    await asyncValidator.ValidateAsync(param, value, currentScope);
+                    return;
                 }
 
-                if (exceptions.Any())
-                    throw new AggregateException(exceptions);
-
-                static IReadOnlyCollection<Action<IInjector, object?[]>> GetValidators(MethodInfo method) => ValidatorsToDelegate<Action<IInjector, object?[]>>(method, (param, validator) => (currentScope, args) =>
-                {
-                    if ((validator as IConditionalValidatior)?.ShouldRun(method, currentScope) is not false)
-                    {
-                        object? value = args[param.Position];
-
-                        if (value is not null || validator.SupportsNull)
-                            validator.Validate(param, value, currentScope);
-                    }
-                });
-            }
-
-            static IReadOnlyCollection<TDelegate> ValidatorsToDelegate<TDelegate>(MethodInfo method, Func<ParameterInfo, IParameterValidator, TDelegate> convert) where TDelegate : Delegate => Cache.GetOrAdd(method, () => method
-                .GetParameters()
-                .SelectMany(param => param
-                    .GetCustomAttributes()
-                    .OfType<IParameterValidator>()
-                    .Select(validator => convert(param, validator)))
-                .ToArray());
+                validator.Validate(param, value, currentScope);
+            });
         }
+
+        private static IReadOnlyCollection<TDelegate> ValidatorsToDelegate<TDelegate>(MethodInfo method, Func<ParameterInfo, IParameterValidator, TDelegate> convert) where TDelegate : Delegate => Cache.GetOrAdd(method, () => method
+            .GetParameters()
+            .SelectMany(param => param
+                .GetCustomAttributes()
+                .OfType<IParameterValidator>()
+                .Select(validator => convert(param, validator)))
+            .ToArray());
     }
 }

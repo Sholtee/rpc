@@ -17,7 +17,7 @@ namespace Solti.Utils.Rpc.Aspects
     /// <summary>
     /// Manages database transactions.
     /// </summary>
-    public class TransactionManager<TInterface> : InterfaceInterceptor<TInterface> where TInterface : class
+    public class TransactionManager<TInterface> : AspectInterceptor<TInterface> where TInterface : class
     {
         private readonly Lazy<IDbConnection> FConnection;
 
@@ -29,66 +29,70 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="TransactionManager{TInterface}"/> instance.
         /// </summary>
-        public TransactionManager(TInterface target, Lazy<IDbConnection> dbConn) : base(target ?? throw new ArgumentNullException(nameof(target))) =>
+        public TransactionManager(TInterface target, Lazy<IDbConnection> dbConn) : base(target) =>
             FConnection = dbConn ?? throw new ArgumentNullException(nameof(dbConn));
 
         /// <inheritdoc/>
-        public override object? Invoke(InvocationContext context)
+        protected override object? Decorator(InvocationContext context, Func<object?> callNext)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
+            if (callNext is null)
+                throw new ArgumentNullException(nameof(callNext));
+
             TransactionalAttribute? ta = context.Method.GetCustomAttribute<TransactionalAttribute>();
             if (ta is null)
-                return base.Invoke(context);
+                return callNext();
 
-            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType)) // Task | Task<>
+            using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
+
+            object? result;
+
+            try
             {
-                Task? task = null;
-
-                return AsyncExtensions.Before(() => task!, context.Method.ReturnType, InvokeInTransactionAsync);
-
-                async Task InvokeInTransactionAsync()
-                {
-                    using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
-
-                    try
-                    {
-                        task = (Task) base.Invoke(context)!;
-
-                        await task;
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-
-                    transaction.Commit();
-                }
+                result = callNext();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
             }
 
-            return InvokeInTransaction();
+            transaction.Commit();
+            return result;
+        }
 
-            object? InvokeInTransaction()
+        /// <inheritdoc/>
+        protected override async Task<Task> DecoratorAsync(InvocationContext context, Func<Task> callNext)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            if (callNext is null)
+                throw new ArgumentNullException(nameof(callNext));
+
+            TransactionalAttribute? ta = context.Method.GetCustomAttribute<TransactionalAttribute>();
+            if (ta is null)
+                return callNext();
+
+            using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
+
+            Task task;
+
+            try
             {
-                using IDbTransaction transaction = Connection.BeginTransaction(ta.IsolationLevel);
-
-                object? result;
-
-                try
-                {
-                    result = base.Invoke(context);
-                }
-                catch 
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-
-                transaction.Commit();
-                return result;
+                task = callNext();
+                await task;
             }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+
+            transaction.Commit();
+            return task;
         }
     }
 }

@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Authentication;
@@ -20,11 +21,25 @@ namespace Solti.Utils.Rpc.Aspects
     /// Contains the role validation logic.
     /// </summary>
     /// <remarks>In order to use this interceptor you have to implement and register the <see cref="IRoleManager"/> service.</remarks>
-    public class RoleValidator<TInterface>: InterfaceInterceptor<TInterface> where TInterface: class
+    public class RoleValidator<TInterface>: AspectInterceptor<TInterface> where TInterface: class
     {
         private IRoleManager RoleManager { get; }
 
         private IRequestContext RequestContext { get; }
+
+        private static IReadOnlyList<Enum> GetRequiredRoles(MethodInfo method)
+        {
+            RequiredRolesAttribute? attr = method.GetCustomAttribute<RequiredRolesAttribute>();
+
+            //
+            // Meg ha nem is szukseges szerep a metodus meghivasahoz, akkor is muszaj h szerepeljen az attributum
+            //
+
+            if (attr is null)
+                throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, method.Name));
+
+            return attr.RoleGroups;
+        }
 
         /// <summary>
         /// Creates a new <see cref="RoleValidator{TInterface}"/> instance.
@@ -36,40 +51,35 @@ namespace Solti.Utils.Rpc.Aspects
         }
 
         /// <inheritdoc/>
-        public override object? Invoke(InvocationContext context)
+        protected override object? Decorator(InvocationContext context, Func<object?> callNext)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            RequiredRolesAttribute? attr = context.Method.GetCustomAttribute<RequiredRolesAttribute>();
+            if (callNext is null)
+                throw new ArgumentNullException(nameof(callNext));
 
-            //
-            // Meg ha nem is szukseges szerep a metodus meghivasahoz, akkor is muszaj h szerepeljen az attributum
-            //
+            Validate(GetRequiredRoles(context.Method), RoleManager.GetAssignedRoles(RequestContext.SessionId));
+            return callNext();
+        }
 
-            if (attr is null)
-                throw new InvalidOperationException(string.Format(Errors.Culture, Errors.NO_ROLES_SPECIFIED, context.Method.Name));
+        /// <inheritdoc/>
+        protected override async Task<Task> DecoratorAsync(InvocationContext context, Func<Task> callNext)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
 
-            //
-            // Aszinkron metodusnal aszinkron validalunk.
-            //
+            if (callNext is null)
+                throw new ArgumentNullException(nameof(callNext));
 
-            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType))
-                return AsyncExtensions.Before
-                (
-                    () => (Task) base.Invoke(context)!, 
-                    context.Method.ReturnType, 
-                    async () => Validate(await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation))
-                );
+            Validate(GetRequiredRoles(context.Method), await RoleManager.GetAssignedRolesAsync(RequestContext.SessionId, RequestContext.Cancellation));
+            return callNext();
+        }
 
-            Validate(RoleManager.GetAssignedRoles(RequestContext.SessionId));
-            return base.Invoke(context);
-
-            void Validate(Enum availableRoles)
-            {
-                if (!attr.RoleGroups.Any(grp => availableRoles.HasFlag(grp)))
-                    throw new AuthenticationException(Errors.INSUFFICIENT_PRIVILEGES);
-            }
+        private static void Validate(IReadOnlyList<Enum> roleGroups, Enum availableRoles)
+        {
+            if (!roleGroups.Any(grp => availableRoles.HasFlag(grp)))
+                throw new AuthenticationException(Errors.INSUFFICIENT_PRIVILEGES);
         }
     }
 }

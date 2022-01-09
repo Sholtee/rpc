@@ -3,9 +3,6 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-#pragma warning disable CS3003 // Type is not CLS-compliant
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-
 using System;
 using System.Collections.Generic;
 using System.Reflection;

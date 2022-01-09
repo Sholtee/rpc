@@ -14,20 +14,20 @@ namespace Solti.Utils.Rpc.Internals
 
     internal static class AsyncExtensions
     {
-        private static readonly MethodInfo FGenericBefore = ((Func<Func<Task>, Func<Task>, Task<object>>) Before<object>)
+        private static readonly MethodInfo FGenericDecorate = ((Func<Func<Task>, Func<Func<Task>, Task<Task>>, Task<object>>) Decorate<object>)
             .Method
             .GetGenericMethodDefinition();
 
-        private static async Task<T> Before<T>(Func<Task> original, Func<Task> decorator)
+        private static async Task Decorate(Func<Task> original, Func<Func<Task>, Task<Task>> decorator)
         {
-            await decorator();
-            return await (Task<T>) original();
+            Task task = await decorator(original);
+            await task;
         }
 
-        private static async Task Before(Func<Task> original, Func<Task> decorator)
+        private static async Task<T> Decorate<T>(Func<Task> original, Func<Func<Task>, Task<Task>> decorator)
         {
-            await decorator();
-            await original();
+            Task<T> task = (Task<T>) await decorator(original);
+            return await task;
         }
 
         //
@@ -35,18 +35,18 @@ namespace Solti.Utils.Rpc.Internals
         // metodus nem jatszik
         //
 
-        public static Task Before(Func<Task> original, Type returnType, Func<Task> decorator)
+        public static Task Decorate(Func<Task> original, Type returnType, Func<Func<Task>, Task<Task>> decorator)
         {
             if (returnType == typeof(Task))
-                return Before(original, decorator);
+                return Decorate(original, decorator);
 
             if (typeof(Task).IsAssignableFrom(returnType)) // Task<>
             {
-                Func<object?[], object> before = Cache.GetOrAdd(returnType, () => FGenericBefore
+                Func<object?[], object> decorate = Cache.GetOrAdd(returnType, () => FGenericDecorate
                     .MakeGenericMethod(returnType.GetGenericArguments().Single())
                     .ToStaticDelegate());
 
-                return (Task) before(new object[] { original, decorator });
+                return (Task) decorate(new object[] { original, decorator });
             }
 
             throw new NotSupportedException();
