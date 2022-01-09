@@ -49,7 +49,8 @@
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html">InterfaceInterceptor</a>&lt;TInterface&gt;</div>
-    <div class="level2"><span class="xref">TransactionManager&lt;TInterface&gt;</span></div>
+    <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Internals.AspectInterceptor-1.html">AspectInterceptor</a>&lt;TInterface&gt;</div>
+    <div class="level3"><span class="xref">TransactionManager&lt;TInterface&gt;</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -57,6 +58,9 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_Invoke_Solti_Utils_Proxy_InvocationContext_">AspectInterceptor&lt;TInterface&gt;.Invoke(InvocationContext)</a>
+    </div>
     <div>
       <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Target">InterfaceInterceptor&lt;TInterface&gt;.Target</a>
     </div>
@@ -89,7 +93,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Aspects_TransactionManager_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TransactionManager&lt;TInterface&gt; : InterfaceInterceptor&lt;TInterface&gt;, IHasTarget&lt;TInterface&gt;, IProxyAccess&lt;TInterface&gt; where TInterface : class</code></pre>
+    <pre><code class="lang-csharp hljs">public class TransactionManager&lt;TInterface&gt; : AspectInterceptor&lt;TInterface&gt;, IHasTarget&lt;TInterface&gt;, IProxyAccess&lt;TInterface&gt; where TInterface : class</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -167,13 +171,14 @@
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Aspects_TransactionManager_1_Invoke_" data-uid="Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke*"></a>
-  <h4 id="Solti_Utils_Rpc_Aspects_TransactionManager_1_Invoke_Solti_Utils_Proxy_InvocationContext_" data-uid="Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke(Solti.Utils.Proxy.InvocationContext)">Invoke(InvocationContext)</h4>
-  <div class="markdown level1 summary"></div>
+  <a id="Solti_Utils_Rpc_Aspects_TransactionManager_1_Decorator_" data-uid="Solti.Utils.Rpc.Aspects.TransactionManager`1.Decorator*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_TransactionManager_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__" data-uid="Solti.Utils.Rpc.Aspects.TransactionManager`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})">Decorator(InvocationContext, Func&lt;Object&gt;)</h4>
+  <div class="markdown level1 summary"><p>The decorator function.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override object Invoke(InvocationContext context)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override object Decorator(InvocationContext context, Func&lt;object&gt; callNext)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -188,6 +193,11 @@
       <tr>
         <td><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InvocationContext.html">InvocationContext</a></td>
         <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">callNext</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -208,7 +218,55 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Solti.Utils.Proxy.InterfaceInterceptor&lt;TInterface&gt;.Invoke(Solti.Utils.Proxy.InvocationContext)</span></div>
+  <div><span class="xref">Solti.Utils.Rpc.Internals.AspectInterceptor&lt;TInterface&gt;.Decorator(Solti.Utils.Proxy.InvocationContext, System.Func&lt;System.Object&gt;)</span></div>
+  <a id="Solti_Utils_Rpc_Aspects_TransactionManager_1_DecoratorAsync_" data-uid="Solti.Utils.Rpc.Aspects.TransactionManager`1.DecoratorAsync*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_TransactionManager_1_DecoratorAsync_Solti_Utils_Proxy_InvocationContext_System_Func_System_Threading_Tasks_Task__" data-uid="Solti.Utils.Rpc.Aspects.TransactionManager`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})">DecoratorAsync(InvocationContext, Func&lt;Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>The decorator function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override async Task&lt;Task&gt; DecoratorAsync(InvocationContext context, Func&lt;Task&gt; callNext)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InvocationContext.html">InvocationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</td>
+        <td><span class="parametername">callNext</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Rpc.Internals.AspectInterceptor&lt;TInterface&gt;.DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func&lt;System.Threading.Tasks.Task&gt;)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.IProxyAccess-1.html">IProxyAccess&lt;TInterface&gt;</a>

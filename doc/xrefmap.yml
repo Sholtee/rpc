@@ -158,23 +158,42 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).CurrentScope
   nameWithType: ParameterValidator<TInterface>.CurrentScope
   nameWithType.vb: ParameterValidator(Of TInterface).CurrentScope
-- uid: Solti.Utils.Rpc.Aspects.ParameterValidator`1.Invoke(Solti.Utils.Proxy.InvocationContext)
-  name: Invoke(InvocationContext)
-  href: Solti.Utils.Rpc.Aspects.ParameterValidator-1.html#Solti_Utils_Rpc_Aspects_ParameterValidator_1_Invoke_Solti_Utils_Proxy_InvocationContext_
-  commentId: M:Solti.Utils.Rpc.Aspects.ParameterValidator`1.Invoke(Solti.Utils.Proxy.InvocationContext)
-  fullName: Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext)
-  fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).Invoke(Solti.Utils.Proxy.InvocationContext)
-  nameWithType: ParameterValidator<TInterface>.Invoke(InvocationContext)
-  nameWithType.vb: ParameterValidator(Of TInterface).Invoke(InvocationContext)
-- uid: Solti.Utils.Rpc.Aspects.ParameterValidator`1.Invoke*
-  name: Invoke
-  href: Solti.Utils.Rpc.Aspects.ParameterValidator-1.html#Solti_Utils_Rpc_Aspects_ParameterValidator_1_Invoke_
-  commentId: Overload:Solti.Utils.Rpc.Aspects.ParameterValidator`1.Invoke
+- uid: Solti.Utils.Rpc.Aspects.ParameterValidator`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name: Decorator(InvocationContext, Func<Object>)
+  href: Solti.Utils.Rpc.Aspects.ParameterValidator-1.html#Solti_Utils_Rpc_Aspects_ParameterValidator_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__
+  commentId: M:Solti.Utils.Rpc.Aspects.ParameterValidator`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name.vb: Decorator(InvocationContext, Func(Of Object))
+  fullName: Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext, System.Func<System.Object>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).Decorator(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Object))
+  nameWithType: ParameterValidator<TInterface>.Decorator(InvocationContext, Func<Object>)
+  nameWithType.vb: ParameterValidator(Of TInterface).Decorator(InvocationContext, Func(Of Object))
+- uid: Solti.Utils.Rpc.Aspects.ParameterValidator`1.Decorator*
+  name: Decorator
+  href: Solti.Utils.Rpc.Aspects.ParameterValidator-1.html#Solti_Utils_Rpc_Aspects_ParameterValidator_1_Decorator_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.ParameterValidator`1.Decorator
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Invoke
-  fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).Invoke
-  nameWithType: ParameterValidator<TInterface>.Invoke
-  nameWithType.vb: ParameterValidator(Of TInterface).Invoke
+  fullName: Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Decorator
+  fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).Decorator
+  nameWithType: ParameterValidator<TInterface>.Decorator
+  nameWithType.vb: ParameterValidator(Of TInterface).Decorator
+- uid: Solti.Utils.Rpc.Aspects.ParameterValidator`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name: DecoratorAsync(InvocationContext, Func<Task>)
+  href: Solti.Utils.Rpc.Aspects.ParameterValidator-1.html#Solti_Utils_Rpc_Aspects_ParameterValidator_1_DecoratorAsync_Solti_Utils_Proxy_InvocationContext_System_Func_System_Threading_Tasks_Task__
+  commentId: M:Solti.Utils.Rpc.Aspects.ParameterValidator`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name.vb: DecoratorAsync(InvocationContext, Func(Of Task))
+  fullName: Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func<System.Threading.Tasks.Task>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Threading.Tasks.Task))
+  nameWithType: ParameterValidator<TInterface>.DecoratorAsync(InvocationContext, Func<Task>)
+  nameWithType.vb: ParameterValidator(Of TInterface).DecoratorAsync(InvocationContext, Func(Of Task))
+- uid: Solti.Utils.Rpc.Aspects.ParameterValidator`1.DecoratorAsync*
+  name: DecoratorAsync
+  href: Solti.Utils.Rpc.Aspects.ParameterValidator-1.html#Solti_Utils_Rpc_Aspects_ParameterValidator_1_DecoratorAsync_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.ParameterValidator`1.DecoratorAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.DecoratorAsync
+  fullName.vb: Solti.Utils.Rpc.Aspects.ParameterValidator(Of TInterface).DecoratorAsync
+  nameWithType: ParameterValidator<TInterface>.DecoratorAsync
+  nameWithType.vb: ParameterValidator(Of TInterface).DecoratorAsync
 - uid: Solti.Utils.Rpc.Aspects.RoleValidator`1
   name: RoleValidator<TInterface>
   href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html
@@ -201,23 +220,42 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).RoleValidator
   nameWithType: RoleValidator<TInterface>.RoleValidator
   nameWithType.vb: RoleValidator(Of TInterface).RoleValidator
-- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke(Solti.Utils.Proxy.InvocationContext)
-  name: Invoke(InvocationContext)
-  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_Invoke_Solti_Utils_Proxy_InvocationContext_
-  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke(Solti.Utils.Proxy.InvocationContext)
-  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext)
-  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).Invoke(Solti.Utils.Proxy.InvocationContext)
-  nameWithType: RoleValidator<TInterface>.Invoke(InvocationContext)
-  nameWithType.vb: RoleValidator(Of TInterface).Invoke(InvocationContext)
-- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke*
-  name: Invoke
-  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_Invoke_
-  commentId: Overload:Solti.Utils.Rpc.Aspects.RoleValidator`1.Invoke
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name: Decorator(InvocationContext, Func<Object>)
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__
+  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name.vb: Decorator(InvocationContext, Func(Of Object))
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext, System.Func<System.Object>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).Decorator(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Object))
+  nameWithType: RoleValidator<TInterface>.Decorator(InvocationContext, Func<Object>)
+  nameWithType.vb: RoleValidator(Of TInterface).Decorator(InvocationContext, Func(Of Object))
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.Decorator*
+  name: Decorator
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_Decorator_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.RoleValidator`1.Decorator
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Invoke
-  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).Invoke
-  nameWithType: RoleValidator<TInterface>.Invoke
-  nameWithType.vb: RoleValidator(Of TInterface).Invoke
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Decorator
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).Decorator
+  nameWithType: RoleValidator<TInterface>.Decorator
+  nameWithType.vb: RoleValidator(Of TInterface).Decorator
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name: DecoratorAsync(InvocationContext, Func<Task>)
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_DecoratorAsync_Solti_Utils_Proxy_InvocationContext_System_Func_System_Threading_Tasks_Task__
+  commentId: M:Solti.Utils.Rpc.Aspects.RoleValidator`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name.vb: DecoratorAsync(InvocationContext, Func(Of Task))
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func<System.Threading.Tasks.Task>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Threading.Tasks.Task))
+  nameWithType: RoleValidator<TInterface>.DecoratorAsync(InvocationContext, Func<Task>)
+  nameWithType.vb: RoleValidator(Of TInterface).DecoratorAsync(InvocationContext, Func(Of Task))
+- uid: Solti.Utils.Rpc.Aspects.RoleValidator`1.DecoratorAsync*
+  name: DecoratorAsync
+  href: Solti.Utils.Rpc.Aspects.RoleValidator-1.html#Solti_Utils_Rpc_Aspects_RoleValidator_1_DecoratorAsync_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.RoleValidator`1.DecoratorAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.DecoratorAsync
+  fullName.vb: Solti.Utils.Rpc.Aspects.RoleValidator(Of TInterface).DecoratorAsync
+  nameWithType: RoleValidator<TInterface>.DecoratorAsync
+  nameWithType.vb: RoleValidator(Of TInterface).DecoratorAsync
 - uid: Solti.Utils.Rpc.Aspects.TransactionManager`1
   name: TransactionManager<TInterface>
   href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html
@@ -262,23 +300,42 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Connection
   nameWithType: TransactionManager<TInterface>.Connection
   nameWithType.vb: TransactionManager(Of TInterface).Connection
-- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke(Solti.Utils.Proxy.InvocationContext)
-  name: Invoke(InvocationContext)
-  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Invoke_Solti_Utils_Proxy_InvocationContext_
-  commentId: M:Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke(Solti.Utils.Proxy.InvocationContext)
-  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext)
-  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Invoke(Solti.Utils.Proxy.InvocationContext)
-  nameWithType: TransactionManager<TInterface>.Invoke(InvocationContext)
-  nameWithType.vb: TransactionManager(Of TInterface).Invoke(InvocationContext)
-- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke*
-  name: Invoke
-  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Invoke_
-  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionManager`1.Invoke
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name: Decorator(InvocationContext, Func<Object>)
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__
+  commentId: M:Solti.Utils.Rpc.Aspects.TransactionManager`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name.vb: Decorator(InvocationContext, Func(Of Object))
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext, System.Func<System.Object>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Decorator(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Object))
+  nameWithType: TransactionManager<TInterface>.Decorator(InvocationContext, Func<Object>)
+  nameWithType.vb: TransactionManager(Of TInterface).Decorator(InvocationContext, Func(Of Object))
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.Decorator*
+  name: Decorator
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_Decorator_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionManager`1.Decorator
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Invoke
-  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Invoke
-  nameWithType: TransactionManager<TInterface>.Invoke
-  nameWithType.vb: TransactionManager(Of TInterface).Invoke
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Decorator
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).Decorator
+  nameWithType: TransactionManager<TInterface>.Decorator
+  nameWithType.vb: TransactionManager(Of TInterface).Decorator
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name: DecoratorAsync(InvocationContext, Func<Task>)
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_DecoratorAsync_Solti_Utils_Proxy_InvocationContext_System_Func_System_Threading_Tasks_Task__
+  commentId: M:Solti.Utils.Rpc.Aspects.TransactionManager`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name.vb: DecoratorAsync(InvocationContext, Func(Of Task))
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func<System.Threading.Tasks.Task>)
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Threading.Tasks.Task))
+  nameWithType: TransactionManager<TInterface>.DecoratorAsync(InvocationContext, Func<Task>)
+  nameWithType.vb: TransactionManager(Of TInterface).DecoratorAsync(InvocationContext, Func(Of Task))
+- uid: Solti.Utils.Rpc.Aspects.TransactionManager`1.DecoratorAsync*
+  name: DecoratorAsync
+  href: Solti.Utils.Rpc.Aspects.TransactionManager-1.html#Solti_Utils_Rpc_Aspects_TransactionManager_1_DecoratorAsync_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.TransactionManager`1.DecoratorAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.DecoratorAsync
+  fullName.vb: Solti.Utils.Rpc.Aspects.TransactionManager(Of TInterface).DecoratorAsync
+  nameWithType: TransactionManager<TInterface>.DecoratorAsync
+  nameWithType.vb: TransactionManager(Of TInterface).DecoratorAsync
 - uid: Solti.Utils.Rpc.Hosting
   name: Solti.Utils.Rpc.Hosting
   href: Solti.Utils.Rpc.Hosting.html
@@ -2356,6 +2413,85 @@ references:
   commentId: N:Solti.Utils.Rpc.Internals
   fullName: Solti.Utils.Rpc.Internals
   nameWithType: Solti.Utils.Rpc.Internals
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1
+  name: AspectInterceptor<TInterface>
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html
+  commentId: T:Solti.Utils.Rpc.Internals.AspectInterceptor`1
+  name.vb: AspectInterceptor(Of TInterface)
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface)
+  nameWithType: AspectInterceptor<TInterface>
+  nameWithType.vb: AspectInterceptor(Of TInterface)
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.#ctor(`0)
+  name: AspectInterceptor(TInterface)
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1__ctor__0_
+  commentId: M:Solti.Utils.Rpc.Internals.AspectInterceptor`1.#ctor(`0)
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.AspectInterceptor(TInterface)
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).AspectInterceptor(TInterface)
+  nameWithType: AspectInterceptor<TInterface>.AspectInterceptor(TInterface)
+  nameWithType.vb: AspectInterceptor(Of TInterface).AspectInterceptor(TInterface)
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.#ctor*
+  name: AspectInterceptor
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Internals.AspectInterceptor`1.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.AspectInterceptor
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).AspectInterceptor
+  nameWithType: AspectInterceptor<TInterface>.AspectInterceptor
+  nameWithType.vb: AspectInterceptor(Of TInterface).AspectInterceptor
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name: Decorator(InvocationContext, Func<Object>)
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__
+  commentId: M:Solti.Utils.Rpc.Internals.AspectInterceptor`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
+  name.vb: Decorator(InvocationContext, Func(Of Object))
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext, System.Func<System.Object>)
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).Decorator(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Object))
+  nameWithType: AspectInterceptor<TInterface>.Decorator(InvocationContext, Func<Object>)
+  nameWithType.vb: AspectInterceptor(Of TInterface).Decorator(InvocationContext, Func(Of Object))
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.Decorator*
+  name: Decorator
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_Decorator_
+  commentId: Overload:Solti.Utils.Rpc.Internals.AspectInterceptor`1.Decorator
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Decorator
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).Decorator
+  nameWithType: AspectInterceptor<TInterface>.Decorator
+  nameWithType.vb: AspectInterceptor(Of TInterface).Decorator
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name: DecoratorAsync(InvocationContext, Func<Task>)
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_DecoratorAsync_Solti_Utils_Proxy_InvocationContext_System_Func_System_Threading_Tasks_Task__
+  commentId: M:Solti.Utils.Rpc.Internals.AspectInterceptor`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})
+  name.vb: DecoratorAsync(InvocationContext, Func(Of Task))
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func<System.Threading.Tasks.Task>)
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func(Of System.Threading.Tasks.Task))
+  nameWithType: AspectInterceptor<TInterface>.DecoratorAsync(InvocationContext, Func<Task>)
+  nameWithType.vb: AspectInterceptor(Of TInterface).DecoratorAsync(InvocationContext, Func(Of Task))
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.DecoratorAsync*
+  name: DecoratorAsync
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_DecoratorAsync_
+  commentId: Overload:Solti.Utils.Rpc.Internals.AspectInterceptor`1.DecoratorAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.DecoratorAsync
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).DecoratorAsync
+  nameWithType: AspectInterceptor<TInterface>.DecoratorAsync
+  nameWithType.vb: AspectInterceptor(Of TInterface).DecoratorAsync
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.Invoke(Solti.Utils.Proxy.InvocationContext)
+  name: Invoke(InvocationContext)
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_Invoke_Solti_Utils_Proxy_InvocationContext_
+  commentId: M:Solti.Utils.Rpc.Internals.AspectInterceptor`1.Invoke(Solti.Utils.Proxy.InvocationContext)
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext)
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).Invoke(Solti.Utils.Proxy.InvocationContext)
+  nameWithType: AspectInterceptor<TInterface>.Invoke(InvocationContext)
+  nameWithType.vb: AspectInterceptor(Of TInterface).Invoke(InvocationContext)
+- uid: Solti.Utils.Rpc.Internals.AspectInterceptor`1.Invoke*
+  name: Invoke
+  href: Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_Invoke_
+  commentId: Overload:Solti.Utils.Rpc.Internals.AspectInterceptor`1.Invoke
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Invoke
+  fullName.vb: Solti.Utils.Rpc.Internals.AspectInterceptor(Of TInterface).Invoke
+  nameWithType: AspectInterceptor<TInterface>.Invoke
+  nameWithType.vb: AspectInterceptor(Of TInterface).Invoke
 - uid: Solti.Utils.Rpc.Internals.CommandLineApplication
   name: CommandLineApplication
   href: Solti.Utils.Rpc.Internals.CommandLineApplication.html
