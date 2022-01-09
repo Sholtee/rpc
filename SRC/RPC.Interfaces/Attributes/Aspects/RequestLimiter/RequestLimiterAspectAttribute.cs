@@ -31,7 +31,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The default threshold (allowed requests).
         /// </summary>
-        /// <remarks>This value can be overridden by the </remarks>
+        /// <remarks>This value can be overridden by the <see cref="RequestThresholdAttribute"/>.</remarks>
         public int Threshold { get; }
 
         /// <summary>
