@@ -25,12 +25,12 @@ namespace Solti.Utils.Rpc.Interfaces
         Task RegisterRequestAsync(string id, DateTime whenUtc, CancellationToken cancellation = default);
 
         /// <summary>
-        /// Counts the request in a given period of time.
+        /// Counts the requests in a given period of time.
         /// </summary>
         int CountRequest(string id, DateTime fromUtc, DateTime toUtc);
 
         /// <summary>
-        /// Counts the request in a given period of time.
+        /// Counts the requests in a given period of time.
         /// </summary>
         Task<int> CountRequestAsync(string id, DateTime fromUtc, DateTime toUtc, CancellationToken cancellation = default);
     }
