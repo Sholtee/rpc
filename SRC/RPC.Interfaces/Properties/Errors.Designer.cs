@@ -19,7 +19,7 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Errors {
@@ -111,6 +111,15 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         internal static string NO_REQUIRED_ROLE {
             get {
                 return ResourceManager.GetString("NO_REQUIRED_ROLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &quot;{0}&quot; not assignable from &quot;{1}&quot;..
+        /// </summary>
+        internal static string NOT_ASSIGNABLE_FROM {
+            get {
+                return ResourceManager.GetString("NOT_ASSIGNABLE_FROM", resourceCulture);
             }
         }
         

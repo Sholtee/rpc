@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
+    using Primitives;
+    using Properties;
+
     /// <summary>
     /// Collects the related loogers.
     /// </summary>
@@ -26,8 +29,22 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>>
         [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments")]
         public LoggersAttribute(params Type[] types) => Value = types
-            .Select(Activator.CreateInstance)
-            .Cast<LoggerBase>()
+            .Select
+            (
+                type => type.GetConstructor(Array.Empty<Type>()) ?? throw new ArgumentException
+                (
+                    string.Format(Errors.Culture, Errors.PARAMETERLESS_CTOR_REQUIRED, type),
+                    nameof(types)
+                )
+            )
+            .Select
+            (
+                ctor => ctor.ToStaticDelegate().Invoke(Array.Empty<object?>()) as LoggerBase ?? throw new ArgumentException
+                (
+                    string.Format(Errors.Culture, Errors.NOT_ASSIGNABLE_FROM, ctor.ReflectedType, typeof(LoggerBase)),
+                    nameof(types)
+                )
+            )
             .ToArray();
 
         /// <summary>

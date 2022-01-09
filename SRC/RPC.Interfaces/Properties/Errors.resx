@@ -132,6 +132,9 @@
   <data name="MODULE_NOT_FOUND" xml:space="preserve">
     <value>The module "{0}" could not be found.</value>
   </data>
+  <data name="NOT_ASSIGNABLE_FROM" xml:space="preserve">
+    <value>Type "{0}" not assignable from "{1}".</value>
+  </data>
   <data name="NO_REQUIRED_ROLE" xml:space="preserve">
     <value>At least one role must be specified.</value>
   </data>

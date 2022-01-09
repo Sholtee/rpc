@@ -34,9 +34,13 @@ namespace Solti.Utils.Rpc.Interfaces
             ConstructorInfo? ctor = predicate.GetConstructor(Type.EmptyTypes) ?? 
                 throw new ArgumentException(Errors.PARAMETERLESS_CTOR_REQUIRED, nameof(predicate));
 
-            Predicate = (IPredicate) ctor
+            Predicate = ctor
                .ToStaticDelegate()
-               .Invoke(Array.Empty<object?>());
+               .Invoke(Array.Empty<object?>()) as IPredicate ?? throw new ArgumentException
+                (
+                    string.Format(Errors.Culture, Errors.NOT_ASSIGNABLE_FROM, ctor.ReflectedType, typeof(IPredicate)),
+                    nameof(predicate)
+                );
         }
 
         /// <summary>

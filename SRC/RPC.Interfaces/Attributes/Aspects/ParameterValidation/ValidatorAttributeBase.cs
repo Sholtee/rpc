@@ -41,7 +41,13 @@ namespace Solti.Utils.Rpc.Interfaces
                     if (ctor is null)
                         throw new ArgumentException(Errors.PARAMETERLESS_CTOR_REQUIRED , nameof(value));
 
-                    ShouldRunImpl = (IConditionalValidatior?) ctor.ToStaticDelegate().Invoke(Array.Empty<object?>());
+                    ShouldRunImpl = ctor
+                        .ToStaticDelegate()
+                        .Invoke(Array.Empty<object?>()) as IConditionalValidatior ?? throw new ArgumentException
+                        (
+                            string.Format(Errors.Culture, Errors.NOT_ASSIGNABLE_FROM, value, typeof(IConditionalValidatior)),
+                            nameof(value)
+                        );
                 }
             }
         }
