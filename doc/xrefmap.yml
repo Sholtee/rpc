@@ -2181,6 +2181,38 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.RequestLimiterAspectAttribute.Threshold
   nameWithType: RequestLimiterAspectAttribute.Threshold
+- uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute
+  name: RequestThresholdAttribute
+  href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute
+  fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute
+  nameWithType: RequestThresholdAttribute
+- uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.Int32)
+  name: RequestThresholdAttribute(Int32)
+  href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html#Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_System_Int32_
+  commentId: M:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.Int32)
+  fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.RequestThresholdAttribute(System.Int32)
+  nameWithType: RequestThresholdAttribute.RequestThresholdAttribute(Int32)
+- uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor*
+  name: RequestThresholdAttribute
+  href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html#Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.RequestThresholdAttribute
+  nameWithType: RequestThresholdAttribute.RequestThresholdAttribute
+- uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value
+  name: Value
+  href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html#Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute_Value
+  commentId: P:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value
+  fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value
+  nameWithType: RequestThresholdAttribute.Value
+- uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value*
+  name: Value
+  href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html#Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute_Value_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value
+  nameWithType: RequestThresholdAttribute.Value
 - uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
   name: RequiredRolesAttribute
   href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html
