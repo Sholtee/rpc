@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RequestLimiter&lt;TInterface&gt;
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RequestLimiter&lt;TInterface&gt;
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1" class="text-break">Class RequestLimiter&lt;TInterface&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Limits how many requests can be serverd in a given period of time. Every remote endpoint has its own limiter.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html">InterfaceInterceptor</a>&lt;TInterface&gt;</div>
+    <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Internals.AspectInterceptor-1.html">AspectInterceptor</a>&lt;TInterface&gt;</div>
+    <div class="level3"><span class="xref">RequestLimiter&lt;TInterface&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.IProxyAccess-1.html">IProxyAccess</a>&lt;TInterface&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Internals.AspectInterceptor-1.html#Solti_Utils_Rpc_Internals_AspectInterceptor_1_Invoke_Solti_Utils_Proxy_InvocationContext_">AspectInterceptor&lt;TInterface&gt;.Invoke(InvocationContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Target">InterfaceInterceptor&lt;TInterface&gt;.Target</a>
+    </div>
+    <div>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html#Solti_Utils_Proxy_InterfaceInterceptor_1_Proxy">InterfaceInterceptor&lt;TInterface&gt;.Proxy</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Aspects.html">Solti.Utils.Rpc.Aspects</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RequestLimiter&lt;TInterface&gt; : AspectInterceptor&lt;TInterface&gt;, IHasTarget&lt;TInterface&gt;, IProxyAccess&lt;TInterface&gt; where TInterface : class</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInterface</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This interceptor should be applied against module interfaces only. In order to use this interceptor you should implement the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestCounter.html">IRequestCounter</a> service.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter)">RequestLimiter(TInterface, IRequestContext, IRequestCounter)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Aspects.RequestLimiter-1.html">RequestLimiter&lt;TInterface&gt;</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ServiceActivator]
+public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInterface</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestContext.html">IRequestContext</a></td>
+        <td><span class="parametername">requestContext</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestCounter.html">IRequestCounter</a></td>
+        <td><span class="parametername">requestCounter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_System_Int32_System_Int32_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,System.Int32,System.Int32)">RequestLimiter(TInterface, IRequestContext, IRequestCounter, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Aspects.RequestLimiter-1.html">RequestLimiter&lt;TInterface&gt;</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, int threshold, int interval)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInterface</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestContext.html">IRequestContext</a></td>
+        <td><span class="parametername">requestContext</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestCounter.html">IRequestCounter</a></td>
+        <td><span class="parametername">requestCounter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">threshold</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">interval</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Interval_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Interval*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Interval" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Interval">Interval</h4>
+  <div class="markdown level1 summary"><p>The interval on which the <a class="xref" href="Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1_Threshold">Threshold</a> is applied.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Interval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestContext_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestContext*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestContext" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestContext">RequestContext</h4>
+  <div class="markdown level1 summary"><p>The request descriptor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IRequestContext RequestContext { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestContext.html">IRequestContext</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestCounter_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestCounter*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestCounter" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestCounter">RequestCounter</h4>
+  <div class="markdown level1 summary"><p>The request counter service.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IRequestCounter RequestCounter { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestCounter.html">IRequestCounter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestId_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestId*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestId" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestId">RequestId</h4>
+  <div class="markdown level1 summary"><p>The request idintifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string RequestId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Threshold_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Threshold*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Threshold" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Threshold">Threshold</h4>
+  <div class="markdown level1 summary"><p>The default threshold (allowed requests).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Threshold { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Decorator_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Decorator*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})">Decorator(InvocationContext, Func&lt;Object&gt;)</h4>
+  <div class="markdown level1 summary"><p>The decorator function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override object Decorator(InvocationContext context, Func&lt;object&gt; callNext)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InvocationContext.html">InvocationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">callNext</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Rpc.Internals.AspectInterceptor&lt;TInterface&gt;.Decorator(Solti.Utils.Proxy.InvocationContext, System.Func&lt;System.Object&gt;)</span></div>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_DecoratorAsync_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.DecoratorAsync*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_DecoratorAsync_Solti_Utils_Proxy_InvocationContext_System_Func_System_Threading_Tasks_Task__" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.DecoratorAsync(Solti.Utils.Proxy.InvocationContext,System.Func{System.Threading.Tasks.Task})">DecoratorAsync(InvocationContext, Func&lt;Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>The decorator function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override async Task&lt;Task&gt; DecoratorAsync(InvocationContext context, Func&lt;Task&gt; callNext)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InvocationContext.html">InvocationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</td>
+        <td><span class="parametername">callNext</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Rpc.Internals.AspectInterceptor&lt;TInterface&gt;.DecoratorAsync(Solti.Utils.Proxy.InvocationContext, System.Func&lt;System.Threading.Tasks.Task&gt;)</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.IProxyAccess-1.html">IProxyAccess&lt;TInterface&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
