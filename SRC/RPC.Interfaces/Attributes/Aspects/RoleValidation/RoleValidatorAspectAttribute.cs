@@ -10,7 +10,7 @@ namespace Solti.Utils.Rpc.Interfaces
     using DI.Interfaces;
 
     /// <summary>
-    /// Indicates that the caller may have sufficient privileges to call the module methods.
+    /// Validates if the caller have sufficient privileges to call module methods.
     /// </summary>
     /// <remarks>In order to use this aspect you have to implement and register the <see cref="IRoleManager"/> service.</remarks>
     [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
