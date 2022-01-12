@@ -153,13 +153,13 @@ public RequestLimiter(TInterface target, IRequestContext requestContext, IReques
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_System_Int32_System_Int32_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,System.Int32,System.Int32)">RequestLimiter(TInterface, IRequestContext, IRequestCounter, Int32, Int32)</h4>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_Solti_Utils_Rpc_Interfaces_IClock_System_Int32_System_Int32_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,Solti.Utils.Rpc.Interfaces.IClock,System.Int32,System.Int32)">RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock, Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Aspects.RequestLimiter-1.html">RequestLimiter&lt;TInterface&gt;</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, int threshold, int interval)</code></pre>
+    <pre><code class="lang-csharp hljs">public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, IClock clock, int threshold, int interval)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -187,6 +187,11 @@ public RequestLimiter(TInterface target, IRequestContext requestContext, IReques
         <td></td>
       </tr>
       <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IClock.html">IClock</a></td>
+        <td><span class="parametername">clock</span></td>
+        <td></td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">threshold</span></td>
         <td></td>
@@ -200,9 +205,33 @@ public RequestLimiter(TInterface target, IRequestContext requestContext, IReques
   </table>
   <h3 id="properties">Properties
   </h3>
+  <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Clock_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Clock*"></a>
+  <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Clock" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Clock">Clock</h4>
+  <div class="markdown level1 summary"><p>Returns the clock service.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IClock Clock { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IClock.html">IClock</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Interval_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Interval*"></a>
   <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_Interval" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.Interval">Interval</h4>
-  <div class="markdown level1 summary"><p>The interval on which the <a class="xref" href="Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1_Threshold">Threshold</a> is applied.</p>
+  <div class="markdown level1 summary"><p>Returns the interval on which the <a class="xref" href="Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1_Threshold">Threshold</a> is applied.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -226,7 +255,7 @@ public RequestLimiter(TInterface target, IRequestContext requestContext, IReques
   </table>
   <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestContext_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestContext*"></a>
   <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestContext" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestContext">RequestContext</h4>
-  <div class="markdown level1 summary"><p>The request descriptor.</p>
+  <div class="markdown level1 summary"><p>Returns the request descriptor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -250,7 +279,7 @@ public RequestLimiter(TInterface target, IRequestContext requestContext, IReques
   </table>
   <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestCounter_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestCounter*"></a>
   <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestCounter" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestCounter">RequestCounter</h4>
-  <div class="markdown level1 summary"><p>The request counter service.</p>
+  <div class="markdown level1 summary"><p>Returns the  request counter service.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -274,7 +303,7 @@ public RequestLimiter(TInterface target, IRequestContext requestContext, IReques
   </table>
   <a id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestId_" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestId*"></a>
   <h4 id="Solti_Utils_Rpc_Aspects_RequestLimiter_1_RequestId" data-uid="Solti.Utils.Rpc.Aspects.RequestLimiter`1.RequestId">RequestId</h4>
-  <div class="markdown level1 summary"><p>The request idintifier.</p>
+  <div class="markdown level1 summary"><p>Returns the request idintifier.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>

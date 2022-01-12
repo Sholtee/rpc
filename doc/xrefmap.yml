@@ -211,14 +211,14 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter)
   nameWithType: RequestLimiter<TInterface>.RequestLimiter(TInterface, IRequestContext, IRequestCounter)
   nameWithType.vb: RequestLimiter(Of TInterface).RequestLimiter(TInterface, IRequestContext, IRequestCounter)
-- uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,System.Int32,System.Int32)
-  name: RequestLimiter(TInterface, IRequestContext, IRequestCounter, Int32, Int32)
-  href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_System_Int32_System_Int32_
-  commentId: M:Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,System.Int32,System.Int32)
-  fullName: Solti.Utils.Rpc.Aspects.RequestLimiter<TInterface>.RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter, System.Int32, System.Int32)
-  fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter, System.Int32, System.Int32)
-  nameWithType: RequestLimiter<TInterface>.RequestLimiter(TInterface, IRequestContext, IRequestCounter, Int32, Int32)
-  nameWithType.vb: RequestLimiter(Of TInterface).RequestLimiter(TInterface, IRequestContext, IRequestCounter, Int32, Int32)
+- uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,Solti.Utils.Rpc.Interfaces.IClock,System.Int32,System.Int32)
+  name: RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock, Int32, Int32)
+  href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_Solti_Utils_Rpc_Interfaces_IClock_System_Int32_System_Int32_
+  commentId: M:Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,Solti.Utils.Rpc.Interfaces.IClock,System.Int32,System.Int32)
+  fullName: Solti.Utils.Rpc.Aspects.RequestLimiter<TInterface>.RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter, Solti.Utils.Rpc.Interfaces.IClock, System.Int32, System.Int32)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter, Solti.Utils.Rpc.Interfaces.IClock, System.Int32, System.Int32)
+  nameWithType: RequestLimiter<TInterface>.RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock, Int32, Int32)
+  nameWithType.vb: RequestLimiter(Of TInterface).RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock, Int32, Int32)
 - uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor*
   name: RequestLimiter
   href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor_
@@ -228,6 +228,23 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).RequestLimiter
   nameWithType: RequestLimiter<TInterface>.RequestLimiter
   nameWithType.vb: RequestLimiter(Of TInterface).RequestLimiter
+- uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.Clock
+  name: Clock
+  href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1_Clock
+  commentId: P:Solti.Utils.Rpc.Aspects.RequestLimiter`1.Clock
+  fullName: Solti.Utils.Rpc.Aspects.RequestLimiter<TInterface>.Clock
+  fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).Clock
+  nameWithType: RequestLimiter<TInterface>.Clock
+  nameWithType.vb: RequestLimiter(Of TInterface).Clock
+- uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.Clock*
+  name: Clock
+  href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1_Clock_
+  commentId: Overload:Solti.Utils.Rpc.Aspects.RequestLimiter`1.Clock
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Aspects.RequestLimiter<TInterface>.Clock
+  fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).Clock
+  nameWithType: RequestLimiter<TInterface>.Clock
+  nameWithType.vb: RequestLimiter(Of TInterface).Clock
 - uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.Decorator(Solti.Utils.Proxy.InvocationContext,System.Func{System.Object})
   name: Decorator(InvocationContext, Func<Object>)
   href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1_Decorator_Solti_Utils_Proxy_InvocationContext_System_Func_System_Object__
@@ -932,6 +949,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync
   nameWithType: IAsyncPropertyValidator.ValidateAsync
+- uid: Solti.Utils.Rpc.Interfaces.IClock
+  name: IClock
+  href: Solti.Utils.Rpc.Interfaces.IClock.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IClock
+  fullName: Solti.Utils.Rpc.Interfaces.IClock
+  nameWithType: IClock
+- uid: Solti.Utils.Rpc.Interfaces.IClock.UtcNow
+  name: UtcNow
+  href: Solti.Utils.Rpc.Interfaces.IClock.html#Solti_Utils_Rpc_Interfaces_IClock_UtcNow
+  commentId: P:Solti.Utils.Rpc.Interfaces.IClock.UtcNow
+  fullName: Solti.Utils.Rpc.Interfaces.IClock.UtcNow
+  nameWithType: IClock.UtcNow
+- uid: Solti.Utils.Rpc.Interfaces.IClock.UtcNow*
+  name: UtcNow
+  href: Solti.Utils.Rpc.Interfaces.IClock.html#Solti_Utils_Rpc_Interfaces_IClock_UtcNow_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IClock.UtcNow
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IClock.UtcNow
+  nameWithType: IClock.UtcNow
 - uid: Solti.Utils.Rpc.Interfaces.IConditionalValidatior
   name: IConditionalValidatior
   href: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html
@@ -1148,19 +1184,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.Module
   nameWithType: IRequestContext.Module
-- uid: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
-  name: OriginalRequest
-  href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_OriginalRequest
-  commentId: P:Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
-  fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
-  nameWithType: IRequestContext.OriginalRequest
-- uid: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest*
-  name: OriginalRequest
-  href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_OriginalRequest_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.OriginalRequest
-  nameWithType: IRequestContext.OriginalRequest
 - uid: Solti.Utils.Rpc.Interfaces.IRequestContext.Payload
   name: Payload
   href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_Payload
@@ -1174,6 +1197,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.Payload
   nameWithType: IRequestContext.Payload
+- uid: Solti.Utils.Rpc.Interfaces.IRequestContext.RemoteEndPoint
+  name: RemoteEndPoint
+  href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_RemoteEndPoint
+  commentId: P:Solti.Utils.Rpc.Interfaces.IRequestContext.RemoteEndPoint
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.RemoteEndPoint
+  nameWithType: IRequestContext.RemoteEndPoint
+- uid: Solti.Utils.Rpc.Interfaces.IRequestContext.RemoteEndPoint*
+  name: RemoteEndPoint
+  href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_RemoteEndPoint_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRequestContext.RemoteEndPoint
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestContext.RemoteEndPoint
+  nameWithType: IRequestContext.RemoteEndPoint
 - uid: Solti.Utils.Rpc.Interfaces.IRequestContext.RequestParameters
   name: RequestParameters
   href: Solti.Utils.Rpc.Interfaces.IRequestContext.html#Solti_Utils_Rpc_Interfaces_IRequestContext_RequestParameters
