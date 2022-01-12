@@ -74,7 +74,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             Injector
                 .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, default));
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, null, default));
 
             int callOrder = 0;
 
@@ -103,7 +103,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             Injector
                 .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, default));
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, null, default));
 
             BeginScope
                 .Setup(fn => fn(It.Is<Dictionary<string, object>>(d => d["Module"].ToString() == nameof(IModule) && d["Method"].ToString() == nameof(IModule.DoSomething) && d["SessionId"].ToString() == "cica")))
@@ -124,7 +124,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Injector
                 .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, default));
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, null, default));
 
             int callOrder = 0;
 
@@ -161,7 +161,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Injector
                 .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null, default));
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null, null, default));
 
             int callOrder = 0;
 
@@ -198,7 +198,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Injector
                 .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null, default));
+                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null, null, default));
 
             int callOrder = 0;
 

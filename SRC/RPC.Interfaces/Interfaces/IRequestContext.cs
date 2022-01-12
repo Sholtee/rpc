@@ -54,8 +54,8 @@ namespace Solti.Utils.Rpc.Interfaces
         IReadOnlyDictionary<string, string> Headers { get; }
 
         /// <summary>
-        /// Gets the original request.
+        /// Gets the remote endpoint.
         /// </summary>
-        HttpListenerRequest OriginalRequest { get; }
+        IPEndPoint RemoteEndPoint { get; }
     }
 }

@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System.IO;
+using System.Net;
 using System.Runtime.CompilerServices;
 
 using BenchmarkDotNet.Attributes;
@@ -62,7 +63,7 @@ namespace Solti.Utils.Rpc.Perf
 
             ScopeFactory = DI.ScopeFactory.Create(svcs => svcs.Service<IModule, Module>(Lifetime.Scoped));
 
-            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload, default);
+            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), new IPEndPoint(IPAddress.Loopback, 1986), Payload, default);
         }
 
         [GlobalCleanup]

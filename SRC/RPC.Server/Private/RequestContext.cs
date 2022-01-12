@@ -18,19 +18,22 @@ namespace Solti.Utils.Rpc.Internals
 
     internal sealed class RequestContext : IRequestContext
     {
+        private readonly HttpListenerRequest FOriginalRequest;
+
 #if DEBUG || PERF
-        internal RequestContext(string? sessionId, string module, string method, Stream payload, CancellationToken cancellation)
+        internal RequestContext(string? sessionId, string module, string method, IPEndPoint remoteEndPoint, Stream payload, CancellationToken cancellation)
         {
-            SessionId    = sessionId;
-            Module       = module;
-            Method       = method;
-            Payload      = payload;
-            Cancellation = cancellation;
+            SessionId      = sessionId;
+            Module         = module;
+            Method         = method;
+            RemoteEndPoint = remoteEndPoint;
+            Payload        = payload;
+            Cancellation   = cancellation;
 
             FHeaders           = new Dictionary<string, string>();
             FRequestParameters = new Dictionary<string, string>();
 
-            OriginalRequest = null!;
+            FOriginalRequest = null!;
         }
 #endif
         public RequestContext(HttpListenerRequest request, CancellationToken cancellation)
@@ -46,8 +49,9 @@ namespace Solti.Utils.Rpc.Internals
             Method    = paramz[nameof(Method)] ?? throw new InvalidOperationException(Errors.NO_METHOD);
 
             Payload = request.InputStream;
+            RemoteEndPoint = request.RemoteEndPoint;
 
-            OriginalRequest = request;
+            FOriginalRequest = request;
 
             Cancellation = cancellation;
         }
@@ -63,17 +67,17 @@ namespace Solti.Utils.Rpc.Internals
         public CancellationToken Cancellation { get; }
 
         private Dictionary<string, string>? FHeaders;
-        public IReadOnlyDictionary<string, string> Headers => FHeaders ??= OriginalRequest
+        public IReadOnlyDictionary<string, string> Headers => FHeaders ??= FOriginalRequest
             .Headers
             .AllKeys
-            .ToDictionary(key => key, key => OriginalRequest.Headers[key]);
+            .ToDictionary(key => key, key => FOriginalRequest.Headers[key]);
 
         private Dictionary<string, string>? FRequestParameters;
-        public IReadOnlyDictionary<string, string> RequestParameters => FRequestParameters ??= OriginalRequest
+        public IReadOnlyDictionary<string, string> RequestParameters => FRequestParameters ??= FOriginalRequest
             .QueryString
             .AllKeys
-            .ToDictionary(key => key, key => OriginalRequest.QueryString[key]);
+            .ToDictionary(key => key, key => FOriginalRequest.QueryString[key]);
 
-        public HttpListenerRequest OriginalRequest { get; }
+        public IPEndPoint RemoteEndPoint { get; }
     }
 }

@@ -13,6 +13,7 @@ namespace Solti.Utils.Rpc.Aspects
     using DI.Interfaces;
     using Interfaces;
     using Internals;
+    using Primitives.Patterns;
     using Proxy;
 
     /// <summary>
@@ -23,41 +24,51 @@ namespace Solti.Utils.Rpc.Aspects
     {
         private static RequestLimiterAspectAttribute? RelatedAspect { get; } = typeof(TInterface).GetCustomAttribute<RequestLimiterAspectAttribute>();
 
+        private sealed class DefaultClock : Singleton<DefaultClock>, IClock
+        {
+            public DateTime UtcNow => DateTime.UtcNow;
+        }
+
         /// <summary>
         /// The default threshold (allowed requests).
         /// </summary>
         public int Threshold { get; }
 
         /// <summary>
-        /// The interval on which the <see cref="Threshold"/> is applied.
+        /// Returns the interval on which the <see cref="Threshold"/> is applied.
         /// </summary>
         public int Interval { get; }
 
         /// <summary>
-        /// The request idintifier.
+        /// Returns the request idintifier.
         /// </summary>
-        public string RequestId { get; }
+        public string RequestId => $"{RequestContext.RemoteEndPoint}_{RequestContext.Module}_{RequestContext.Method}";
 
         /// <summary>
-        /// The request descriptor.
+        /// Returns the request descriptor.
         /// </summary>
         public IRequestContext RequestContext { get; }
 
         /// <summary>
-        /// The request counter service.
+        /// Returns the  request counter service.
         /// </summary>
         public IRequestCounter RequestCounter { get; }
 
         /// <summary>
+        /// Returns the clock service.
+        /// </summary>
+        public IClock Clock { get; }
+
+        /// <summary>
         /// Creates a new <see cref="RequestLimiter{TInterface}"/> instance.
         /// </summary>
-        public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, int threshold, int interval) : base(target ?? throw new ArgumentNullException(nameof(target)))
+        public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, IClock clock, int threshold, int interval) : base(target ?? throw new ArgumentNullException(nameof(target)))
         {
             Threshold = threshold;
             Interval = interval;
             RequestContext = requestContext ?? throw new ArgumentNullException(nameof(requestContext));
             RequestCounter = requestCounter ?? throw new ArgumentNullException(nameof(requestCounter));
-            RequestId = $"{requestContext.OriginalRequest.RemoteEndPoint}_{requestContext.Module}_{requestContext.Method}";
+            Clock = clock ?? throw new ArgumentNullException(nameof(clock));
         }
 
         /// <summary>
@@ -68,6 +79,7 @@ namespace Solti.Utils.Rpc.Aspects
             target, 
             requestContext,
             requestCounter,
+            DefaultClock.Instance,
             RelatedAspect?.Threshold ?? RequestLimiterAspectAttribute.DEFAULT_THRESHOLD,
             RelatedAspect?.Interval ?? RequestLimiterAspectAttribute.DEFAULT_INTERVAL)
         {
@@ -82,7 +94,7 @@ namespace Solti.Utils.Rpc.Aspects
             if (callNext is null)
                 throw new ArgumentNullException(nameof(callNext));
 
-            DateTime nowUtc = DateTime.UtcNow;
+            DateTime nowUtc = Clock.UtcNow;
 
             if (RequestCounter.CountRequest(RequestId, nowUtc.Subtract(TimeSpan.FromMilliseconds(Interval)), nowUtc) > (context.Method.GetCustomAttribute<RequestThresholdAttribute>()?.Value ?? Threshold))
                 throw new HttpException { Status = HttpStatusCode.Forbidden };
@@ -101,7 +113,7 @@ namespace Solti.Utils.Rpc.Aspects
             if (callNext is null)
                 throw new ArgumentNullException(nameof(callNext));
 
-            DateTime nowUtc = DateTime.UtcNow;
+            DateTime nowUtc = Clock.UtcNow;
 
             if (await RequestCounter.CountRequestAsync(RequestId, nowUtc.Subtract(TimeSpan.FromMilliseconds(Interval)), nowUtc, RequestContext.Cancellation) > (context.Method.GetCustomAttribute<RequestThresholdAttribute>()?.Value ?? Threshold))
                 throw new HttpException { Status = HttpStatusCode.Forbidden };
