@@ -42,6 +42,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             [RequiredRoles(MyRoles.Anonymous)]
             void Login();
             void MissingRequiredRoleAttribute();
+            int Property 
+            {
+                [RequiredRoles(MyRoles.Anonymous)]
+                get;
+            }
         }
 
         public static IEnumerable<(MyRoles Roles, bool ShouldThrow)> TestCases 
@@ -83,6 +88,40 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             }
             else
                 Assert.DoesNotThrow(module.Print);
+
+            mockRequest.VerifyGet(r => r.SessionId, Times.Once);
+            mockRoleManager.Verify(rm => rm.GetAssignedRoles("cica"), Times.Once);
+        }
+
+        [TestCaseSource(nameof(TestCases))]
+        public void RoleValidation_ShouldWorkOnProperties((MyRoles Roles, bool ShouldThrow) data)
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .SetupGet(m => m.Property)
+                .Returns(0);
+
+            var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
+            mockRoleManager
+                .Setup(rm => rm.GetAssignedRoles("cica"))
+                .Returns(data.Roles);
+
+            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            mockRequest
+                .SetupGet(r => r.SessionId)
+                .Returns("cica");
+
+            Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule)Activator.CreateInstance(proxyType, mockModule.Object, mockRequest.Object, mockRoleManager.Object);
+
+            if (data.ShouldThrow)
+            {
+                Assert.Throws<AuthenticationException>(module.Print, Errors.INSUFFICIENT_PRIVILEGES);
+                mockModule.VerifyGet(m => m.Property, Times.Never);
+            }
+            else
+                Assert.DoesNotThrow(() => _ = module.Property);
 
             mockRequest.VerifyGet(r => r.SessionId, Times.Once);
             mockRoleManager.Verify(rm => rm.GetAssignedRoles("cica"), Times.Once);
