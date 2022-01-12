@@ -211,6 +211,14 @@ references:
   fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter)
   nameWithType: RequestLimiter<TInterface>.RequestLimiter(TInterface, IRequestContext, IRequestCounter)
   nameWithType.vb: RequestLimiter(Of TInterface).RequestLimiter(TInterface, IRequestContext, IRequestCounter)
+- uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,Solti.Utils.Rpc.Interfaces.IClock)
+  name: RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock)
+  href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_Solti_Utils_Rpc_Interfaces_IClock_
+  commentId: M:Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,Solti.Utils.Rpc.Interfaces.IClock)
+  fullName: Solti.Utils.Rpc.Aspects.RequestLimiter<TInterface>.RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter, Solti.Utils.Rpc.Interfaces.IClock)
+  fullName.vb: Solti.Utils.Rpc.Aspects.RequestLimiter(Of TInterface).RequestLimiter(TInterface, Solti.Utils.Rpc.Interfaces.IRequestContext, Solti.Utils.Rpc.Interfaces.IRequestCounter, Solti.Utils.Rpc.Interfaces.IClock)
+  nameWithType: RequestLimiter<TInterface>.RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock)
+  nameWithType.vb: RequestLimiter(Of TInterface).RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock)
 - uid: Solti.Utils.Rpc.Aspects.RequestLimiter`1.#ctor(`0,Solti.Utils.Rpc.Interfaces.IRequestContext,Solti.Utils.Rpc.Interfaces.IRequestCounter,Solti.Utils.Rpc.Interfaces.IClock,System.Int32,System.Int32)
   name: RequestLimiter(TInterface, IRequestContext, IRequestCounter, IClock, Int32, Int32)
   href: Solti.Utils.Rpc.Aspects.RequestLimiter-1.html#Solti_Utils_Rpc_Aspects_RequestLimiter_1__ctor__0_Solti_Utils_Rpc_Interfaces_IRequestContext_Solti_Utils_Rpc_Interfaces_IRequestCounter_Solti_Utils_Rpc_Interfaces_IClock_System_Int32_System_Int32_
