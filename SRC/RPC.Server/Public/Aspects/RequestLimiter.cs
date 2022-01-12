@@ -74,14 +74,25 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="RequestLimiter{TInterface}"/> instance.
         /// </summary>
+        public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, IClock clock) : this(
+            target,
+            requestContext,
+            requestCounter,
+            clock,
+            RelatedAspect?.Threshold ?? RequestLimiterAspectAttribute.DEFAULT_THRESHOLD,
+            RelatedAspect?.Interval ?? RequestLimiterAspectAttribute.DEFAULT_INTERVAL)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RequestLimiter{TInterface}"/> instance.
+        /// </summary>
         [ServiceActivator]
         public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter) : this(
             target, 
             requestContext,
             requestCounter,
-            DefaultClock.Instance,
-            RelatedAspect?.Threshold ?? RequestLimiterAspectAttribute.DEFAULT_THRESHOLD,
-            RelatedAspect?.Interval ?? RequestLimiterAspectAttribute.DEFAULT_INTERVAL)
+            DefaultClock.Instance)
         {
         }
 
