@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* RequestContext.cs                                                             *
+* RpcRequestContext.cs                                                          *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -16,12 +16,12 @@ namespace Solti.Utils.Rpc.Internals
     using Interfaces;
     using Properties;
 
-    internal sealed class RequestContext : IRequestContext
+    internal sealed class RpcRequestContext : IRpcRequestContext
     {
         private readonly HttpListenerRequest FOriginalRequest;
 
 #if DEBUG || PERF
-        internal RequestContext(string? sessionId, string module, string method, IPEndPoint remoteEndPoint, Stream payload, CancellationToken cancellation)
+        internal RpcRequestContext(string? sessionId, string module, string method, IPEndPoint remoteEndPoint, Stream payload, CancellationToken cancellation)
         {
             SessionId      = sessionId;
             Module         = module;
@@ -36,7 +36,7 @@ namespace Solti.Utils.Rpc.Internals
             FOriginalRequest = null!;
         }
 #endif
-        public RequestContext(HttpListenerRequest request, CancellationToken cancellation)
+        public RpcRequestContext(HttpListenerRequest request, CancellationToken cancellation)
         {
             NameValueCollection paramz = request.QueryString;
 

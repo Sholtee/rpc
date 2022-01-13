@@ -81,11 +81,11 @@ namespace Solti.Utils.Rpc.Tests
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
             mockModule.Setup(i => i.Dummy());
 
-            IRequestContext context = null;
+            IRpcRequestContext context = null;
 
             ServerBuilder.ConfigureModules(registry => registry.Register(injector => 
             {
-                context = injector.Get<IRequestContext>();
+                context = injector.Get<IRpcRequestContext>();
 
                 return mockModule.Object;
             }));
@@ -361,7 +361,7 @@ namespace Solti.Utils.Rpc.Tests
                     var mockModule = new Mock<IModule>(MockBehavior.Strict);
                     mockModule
                         .Setup(i => i.Faulty())
-                        .Returns(Task.Factory.StartNew(() => new ManualResetEventSlim().Wait(injector.Get<IRequestContext>().Cancellation)));
+                        .Returns(Task.Factory.StartNew(() => new ManualResetEventSlim().Wait(injector.Get<IRpcRequestContext>().Cancellation)));
 
                     return mockModule.Object;
                 }));
@@ -544,9 +544,9 @@ namespace Solti.Utils.Rpc.Tests
 
         public class GetMyHeaderBack : IGetMyHeaderBack
         {
-            public IRequestContext Context { get; }
+            public IRpcRequestContext Context { get; }
 
-            public GetMyHeaderBack(IRequestContext context) => Context = context;
+            public GetMyHeaderBack(IRpcRequestContext context) => Context = context;
 
             string IGetMyHeaderBack.GetMyHeaderBack() => Context.Headers["cica"];
         }
@@ -570,9 +570,9 @@ namespace Solti.Utils.Rpc.Tests
 
         public class GetMyParamBack : IGetMyParamBack
         {
-            public IRequestContext Context { get; }
+            public IRpcRequestContext Context { get; }
 
-            public GetMyParamBack(IRequestContext context) => Context = context;
+            public GetMyParamBack(IRpcRequestContext context) => Context = context;
 
             string IGetMyParamBack.GetMyParamBack() => Context.RequestParameters["cica"];
         }

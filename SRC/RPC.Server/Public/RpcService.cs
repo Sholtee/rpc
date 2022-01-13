@@ -87,7 +87,7 @@ namespace Solti.Utils.Rpc
 
             try
             {
-                result = await InvokeModule(new RequestContext(request, cancellation), injector);
+                result = await InvokeModule(new RpcRequestContext(request, cancellation), injector);
             }
 
             catch (OperationCanceledException ex) // ez megeszi a TaskCanceledException-t is
@@ -128,7 +128,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Invokes a module method described by the <paramref name="context"/>.
         /// </summary>
-        protected async virtual Task<object?> InvokeModule(IRequestContext context, IInjector injector)
+        protected async virtual Task<object?> InvokeModule(IRpcRequestContext context, IInjector injector)
         {
             if (context is null) 
                 throw new ArgumentNullException(nameof(context));

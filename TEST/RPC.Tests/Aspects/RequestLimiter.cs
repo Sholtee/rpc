@@ -41,7 +41,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             mockModule
                 .Setup(m => m.DoSomething());
 
-            var mockContext = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockContext = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockContext
                 .SetupGet(ctx => ctx.RemoteEndPoint)
                 .Returns(new IPEndPoint(IPAddress.Loopback, 1986));
@@ -91,7 +91,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(m => m.DoSomethingAsync())
                 .Returns(Task.CompletedTask);
 
-            var mockContext = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockContext = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockContext
                 .SetupGet(ctx => ctx.RemoteEndPoint)
                 .Returns(new IPEndPoint(IPAddress.Loopback, 1986));
@@ -145,7 +145,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             IPEndPoint remoteEndPoint = new(IPAddress.Loopback, 1986);
 
-            var mockContext = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockContext = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockContext
                 .SetupGet(ctx => ctx.RemoteEndPoint)
                 .Returns(() => remoteEndPoint);
@@ -200,7 +200,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             IPEndPoint remoteEndPoint = new(IPAddress.Loopback, 1986);
 
-            var mockContext = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockContext = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockContext
                 .SetupGet(ctx => ctx.RemoteEndPoint)
                 .Returns(() => remoteEndPoint);
@@ -257,7 +257,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .SetupGet(m => m.Property)
                 .Returns(0);
 
-            var mockContext = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockContext = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockContext
                 .SetupGet(ctx => ctx.RemoteEndPoint)
                 .Returns(new IPEndPoint(IPAddress.Loopback, 1986));

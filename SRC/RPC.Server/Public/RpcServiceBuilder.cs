@@ -86,7 +86,7 @@ namespace Solti.Utils.Rpc
         {
             FServiceCollection = new ServiceCollection();
             FServiceCollection
-                .Register(new MetaReaderServiceEntry(typeof(IRequestContext), META_REQUEST))
+                .Register(new MetaReaderServiceEntry(typeof(IRpcRequestContext), META_REQUEST))
                 .Factory<IReadOnlyList<string>>("CommandLineArgs", _ => Environment.GetCommandLineArgs(), Lifetime.Singleton)
                 .Factory<IDictionary>("EnvironmentVariables", _ => Environment.GetEnvironmentVariables(), Lifetime.Singleton);
 

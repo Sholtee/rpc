@@ -52,7 +52,7 @@ namespace Solti.Utils.Rpc.Perf
 
         private IScopeFactory ScopeFactory { get; set; }
 
-        private IRequestContext Context { get; set; }
+        private IRpcRequestContext Context { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup() 
@@ -63,7 +63,7 @@ namespace Solti.Utils.Rpc.Perf
 
             ScopeFactory = DI.ScopeFactory.Create(svcs => svcs.Service<IModule, Module>(Lifetime.Scoped));
 
-            Context = new RequestContext(null, nameof(IModule), nameof(IModule.Foo), new IPEndPoint(IPAddress.Loopback, 1986), Payload, default);
+            Context = new RpcRequestContext(null, nameof(IModule), nameof(IModule.Foo), new IPEndPoint(IPAddress.Loopback, 1986), Payload, default);
         }
 
         [GlobalCleanup]

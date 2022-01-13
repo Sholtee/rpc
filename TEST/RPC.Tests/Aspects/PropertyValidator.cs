@@ -51,7 +51,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public class IfNoSession : IConditionalValidatior
         {
             public bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) =>
-                currentScope.TryGet<IRequestContext>() is null;
+                currentScope.TryGet<IRpcRequestContext>() is null;
         }
 
         public interface IModule
@@ -68,7 +68,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
             mockInjector
-                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Setup(i => i.TryGet(typeof(IRpcRequestContext), null))
                 .Returns<Type, string>((iface, name) => null);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
@@ -118,7 +118,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
             mockInjector
-                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Setup(i => i.TryGet(typeof(IRpcRequestContext), null))
                 .Returns<Type, string>((iface, name) => null);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
@@ -180,11 +180,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         {
             var mockModule = new Mock<IModule>(MockBehavior.Loose);
 
-            IRequestContext context = null;
+            IRpcRequestContext context = null;
 
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
             mockInjector
-                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Setup(i => i.TryGet(typeof(IRpcRequestContext), null))
                 .Returns<Type, string>((iface, name) => context);
 
             Type proxyType = ProxyGenerator<IModule, ParameterValidator<IModule>>.GetGeneratedType();
@@ -193,7 +193,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             Assert.Throws<ValidationException>(() => module.DoSomething(new MyParameter2 { Value3 = new object(), Value2 = new MyParameter1 { Value1 = null } }));
 
-            context = new Mock<IRequestContext>(MockBehavior.Strict).Object;
+            context = new Mock<IRpcRequestContext>(MockBehavior.Strict).Object;
 
             Assert.DoesNotThrow(() => module.DoSomething(new MyParameter2 { Value3 = new object(), Value2 = new MyParameter1 { Value1 = null } }));
         }
@@ -296,7 +296,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
             mockInjector
-                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Setup(i => i.TryGet(typeof(IRpcRequestContext), null))
                 .Returns<Type, string>((iface, name) => null);
 
             Type proxyType = ProxyGenerator<IMyAsyncModule, ParameterValidator<IMyAsyncModule>>.GetGeneratedType();
@@ -318,7 +318,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
             mockInjector
-                .Setup(i => i.TryGet(typeof(IRequestContext), null))
+                .Setup(i => i.TryGet(typeof(IRpcRequestContext), null))
                 .Returns<Type, string>((iface, name) => null);
 
             Type proxyType = ProxyGenerator<IMyAsyncModule, ParameterValidator<IMyAsyncModule>>.GetGeneratedType();

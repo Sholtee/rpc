@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* IRequestContext.cs                                                            *
+* IRpcRequestContext.cs                                                         *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -14,7 +14,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Encapsulates all the informations related to a request.
     /// </summary>
-    public interface IRequestContext 
+    public interface IRpcRequestContext 
     {
         /// <summary>
         /// The (optional) session ID.

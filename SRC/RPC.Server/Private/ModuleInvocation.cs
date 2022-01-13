@@ -28,7 +28,7 @@ namespace Solti.Utils.Rpc.Internals
     /// </summary>
     /// <param name="injector">The <see cref="IInjector"/> in which the module was registered.</param>
     /// <param name="context">The context which describes the invocation.</param>
-    public delegate Task<object?> ModuleInvocation(IInjector injector, IRequestContext context);
+    public delegate Task<object?> ModuleInvocation(IInjector injector, IRpcRequestContext context);
 
     /// <summary>
     /// Defines some extensions to the <see cref="ModuleInvocation"/> delegate.
@@ -146,7 +146,7 @@ namespace Solti.Utils.Rpc.Internals
         {
             ParameterExpression
                 injector  = Expression.Parameter(typeof(IInjector), nameof(injector)),
-                context   = Expression.Parameter(typeof(IRequestContext), nameof(context));
+                context   = Expression.Parameter(typeof(IRpcRequestContext), nameof(context));
 
             Expression
                 ifaceId  = GetFromContext(context, context => context.Module),
@@ -195,7 +195,7 @@ namespace Solti.Utils.Rpc.Internals
                     //
 
                     localInjector = Expression.Variable(typeof(IInjector), nameof(localInjector)),
-                    localContext  = Expression.Variable(typeof(IRequestContext), nameof(localContext)),
+                    localContext  = Expression.Variable(typeof(IRpcRequestContext), nameof(localContext)),
                     args          = Expression.Parameter(typeof(object?[]), nameof(args));
 
                 Expression
@@ -301,10 +301,10 @@ namespace Solti.Utils.Rpc.Internals
                 );
             }
 
-            static MemberExpression GetFromContext<T>(ParameterExpression context, Expression<Func<IRequestContext, T>> ctx) => Expression.Property
+            static MemberExpression GetFromContext<T>(ParameterExpression context, Expression<Func<IRpcRequestContext, T>> ctx) => Expression.Property
             (
                 context,
-                typeof(IRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name)
+                typeof(IRpcRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name)
             );
 
             static LambdaExpression BuildGetResultDelegate(Type returnType) 

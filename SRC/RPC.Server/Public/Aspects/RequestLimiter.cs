@@ -47,7 +47,7 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Returns the request descriptor.
         /// </summary>
-        public IRequestContext RequestContext { get; }
+        public IRpcRequestContext RequestContext { get; }
 
         /// <summary>
         /// Returns the  request counter service.
@@ -62,7 +62,7 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="RequestLimiter{TInterface}"/> instance.
         /// </summary>
-        public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, IClock clock, int threshold, int interval) : base(target ?? throw new ArgumentNullException(nameof(target)))
+        public RequestLimiter(TInterface target, IRpcRequestContext requestContext, IRequestCounter requestCounter, IClock clock, int threshold, int interval) : base(target ?? throw new ArgumentNullException(nameof(target)))
         {
             Threshold = threshold;
             Interval = interval;
@@ -74,7 +74,7 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="RequestLimiter{TInterface}"/> instance.
         /// </summary>
-        public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter, IClock clock) : this(
+        public RequestLimiter(TInterface target, IRpcRequestContext requestContext, IRequestCounter requestCounter, IClock clock) : this(
             target,
             requestContext,
             requestCounter,
@@ -88,7 +88,7 @@ namespace Solti.Utils.Rpc.Aspects
         /// Creates a new <see cref="RequestLimiter{TInterface}"/> instance.
         /// </summary>
         [ServiceActivator]
-        public RequestLimiter(TInterface target, IRequestContext requestContext, IRequestCounter requestCounter) : this(
+        public RequestLimiter(TInterface target, IRpcRequestContext requestContext, IRequestCounter requestCounter) : this(
             target, 
             requestContext,
             requestCounter,
