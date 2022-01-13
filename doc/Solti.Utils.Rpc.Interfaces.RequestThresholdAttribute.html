@@ -184,7 +184,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
   <h5 id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false)]
+    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public sealed class RequestThresholdAttribute : Attribute</code></pre>
   </div>
   <h5 id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute_remarks"><strong>Remarks</strong></h5>
@@ -194,7 +194,7 @@ public sealed class RequestThresholdAttribute : Attribute</code></pre>
   </h3>
   <a id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor*"></a>
   <h4 id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_System_Int32_" data-uid="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.Int32)">RequestThresholdAttribute(Int32)</h4>
-  <div class="markdown level1 summary"><p>Creates a new a <a class="xref" href="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html">RequestThresholdAttribute</a> instance.</p>
+  <div class="markdown level1 summary"><p>Creates a new a <a class="xref" href="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html">RequestThresholdAttribute</a> instance against a given <code data-dev-comment-type="paramref" class="paramref">value</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -218,6 +218,35 @@ public sealed class RequestThresholdAttribute : Attribute</code></pre>
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_" data-uid="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_System_String_" data-uid="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.String)">RequestThresholdAttribute(String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new a <a class="xref" href="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html">RequestThresholdAttribute</a> instance against a given <code data-dev-comment-type="paramref" class="paramref">variableName</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestThresholdAttribute(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Use this constructor if you want to change the threshold value in runtime.</p>
+</div>
   <h3 id="properties">Properties
   </h3>
   <a id="Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute_Value_" data-uid="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.Value*"></a>

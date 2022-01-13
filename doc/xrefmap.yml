@@ -2237,6 +2237,12 @@ references:
   commentId: M:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.Int32)
   fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.RequestThresholdAttribute(System.Int32)
   nameWithType: RequestThresholdAttribute.RequestThresholdAttribute(Int32)
+- uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.String)
+  name: RequestThresholdAttribute(String)
+  href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html#Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_System_String_
+  commentId: M:Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor(System.String)
+  fullName: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.RequestThresholdAttribute(System.String)
+  nameWithType: RequestThresholdAttribute.RequestThresholdAttribute(String)
 - uid: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.#ctor*
   name: RequestThresholdAttribute
   href: Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html#Solti_Utils_Rpc_Interfaces_RequestThresholdAttribute__ctor_
