@@ -107,10 +107,10 @@ namespace Solti.Utils.Rpc.Aspects
 
             DateTime nowUtc = Clock.UtcNow;
 
+            RequestCounter.RegisterRequest(RequestId, nowUtc);
+
             if (RequestCounter.CountRequest(RequestId, nowUtc.Subtract(TimeSpan.FromMilliseconds(Interval)), nowUtc) > (context.Method.GetCustomAttribute<RequestThresholdAttribute>()?.Value ?? Threshold))
                 throw new HttpException { Status = HttpStatusCode.Forbidden };
-
-            RequestCounter.RegisterRequest(RequestId, nowUtc);
 
             return callNext();
         }
@@ -126,10 +126,11 @@ namespace Solti.Utils.Rpc.Aspects
 
             DateTime nowUtc = Clock.UtcNow;
 
+            await RequestCounter.RegisterRequestAsync(RequestId, nowUtc, RequestContext.Cancellation);
+
             if (await RequestCounter.CountRequestAsync(RequestId, nowUtc.Subtract(TimeSpan.FromMilliseconds(Interval)), nowUtc, RequestContext.Cancellation) > (context.Method.GetCustomAttribute<RequestThresholdAttribute>()?.Value ?? Threshold))
                 throw new HttpException { Status = HttpStatusCode.Forbidden };
 
-            await RequestCounter.RegisterRequestAsync(RequestId, nowUtc, RequestContext.Cancellation);
 
             return callNext();
         }

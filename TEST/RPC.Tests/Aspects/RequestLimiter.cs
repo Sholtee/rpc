@@ -29,7 +29,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             Task DoSomethingAsync();
             int Property
             {
-                [RequestThreshold(1)]
+                [RequestThreshold("my_variable")]
                 get;
             }
         }
@@ -65,10 +65,11 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockCounter = new Mock<IRequestCounter>(MockBehavior.Strict);
             mockCounter
-                .Setup(rq => rq.RegisterRequest(requestId, now));
+                .Setup(rq => rq.RegisterRequest(requestId, now))
+                .Callback<string, DateTime>((_, _) => invocationCount++);
             mockCounter
                 .Setup(rq => rq.CountRequest(requestId, now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now))
-                .Returns<string, DateTime, DateTime>((_, _, _) => ++invocationCount);
+                .Returns<string, DateTime, DateTime>((_, _, _) => invocationCount);
 
             Type proxyType = ProxyGenerator<IModule, RequestLimiter<IModule>>.GetGeneratedType();
 
@@ -78,7 +79,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             HttpException ex = Assert.Throws<HttpException>(module.DoSomething);
             Assert.That(ex.Status, Is.EqualTo(HttpStatusCode.Forbidden));
 
-            mockCounter.Verify(c => c.RegisterRequest(requestId, now), Times.Once);
+            mockCounter.Verify(c => c.RegisterRequest(requestId, now), Times.Exactly(2));
             mockCounter.Verify(c => c.CountRequest(requestId, now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now), Times.Exactly(2));
         }
 
@@ -118,10 +119,10 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             var mockCounter = new Mock<IRequestCounter>(MockBehavior.Strict);
             mockCounter
                 .Setup(rq => rq.RegisterRequestAsync(requestId, now, default))
-                .Returns(Task.CompletedTask);
+                .Returns<string, DateTime, CancellationToken>((_, _, _) => { invocationCount++; return Task.CompletedTask; });
             mockCounter
                 .Setup(rq => rq.CountRequestAsync(requestId, now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now, default))
-                .Returns<string, DateTime, DateTime, CancellationToken>((_, _, _, _) => Task.FromResult(++invocationCount));
+                .Returns<string, DateTime, DateTime, CancellationToken>((_, _, _, _) => Task.FromResult(invocationCount));
 
             Type proxyType = ProxyGenerator<IModule, RequestLimiter<IModule>>.GetGeneratedType();
 
@@ -131,7 +132,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             HttpException ex = Assert.ThrowsAsync<HttpException>(module.DoSomethingAsync);
             Assert.That(ex.Status, Is.EqualTo(HttpStatusCode.Forbidden));
 
-            mockCounter.Verify(c => c.RegisterRequestAsync(requestId, now, default), Times.Once);
+            mockCounter.Verify(c => c.RegisterRequestAsync(requestId, now, default), Times.Exactly(2));
             mockCounter.Verify(c => c.CountRequestAsync(requestId, now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now, default), Times.Exactly(2));
         }
 
@@ -246,6 +247,58 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             mockCounter.Verify(c => c.CountRequestAsync("127.0.0.1:1986_IModule_DoSomething", now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now, default), Times.Once);
             mockCounter.Verify(c => c.RegisterRequestAsync("127.0.0.1:1987_IModule_DoSomething", now, default), Times.Once);
             mockCounter.Verify(c => c.CountRequestAsync("127.0.0.1:1987_IModule_DoSomething", now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now, default), Times.Once);
+        }
+
+        [Test]
+        public void THreshold_MayBeChangedRuntime()
+        {
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .SetupGet(m => m.Property)
+                .Returns(0);
+
+            var mockContext = new Mock<IRequestContext>(MockBehavior.Strict);
+            mockContext
+                .SetupGet(ctx => ctx.RemoteEndPoint)
+                .Returns(new IPEndPoint(IPAddress.Loopback, 1986));
+            mockContext
+                .SetupGet(ctx => ctx.Module)
+                .Returns(nameof(IModule));
+            mockContext
+                .SetupGet(ctx => ctx.Method)
+                .Returns("get_Property");
+
+            DateTime now = DateTime.UtcNow;
+
+            const string requestId = "127.0.0.1:1986_IModule_get_Property";
+
+            var mockClock = new Mock<IClock>(MockBehavior.Strict);
+            mockClock
+                .SetupGet(c => c.UtcNow)
+                .Returns(now);
+
+            int invocationCount = 0;
+
+            var mockCounter = new Mock<IRequestCounter>(MockBehavior.Strict);
+            mockCounter
+                .Setup(rq => rq.RegisterRequest(requestId, now))
+                .Callback<string, DateTime>((_, _) => invocationCount++);
+            mockCounter
+                .Setup(rq => rq.CountRequest(requestId, now.Subtract(TimeSpan.FromMilliseconds(RequestLimiterAspectAttribute.DEFAULT_INTERVAL)), now))
+                .Returns<string, DateTime, DateTime>((_, _, _) => invocationCount);
+
+            Type proxyType = ProxyGenerator<IModule, RequestLimiter<IModule>>.GetGeneratedType();
+
+            IModule module = (IModule) Activator.CreateInstance(proxyType, mockModule.Object, mockContext.Object, mockCounter.Object, mockClock.Object);
+
+            Environment.SetEnvironmentVariable("my_variable", 1.ToString());
+
+            Assert.DoesNotThrow(() => _ = module.Property);
+            HttpException ex = Assert.Throws<HttpException>(() => _ = module.Property);
+            Assert.That(ex.Status, Is.EqualTo(HttpStatusCode.Forbidden));
+
+            Environment.SetEnvironmentVariable("my_variable", 3.ToString());
+            Assert.DoesNotThrow(() => _ = module.Property);
         }
     }
 }

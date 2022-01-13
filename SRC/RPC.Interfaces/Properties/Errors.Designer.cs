@@ -97,6 +97,15 @@ namespace Solti.Utils.Rpc.Interfaces.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The environment variable must contain a valid integer value..
+        /// </summary>
+        internal static string INVALID_VARIABLE {
+            get {
+                return ResourceManager.GetString("INVALID_VARIABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The module &quot;{0}&quot; could not be found..
         /// </summary>
         internal static string MODULE_NOT_FOUND {
