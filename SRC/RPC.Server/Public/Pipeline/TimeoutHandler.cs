@@ -72,4 +72,18 @@ namespace Solti.Utils.Rpc.Pipeline
             await task;
         }
     }
+
+    /// <summary>
+    /// Adds a timeout to the request processing.
+    /// </summary>
+    public class Timeout : RequestHandlerFactory
+    {
+        /// <summary>
+        /// The request timeout.
+        /// </summary>
+        public TimeSpan Value { get; set; } = TimeSpan.FromSeconds(10);
+
+        /// <inheritdoc/>
+        public override IRequestHandler Create(IRequestHandler next) => new TimeoutHandler(next, Value);
+    }
 }

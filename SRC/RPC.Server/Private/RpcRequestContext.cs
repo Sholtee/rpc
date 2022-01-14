@@ -19,7 +19,6 @@ namespace Solti.Utils.Rpc.Internals
     internal sealed class RpcRequestContext : IRpcRequestContext
     {
         private readonly HttpListenerRequest FOriginalRequest;
-
 #if DEBUG || PERF
         internal RpcRequestContext(string? sessionId, string module, string method, IPEndPoint remoteEndPoint, Stream payload, CancellationToken cancellation)
         {
@@ -38,6 +37,23 @@ namespace Solti.Utils.Rpc.Internals
 #endif
         public RpcRequestContext(HttpListenerRequest request, CancellationToken cancellation)
         {
+            //
+            // Metodus validalasa (POST eseten a keresnek kene legyen torzse).
+            //
+
+            if (request.HttpMethod.ToUpperInvariant() is not "POST")
+                throw new HttpException(Errors.HTTP_METHOD_NOT_SUPPORTED) { Status = HttpStatusCode.MethodNotAllowed };
+
+            //
+            // Tartalom validalasa. ContentType property bar nem nullable de lehet NULL.
+            //
+
+            if (request.ContentType?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) is not true)
+                throw new HttpException(Errors.HTTP_CONTENT_NOT_SUPPORTED) { Status = HttpStatusCode.BadRequest };
+
+            if (request.ContentEncoding?.WebName.Equals("utf-8", StringComparison.OrdinalIgnoreCase) is not true)
+                throw new HttpException(Errors.HTTP_ENCODING_NOT_SUPPORTED) { Status = HttpStatusCode.BadRequest };
+
             NameValueCollection paramz = request.QueryString;
 
             //
@@ -45,12 +61,11 @@ namespace Solti.Utils.Rpc.Internals
             //
 
             SessionId = paramz[nameof(SessionId)];
-            Module    = paramz[nameof(Module)] ?? throw new InvalidOperationException(Errors.NO_MODULE);
-            Method    = paramz[nameof(Method)] ?? throw new InvalidOperationException(Errors.NO_METHOD);
+            Module    = paramz[nameof(Module)] ?? throw new HttpException(Errors.NO_MODULE) { Status = HttpStatusCode.BadRequest };
+            Method    = paramz[nameof(Method)] ?? throw new HttpException(Errors.NO_METHOD) { Status = HttpStatusCode.BadRequest };
 
-            Payload = request.InputStream;
-            RemoteEndPoint = request.RemoteEndPoint;
-
+            Payload          = request.InputStream;
+            RemoteEndPoint   = request.RemoteEndPoint;
             FOriginalRequest = request;
 
             Cancellation = cancellation;

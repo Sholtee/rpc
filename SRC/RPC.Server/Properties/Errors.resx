@@ -132,6 +132,15 @@
   <data name="GENERIC_IFACE" xml:space="preserve">
     <value>Generic interfaces are not supported.</value>
   </data>
+  <data name="HTTP_CONTENT_NOT_SUPPORTED" xml:space="preserve">
+    <value>Content-Type not supported.</value>
+  </data>
+  <data name="HTTP_ENCODING_NOT_SUPPORTED" xml:space="preserve">
+    <value>Content-Encoding not supported.</value>
+  </data>
+  <data name="HTTP_METHOD_NOT_SUPPORTED" xml:space="preserve">
+    <value>Http method not supported.</value>
+  </data>
   <data name="INAPPROPRIATE_ARRAY_LENGTH" xml:space="preserve">
     <value>The length of the args array does not match the parameter count.</value>
   </data>
@@ -154,7 +163,7 @@
     <value>No compatible hosting found.</value>
   </data>
   <data name="NO_METHOD" xml:space="preserve">
-    <value>Request must specify a method.</value>
+    <value>Request must specify a module method.</value>
   </data>
   <data name="NO_MODULE" xml:space="preserve">
     <value>Request must specify a module.</value>

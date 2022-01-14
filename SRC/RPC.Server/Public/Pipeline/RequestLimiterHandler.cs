@@ -64,4 +64,27 @@ namespace Solti.Utils.Rpc.Pipeline
             await Next.Handle(context);
         }
     }
+
+    /// <summary>
+    /// Limits how many times a remote client could access the local resources (in a given period of time).
+    /// </summary>
+    public class RequestLimiter : RequestHandlerFactory
+    {
+        /// <summary>
+        /// The interval on which the request counting takes palce.
+        /// </summary>
+        /// <remarks>This property is a func so the returned value can be changed in runtime.</remarks>
+        public Func<TimeSpan> Interval { get; set; } = () => TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        /// The request threshold.
+        /// </summary>
+        /// <remarks>This property is a func so the returned value can be changed in runtime.</remarks>
+        public Func<int> Threshold { get; set; } = () => 1000;
+
+        /// <summary>
+        /// Creates a new <see cref="RequestLimiterHandler"/> instance.
+        /// </summary>
+        public override IRequestHandler Create(IRequestHandler next) => new RequestLimiterHandler(next, Interval, Threshold);
+    }
 }

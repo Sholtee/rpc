@@ -21,7 +21,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Processes unhandled exceptions.
     /// </summary>
-    public class ExceptionHandler : IRequestHandler
+    public class CatchAllExceptionsHandler : IRequestHandler
     {
         /// <summary>
         /// Writes the given <paramref name="responseString"/> to the <paramref name="response"/>.
@@ -88,10 +88,10 @@ namespace Solti.Utils.Rpc.Pipeline
         public IRequestHandler Next { get; }
 
         /// <summary>
-        /// Creates a new <see cref="ExceptionHandler"/> instance.
+        /// Creates a new <see cref="CatchAllExceptionsHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public ExceptionHandler(IRequestHandler next) => Next = next ?? throw new ArgumentNullException(nameof(next));
+        public CatchAllExceptionsHandler(IRequestHandler next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 
         /// <inheritdoc/>
         public async Task Handle(RequestContext context)
@@ -110,5 +110,14 @@ namespace Solti.Utils.Rpc.Pipeline
                 await ProcessUnhandledException(ex, context);
             }
         }
+    }
+
+    /// <summary>
+    /// Catches unhandled exceptions.
+    /// </summary>
+    public class ExceptionCatcher : RequestHandlerFactory
+    {
+        /// <inheritdoc/>
+        public override IRequestHandler Create(IRequestHandler next) => new CatchAllExceptionsHandler(next);
     }
 }
