@@ -53,9 +53,9 @@ namespace Solti.Utils.Rpc
                 // Ez az injector csak a listener thread-hez tartozik, ezen a metoduson kivul TILOS hasznalni.
                 //
 
-                using IInjector injector = ScopeFactory.CreateScope();
+                using IInjector scope = ScopeFactory.CreateScope();
 
-                ILogger? logger = injector.TryGet<ILogger>();
+                ILogger? logger = scope.TryGet<ILogger>();
 
                 //
                 // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
@@ -80,21 +80,9 @@ namespace Solti.Utils.Rpc
                     {
                         case TaskStatus.RanToCompletion:
                             logger?.LogInformation(Trace.REQUEST_AVAILABLE);
-
-                            Interlocked.Increment(ref FActiveRequests);
-
-                            injector
-                                .Get<IRequestHandler>()
-                                .HandleAsync(new RequestContext 
-                                {
-                                    Request = getContext.Result.Request,
-                                    Response = getContext.Result.Response,
-                                    Cancellation = FListenerCancellation.Token,
-                                    Scope = injector
-                                })
-                                .ContinueWith(_ => Interlocked.Decrement(ref FActiveRequests), TaskContinuationOptions.ExecuteSynchronously);
-
+                            _ = CreateSession(getContext.Result);
                             break;
+
                         case TaskStatus.Faulted:
                             logger?.LogError(getContext.Exception.ToString());
                             break;
@@ -107,6 +95,24 @@ namespace Solti.Utils.Rpc
             {
                 System.Diagnostics.Trace.WriteLine(string.Format(Trace.Culture, Trace.EXCEPTION_IN_LISTENER_THREAD, ex));
             }
+        }
+
+        private async Task CreateSession(HttpListenerContext context)
+        {
+            Interlocked.Increment(ref FActiveRequests);
+            try
+            {
+                await using IInjector scope = ScopeFactory.CreateScope();
+
+                await scope.Get<IRequestHandler>().HandleAsync(new RequestContext
+                {
+                    Request      = context.Request,
+                    Response     = context.Response,
+                    Cancellation = FListenerCancellation!.Token,
+                    Scope        = scope
+                });
+            } 
+            finally { Interlocked.Decrement(ref FActiveRequests); }
         }
 
         private HttpListener CreateCore() 
@@ -136,9 +142,9 @@ namespace Solti.Utils.Rpc
 
             ProcessStartInfo psi = new("netsh", arguments)
             {
-                Verb = "runas",
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                Verb            = "runas",
+                CreateNoWindow  = true,
+                WindowStyle     = ProcessWindowStyle.Hidden,
                 UseShellExecute = true
             };
 

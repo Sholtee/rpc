@@ -466,7 +466,8 @@ namespace Solti.Utils.Rpc.Tests
 
             StartServer();
 
-            await Task.WhenAll(Enumerable.Repeat(0, 20).Select(_ => InvokeModule()));
+            for (int i = 0; i < 20; i++)
+                await InvokeModule();
 
             Assert.That(moduleRequested, Is.EqualTo(20));
 
@@ -683,9 +684,8 @@ namespace Solti.Utils.Rpc.Tests
 
             IModule module = await clientFactory.CreateClient<IModule>();
 
-            RpcException ex = Assert.Throws<RpcException>(() => module.Add(1, 1));
-            Assert.That(ex.InnerException, Is.TypeOf<InvalidOperationException>());
-            Assert.That(ex.InnerException.Message, Is.EqualTo(Errors.NO_MODULE));
+            HttpRequestException ex = Assert.Throws<HttpRequestException>(() => module.Add(1, 1));
+            Assert.That(ex.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         private class BadRpcClientFactory : RpcClientFactory
