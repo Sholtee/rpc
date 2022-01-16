@@ -37,7 +37,7 @@ namespace Solti.Utils.Rpc.Server.Sample
                             modules.Register<ICalculator, Calculator>();
                             break;
                         case RpcAccessControl ac:
-                            ac.AllowedMethods.Add("http://localhost:1987");
+                            ac.AllowedOrigins.Add("http://localhost:1987");
                             break;
                     }
                 })
