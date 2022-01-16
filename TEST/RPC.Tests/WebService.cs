@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,8 @@ using NUnit.Framework;
 namespace Solti.Utils.Rpc.Tests
 {
     using DI.Interfaces;
-    using Internals;   
+    using Interfaces;
+    using Pipeline;
 
     [TestFixture]
     public class WebServiceTests
@@ -25,41 +27,68 @@ namespace Solti.Utils.Rpc.Tests
             Hello   = "Hello World",
             TestUrl = "http://127.0.0.1:1986/test/";
 
-        private class DummyWebService : WebService 
+        static async Task WriteResponseString(HttpListenerResponse response, string responseString)
         {
-            protected override Task Process(HttpListenerContext context, IInjector injector, CancellationToken cancellation)
-            {
-                if (OnRequest != null)
-                {
-                    return OnRequest.Invoke(context, cancellation);
-                }
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+            response.ContentEncoding = Encoding.UTF8;
+            response.ContentLength64 = buffer.Length;
+            await response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+        }
 
-                return base.Process(context, injector, cancellation);
-            }
+        private sealed class RequestDelegatorHandler : IRequestHandler
+        {
+            public IRequestHandler Next => throw new NotImplementedException();
 
-            public Func<HttpListenerContext, CancellationToken, Task> OnRequest { get; set; }
+            public Func<RequestContext, Task> OnRequest { get; }
 
-            public DummyWebService(WebServiceDescriptor webServiceDescriptor = null ): base(webServiceDescriptor ?? new WebServiceDescriptor { Url = TestUrl }) => OnRequest = (context, _) =>
+            public Task HandleAsync(RequestContext context) => OnRequest(context);
+
+            public RequestDelegatorHandler(Func<RequestContext, Task> onRequest) => OnRequest = onRequest;
+        }
+
+        private sealed class RequestDelegator : RequestHandlerFactory
+        {
+            public Func<RequestContext, Task> Handler { get; private set; } = async context =>
             {
                 HttpListenerResponse response = context.Response;
 
                 response.ContentType = "text/html";
                 response.StatusCode = 200;
 
-                WriteResponseString(response, Hello).Wait();
+                await WriteResponseString(response, Hello);
 
                 response.Close();
-
-                return Task.CompletedTask;
             };
+
+            public void SetHandler(Func<RequestContext, Task> handler) => Handler = handler;
+
+            protected override IRequestHandler Create(IRequestHandler next) => new RequestDelegatorHandler(Handler);
         }
 
-        private DummyWebService Svc { get; set; }
-
-        [SetUp]
-        public void SetupFixture() 
+        private sealed class DummyRequestCounter : IRequestCounter
         {
+            public int CountRequest(string id, DateTime fromUtc, DateTime toUtc) => throw new NotImplementedException();
+
+            public Task<int> CountRequestAsync(string id, DateTime fromUtc, DateTime toUtc, CancellationToken cancellation = default) => Task.FromResult(0);
+
+            public void RegisterRequest(string id, DateTime whenUtc) => throw new NotImplementedException();
+
+            public Task RegisterRequestAsync(string id, DateTime whenUtc, CancellationToken cancellation = default) => Task.CompletedTask;
         }
+
+        private WebService Svc { get; set; }
+
+        private static WebServiceBuilder CreateBuilder(Action<RequestHandlerFactory> config = null) => new WebServiceBuilder { Url = TestUrl }
+            .ConfigurePipeline(pipe => pipe
+                .Use<RequestDelegator>(config)
+                .Use<Timeout>(config)
+                .Use<HttpAccessControl>(config)
+                .Use<RequestLimiter>(config)
+                .Use<ExceptionCatcher>())
+            .ConfigureServices(services => services
+                .Service<IRequestCounter, DummyRequestCounter>(Lifetime.Scoped));
+
+        private static WebService CreateService(Action<RequestHandlerFactory> config = null) => CreateBuilder(config).Build();
 
         [TearDown]
         public void TeardownFixture() 
@@ -70,7 +99,7 @@ namespace Solti.Utils.Rpc.Tests
 
         private static async Task InvokeService()
         {
-            using var client = new HttpClient();
+            using HttpClient client = new();
 
             HttpResponseMessage response = await client.GetAsync(TestUrl);
             response.EnsureSuccessStatusCode();
@@ -82,7 +111,7 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_ShouldHandleRequests() 
         {
-            Svc = new DummyWebService();
+            Svc = CreateService();
             Svc.Start();
 
             await InvokeService();
@@ -91,7 +120,7 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public void Service_ShouldHandleRequestsAsynchronously()
         {
-            Svc = new DummyWebService();
+            Svc = CreateService();
             Svc.Start();
 
             Assert.DoesNotThrowAsync(() => Task.WhenAll(Enumerable
@@ -102,8 +131,7 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_ShouldHandleExceptions() 
         {
-            Svc = new DummyWebService();
-            Svc.OnRequest = (_, __) => throw new Exception();
+            Svc = CreateService(conf => (conf as RequestDelegator)?.SetHandler(_ => throw new Exception()));
             Svc.Start();
 
             using var client = new HttpClient();
@@ -119,7 +147,7 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_CanBeRestarted() 
         {
-            Svc = new DummyWebService();
+            Svc = CreateService();
             Svc.Start();
 
             Assert.That(Svc.IsStarted);
@@ -145,15 +173,14 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public void Start_ShouldValidateTheUrl() 
         {
-            using var svc = new WebService(new WebServiceDescriptor { Url = "invalid" });
+            using var svc = new WebServiceBuilder { Url = "invalid" }.Build();
             Assert.Throws<ArgumentException>(svc.Start);
         }
 
         [Test]
-        public async Task Service_ShouldReturnHttp200ByDefault() 
+        public async Task Service_ShouldReturnHttpNoContentByDefault() 
         {
-            Svc = new DummyWebService();
-            Svc.OnRequest = null;
+            Svc = new WebServiceBuilder { Url = TestUrl }.Build();
             Svc.Start();
 
             using var client = new HttpClient();
@@ -169,10 +196,20 @@ namespace Solti.Utils.Rpc.Tests
         {
             const string origin = "http://cica.hu";
 
-            var mockProcessor = new Mock<Func<HttpListenerContext, CancellationToken, Task>>(MockBehavior.Strict);
+            var mockProcessor = new Mock<Func<RequestContext, Task>>(MockBehavior.Strict);
 
-            Svc = new DummyWebService(new WebServiceDescriptor { Url = TestUrl, AllowedOrigins = new[] { origin } });
-            Svc.OnRequest = mockProcessor.Object;
+            Svc = CreateService(conf =>
+            {
+                switch (conf)
+                {
+                    case RequestDelegator delegator:
+                        delegator.SetHandler(mockProcessor.Object);
+                        break;
+                    case HttpAccessControl ac:
+                        ac.AllowedOrigins.Add(origin);
+                        break;
+                }
+            });
             Svc.Start();
 
             using var client = new HttpClient();
@@ -185,15 +222,14 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(response.Headers.GetValues("Access-Control-Allow-Origin").Single(), Is.EqualTo(origin));
             Assert.That(response.Headers.GetValues("Vary").Single(), Is.EqualTo("Origin"));
             
-            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockProcessor.Verify(ctx => ctx(It.IsAny<RequestContext>()), Times.Never);
         }
 
         private async Task Service_ShouldAllowAnyXxXByDefault(string headerName) 
         {
-            var mockProcessor = new Mock<Func<HttpListenerContext, CancellationToken, Task>>(MockBehavior.Strict);
+            var mockProcessor = new Mock<Func<RequestContext, Task>>(MockBehavior.Strict);
 
-            Svc = new DummyWebService();
-            Svc.OnRequest = mockProcessor.Object;
+            Svc = CreateService(conf => (conf as RequestDelegator)?.SetHandler(mockProcessor.Object));
             Svc.Start();
 
             using var client = new HttpClient();
@@ -202,7 +238,7 @@ namespace Solti.Utils.Rpc.Tests
 
             Assert.That(response.Headers.GetValues(headerName).Single(), Is.EqualTo("*"));
 
-            mockProcessor.Verify(ctx => ctx(It.IsAny<HttpListenerContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockProcessor.Verify(ctx => ctx(It.IsAny<RequestContext>()), Times.Never);
         }
 
         [Test]
@@ -216,15 +252,25 @@ namespace Solti.Utils.Rpc.Tests
         {
             Task processor = null;
 
-            Svc = new DummyWebService(new WebServiceDescriptor { Url = TestUrl, Timeout = TimeSpan.FromSeconds(1) });
-            Svc.OnRequest = (context, cancellation) => processor = Task.Factory.StartNew(() => 
+            Svc = CreateService(conf => 
             {
-                using var evt = new ManualResetEventSlim();
-                evt.Wait(cancellation);
-            }, TaskCreationOptions.LongRunning);
+                switch (conf)
+                {
+                    case RequestDelegator delgator:
+                        delgator.SetHandler(ctx => processor = Task.Factory.StartNew(() =>
+                        {
+                            using ManualResetEventSlim evt = new();
+                            evt.Wait(ctx.Cancellation);
+                        }, TaskCreationOptions.LongRunning));
+                        break;
+                    case Timeout timeout:
+                        timeout.Value = TimeSpan.FromSeconds(1);
+                        break;
+                }
+            });
             Svc.Start();
 
-            using var client = new HttpClient();
+            using HttpClient client = new();
 
             HttpResponseMessage response = await client.GetAsync(TestUrl);
 
@@ -233,6 +279,49 @@ namespace Solti.Utils.Rpc.Tests
 
             Thread.Sleep(100);
             Assert.That(processor.IsCompleted);
+        }
+
+        [Test]
+        public async Task Service_ShouldRejectTheRequestIfThereIsAThresholSet()
+        {
+            int count = 0;
+
+            var mockRequestCounter = new Mock<IRequestCounter>(MockBehavior.Strict);
+            mockRequestCounter
+                .Setup(rc => rc.RegisterRequestAsync(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
+                .Returns<string, DateTime, CancellationToken>((_, _, _) => 
+                {
+                    Interlocked.Increment(ref count);
+                    return Task.CompletedTask;
+                });
+            mockRequestCounter
+                .Setup(rc => rc.CountRequestAsync(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
+                .Returns<string, DateTime, DateTime, CancellationToken>((_, _, _, _) => Task.FromResult(count));
+
+            Svc = 
+                CreateBuilder(conf => 
+                {
+                    switch (conf)
+                    {
+                        case RequestLimiter requestLimiter:
+                            requestLimiter.Interval = () => TimeSpan.FromSeconds(60);
+                            requestLimiter.Threshold = () => 1;
+                            break;
+                    }
+                })
+                .ConfigureServices(services => services
+                    .Single(svc => svc.Interface == typeof(IRequestCounter))
+                    .ApplyProxy((_, _, _) => mockRequestCounter.Object))
+                .Build();
+            Svc.Start();
+
+            using var client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync(TestUrl);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            response = await client.GetAsync(TestUrl);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
         }
     }
 }

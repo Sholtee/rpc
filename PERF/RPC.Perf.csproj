@@ -9,7 +9,7 @@
     <AssemblyName>RPC.Perf</AssemblyName>
     <RootNamespace>Solti.Utils.Rpc.Perf</RootNamespace>
     <OutputPath>..\BIN\$(Configuration)\</OutputPath>
-    <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
     <Optimize>true</Optimize>
   </PropertyGroup>
 

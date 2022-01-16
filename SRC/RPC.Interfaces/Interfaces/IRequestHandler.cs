@@ -76,6 +76,6 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Does some handler specific work.
         /// </summary>
         /// <remarks></remarks>
-        Task Handle(RequestContext context);
+        Task HandleAsync(RequestContext context);
     }
 }

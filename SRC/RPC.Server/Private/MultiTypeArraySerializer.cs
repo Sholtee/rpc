@@ -48,17 +48,15 @@ namespace Solti.Utils.Rpc.Internals
 #endif
         }
 
-        public Task<object?[]> Deserialize(Stream json, CancellationToken cancellation)
-        {
-            return JsonSerializer
-                .DeserializeAsync<object?[]>(json, SerializerOptions, cancellation)
-                .AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
-        }
+        public Task<object?[]> Deserialize(Stream json, CancellationToken cancellation) => JsonSerializer
+            .DeserializeAsync<object?[]>(json, SerializerOptions, cancellation)
+            .AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
 #if DEBUG
         public object?[] Deserialize(string json) 
         {
-            using var stm = new MemoryStream();
-            using var sw = new StreamWriter(stm);
+            using MemoryStream stm = new();
+            using StreamWriter sw = new(stm);
+
             sw.Write(json);
             sw.Flush();
             stm.Seek(0, SeekOrigin.Begin);
@@ -78,7 +76,8 @@ namespace Solti.Utils.Rpc.Internals
                 // Csak tomboket tamogatunk
                 //
 
-                if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException(Errors.NOT_AN_ARRAY);
+                if (reader.TokenType is not JsonTokenType.StartArray)
+                    throw new JsonException(Errors.NOT_AN_ARRAY);
 
                 object?[] result = new object?[ElementTypes.Count];
 
@@ -90,7 +89,8 @@ namespace Solti.Utils.Rpc.Internals
                         // A tomb hossza kissebb mint az elvart.
                         //
 
-                        if (i < result.Length) throw new JsonException(Errors.INAPPROPRIATE_ARRAY_LENGTH);
+                        if (i < result.Length)
+                            throw new JsonException(Errors.INAPPROPRIATE_ARRAY_LENGTH);
 
                         return result;
                     }
@@ -99,7 +99,8 @@ namespace Solti.Utils.Rpc.Internals
                     // A tomb hossza nagyobb mint az elvart
                     //
 
-                    if (i == result.Length) throw new JsonException(Errors.INAPPROPRIATE_ARRAY_LENGTH);
+                    if (i == result.Length)
+                        throw new JsonException(Errors.INAPPROPRIATE_ARRAY_LENGTH);
 
                     //
                     // Elem deszerializalasa es rogzitese

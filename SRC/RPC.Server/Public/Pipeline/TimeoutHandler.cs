@@ -35,7 +35,7 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public async Task Handle(RequestContext context)
+        public async Task HandleAsync(RequestContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -50,7 +50,7 @@ namespace Solti.Utils.Rpc.Pipeline
                 taskCancellation = new(),
                 linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(taskCancellation.Token, context.Cancellation);
 
-            Task task = Next.Handle(new RequestContext(context) 
+            Task task = Next.HandleAsync(new RequestContext(context) 
             { 
                 Cancellation = linkedCancellation.Token
             });
@@ -84,6 +84,6 @@ namespace Solti.Utils.Rpc.Pipeline
         public TimeSpan Value { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <inheritdoc/>
-        public override IRequestHandler Create(IRequestHandler next) => new TimeoutHandler(next, Value);
+        protected override IRequestHandler Create(IRequestHandler next) => new TimeoutHandler(next, Value);
     }
 }

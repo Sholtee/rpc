@@ -3,10 +3,9 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System;
-using System.Linq;
 
 #pragma warning disable CA1716 // Identifiers should not match keywords
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 namespace Solti.Utils.Rpc.Pipeline
 {
@@ -19,48 +18,20 @@ namespace Solti.Utils.Rpc.Pipeline
     public abstract class RequestHandlerFactory
     {
         /// <summary>
-        /// Registers the underlying request handler.
+        /// Called once the factory configuration is finished. 
         /// </summary>
-        public virtual void AddTo(IServiceCollection services)
-        {
-            if (services is null)
-                throw new ArgumentNullException(nameof(services));
-
-            services
-                .First(svc => svc.Interface == typeof(IRequestHandler) && svc.Name is null)
-                .ApplyProxy((_, _, next) => Create((IRequestHandler) next));
-        }
+        /// <remarks>You should not call this method directly.</remarks>
+        protected internal virtual void FinishConfiguration() => WebServiceBuilder.Pipe.ApplyProxy((_, _, next) => Create((IRequestHandler) next));
 
         /// <summary>
         /// Creates a new request handler instance.
         /// </summary>
-        public abstract IRequestHandler Create(IRequestHandler next);
-    }
-
-    /// <summary>
-    /// Defines extensions related to <see cref="RequestHandlerFactory"/> class.
-    /// </summary>
-    public static class RequestHandlerFactoryExtensions
-    {
-        /// <summary>
-        /// Uses the given request handler.
-        /// </summary>
-        public static void Use<THandlerFactory>(this IServiceCollection services, Action<THandlerFactory> configCallback) where THandlerFactory : RequestHandlerFactory, new()
-        {
-            if (services is null)
-                throw new ArgumentNullException(nameof(services));
-
-            if (configCallback is null)
-                throw new ArgumentNullException(nameof(configCallback));
-
-            THandlerFactory factory = new();
-            configCallback(factory);
-            factory.AddTo(services);
-        }
+        /// <remarks>You should not call this method directly.</remarks>
+        protected abstract IRequestHandler Create(IRequestHandler next);
 
         /// <summary>
-        /// Uses the given request handler.
+        /// The <see cref="Solti.Utils.Rpc.WebServiceBuilder"/> that instantiated this class.
         /// </summary>
-        public static void Use<THandlerFactory>(this IServiceCollection services) where THandlerFactory : RequestHandlerFactory, new() => Use<THandlerFactory>(services, _ => { });
+        public WebServiceBuilder WebServiceBuilder { get; init; }
     }
 }

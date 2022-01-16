@@ -91,7 +91,7 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public Task Handle(RequestContext context)
+        public Task HandleAsync(RequestContext context)
         {
             SetAcHeaders(context);
 
@@ -102,7 +102,7 @@ namespace Solti.Utils.Rpc.Pipeline
                 return Task.CompletedTask;
             }
 
-            return Next.Handle(context);
+            return Next.HandleAsync(context);
         }
     }
 
@@ -119,20 +119,33 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Allowed methods.
         /// </summary>
-        public ICollection<string> AllowedMethods { get; } = new HashSet<string>();
+        public virtual ICollection<string> AllowedMethods { get; } = new HashSet<string>();
 
         /// <summary>
         /// Allowed headers.
         /// </summary>
-        public ICollection<string> AllowedHeaders { get; } = new HashSet<string>();
+        public virtual ICollection<string> AllowedHeaders { get; } = new HashSet<string>();
 
         /// <inheritdoc/>
-        public override IRequestHandler Create(IRequestHandler next) => new HttpAccessControlHandler
+        protected override IRequestHandler Create(IRequestHandler next) => new HttpAccessControlHandler
         (
             next,
             (IReadOnlyCollection<string>) AllowedOrigins,
-            (IReadOnlyCollection<string>) (AllowedMethods.Count == 0 ? new string[] { "*" } : AllowedMethods),
-            (IReadOnlyCollection<string>) (AllowedHeaders.Count == 0 ? new string[] { "*" } : AllowedHeaders)
+            (IReadOnlyCollection<string>) (AllowedMethods.Count is 0 ? new string[] { "*" } : AllowedMethods),
+            (IReadOnlyCollection<string>) (AllowedHeaders.Count is 0 ? new string[] { "*" } : AllowedHeaders)
         );
+    }
+
+    /// <summary>
+    /// Handles access control HTTP requests.
+    /// </summary>
+    /// <remarks>Allowed method: POST, Allowed headers: Content-Type, Content-Length</remarks>
+    public class RpcAccessControl : HttpAccessControl
+    {
+        /// <inheritdoc/>
+        public override ICollection<string> AllowedMethods { get; } = new string[] { "POST" };
+
+        /// <inheritdoc/>
+        public override ICollection<string> AllowedHeaders { get; } = new string[] { "Content-Type", "Content-Length" };
     }
 }

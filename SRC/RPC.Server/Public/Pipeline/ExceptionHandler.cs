@@ -94,14 +94,14 @@ namespace Solti.Utils.Rpc.Pipeline
         public CatchAllExceptionsHandler(IRequestHandler next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 
         /// <inheritdoc/>
-        public async Task Handle(RequestContext context)
+        public async Task HandleAsync(RequestContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             try
             {
-                await Next.Handle(context);
+                await Next.HandleAsync(context);
             }
             catch (Exception ex)
             {
@@ -118,6 +118,6 @@ namespace Solti.Utils.Rpc.Pipeline
     public class ExceptionCatcher : RequestHandlerFactory
     {
         /// <inheritdoc/>
-        public override IRequestHandler Create(IRequestHandler next) => new CatchAllExceptionsHandler(next);
+        protected override IRequestHandler Create(IRequestHandler next) => new CatchAllExceptionsHandler(next);
     }
 }

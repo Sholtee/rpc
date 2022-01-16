@@ -42,7 +42,7 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Returns the request idintifier.
         /// </summary>
-        public string RequestId => $"{RequestContext.RemoteEndPoint}_{RequestContext.Module}_{RequestContext.Method}";
+        public string RequestId => $"{RequestContext.OriginalRequest.RemoteEndPoint}_{RequestContext.Module}_{RequestContext.Method}";
 
         /// <summary>
         /// Returns the request descriptor.

@@ -171,6 +171,9 @@
   <data name="NO_ROLES_SPECIFIED" xml:space="preserve">
     <value>There is no RequiredRoles attribute specified for the module method {0}.</value>
   </data>
+  <data name="SCHEME_NOT_SUPPORTED" xml:space="preserve">
+    <value>Scheme not supported.</value>
+  </data>
   <data name="SC_INVOCATION_FAILED" xml:space="preserve">
     <value>Service Control Manager invocation failed. Error {0}</value>
   </data>

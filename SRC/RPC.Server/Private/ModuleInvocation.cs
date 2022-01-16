@@ -24,11 +24,9 @@ namespace Solti.Utils.Rpc.Internals
     using Properties;
 
     /// <summary>
-    /// Executes module methods by context.
+    /// Executes module methods.
     /// </summary>
-    /// <param name="injector">The <see cref="IInjector"/> in which the module was registered.</param>
-    /// <param name="context">The context which describes the invocation.</param>
-    public delegate Task<object?> ModuleInvocation(IInjector injector, IRpcRequestContext context);
+    public delegate Task<object?> ModuleInvocation(IInjector injector, IRpcRequestContext context, JsonSerializerOptions serializerOptions);
 
     /// <summary>
     /// Defines some extensions to the <see cref="ModuleInvocation"/> delegate.
@@ -52,6 +50,12 @@ namespace Solti.Utils.Rpc.Internals
         private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
 
         private readonly HashSet<Type> FModules = new();
+
+        static MemberExpression GetFromContext<T>(ParameterExpression context, Expression<Func<IRpcRequestContext, T>> ctx) => Expression.Property
+        (
+            context,
+            typeof(IRpcRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name)
+        );
 
         //
         // {throw new Exception(...); return null;}
@@ -116,7 +120,7 @@ namespace Solti.Utils.Rpc.Internals
                 .Distinct();
 
         //
-        // (injector, ctx) =>
+        // (injector, ctx, serializerOpts) =>
         // {
         //   switch (ctx.Module)
         //   {
@@ -127,7 +131,7 @@ namespace Solti.Utils.Rpc.Internals
         //         case "Method_1":
         //            return DoInvoke
         //            (
-        //              deserializer(context.Payload, context.Cancellation),
+        //              deserializer(context.Payload, serializerOpts, context.Cancellation),
         //              args => ((IModuleA) injector.Get(typeof(IModuleA), null)).Method_1((T0) arg0, (T1) arg1, ...),
         //              task => (object) ((Task<TResult>) task).Result | null
         //            );
@@ -145,12 +149,13 @@ namespace Solti.Utils.Rpc.Internals
         private Expression<ModuleInvocation> BuildExpression(IEnumerable<Type> interfaces) 
         {
             ParameterExpression
-                injector  = Expression.Parameter(typeof(IInjector), nameof(injector)),
-                context   = Expression.Parameter(typeof(IRpcRequestContext), nameof(context));
+                injector       = Expression.Parameter(typeof(IInjector), nameof(injector)),
+                context        = Expression.Parameter(typeof(IRpcRequestContext), nameof(context)),
+                serializerOpts = Expression.Parameter(typeof(JsonSerializerOptions), nameof(serializerOpts));
 
-            Expression
-                ifaceId  = GetFromContext(context, context => context.Module),
-                methodId = GetFromContext(context, context => context.Method);
+            MemberExpression
+                module = GetFromContext(context, ctx => ctx.Module),
+                method = GetFromContext(context, ctx => ctx.Method);
 
             return Expression.Lambda<ModuleInvocation>
             (
@@ -158,66 +163,81 @@ namespace Solti.Utils.Rpc.Internals
                 (
                     CreateSwitch
                     (
-                        value: ifaceId,
+                        value: module,
                         cases: interfaces.Select
                         (
-                            iface =>
+                            moduleType =>
                             (
-                                (MemberInfo) iface,
+                                (MemberInfo) moduleType,
                                 (Expression) CreateSwitch
                                 (
-                                    value: methodId, 
-                                    cases: GetAllInterfaceMethods(iface).Where(method => method.GetCustomAttribute<IgnoreAttribute>() == null).Select
+                                    value: method, 
+                                    cases: GetAllInterfaceMethods(moduleType).Where(method => method.GetCustomAttribute<IgnoreAttribute>() is null).Select
                                     (
-                                        method => 
+                                        methodType => 
                                         (
-                                            (MemberInfo) method, 
-                                            (Expression) InvokeModule(iface, method)
+                                            (MemberInfo) methodType,
+                                            (Expression) InvokeModule(moduleType, methodType)
                                         )
                                     ), 
-                                    defaultBody: Throw<MissingMethodException>(new[] { typeof(string), typeof(string) }, ifaceId, methodId)
+                                    defaultBody: Throw<MissingMethodException>(new[] { typeof(string), typeof(string) }, module, method)
                                 )
                             )
                         ),
-                        defaultBody: Throw<MissingModuleException>(new[] { typeof(string) }, ifaceId)
+                        defaultBody: Throw<MissingModuleException>(new[] { typeof(string) }, module)
                     )
                 ),
                 injector,
-                context
+                context,
+                serializerOpts
             );
 
             Expression InvokeModule(Type module, MethodInfo ifaceMethod)
             {
-                ParameterExpression
-                    //
-                    // A localXxX valtozok workaround-ok mivel (gozom nincs miert) ha switch esetek szama eler egy szamot
-                    // akkor a lambda fordito elvesziti a scope-ot es elszall InvalidOperationException-el. NE modositsd!
-                    //
+                //
+                // A "localInjector" valtozo egy workaround mivel (gozom nincs miert) ha switch esetek szama eler egy szamot
+                // akkor a ModuleInvocationDelegate osszeallitasakor a fordito elszall InvalidOperationException-el.
+                //
+                // A "context"-re es a "serializerOpts"-ra nem kell ilyen valtozo mivel oket nem akarjuk egy belso lambda-ban
+                // is hasznalni.
+                //
 
-                    localInjector = Expression.Variable(typeof(IInjector), nameof(localInjector)),
-                    localContext  = Expression.Variable(typeof(IRpcRequestContext), nameof(localContext)),
-                    args          = Expression.Parameter(typeof(object?[]), nameof(args));
+                ParameterExpression localInjector = Expression.Parameter(typeof(IInjector), nameof(localInjector));
 
-                Expression
-                    assignLocalInjector = Expression.Assign(localInjector, injector),
-                    assignLocalContext  = Expression.Assign(localContext, context),
+                //
+                // DoInvoke(deserializer(context.Payload, serializerOpts, context.Cancellation), args => {...invokeModule...}, task => {...getResult...})
+                //
 
-                    //
-                    // deserializer(context.Payload, context.Cancellation);
-                    //
-
-                    getArgs = Expression.Invoke
+                return Expression.Block
+                (
+                    new[] { localInjector },
+                    Expression.Assign(localInjector, injector),
+                    Expression.Invoke
                     (
-                        Expression.Constant(GetDeserializerFor(ifaceMethod)),
-                        GetFromContext(localContext, localContext => localContext.Payload),
-                        GetFromContext(localContext, localContext => localContext.Cancellation)
-                    ),
+                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Func<Task, object?>, Task<object?>>) DoInvoke),
+                        BuildDeserializerInvocation(),
+                        BuildModuleInvocationDelegate(module, ifaceMethod),
+                        BuildGetResultDelegate(ifaceMethod.ReturnType)
+                    )
+                );
+
+                Expression BuildDeserializerInvocation() => Expression.Invoke
+                (
+                    Expression.Constant(GetDeserializerFor(ifaceMethod)),
+                    GetFromContext(context, ctx => ctx.Payload),
+                    serializerOpts,
+                    GetFromContext(context, ctx => ctx.Cancellation)
+                );
+
+                Expression<Func<object?[], object?>> BuildModuleInvocationDelegate(Type module, MethodInfo ifaceMethod)
+                {
+                    ParameterExpression args = Expression.Parameter(typeof(object?[]), nameof(args));
 
                     //
                     // args => ((TInterface) injector.Get(typeof(TInterface), null)).Method((T0) args[0], ..., (TN) args[N])
                     //
 
-                    invokeModule = Expression.Call
+                    Expression invokeModule = Expression.Call
                     (
                         //
                         // (TInterface) injector.Get(typeof(TInterface), null)
@@ -250,92 +270,64 @@ namespace Solti.Utils.Rpc.Internals
                         )
                     );
 
-                List<Expression> invocationBlock = new();
+                    if (ifaceMethod.ReturnType != typeof(void))
+                        //
+                        // return (object) ...;
+                        //
 
-                if (ifaceMethod.ReturnType != typeof(void))
-                    //
-                    // return (object) ...;
-                    //
+                        invokeModule = Expression.Convert(invokeModule, typeof(object));
+                    else
+                    {
+                        //
+                        // ...;
+                        // return null;
+                        //
 
-                    invocationBlock.Add
+                        List<Expression> invocationBlock = new();
+
+                        invocationBlock.Add(invokeModule);
+                        invocationBlock.Add(Expression.Default(typeof(object)));
+
+                        invokeModule = Expression.Block(invocationBlock);
+                    }
+
+                    return Expression.Lambda<Func<object?[], object?>>
                     (
-                        Expression.Convert(invokeModule, typeof(object))
+                        Expression.Block(invokeModule),
+                        args
                     );
-                else
-                {
-                    //
-                    // ...;
-                    // return null;
-                    //
-
-                    invocationBlock.Add(invokeModule);
-                    invocationBlock.Add(Expression.Default(typeof(object)));
                 }
 
-                return Expression.Block
-                (
-                    //
-                    // Parameterek lokalizalasa egy workaround (lasd metodus teteje), NE modositsd!
-                    //
+                static LambdaExpression BuildGetResultDelegate(Type returnType) 
+                {
+                    ParameterExpression task = Expression.Parameter(typeof(Task), nameof(task));
 
-                    new[] { localInjector, localContext },
+                    BlockExpression block = !typeof(Task).IsAssignableFrom(returnType) || returnType == typeof(Task)
+                        //
+                        // task => null;
+                        //
 
-                    assignLocalInjector,
-                    assignLocalContext,
+                        ? Expression.Block(Expression.Default(typeof(object)))
 
-                    //
-                    // DoInvoke(deserializer(context.Payload, context.Cancellation), args => {...})
-                    //
+                        //
+                        // task => (object) ((Task<TResult>) task).Result;
+                        //
 
-                    Expression.Invoke
-                    (
-                        Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Func<Task, object?>, Task<object?>>) DoInvoke),
-                        getArgs,
-                        Expression.Lambda<Func<object?[], object?>>
+                        : Expression.Block
                         (
-                           Expression.Block(invocationBlock),
-                           args
-                        ),
-                        BuildGetResultDelegate(ifaceMethod.ReturnType)
-                    )
-                );
-            }
-
-            static MemberExpression GetFromContext<T>(ParameterExpression context, Expression<Func<IRpcRequestContext, T>> ctx) => Expression.Property
-            (
-                context,
-                typeof(IRpcRequestContext).GetProperty(((MemberExpression) ctx.Body).Member.Name)
-            );
-
-            static LambdaExpression BuildGetResultDelegate(Type returnType) 
-            {
-                ParameterExpression task = Expression.Parameter(typeof(Task), nameof(task));
-
-                BlockExpression block = !typeof(Task).IsAssignableFrom(returnType) || returnType == typeof(Task)
-                    //
-                    // task => null;
-                    //
-
-                    ? Expression.Block(Expression.Default(typeof(object)))
-
-                    //
-                    // task => (object) ((Task<TResult>) task).Result;
-                    //
-
-                    : Expression.Block
-                    (
-                        Expression.Convert
-                        (
-                            Expression.Property
+                            Expression.Convert
                             (
-                                Expression.Convert(task, returnType),
-                                returnType.GetProperty(nameof(Task<object>.Result))
-                            ),
-                            typeof(object)
-                        )
-                    );
+                                Expression.Property
+                                (
+                                    Expression.Convert(task, returnType),
+                                    returnType.GetProperty(nameof(Task<object>.Result))
+                                ),
+                                typeof(object)
+                            )
+                        );
 
-                return Expression.Lambda<Func<Task, object>>(block, task);
+                    return Expression.Lambda<Func<Task, object>>(block, task);
+                }
             }
         }
         #endregion
@@ -346,7 +338,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         protected virtual string GetMemberId(MemberInfo member)
         {
-            if (member == null)
+            if (member is null)
                 throw new ArgumentNullException(nameof(member));
 
             return member.GetId();
@@ -355,32 +347,21 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Gets the deserializer for the given method.
         /// </summary>
-        protected virtual Func<Stream, CancellationToken, Task<object?[]>> GetDeserializerFor(MethodInfo ifaceMethod)
+        protected virtual Func<Stream, JsonSerializerOptions, CancellationToken, Task<object?[]>> GetDeserializerFor(MethodInfo ifaceMethod)
         {
-            if (ifaceMethod == null)
+            if (ifaceMethod is null)
                 throw new ArgumentNullException(nameof(ifaceMethod));
 
-            var serializer = new MultiTypeArraySerializer(SerializerOptions, ifaceMethod
+            //
+            // Idoigenyes ezert NE a visszaadott fuggvenyben (ami tobbszor meghivasra kerul) kerdezzuk le
+            //
+
+            Type[] elementTypes = ifaceMethod
                 .GetParameters()
                 .Select(param => param.ParameterType)
-                .ToArray());
+                .ToArray();
 
-            return (json, cancellation) =>
-            {
-                try
-                {
-                    return serializer.Deserialize(json, cancellation);
-                }
-                finally
-                {
-                    //
-                    // Forrast alaphelyzetbe allitjuk ha lehet.
-                    //
-
-                    if (json.CanSeek) 
-                        json.Seek(0, SeekOrigin.Begin);
-                }
-            };
+            return (stm, opts, cancellation) => new MultiTypeArraySerializer(opts, elementTypes).Deserialize(stm, cancellation);
         }
         #endregion
 
@@ -395,7 +376,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         public void AddModule(Type iface)
         {
-            if (iface == null)
+            if (iface is null)
                 throw new ArgumentNullException(nameof(iface));
 
             if (!iface.IsInterface)
@@ -423,11 +404,6 @@ namespace Solti.Utils.Rpc.Internals
         /// Returns the registered modules.
         /// </summary>
         public IReadOnlyCollection<Type> Modules => FModules;
-
-        /// <summary>
-        /// Returns the <see cref="JsonSerializerOptions"/> associated with the delegate being built.
-        /// </summary>
-        public JsonSerializerOptions SerializerOptions { get; set; } = new JsonSerializerOptions();
 
         /// <summary>
         /// Builds a <see cref="ModuleInvocation"/> instance.

@@ -230,5 +230,14 @@ namespace Solti.Utils.Rpc.Properties {
                 return ResourceManager.GetString("SC_INVOCATION_FAILED", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scheme not supported..
+        /// </summary>
+        internal static string SCHEME_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("SCHEME_NOT_SUPPORTED", resourceCulture);
+            }
+        }
     }
 }

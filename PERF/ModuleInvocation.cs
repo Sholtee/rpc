@@ -6,6 +6,8 @@
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Threading;
 
 using BenchmarkDotNet.Attributes;
 
@@ -21,6 +23,18 @@ namespace Solti.Utils.Rpc.Perf
     [MemoryDiagnoser]
     public class ModuleInvocation
     {
+        private sealed record RpcRequestContext
+        (
+            string SessionId,
+            string Module,
+            string Method,
+            Stream Payload
+        ) : IRpcRequestContext
+        {
+            public HttpListenerRequest OriginalRequest { get; }
+            public CancellationToken Cancellation { get; }
+        };
+
         public interface IModule 
         {
             void Foo();
@@ -63,7 +77,7 @@ namespace Solti.Utils.Rpc.Perf
 
             ScopeFactory = DI.ScopeFactory.Create(svcs => svcs.Service<IModule, Module>(Lifetime.Scoped));
 
-            Context = new RpcRequestContext(null, nameof(IModule), nameof(IModule.Foo), new IPEndPoint(IPAddress.Loopback, 1986), Payload, default);
+            Context = new RpcRequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload);
         }
 
         [GlobalCleanup]
@@ -87,7 +101,7 @@ namespace Solti.Utils.Rpc.Perf
 
             for (int i = 0; i < OperationsPerInvoke; i++)
             {
-                Invoke(injector, Context).GetAwaiter().GetResult();
+                Invoke(injector, Context, new JsonSerializerOptions()).GetAwaiter().GetResult();
             }
         }
     }

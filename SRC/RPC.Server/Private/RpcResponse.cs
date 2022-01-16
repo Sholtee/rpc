@@ -10,8 +10,8 @@ namespace Solti.Utils.Rpc.Internals
 
     internal sealed class RpcResponse
     {
-        public object? Result { get; set; }
+        public object? Result { get; init; }
 
-        public ExceptionInfo? Exception { get; set; }
+        public ExceptionInfo? Exception { get; init; }
     }
 }

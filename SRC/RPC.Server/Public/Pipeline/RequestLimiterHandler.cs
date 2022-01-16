@@ -20,11 +20,11 @@ namespace Solti.Utils.Rpc.Pipeline
     {
         internal async Task ThrowIfRequestCountExceedsTheThreshold(IRequestCounter requestCounter, IPEndPoint remoteEndPoint, DateTime nowUtc, CancellationToken cancellation) // tesztekhez van kulon
         {
-            string ipEp = remoteEndPoint.ToString();
+            string ipep = remoteEndPoint.ToString();
 
-            await requestCounter.RegisterRequestAsync(ipEp, nowUtc, cancellation);
+            await requestCounter.RegisterRequestAsync(ipep, nowUtc, cancellation);
 
-            if (await requestCounter.CountRequestAsync(ipEp, nowUtc.Subtract(Interval()), nowUtc, cancellation) > Threshold())
+            if (await requestCounter.CountRequestAsync(ipep, nowUtc.Subtract(Interval()), nowUtc, cancellation) > Threshold())
                 throw new HttpException { Status = HttpStatusCode.Forbidden };
         }
 
@@ -55,13 +55,13 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public async Task Handle(RequestContext context)
+        public async Task HandleAsync(RequestContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             await ThrowIfRequestCountExceedsTheThreshold(context.Scope.Get<IRequestCounter>(), context.Request.RemoteEndPoint, DateTime.UtcNow, context.Cancellation);
-            await Next.Handle(context);
+            await Next.HandleAsync(context);
         }
     }
 
@@ -85,6 +85,6 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RequestLimiterHandler"/> instance.
         /// </summary>
-        public override IRequestHandler Create(IRequestHandler next) => new RequestLimiterHandler(next, Interval, Threshold);
+        protected override IRequestHandler Create(IRequestHandler next) => new RequestLimiterHandler(next, Interval, Threshold);
     }
 }
