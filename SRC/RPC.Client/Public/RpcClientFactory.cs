@@ -168,7 +168,7 @@ namespace Solti.Utils.Rpc
             // Eredmeny feldolgozas.
             //
 
-            switch (response.Content.Headers.ContentType.MediaType) 
+            switch (response.Content.Headers.ContentType?.MediaType) 
             {
                 case "application/json":
                     using (Stream stm = await response.Content.ReadAsStreamAsync())
