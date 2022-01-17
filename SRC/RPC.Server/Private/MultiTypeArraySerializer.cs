@@ -18,15 +18,13 @@ namespace Solti.Utils.Rpc.Internals
 
     internal sealed class MultiTypeArraySerializer // szal biztos
     {
-        public JsonSerializerOptions SerializerOptions { get; }
-
-        public MultiTypeArraySerializer(JsonSerializerOptions serializerOptions, params Type[] elementTypes) 
+        public static Task<object?[]> DeserializeAsync(Stream json, JsonSerializerOptions serializerOptions, IReadOnlyList<Type> elementTypes, in CancellationToken cancellation)
         {
 #if FALSE
-            SerializerOptions = new JsonSerializerOptions(serializerOptions); // .NET 5-ben elvileg mar lesz
-            SerializerOptions.Converters.Add(new MultiTypeArrayConverter(elementTypes));
+            JsonSerializerOptions opts =  = new JsonSerializerOptions(serializerOptions); // .NET 5-ben elvileg mar lesz
+            opts.Converters.Add(new MultiTypeArrayConverter(elementTypes, cancellation));
 #else
-            SerializerOptions = new JsonSerializerOptions
+            JsonSerializerOptions opts = new()
             {
                 AllowTrailingCommas         = serializerOptions.AllowTrailingCommas,
                 DefaultBufferSize           = serializerOptions.DefaultBufferSize,
@@ -41,18 +39,15 @@ namespace Solti.Utils.Rpc.Internals
                 WriteIndented               = serializerOptions.WriteIndented
             };
 
-            foreach (JsonConverter converter in serializerOptions.Converters.Append(new MultiTypeArrayConverter(elementTypes)))
+            foreach (JsonConverter converter in serializerOptions.Converters.Append(new MultiTypeArrayConverter(elementTypes, cancellation)))
             {
-                SerializerOptions.Converters.Add(converter);
+                opts.Converters.Add(converter);
             }
 #endif
+            return JsonSerializer.DeserializeAsync<object?[]>(json, opts, cancellation).AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
         }
-
-        public Task<object?[]> Deserialize(Stream json, CancellationToken cancellation) => JsonSerializer
-            .DeserializeAsync<object?[]>(json, SerializerOptions, cancellation)
-            .AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
 #if DEBUG
-        public object?[] Deserialize(string json) 
+        public static object?[] Deserialize(string json, JsonSerializerOptions serializerOptions, IReadOnlyList<Type> elementTypes) 
         {
             using MemoryStream stm = new();
             using StreamWriter sw = new(stm);
@@ -61,14 +56,20 @@ namespace Solti.Utils.Rpc.Internals
             sw.Flush();
             stm.Seek(0, SeekOrigin.Begin);
 
-            return Deserialize(stm, default).GetAwaiter().GetResult();
+            return DeserializeAsync(stm, serializerOptions, elementTypes, default).GetAwaiter().GetResult();
         }
 #endif
         private sealed class MultiTypeArrayConverter : JsonConverter<object?[]>
         {
             public IReadOnlyList<Type> ElementTypes { get; }
 
-            public MultiTypeArrayConverter(IReadOnlyList<Type> elementTypes) => ElementTypes = elementTypes;
+            public CancellationToken Cancellation { get; }
+
+            public MultiTypeArrayConverter(IReadOnlyList<Type> elementTypes, CancellationToken cancellation)
+            {
+                ElementTypes = elementTypes;
+                Cancellation = cancellation;
+            }
 
             public override object?[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -83,7 +84,7 @@ namespace Solti.Utils.Rpc.Internals
 
                 for (int i = 0; reader.Read(); i++)
                 {
-                    if (reader.TokenType == JsonTokenType.EndArray)
+                    if (reader.TokenType is JsonTokenType.EndArray)
                     {
                         //
                         // A tomb hossza kissebb mint az elvart.
@@ -105,6 +106,8 @@ namespace Solti.Utils.Rpc.Internals
                     //
                     // Elem deszerializalasa es rogzitese
                     //
+
+                    Cancellation.ThrowIfCancellationRequested();
 
                     result[i] = JsonSerializer.Deserialize(ref reader, ElementTypes[i], options);
                 }

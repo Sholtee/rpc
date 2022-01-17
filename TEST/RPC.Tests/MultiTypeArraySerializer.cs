@@ -37,7 +37,7 @@ namespace Solti.Utils.Rpc.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Deserialize_ShouldWorkWith((string Json, Type[] Types, object[] Result) testCase) 
         {
-            object[] result = new MultiTypeArraySerializer(new JsonSerializerOptions(), testCase.Types).Deserialize(testCase.Json);
+            object[] result = MultiTypeArraySerializer.Deserialize(testCase.Json, new JsonSerializerOptions(), testCase.Types);
 
             Assert.That(result.Length, Is.EqualTo(testCase.Result.Length));
 
@@ -49,6 +49,6 @@ namespace Solti.Utils.Rpc.Tests
 
         [TestCase("[]")]
         [TestCase("[1, 2]")]
-        public void Deserialize_ShouldThrowOnInvalidLength(string jsonString) => Assert.Throws<JsonException>(() => new MultiTypeArraySerializer(new JsonSerializerOptions(), typeof(int)).Deserialize(jsonString));
+        public void Deserialize_ShouldThrowOnInvalidLength(string jsonString) => Assert.Throws<JsonException>(() => MultiTypeArraySerializer.Deserialize(jsonString, new JsonSerializerOptions(), new[] { typeof(int) }));
     }
 }

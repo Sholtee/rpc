@@ -361,7 +361,7 @@ namespace Solti.Utils.Rpc.Internals
                 .Select(param => param.ParameterType)
                 .ToArray();
 
-            return (stm, opts, cancellation) => new MultiTypeArraySerializer(opts, elementTypes).Deserialize(stm, cancellation);
+            return (stm, opts, cancellation) => MultiTypeArraySerializer.DeserializeAsync(stm, opts, elementTypes, cancellation);
         }
         #endregion
 
