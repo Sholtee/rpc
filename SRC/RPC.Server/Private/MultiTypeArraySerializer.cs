@@ -45,7 +45,7 @@ namespace Solti.Utils.Rpc.Internals
 
             private bool FConversionStarted;
 
-            public MultiTypeArrayConverter(IReadOnlyList<Type> elementTypes, CancellationToken cancellation)
+            public MultiTypeArrayConverter(IReadOnlyList<Type> elementTypes, in CancellationToken cancellation)
             {
                 FElementTypes = elementTypes;
                 FCancellation = cancellation;
