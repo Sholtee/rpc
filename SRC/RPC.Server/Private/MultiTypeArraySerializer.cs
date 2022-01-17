@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -16,35 +15,14 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Properties;
 
-    internal sealed class MultiTypeArraySerializer // szal biztos
+    internal static class MultiTypeArraySerializer // szal biztos
     {
         public static Task<object?[]> DeserializeAsync(Stream json, JsonSerializerOptions serializerOptions, IReadOnlyList<Type> elementTypes, in CancellationToken cancellation)
         {
-#if FALSE
-            JsonSerializerOptions opts =  = new JsonSerializerOptions(serializerOptions); // .NET 5-ben elvileg mar lesz
-            opts.Converters.Add(new MultiTypeArrayConverter(elementTypes, cancellation));
-#else
-            JsonSerializerOptions opts = new()
-            {
-                AllowTrailingCommas         = serializerOptions.AllowTrailingCommas,
-                DefaultBufferSize           = serializerOptions.DefaultBufferSize,
-                DictionaryKeyPolicy         = serializerOptions.DictionaryKeyPolicy,
-                Encoder                     = serializerOptions.Encoder,
-                IgnoreNullValues            = serializerOptions.IgnoreNullValues,
-                IgnoreReadOnlyProperties    = serializerOptions.IgnoreReadOnlyProperties,
-                MaxDepth                    = serializerOptions.MaxDepth,
-                PropertyNameCaseInsensitive = serializerOptions.PropertyNameCaseInsensitive,
-                PropertyNamingPolicy        = serializerOptions.PropertyNamingPolicy,
-                ReadCommentHandling         = serializerOptions.ReadCommentHandling,
-                WriteIndented               = serializerOptions.WriteIndented
-            };
+            serializerOptions = new JsonSerializerOptions(serializerOptions);
+            serializerOptions.Converters.Add(new MultiTypeArrayConverter(elementTypes, cancellation));
 
-            foreach (JsonConverter converter in serializerOptions.Converters.Append(new MultiTypeArrayConverter(elementTypes, cancellation)))
-            {
-                opts.Converters.Add(converter);
-            }
-#endif
-            return JsonSerializer.DeserializeAsync<object?[]>(json, opts, cancellation).AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
+            return JsonSerializer.DeserializeAsync<object?[]>(json, serializerOptions, cancellation).AsTask()!; // sose NULL, lasd MultiTypeArrayConverter
         }
 #if DEBUG
         public static object?[] Deserialize(string json, JsonSerializerOptions serializerOptions, IReadOnlyList<Type> elementTypes) 
@@ -61,18 +39,29 @@ namespace Solti.Utils.Rpc.Internals
 #endif
         private sealed class MultiTypeArrayConverter : JsonConverter<object?[]>
         {
-            public IReadOnlyList<Type> ElementTypes { get; }
+            private readonly IReadOnlyList<Type> FElementTypes;
 
-            public CancellationToken Cancellation { get; }
+            private readonly CancellationToken FCancellation;
+
+            private bool FConversionStarted;
 
             public MultiTypeArrayConverter(IReadOnlyList<Type> elementTypes, CancellationToken cancellation)
             {
-                ElementTypes = elementTypes;
-                Cancellation = cancellation;
+                FElementTypes = elementTypes;
+                FCancellation = cancellation;
             }
+
+            public override bool CanConvert(Type typeToConvert) => !FConversionStarted && typeToConvert == typeof(object?[]);
 
             public override object?[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
+                //
+                // A tovabbiakban mar nem akarjuk ezt a konvertert hasznalni viszont az "options.Converters"
+                // lista mar nem modosithato [tehat az "options.Converters.Remove(this)" nem jatszik].
+                //
+
+                FConversionStarted = true;
+
                 //
                 // Csak tomboket tamogatunk
                 //
@@ -80,7 +69,7 @@ namespace Solti.Utils.Rpc.Internals
                 if (reader.TokenType is not JsonTokenType.StartArray)
                     throw new JsonException(Errors.NOT_AN_ARRAY);
 
-                object?[] result = new object?[ElementTypes.Count];
+                object?[] result = new object?[FElementTypes.Count];
 
                 for (int i = 0; reader.Read(); i++)
                 {
@@ -104,12 +93,16 @@ namespace Solti.Utils.Rpc.Internals
                         throw new JsonException(Errors.INAPPROPRIATE_ARRAY_LENGTH);
 
                     //
+                    // A Deserialize()-nak nincs overload-ja ami tamogatna a megszakitast
+                    //
+
+                    FCancellation.ThrowIfCancellationRequested();
+
+                    //
                     // Elem deszerializalasa es rogzitese
                     //
 
-                    Cancellation.ThrowIfCancellationRequested();
-
-                    result[i] = JsonSerializer.Deserialize(ref reader, ElementTypes[i], options);
+                    result[i] = JsonSerializer.Deserialize(ref reader, FElementTypes[i], options);
                 }
 
                 //
