@@ -5,12 +5,12 @@
 ********************************************************************************/
 using System;
 using System.Net;
+using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Pipeline
 {
-    using DI.Interfaces;
     using Interfaces;
 
     /// <summary>
@@ -18,13 +18,17 @@ namespace Solti.Utils.Rpc.Pipeline
     /// </summary>
     public class RequestLimiterHandler : IRequestHandler
     {
-        internal async Task ThrowIfRequestCountExceedsTheThreshold(IRequestCounter requestCounter, IPEndPoint remoteEndPoint, DateTime nowUtc, CancellationToken cancellation) // tesztekhez van kulon
+        private static readonly MemoryCache FCache = new(nameof(RequestLimiter));
+
+        private sealed class Box { public int Count; }
+
+        internal void ThrowIfRequestCountExceedsTheThreshold(IPEndPoint remoteEndPoint, DateTime nowUtc) // tesztekhez van kulon
         {
-            string ipep = remoteEndPoint.ToString();
+            Box 
+                @new = new(),
+                counter = (Box) FCache.AddOrGetExisting(remoteEndPoint.ToString(), @new, nowUtc + Parent.Interval()) ?? @new;
 
-            await requestCounter.RegisterRequestAsync(ipep, nowUtc, cancellation);
-
-            if (await requestCounter.CountRequestAsync(ipep, nowUtc.Subtract(Interval()), nowUtc, cancellation) > Threshold())
+            if (Interlocked.Increment(ref counter.Count) > Parent.Threshold())
                 throw new HttpException { Status = HttpStatusCode.Forbidden };
         }
 
@@ -32,36 +36,28 @@ namespace Solti.Utils.Rpc.Pipeline
         public IRequestHandler Next { get; }
 
         /// <summary>
-        /// The interval on which the request counting takes palce.
+        /// The parent instance.
         /// </summary>
-        /// <remarks>This property is a func so the returned value can be changed in runtime.</remarks>
-        public Func<TimeSpan> Interval { get; }
-
-        /// <summary>
-        /// The request threshold.
-        /// </summary>
-        /// <remarks>This property is a func so the returned value can be changed in runtime.</remarks>
-        public Func<int> Threshold { get; }
+        public RequestLimiter Parent { get; }
 
         /// <summary>
         /// Creates a new <see cref="RequestLimiterHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public RequestLimiterHandler(IRequestHandler next, Func<TimeSpan> interval, Func<int> threshold)
+        public RequestLimiterHandler(IRequestHandler next, RequestLimiter parent)
         {
-            Next = next ?? throw new ArgumentNullException(nameof(next));
-            Interval = interval ?? throw new ArgumentNullException(nameof(interval));
-            Threshold = threshold ?? throw new ArgumentNullException(nameof(threshold));
+            Next   = next   ?? throw new ArgumentNullException(nameof(next));
+            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
         }
 
         /// <inheritdoc/>
-        public async Task HandleAsync(RequestContext context)
+        public Task HandleAsync(RequestContext context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            await ThrowIfRequestCountExceedsTheThreshold(context.Scope.Get<IRequestCounter>(), context.Request.RemoteEndPoint, DateTime.UtcNow, context.Cancellation);
-            await Next.HandleAsync(context);
+            ThrowIfRequestCountExceedsTheThreshold(context.Request.RemoteEndPoint, DateTime.UtcNow);
+            return Next.HandleAsync(context);
         }
     }
 
@@ -85,6 +81,6 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RequestLimiterHandler"/> instance.
         /// </summary>
-        protected override IRequestHandler Create(IRequestHandler next) => new RequestLimiterHandler(next, Interval, Threshold);
+        protected override IRequestHandler Create(IRequestHandler next) => new RequestLimiterHandler(next, this);
     }
 }

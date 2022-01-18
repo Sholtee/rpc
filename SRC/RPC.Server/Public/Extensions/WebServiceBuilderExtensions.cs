@@ -52,6 +52,7 @@ namespace Solti.Utils.Rpc
                     })
                     .Use<Timeout>(configurator)
                     .Use<RpcAccessControl>(configurator)
+                    .Use<RequestLimiter>(configurator)
                     .Use<ExceptionCatcher>(configurator));
 
             if (useDefaultLogger)

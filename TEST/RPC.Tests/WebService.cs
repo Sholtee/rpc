@@ -284,34 +284,17 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_ShouldRejectTheRequestIfThereIsAThresholSet()
         {
-            int count = 0;
-
-            var mockRequestCounter = new Mock<IRequestCounter>(MockBehavior.Strict);
-            mockRequestCounter
-                .Setup(rc => rc.RegisterRequestAsync(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
-                .Returns<string, DateTime, CancellationToken>((_, _, _) => 
-                {
-                    Interlocked.Increment(ref count);
-                    return Task.CompletedTask;
-                });
-            mockRequestCounter
-                .Setup(rc => rc.CountRequestAsync(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
-                .Returns<string, DateTime, DateTime, CancellationToken>((_, _, _, _) => Task.FromResult(count));
-
             Svc = 
                 CreateBuilder(conf => 
                 {
                     switch (conf)
                     {
                         case RequestLimiter requestLimiter:
-                            requestLimiter.Interval = () => TimeSpan.FromSeconds(60);
+                            requestLimiter.Interval = () => TimeSpan.FromSeconds(2);
                             requestLimiter.Threshold = () => 1;
                             break;
                     }
                 })
-                .ConfigureServices(services => services
-                    .Single(svc => svc.Interface == typeof(IRequestCounter))
-                    .ApplyProxy((_, _, _) => mockRequestCounter.Object))
                 .Build();
             Svc.Start();
 
@@ -322,6 +305,11 @@ namespace Solti.Utils.Rpc.Tests
 
             response = await client.GetAsync(TestUrl);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+
+            await Task.Delay(2000);
+
+            response = await client.GetAsync(TestUrl);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
     }
 }
