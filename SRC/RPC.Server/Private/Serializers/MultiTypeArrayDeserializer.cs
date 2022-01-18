@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* MultiTypeArraySerializer.cs                                                   *
+* MultiTypeArrayDeserializer.cs                                                 *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -15,7 +15,7 @@ namespace Solti.Utils.Rpc.Internals
 {
     using Properties;
 
-    internal static class MultiTypeArraySerializer // szal biztos
+    internal static class MultiTypeArrayDeserializer
     {
         public static Task<object?[]> DeserializeAsync(Stream json, JsonSerializerOptions serializerOptions, IReadOnlyList<Type> elementTypes, in CancellationToken cancellation)
         {

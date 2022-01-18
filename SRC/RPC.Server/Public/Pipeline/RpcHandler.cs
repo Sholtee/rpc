@@ -44,6 +44,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates the HTTP response.
         /// </summary>
+        /// <remarks>This operation cannot be cancelled.</remarks>
         protected virtual async Task CreateResponse(object? result, HttpListenerResponse response)
         {
             if (response is null)
@@ -66,7 +67,7 @@ namespace Solti.Utils.Rpc.Pipeline
                 case Exception ex:
                     response.ContentType = "application/json";
                     response.ContentEncoding = Encoding.UTF8;
-                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse
+                    await SafeSerializer.SerializeAsync(response.OutputStream, new RpcResponse
                     {
                         Exception = new ExceptionInfo
                         {
@@ -79,7 +80,7 @@ namespace Solti.Utils.Rpc.Pipeline
                 default:
                     response.ContentType = "application/json";
                     response.ContentEncoding = Encoding.UTF8;
-                    await JsonSerializer.SerializeAsync(response.OutputStream, new RpcResponse { Result = result }, SerializerOptions);
+                    await SafeSerializer.SerializeAsync(response.OutputStream, new RpcResponse { Result = result }, SerializerOptions);
                     break;
             }
         }
