@@ -35,7 +35,7 @@ namespace Solti.Utils.Rpc
         /// Defines a basic RPC service.
         /// </summary>
         /// <remarks>The defined RPC service uses: <see cref="ExceptionCatcher"/>, <see cref="RpcAccessControl"/>, <see cref="Timeout"/> and <see cref="Modules"/>.</remarks>
-        public static WebServiceBuilder DefineRpcService(this WebServiceBuilder webServiceBuilder, Action<RequestHandlerFactory> configurator)
+        public static WebServiceBuilder DefineRpcService(this WebServiceBuilder webServiceBuilder, Action<RequestHandlerFactory> configurator, bool useDefaultLogger = true)
         {
             if (webServiceBuilder is null)
                 throw new ArgumentNullException(nameof(webServiceBuilder));
@@ -43,7 +43,7 @@ namespace Solti.Utils.Rpc
             if (configurator is null)
                 throw new ArgumentNullException(nameof(configurator));
 
-            return webServiceBuilder
+            webServiceBuilder
                 .ConfigurePipeline(pipeline => pipeline
                     .Use<Modules>(registry =>
                     {
@@ -53,6 +53,11 @@ namespace Solti.Utils.Rpc
                     .Use<Timeout>(configurator)
                     .Use<RpcAccessControl>(configurator)
                     .Use<ExceptionCatcher>(configurator));
+
+            if (useDefaultLogger)
+                webServiceBuilder.ConfigureServices(services => services.Factory<ILogger>(_ => TraceLogger.Create<WebService>(), Lifetime.Singleton));
+
+            return webServiceBuilder;
         }
     }
 }

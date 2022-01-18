@@ -103,7 +103,7 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(context.Method, Is.EqualTo(nameof(IModule.Dummy)));
         }
 
-        [Test, NUnit.Framework.Ignore("TODO")]
+        [Test]
         public async Task Logger_ShouldBeAccessible() 
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
