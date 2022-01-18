@@ -5,7 +5,6 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
 #pragma warning disable CA1033 // Interface methods should be callable by child types
 
@@ -21,31 +20,6 @@ namespace Solti.Utils.Rpc
     /// </summary>
     public class WebServiceBuilder : IRequestPipeConfigurator<RequestHandlerFactory>
     {
-        /// <summary>
-        /// The default request handler.
-        /// </summary>
-        protected sealed class DefaultHandler : IRequestHandler
-        {
-            /// <inheritdoc/>
-            public IRequestHandler? Next { get; }
-
-            /// <summary>
-            /// Closes the current session.
-            /// </summary>
-            public Task HandleAsync(RequestContext context)
-            {
-                if (context is null)
-                    throw new ArgumentNullException(nameof(context));
-
-                //
-                // Ha csak valamelyik Handler at nem allitotta akkor HTTP 200 lesz a visszateresi kod.
-                //
-
-                context.Response.Close();
-                return Task.CompletedTask;
-            }
-        }
-
         /// <summary>
         /// The <see cref="IServiceCollection"/> containing all the necessary service to build a <see cref="WebService"/> instance.
         /// </summary>
