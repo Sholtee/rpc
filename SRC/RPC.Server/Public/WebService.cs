@@ -73,7 +73,7 @@ namespace Solti.Utils.Rpc
                 {
                     Task<HttpListenerContext> getContext = FListener!.GetContextAsync();
 
-                    if (WaitHandle.WaitAny(new WaitHandle[] { FListenerCancellation!.Token.WaitHandle, ((IAsyncResult) getContext).AsyncWaitHandle }) == 0)
+                    if (WaitHandle.WaitAny(new WaitHandle[] { FListenerCancellation!.Token.WaitHandle, ((IAsyncResult) getContext).AsyncWaitHandle }) is 0)
                         break;
 
                     switch (getContext.Status)
@@ -159,9 +159,7 @@ namespace Solti.Utils.Rpc
         #endregion
 
         #region Protected
-        /// <summary>
-        /// Dispsoes this instance.
-        /// </summary>
+        /// <inheritdoc/>
         protected override void Dispose(bool disposeManaged)
         {
             if (disposeManaged)
@@ -173,6 +171,16 @@ namespace Solti.Utils.Rpc
             }
 
             base.Dispose(disposeManaged);
+        }
+
+        /// <inheritdoc/>
+        protected override async ValueTask AsyncDispose()
+        {
+            if (IsStarted)
+                Stop();
+
+            await ScopeFactory.DisposeAsync();
+            await FExclusiveBlock.DisposeAsync();
         }
         #endregion
 
@@ -286,7 +294,7 @@ namespace Solti.Utils.Rpc
                 // Mielott magat a mogottes kiszolgalot leallitanak megvarjuk amig minden meg elo keres lezarasra kerul.
                 //
 
-                SpinWait.SpinUntil(() => FActiveRequests == 0, timeout);
+                SpinWait.SpinUntil(() => FActiveRequests is 0, timeout);
 
                 //
                 // Kiszolgalo leallitasa.
