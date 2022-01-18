@@ -70,7 +70,7 @@ namespace Solti.Utils.Rpc.Tests
         private static WebServiceBuilder CreateBuilder(Action<RequestHandlerFactory> config = null) => new WebServiceBuilder { Url = TestUrl }
             .ConfigurePipeline(pipe => pipe
                 .Use<RequestDelegator>(config)
-                .Use<Timeout>(config)
+                .Use<RequestTimeout>(config)
                 .Use<HttpAccessControl>(config)
                 .Use<RequestLimiter>(config)
                 .Use<ExceptionCatcher>());
@@ -250,8 +250,8 @@ namespace Solti.Utils.Rpc.Tests
                             evt.Wait(ctx.Cancellation);
                         }, TaskCreationOptions.LongRunning));
                         break;
-                    case Timeout timeout:
-                        timeout.Value = TimeSpan.FromSeconds(1);
+                    case RequestTimeout timeout:
+                        timeout.Timeout = TimeSpan.FromSeconds(1);
                         break;
                 }
             });

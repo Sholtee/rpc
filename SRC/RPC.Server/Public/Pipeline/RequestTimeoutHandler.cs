@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* TimeoutHandler.cs                                                             *
+* RequestTimeoutHandler.cs                                                      *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -14,24 +14,24 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Adds a timeout to the request processing.
     /// </summary>
-    public class TimeoutHandler : IRequestHandler
+    public class RequestTimeoutHandler : IRequestHandler
     {
         /// <summary>
-        /// The request timeout.
+        /// The parent instance.
         /// </summary>
-        public TimeSpan Timeout { get; }
+        public RequestTimeout Parent { get; }
 
         /// <inheritdoc/>
         public IRequestHandler Next { get; }
 
         /// <summary>
-        /// Creates a new <see cref="TimeoutHandler"/> instance.
+        /// Creates a new <see cref="RequestTimeoutHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public TimeoutHandler(IRequestHandler next, in TimeSpan timeout)
+        public RequestTimeoutHandler(IRequestHandler next, RequestTimeout parent)
         {
-            Next = next ?? throw new ArgumentNullException(nameof(next));
-            Timeout = timeout;
+            Next   = next   ?? throw new ArgumentNullException(nameof(next));
+            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
         }
 
         /// <inheritdoc/>
@@ -55,7 +55,7 @@ namespace Solti.Utils.Rpc.Pipeline
                 Cancellation = linkedCancellation.Token
             });
 
-            if (await Task.WhenAny(task, Task.Delay(Timeout)) != task)
+            if (await Task.WhenAny(task, Task.Delay(Parent.Timeout)) != task)
                 //
                 // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
                 //
@@ -76,14 +76,14 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Adds a timeout to the request processing.
     /// </summary>
-    public class Timeout : RequestHandlerFactory
+    public class RequestTimeout : RequestHandlerFactory
     {
         /// <summary>
         /// The request timeout.
         /// </summary>
-        public TimeSpan Value { get; set; } = TimeSpan.FromSeconds(10);
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new TimeoutHandler(next, Value);
+        protected override IRequestHandler Create(IRequestHandler next) => new RequestTimeoutHandler(next, this);
     }
 }

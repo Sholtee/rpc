@@ -370,8 +370,8 @@ namespace Solti.Utils.Rpc.Tests
                             return mockModule.Object;
                         });
                         break;
-                    case Timeout timeout:
-                        timeout.Value = TimeSpan.FromSeconds(1);
+                    case RequestTimeout timeout:
+                        timeout.Timeout = TimeSpan.FromSeconds(1);
                         break;
                 }
             });

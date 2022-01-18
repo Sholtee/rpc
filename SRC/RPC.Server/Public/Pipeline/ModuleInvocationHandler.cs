@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* RpcHandler.cs                                                                 *
+* ModuleInvocationHandler.cs                                                    *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -24,7 +24,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Invokes a module method, described by the <see cref="IRpcRequestContext"/> and writes the result into the <see cref="HttpListenerResponse"/>.
     /// </summary>
-    public class RpcHandler : IRequestHandler
+    public class ModuleInvocationHandler : IRequestHandler
     {
         private sealed record RpcRequestContext
         (
@@ -75,12 +75,12 @@ namespace Solti.Utils.Rpc.Pipeline
                             Message  = ex.Message,
                             Data     = ex.Data
                         }
-                    }, SerializerOptions);
+                    }, Parent.SerializerOptions);
                     break;
                 default:
                     response.ContentType = "application/json";
                     response.ContentEncoding = Encoding.UTF8;
-                    await SafeSerializer.SerializeAsync(response.OutputStream, new RpcResponse { Result = result }, SerializerOptions);
+                    await SafeSerializer.SerializeAsync(response.OutputStream, new RpcResponse { Result = result }, Parent.SerializerOptions);
                     break;
             }
         }
@@ -132,25 +132,18 @@ namespace Solti.Utils.Rpc.Pipeline
         public IRequestHandler Next { get; }
 
         /// <summary>
-        /// The serializer options.
+        /// The parent instance.
         /// </summary>
-        public JsonSerializerOptions SerializerOptions { get; }
+        public Modules Parent { get; }
 
         /// <summary>
-        /// The delegate that does the actual work.
-        /// </summary>
-        /// <remarks>Due to performance reasosns the core logic is built runtime.</remarks>
-        public ModuleInvocation ModuleInvocation { get; }
-
-        /// <summary>
-        /// Creates a new <see cref="RpcHandler"/> instance.
+        /// Creates a new <see cref="ModuleInvocationHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public RpcHandler(IRequestHandler next, ModuleInvocation moduleInvocation, JsonSerializerOptions serializerOptions)
+        public ModuleInvocationHandler(IRequestHandler next, Modules parent)
         {
-            ModuleInvocation  = moduleInvocation  ?? throw new ArgumentNullException(nameof(moduleInvocation));
-            SerializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
-            Next              = next              ?? throw new ArgumentNullException(nameof(next));
+            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+            Next   = next   ?? throw new ArgumentNullException(nameof(next));
         }
 
         /// <inheritdoc/>
@@ -165,7 +158,7 @@ namespace Solti.Utils.Rpc.Pipeline
 
             try
             {
-                result = await ModuleInvocation(context.Scope, RpcContext, SerializerOptions);
+                result = await Parent.ModuleInvocation!(context.Scope, RpcContext, Parent.SerializerOptions);
             }
 
             //
@@ -200,18 +193,22 @@ namespace Solti.Utils.Rpc.Pipeline
     {
         private ModuleInvocationBuilder ModuleInvocationBuilder { get; } = new();
 
-        private ModuleInvocation? FModuleInvocation;
-
         /// <inheritdoc/>
         protected internal override void FinishConfiguration()
         {
-            FModuleInvocation = ModuleInvocationBuilder.Build();
-            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(_ => RpcHandler.RpcContext ?? throw new InvalidOperationException(), Lifetime.Scoped));
+            ModuleInvocation = ModuleInvocationBuilder.Build();
+            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(_ => ModuleInvocationHandler.RpcContext ?? throw new InvalidOperationException(), Lifetime.Scoped));
             base.FinishConfiguration();
         }
 
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new RpcHandler(next, FModuleInvocation!, SerializerOptions);
+        protected override IRequestHandler Create(IRequestHandler next) => new ModuleInvocationHandler(next, this);
+
+        /// <summary>
+        /// The built <see cref="Internals.ModuleInvocation"/> delegate.
+        /// </summary>
+        /// <remarks>This property is set once the <see cref="FinishConfiguration()"/> method is called.</remarks>
+        public ModuleInvocation? ModuleInvocation { get; private set; }
 
         /// <summary>
         /// The serializer options.
