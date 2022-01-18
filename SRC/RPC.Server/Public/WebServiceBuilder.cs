@@ -5,7 +5,6 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Threading.Tasks;
 
 #pragma warning disable CA1033 // Interface methods should be callable by child types
@@ -38,7 +37,10 @@ namespace Solti.Utils.Rpc
                 if (context is null)
                     throw new ArgumentNullException(nameof(context));
 
-                context.Response.StatusCode = (int) HttpStatusCode.NoContent;
+                //
+                // Ha csak valamelyik Handler at nem allitotta akkor HTTP 200 lesz a visszateresi kod.
+                //
+
                 context.Response.Close();
                 return Task.CompletedTask;
             }

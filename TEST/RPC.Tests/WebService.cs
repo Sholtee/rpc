@@ -16,7 +16,6 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Tests
 {
-    using DI.Interfaces;
     using Interfaces;
     using Pipeline;
 
@@ -165,7 +164,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task Service_ShouldReturnHttpNoContentByDefault() 
+        public async Task Service_ShouldReturnHttpOkByDefault() 
         {
             Svc = new WebServiceBuilder { Url = TestUrl }.Build();
             Svc.Start();
@@ -174,7 +173,7 @@ namespace Solti.Utils.Rpc.Tests
 
             HttpResponseMessage response = await client.GetAsync(TestUrl);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That((await response.Content.ReadAsStreamAsync()).Length, Is.EqualTo(0));
         }
 
