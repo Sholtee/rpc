@@ -65,17 +65,6 @@ namespace Solti.Utils.Rpc.Tests
             protected override IRequestHandler Create(IRequestHandler next) => new RequestDelegatorHandler(Handler);
         }
 
-        private sealed class DummyRequestCounter : IRequestCounter
-        {
-            public int CountRequest(string id, DateTime fromUtc, DateTime toUtc) => throw new NotImplementedException();
-
-            public Task<int> CountRequestAsync(string id, DateTime fromUtc, DateTime toUtc, CancellationToken cancellation = default) => Task.FromResult(0);
-
-            public void RegisterRequest(string id, DateTime whenUtc) => throw new NotImplementedException();
-
-            public Task RegisterRequestAsync(string id, DateTime whenUtc, CancellationToken cancellation = default) => Task.CompletedTask;
-        }
-
         private WebService Svc { get; set; }
 
         private static WebServiceBuilder CreateBuilder(Action<RequestHandlerFactory> config = null) => new WebServiceBuilder { Url = TestUrl }
@@ -84,9 +73,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Use<Timeout>(config)
                 .Use<HttpAccessControl>(config)
                 .Use<RequestLimiter>(config)
-                .Use<ExceptionCatcher>())
-            .ConfigureServices(services => services
-                .Service<IRequestCounter, DummyRequestCounter>(Lifetime.Scoped));
+                .Use<ExceptionCatcher>());
 
         private static WebService CreateService(Action<RequestHandlerFactory> config = null) => CreateBuilder(config).Build();
 
