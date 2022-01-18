@@ -50,7 +50,7 @@ namespace Solti.Utils.Rpc.Internals
         }
 
         //
-        // Tipusok szerializalasa nem biztosagos (epp ezert ha ez nincs akkor a JsonSerializer NotSupportedException-t dob).
+        // Tipusok szerializalasa nem biztonsagos (epp ezert ha ez nincs akkor a JsonSerializer NotSupportedException-t dob).
         //
 
         internal sealed class TypeConverter : JsonConverter<Type>
