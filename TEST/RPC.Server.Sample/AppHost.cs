@@ -40,7 +40,7 @@ namespace Solti.Utils.Rpc.Server.Sample
                             ac.AllowedOrigins.Add("http://localhost:1987");
                             break;
                     }
-                })
+                }, useDefaultLogger: false)
                 .ConfigureServices(services => 
                 {
                     //
