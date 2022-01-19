@@ -4,6 +4,8 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
@@ -38,9 +40,6 @@ namespace Solti.Utils.Rpc.Pipeline
             public Stream Payload => OriginalRequest.InputStream;
         };
 
-        [ThreadStatic]
-        internal static IRpcRequestContext? RpcContext;
-
         /// <summary>
         /// Creates the HTTP response.
         /// </summary>
@@ -53,16 +52,21 @@ namespace Solti.Utils.Rpc.Pipeline
             switch (result)
             {
                 case Stream stream:
-                    response.ContentType = "application/octet-stream";
-                    response.ContentEncoding = null;
-                    if (stream.CanSeek)
+                    try
+                    {
+                        response.ContentType = "application/octet-stream";
+                        response.ContentEncoding = null;
                         stream.Seek(0, SeekOrigin.Begin);
-                    await stream.CopyToAsync(response.OutputStream);
+                        await stream.CopyToAsync(response.OutputStream);
+                    }
+                    finally
+                    {
 #if NETSTANDARD2_1_OR_GREATER
-                    await stream.DisposeAsync();
+                        await stream.DisposeAsync();
 #else
-                    stream.Dispose();
+                        stream.Dispose();
 #endif
+                    }
                     break;
                 case Exception ex:
                     response.ContentType = "application/json";
@@ -152,30 +156,37 @@ namespace Solti.Utils.Rpc.Pipeline
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            RpcContext = CreateContext(context);
-
+            IRpcRequestContext rpcRequestContext = Parent.ContextStore[context.Scope] = CreateContext(context);
             object? result;
 
             try
             {
-                result = await Parent.ModuleInvocation!(context.Scope, RpcContext, Parent.SerializerOptions);
+                result = await Parent.ModuleInvocation!(context.Scope, rpcRequestContext, Parent.SerializerOptions);
+            }
+
+            catch (Exception ex)
+            {
+                //
+                // Egyedi HTTP hibakod is megadhato, azt nem szerializaljuk.
+                //
+
+                if (ex is HttpException) throw;
+
+                //
+                // Kulonben valid valasz fogja tartalmazni a hibat.
+                //
+
+                result = ex;
             }
 
             //
-            // Egyedi HTTP hibakod is megadhato, azt nem szerializaljuk.
+            // Mar nincs szukseg a kontextusra
             //
 
-            catch (HttpException) { throw; }
-
-            //
-            // Kulonben valid valasz fogja tartalmazni a hibat.
-            //
-
-            catch (Exception ex) { result = ex; }
-
-            //
-            // 
-            finally { RpcContext = null; }
+            finally 
+            {
+                Parent.ContextStore.Remove(context.Scope);
+            }
 
             //
             // A valasz kiirasat mar nem lehet megszakitani.
@@ -193,11 +204,21 @@ namespace Solti.Utils.Rpc.Pipeline
     {
         private ModuleInvocationBuilder ModuleInvocationBuilder { get; } = new();
 
+        //
+        // Az egyes scope-okhoz tartozo kontextust nem lehet ThreadLocal-ban tarolni:
+        //
+        //   threadLocal = context;
+        //   await someAsyncTask();
+        //   threadLocal == null;
+        //
+
+        internal IDictionary<IInjector, IRpcRequestContext> ContextStore { get; } = new ConcurrentDictionary<IInjector, IRpcRequestContext>();
+
         /// <inheritdoc/>
         protected internal override void FinishConfiguration()
         {
             ModuleInvocation = ModuleInvocationBuilder.Build();
-            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(_ => ModuleInvocationHandler.RpcContext ?? throw new InvalidOperationException(), Lifetime.Scoped));
+            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(scope => ContextStore[scope] ?? throw new InvalidOperationException(), Lifetime.Scoped));
             base.FinishConfiguration();
         }
 
