@@ -268,7 +268,7 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
-        public async Task Service_ShouldRejectTheRequestIfThereIsAThresholSet()
+        public async Task Service_ShouldRejectTheRequestIfTheRequestCountReachesTheThreshold()
         {
             Svc = 
                 CreateBuilder(conf => 
@@ -276,7 +276,7 @@ namespace Solti.Utils.Rpc.Tests
                     switch (conf)
                     {
                         case RequestLimiter requestLimiter:
-                            requestLimiter.Interval = () => TimeSpan.FromSeconds(2);
+                            requestLimiter.Interval = () => TimeSpan.FromSeconds(1);
                             requestLimiter.Threshold = () => 1;
                             break;
                     }
