@@ -14,8 +14,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-#pragma warning disable CA1031
-
 namespace Solti.Utils.Rpc.Pipeline
 {
     using DI.Interfaces;
