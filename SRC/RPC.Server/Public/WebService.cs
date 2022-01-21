@@ -315,7 +315,7 @@ namespace Solti.Utils.Rpc
                 {
                     try
                     {
-                        RemoveUrlReservation(Url.ToString());
+                        RemoveUrlReservation(Url);
                     }
                     #pragma warning disable CA1031 // This method should not throw
                     catch { }
