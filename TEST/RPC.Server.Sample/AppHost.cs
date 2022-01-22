@@ -49,7 +49,7 @@ namespace Solti.Utils.Rpc.Server.Sample
                     //
 
                     if (!Args.Any(arg => arg.ToLowerInvariant() is "-nolog"))
-                        services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Singleton);
+                        services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Scoped);
                 });
         }
     }
