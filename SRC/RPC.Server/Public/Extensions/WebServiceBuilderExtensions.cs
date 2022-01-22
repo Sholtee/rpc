@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc
                 throw new ArgumentNullException(nameof(webServiceBuilder));
 
             return webServiceBuilder
-                .ConfigureBackend(_ => new HttpListenerWrapper(url) { ReserveUrl = true })
+                .ConfigureBackend(_ => new HttpListenerBackend(url) { ReserveUrl = true })
                 .ConfigureServices(svcs => svcs.Factory<ILogger>(i => TraceLogger.Create<WebService>(), Lifetime.Singleton))
                 .Build();
         }

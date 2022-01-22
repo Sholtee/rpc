@@ -29,7 +29,7 @@ namespace Solti.Utils.Rpc.Server.Sample
         public override void OnConfigure(WebServiceBuilder serviceBuilder)
         {
             serviceBuilder
-                .ConfigureBackend(_ => new HttpListenerWrapper("http://localhost:1986/api/") { ReserveUrl = true })
+                .ConfigureBackend(_ => new HttpListenerBackend("http://localhost:1986/api/") { ReserveUrl = true })
                 .DefineRpcService(conf => 
                 {
                     switch (conf) 

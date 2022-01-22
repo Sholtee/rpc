@@ -67,7 +67,7 @@ namespace Solti.Utils.Rpc.Tests
         private WebService Svc { get; set; }
 
         private static WebServiceBuilder CreateBuilder(Action<RequestHandlerFactory> config = null) => new WebServiceBuilder()
-            .ConfigureBackend(_ => new HttpListenerWrapper(TestUrl) { ReserveUrl = true })
+            .ConfigureBackend(_ => new HttpListenerBackend(TestUrl) { ReserveUrl = true })
             .ConfigurePipeline(pipe => pipe
                 .Use<RequestDelegator>(config)
                 .Use<RequestTimeout>(config)
@@ -160,14 +160,14 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public void Start_ShouldValidateTheUrl() 
         {
-            Svc = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerWrapper("invalid")).Build();
+            Svc = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerBackend("invalid")).Build();
             Assert.ThrowsAsync<ArgumentException>(Svc.Start);
         }
 
         [Test]
         public async Task Service_ShouldReturnHttpOkByDefault() 
         {
-            Svc = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerWrapper(TestUrl)).Build();
+            Svc = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerBackend(TestUrl)).Build();
             await Svc.Start();
 
             using var client = new HttpClient();

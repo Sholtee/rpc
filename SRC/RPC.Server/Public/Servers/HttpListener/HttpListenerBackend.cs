@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* HttpListenerWrapper.cs                                                        *
+* HttpListenerBackend.cs                                                        *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -25,7 +25,7 @@ namespace Solti.Utils.Rpc.Servers
     /// <summary>
     /// Wraps the built-in <see cref="HttpListener"/> class to be used as a <see cref="IHttpServer"/> service. 
     /// </summary>
-    public class HttpListenerWrapper : Disposable, IHttpServer
+    public class HttpListenerBackend : Disposable, IHttpServer
     {
         #region Private
         private sealed class HttpListenerRequestWrapper : IHttpRequest
@@ -140,9 +140,9 @@ namespace Solti.Utils.Rpc.Servers
 
         #region Public
         /// <summary>
-        /// Creates a new <see cref="HttpListenerWrapper"/> instance.
+        /// Creates a new <see cref="HttpListenerBackend"/> instance.
         /// </summary>
-        public HttpListenerWrapper(string url) => FListener = CreateCore(Url = url);
+        public HttpListenerBackend(string url) => FListener = CreateCore(Url = url);
 
         /// <inheritdoc/>
         public bool IsStarted => FListener.IsListening;
@@ -153,7 +153,7 @@ namespace Solti.Utils.Rpc.Servers
         /// <summary>
         /// Returns true if the system should reserve the <see cref="Url"/>.
         /// </summary>
-        public bool ReserveUrl { get; set; } = true;
+        public bool ReserveUrl { get; init; } = true;
 
         /// <inheritdoc/>
         public async Task<IHttpSession> WaitForSessionAsync(CancellationToken cancellation)

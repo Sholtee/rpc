@@ -56,7 +56,7 @@ namespace Solti.Utils.Rpc.Tests
         [SetUp]
         public void Setup()
         {
-            ServerBuilder = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerWrapper(Host) { ReserveUrl = true });
+            ServerBuilder = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerBackend(Host) { ReserveUrl = true });
             ClientFactory = new RpcClientFactory(Host);
         }
 
