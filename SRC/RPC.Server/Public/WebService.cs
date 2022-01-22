@@ -198,6 +198,8 @@ namespace Solti.Utils.Rpc
             {
                 _ = CreateWorkerLoop();
             }
+
+            scope.TryGet<ILogger>()?.LogInformation(TraceRes.SERVICE_STARTED);
         }
 
         /// <summary>
@@ -227,6 +229,8 @@ namespace Solti.Utils.Rpc
             //
 
             await FTerminatedSignal.AsTask();
+
+            scope.TryGet<ILogger>()?.LogInformation(TraceRes.SERVICE_TERMINATED);
         }
 
         /// <summary>
