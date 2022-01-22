@@ -60,7 +60,7 @@ namespace Solti.Utils.Rpc
                     .Use<ExceptionCatcher>(configurator));
 
             if (useDefaultLogger)
-                webServiceBuilder.ConfigureServices(services => services.Factory<ILogger>(_ => TraceLogger.Create<WebService>(), Lifetime.Singleton));
+                webServiceBuilder.ConfigureServices(services => services.Factory<ILogger>(_ => TraceLogger.Create<WebService>(), Lifetime.Scoped));
 
             return webServiceBuilder;
         }
