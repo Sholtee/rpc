@@ -21,7 +21,7 @@ namespace Solti.Utils.Rpc.Internals
     /// </summary>
     public abstract class LoggerBase : ILogger
     {
-        private readonly Stack<string> FScopes = new Stack<string>();
+        private readonly Stack<string> FScopes = new();
 
         private sealed class Popper : Disposable
         {
@@ -77,7 +77,7 @@ namespace Solti.Utils.Rpc.Internals
         /// </summary>
         public virtual IDisposable BeginScope<TState>(TState state)
         {
-            if (state == null)
+            if (state is null)
                 throw new ArgumentNullException(nameof(state));
 
             string scope = state is IDictionary<string, object> dict
@@ -104,7 +104,7 @@ namespace Solti.Utils.Rpc.Internals
         {
             if (!IsEnabled(logLevel)) return;
 
-            if (formatter == null)
+            if (formatter is null)
                 throw new ArgumentNullException(nameof(formatter));
 
             string message = formatter(state, exception);
