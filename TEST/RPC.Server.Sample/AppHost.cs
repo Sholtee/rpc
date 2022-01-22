@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc.Server.Sample
         {
             serviceBuilder
                 .ConfigureBackend(_ => new HttpListenerBackend("http://localhost:1986/api/") { ReserveUrl = true })
-                .DefineRpcService(conf => 
+                .ConfigureRpcService(conf => 
                 {
                     switch (conf) 
                     {
