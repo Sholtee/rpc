@@ -59,7 +59,7 @@ namespace Solti.Utils.Rpc
                 {
                     using CancellationTokenSource cts = new();
 
-                    Task worker = CreateWorker(cts.Token);
+                    Task worker = DoWork(cts.Token);
 
                     if (await Task.WhenAny(worker, stopSignal) == stopSignal)
                         cts.Cancel();
@@ -124,7 +124,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new worker <see cref="Task"/> that waits for a new session then processes it.
         /// </summary>
-        protected virtual async Task CreateWorker(CancellationToken cancellation)
+        protected virtual async Task DoWork(CancellationToken cancellation)
         {
             await using IInjector scope = ScopeFactory.CreateScope();
 
