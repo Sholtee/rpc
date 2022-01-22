@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IHttpServer
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IHttpServer
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Interfaces_IHttpServer" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer" class="text-break">Interface IHttpServer
+  </h1>
+  <div class="markdown level0 summary"><p>Describes an abstract HTTP server.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx.Disposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#system-idisposable-dispose">IDisposable.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync#system-iasyncdisposable-disposeasync">IAsyncDisposable.DisposeAsync()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Interfaces_IHttpServer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IHttpServer : IDisposableEx, IDisposable, IAsyncDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpServer_IsStarted_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.IsStarted*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpServer_IsStarted" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.IsStarted">IsStarted</h4>
+  <div class="markdown level1 summary"><p>Returns true if the server is started.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsStarted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpServer_Url_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.Url*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpServer_Url" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.Url">Url</h4>
+  <div class="markdown level1 summary"><p>The URL on which the server listens.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Url { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpServer_Start_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.Start*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpServer_Start" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.Start">Start()</h4>
+  <div class="markdown level1 summary"><p>Starts the server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Start()</code></pre>
+  </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>The server has already been started.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpServer_Stop_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.Stop*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpServer_Stop" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.Stop">Stop()</h4>
+  <div class="markdown level1 summary"><p>Stops the server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Stop()</code></pre>
+  </div>
+  <h5 id="Solti_Utils_Rpc_Interfaces_IHttpServer_Stop_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method should not free resources so the already started sessions can gracefully terminate.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpServer_WaitForSessionAsync_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.WaitForSessionAsync*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpServer_WaitForSessionAsync_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpServer.WaitForSessionAsync(System.Threading.CancellationToken)">WaitForSessionAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>If the server is listening, this method waits until a new request is availbale. </p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;IHttpSession&gt; WaitForSessionAsync(CancellationToken cancellation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.operationcanceledexception">OperationCanceledException</a></td>
+        <td><p>Either the server was stopped or a <code data-dev-comment-type="paramref" class="paramref">cancellation</code> was requested.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

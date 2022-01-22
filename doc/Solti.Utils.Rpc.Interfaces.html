@@ -109,12 +109,6 @@
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute.html">ParameterValidatorAspectAttribute</a></h4>
       <section><p>Indicates that the methods of a service may validate their parameters.</p>
 </section>
-      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.RequestLimiterAspectAttribute.html">RequestLimiterAspectAttribute</a></h4>
-      <section><p>Annotates a module to be intercepted by a request limiter that defines a request threashold on every method.</p>
-</section>
-      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.RequestThresholdAttribute.html">RequestThresholdAttribute</a></h4>
-      <section><p>Sets the request threshold on a given method.</p>
-</section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html">RequiredRolesAttribute</a></h4>
       <section><p>Specifies the roles required for the module method invocation.</p>
 </section>
@@ -159,14 +153,23 @@
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.html">IAsyncPropertyValidator</a></h4>
       <section><p>Defines an abstract, asynchronous property validator.</p>
 </section>
-      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IClock.html">IClock</a></h4>
-      <section><p>Describes an abstract clock.</p>
-</section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html">IConditionalValidatior</a></h4>
       <section><p>Determines whether a validator should run or not.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.ICustomValidator.html">ICustomValidator</a></h4>
       <section><p>Describes the common functionality of all the validators.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpRequest.html">IHttpRequest</a></h4>
+      <section><p>Represents an abstract HTTP request.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpResponse.html">IHttpResponse</a></h4>
+      <section><p>Represents an abstract HTTP respone.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a></h4>
+      <section><p>Describes an abstract HTTP server.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a></h4>
+      <section><p>Represents an abstract HTTP session.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></h4>
       <section><p>Describes an abstract module registry.</p>
@@ -180,14 +183,17 @@
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IPropertyValidator.html">IPropertyValidator</a></h4>
       <section><p>Defines an abstract property validator.</p>
 </section>
-      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestContext.html">IRequestContext</a></h4>
-      <section><p>Encapsulates all the informations related to a request.</p>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></h4>
+      <section><p>Describes a request handler service.</p>
 </section>
-      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestCounter.html">IRequestCounter</a></h4>
-      <section><p>Request counter service.</p>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html">IRequestPipeConfigurator&lt;TRequestHandlerBase&gt;</a></h4>
+      <section><p>Describes how to configure the request pipeline.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRoleManager.html">IRoleManager</a></h4>
       <section><p>Contains some role related logic.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a></h4>
+      <section><p>Encapsulates all the informations related to a request.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Interfaces.IServiceDescriptor.html">IServiceDescriptor</a></h4>
       <section><p>Exposes the description of a RPC service.</p>

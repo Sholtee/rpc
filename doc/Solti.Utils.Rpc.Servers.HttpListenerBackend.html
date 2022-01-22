@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class HttpListenerBackend
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class HttpListenerBackend
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Servers_HttpListenerBackend" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend" class="text-break">Class HttpListenerBackend
+  </h1>
+  <div class="markdown level0 summary"><p>Wraps the built-in <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistener">HttpListener</a> class to be used as a <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a> service. </p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Solti.Utils.Primitives.Patterns.Disposable</span></div>
+    <div class="level2"><span class="xref">HttpListenerBackend</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a></div>
+    <div><span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.AsyncDispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.BeforeDispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.CheckNotDisposed()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.DisposeAsync()</span>
+    </div>
+    <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Disposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Servers.html">Solti.Utils.Rpc.Servers</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class HttpListenerBackend : Disposable, IHttpServer, IDisposableEx, IDisposable, IAsyncDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend__ctor_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend__ctor_System_String_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.#ctor(System.String)">HttpListenerBackend(String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Servers.HttpListenerBackend.html">HttpListenerBackend</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HttpListenerBackend(string url)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">url</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_IsStarted_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.IsStarted*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_IsStarted" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.IsStarted">IsStarted</h4>
+  <div class="markdown level1 summary"><p>Returns true if the server is started.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStarted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_ReserveUrl_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.ReserveUrl*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_ReserveUrl" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.ReserveUrl">ReserveUrl</h4>
+  <div class="markdown level1 summary"><p>Returns true if the system should reserve the <a class="xref" href="Solti.Utils.Rpc.Servers.HttpListenerBackend.html#Solti_Utils_Rpc_Servers_HttpListenerBackend_Url">Url</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ReserveUrl { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Url_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Url*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Url" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Url">Url</h4>
+  <div class="markdown level1 summary"><p>The URL on which the server listens.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Url { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_AddSslCert_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.AddSslCert*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_AddSslCert_System_Net_IPEndPoint_System_String_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.AddSslCert(System.Net.IPEndPoint,System.String)">AddSslCert(IPEndPoint, String)</h4>
+  <div class="markdown level1 summary"><p>Binds an SSL certificate to the given IP and port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AddSslCert(IPEndPoint ipPort, string certHash)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.ipendpoint">IPEndPoint</a></td>
+        <td><span class="parametername">ipPort</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">certHash</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_AddUrlReservation_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.AddUrlReservation*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_AddUrlReservation_System_String_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.AddUrlReservation(System.String)">AddUrlReservation(String)</h4>
+  <div class="markdown level1 summary"><p>Adds an URL reservation. For more information see <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AddUrlReservation(string url)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">url</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Dispose_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Dispose*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Dispose_System_Boolean_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Dispose(System.Boolean)">Dispose(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Dispose(bool disposeManaged)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">disposeManaged</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_RemoveSslCert_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveSslCert*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_RemoveSslCert_System_Net_IPEndPoint_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveSslCert(System.Net.IPEndPoint)">RemoveSslCert(IPEndPoint)</h4>
+  <div class="markdown level1 summary"><p>Removes the bound SSL certificate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RemoveSslCert(IPEndPoint ipPort)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.ipendpoint">IPEndPoint</a></td>
+        <td><span class="parametername">ipPort</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_RemoveUrlReservation_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveUrlReservation*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_RemoveUrlReservation_System_String_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveUrlReservation(System.String)">RemoveUrlReservation(String)</h4>
+  <div class="markdown level1 summary"><p>Removes an URL reservation. For more information see <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RemoveUrlReservation(string url)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">url</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Start_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Start*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Start" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Start">Start()</h4>
+  <div class="markdown level1 summary"><p>Starts the server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Start()</code></pre>
+  </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>The server has already been started.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Stop_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Stop*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Stop" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.Stop">Stop()</h4>
+  <div class="markdown level1 summary"><p>Stops the server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Stop()</code></pre>
+  </div>
+  <h5 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_Stop_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method should not free resources so the already started sessions can gracefully terminate.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Servers_HttpListenerBackend_WaitForSessionAsync_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.WaitForSessionAsync*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpListenerBackend_WaitForSessionAsync_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.Servers.HttpListenerBackend.WaitForSessionAsync(System.Threading.CancellationToken)">WaitForSessionAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>If the server is listening, this method waits until a new request is availbale. </p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;IHttpSession&gt; WaitForSessionAsync(CancellationToken cancellation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.operationcanceledexception">OperationCanceledException</a></td>
+        <td><p>Either the server was stopped or a <code data-dev-comment-type="paramref" class="paramref">cancellation</code> was requested.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a>
+  </div>
+  <div>
+      <span class="xref">Solti.Utils.Primitives.Patterns.IDisposableEx</span>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iasyncdisposable">System.IAsyncDisposable</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Modules
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Modules
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Pipeline.Modules">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Pipeline_Modules" data-uid="Solti.Utils.Rpc.Pipeline.Modules" class="text-break">Class Modules
+  </h1>
+  <div class="markdown level0 summary"><p>Invokes a module method described by the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a> and writes the result into the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenerresponse">HttpListenerResponse</a>.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a></div>
+    <div class="level2"><span class="xref">Modules</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_WebServiceBuilder">RequestHandlerFactory.WebServiceBuilder</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Pipeline.html">Solti.Utils.Rpc.Pipeline</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerFactory, IModuleRegistry</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation">ModuleInvocation</h4>
+  <div class="markdown level1 summary"><p>The built <a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a> delegate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ModuleInvocation ModuleInvocation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property is set once the <a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration">FinishConfiguration()</a> method is called.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions" data-uid="Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions">SerializerOptions</h4>
+  <div class="markdown level1 summary"><p>The serializer options.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonSerializerOptions SerializerOptions { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_Create_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Create*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Create(IRequestHandler)</h4>
+  <div class="markdown level1 summary"><p>Creates a new request handler instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IRequestHandler Create(IRequestHandler next)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></td>
+        <td><span class="parametername">next</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerFactory.Create(IRequestHandler)</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration" data-uid="Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration">FinishConfiguration()</h4>
+  <div class="markdown level1 summary"><p>Called once the factory configuration is finished. </p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void FinishConfiguration()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_FinishConfiguration">RequestHandlerFactory.FinishConfiguration()</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_Register_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</h4>
+  <div class="markdown level1 summary"><p>Registers a module.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IModuleRegistry Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt; factory)
+    where TInterface : class</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<span class="xref">Solti.Utils.DI.Interfaces.IInjector</span>, TInterface&gt;</td>
+        <td><span class="parametername">factory</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInterface</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_Register_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Register__2" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register``2">Register&lt;TInterface, TImplementation&gt;()</h4>
+  <div class="markdown level1 summary"><p>Registers a module.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IModuleRegistry Register&lt;TInterface, TImplementation&gt;()
+    where TInterface : class where TImplementation : TInterface</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInterface</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TImplementation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.ModuleRegistryExtensions.html#Solti_Utils_Rpc_ModuleRegistryExtensions_InstallBuiltInModules_Solti_Utils_Rpc_Interfaces_IModuleRegistry_">ModuleRegistryExtensions.InstallBuiltInModules(IModuleRegistry)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

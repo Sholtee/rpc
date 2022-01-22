@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class WebServiceDescriptor
+    <title>Class HttpSession
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class WebServiceDescriptor
+    <meta name="title" content="Class HttpSession
    | RPC.NET ">
     <meta name="generator" content="docfx 2.58.0.0">
     
@@ -37,18 +37,23 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.WebServiceDescriptor">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Servers.HttpSession">
   
   
-  <h1 id="Solti_Utils_Rpc_WebServiceDescriptor" data-uid="Solti.Utils.Rpc.WebServiceDescriptor" class="text-break">Class WebServiceDescriptor
+  <h1 id="Solti_Utils_Rpc_Servers_HttpSession" data-uid="Solti.Utils.Rpc.Servers.HttpSession" class="text-break">Class HttpSession
   </h1>
-  <div class="markdown level0 summary"><p>Describes a WEB service</p>
+  <div class="markdown level0 summary"><p>Default <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a> implementation.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">WebServiceDescriptor</span></div>
+    <div class="level1"><span class="xref">HttpSession</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Servers.HttpSession.html">HttpSession</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -74,22 +79,59 @@
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.html">Solti.Utils.Rpc</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Servers.html">Solti.Utils.Rpc.Servers</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
-  <h5 id="Solti_Utils_Rpc_WebServiceDescriptor_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Servers_HttpSession_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class WebServiceDescriptor</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class HttpSession : IHttpSession, IEquatable&lt;HttpSession&gt;</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Solti_Utils_Rpc_Servers_HttpSession__ctor_" data-uid="Solti.Utils.Rpc.Servers.HttpSession.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpSession__ctor_Solti_Utils_Rpc_Interfaces_IHttpServer_Solti_Utils_Rpc_Interfaces_IHttpRequest_Solti_Utils_Rpc_Interfaces_IHttpResponse_" data-uid="Solti.Utils.Rpc.Servers.HttpSession.#ctor(Solti.Utils.Rpc.Interfaces.IHttpServer,Solti.Utils.Rpc.Interfaces.IHttpRequest,Solti.Utils.Rpc.Interfaces.IHttpResponse)">HttpSession(IHttpServer, IHttpRequest, IHttpResponse)</h4>
+  <div class="markdown level1 summary"><p>Default <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a> implementation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HttpSession(IHttpServer Server, IHttpRequest Request, IHttpResponse Response)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a></td>
+        <td><span class="parametername">Server</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpRequest.html">IHttpRequest</a></td>
+        <td><span class="parametername">Request</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpResponse.html">IHttpResponse</a></td>
+        <td><span class="parametername">Response</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_WebServiceDescriptor_AllowedOrigins_" data-uid="Solti.Utils.Rpc.WebServiceDescriptor.AllowedOrigins*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceDescriptor_AllowedOrigins" data-uid="Solti.Utils.Rpc.WebServiceDescriptor.AllowedOrigins">AllowedOrigins</h4>
-  <div class="markdown level1 summary"><p>See <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">https://en.wikipedia.org/wiki/Cross-origin_resource_sharing</a></p>
-</div>
+  <a id="Solti_Utils_Rpc_Servers_HttpSession_Request_" data-uid="Solti.Utils.Rpc.Servers.HttpSession.Request*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpSession_Request" data-uid="Solti.Utils.Rpc.Servers.HttpSession.Request">Request</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; AllowedOrigins { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IHttpRequest Request { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -101,19 +143,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpRequest.html">IHttpRequest</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_WebServiceDescriptor_Timeout_" data-uid="Solti.Utils.Rpc.WebServiceDescriptor.Timeout*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceDescriptor_Timeout" data-uid="Solti.Utils.Rpc.WebServiceDescriptor.Timeout">Timeout</h4>
-  <div class="markdown level1 summary"><p>The maximum amount of time that is available for the service to serve a request.</p>
-</div>
+  <a id="Solti_Utils_Rpc_Servers_HttpSession_Response_" data-uid="Solti.Utils.Rpc.Servers.HttpSession.Response*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpSession_Response" data-uid="Solti.Utils.Rpc.Servers.HttpSession.Response">Response</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan Timeout { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IHttpResponse Response { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -125,19 +166,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpResponse.html">IHttpResponse</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_WebServiceDescriptor_Url_" data-uid="Solti.Utils.Rpc.WebServiceDescriptor.Url*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceDescriptor_Url" data-uid="Solti.Utils.Rpc.WebServiceDescriptor.Url">Url</h4>
-  <div class="markdown level1 summary"><p>The URL on which the WEB server will listen.</p>
-</div>
+  <a id="Solti_Utils_Rpc_Servers_HttpSession_Server_" data-uid="Solti.Utils.Rpc.Servers.HttpSession.Server*"></a>
+  <h4 id="Solti_Utils_Rpc_Servers_HttpSession_Server" data-uid="Solti.Utils.Rpc.Servers.HttpSession.Server">Server</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Url { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IHttpServer Server { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -149,11 +189,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpSession.html">IHttpSession</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
 </article>
           </div>
           

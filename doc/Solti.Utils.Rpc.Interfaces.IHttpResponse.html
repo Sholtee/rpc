@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IHttpResponse
+   | RPC.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IHttpResponse
+   | RPC.NET ">
+    <meta name="generator" content="docfx 2.58.0.0">
+    
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse">
+  
+  
+  <h1 id="Solti_Utils_Rpc_Interfaces_IHttpResponse" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse" class="text-break">Interface IHttpResponse
+  </h1>
+  <div class="markdown level0 summary"><p>Represents an abstract HTTP respone.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IHttpResponse</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Headers_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.Headers*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Headers" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.Headers">Headers</h4>
+  <div class="markdown level1 summary"><p>The headers being sent to the client.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IDictionary&lt;string, string&gt; Headers { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpResponse_IsClosed_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.IsClosed*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_IsClosed" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.IsClosed">IsClosed</h4>
+  <div class="markdown level1 summary"><p>Returns true if the response has already been closed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsClosed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpResponse_OriginalResponse_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.OriginalResponse*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_OriginalResponse" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.OriginalResponse">OriginalResponse</h4>
+  <div class="markdown level1 summary"><p>The original response.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object OriginalResponse { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Payload_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.Payload*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Payload" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.Payload">Payload</h4>
+  <div class="markdown level1 summary"><p>The response body.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Stream Payload { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Payload_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Content-Length is calculated from the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.length#system-io-stream-length">Length</a> property.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpResponse_StatusCode_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.StatusCode*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_StatusCode" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.StatusCode">StatusCode</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the status code of the response.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">HttpStatusCode StatusCode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode">HttpStatusCode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Close_" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.Close*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IHttpResponse_Close" data-uid="Solti.Utils.Rpc.Interfaces.IHttpResponse.Close">Close()</h4>
+  <div class="markdown level1 summary"><p>Closes the curent session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task Close()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

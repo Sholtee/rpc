@@ -42,14 +42,14 @@
   
   <h1 id="Solti_Utils_Rpc_Internals_ModuleInvocation" data-uid="Solti.Utils.Rpc.Internals.ModuleInvocation" class="text-break">Delegate ModuleInvocation
   </h1>
-  <div class="markdown level0 summary"><p>Executes module methods by context.</p>
+  <div class="markdown level0 summary"><p>Executes module methods.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Internals.html">Solti.Utils.Rpc.Internals</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Internals_ModuleInvocation_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate Task&lt;object&gt; ModuleInvocation(IInjector injector, IRequestContext context);</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate Task&lt;object&gt; ModuleInvocation(IInjector injector, IRpcRequestContext context, JsonSerializerOptions serializerOptions);</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -64,14 +64,17 @@
       <tr>
         <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
         <td><span class="parametername">injector</span></td>
-        <td><p>The <span class="xref">Solti.Utils.DI.Interfaces.IInjector</span> in which the module was registered.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestContext.html">IRequestContext</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a></td>
         <td><span class="parametername">context</span></td>
-        <td><p>The context which describes the invocation.</p>
-</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
+        <td><span class="parametername">serializerOptions</span></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

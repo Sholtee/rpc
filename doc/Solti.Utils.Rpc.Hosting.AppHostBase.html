@@ -94,7 +94,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class AppHostBase : CommandLineApplication</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AppHostBase : CommandLineApplication</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -105,7 +105,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AppHostBase(IReadOnlyList&lt;string&gt; args)</code></pre>
+    <pre><code class="lang-csharp hljs">protected AppHostBase(IReadOnlyList&lt;string&gt; args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -126,14 +126,14 @@
   </table>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_RpcService_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.RpcService*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_RpcService" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.RpcService">RpcService</h4>
-  <div class="markdown level1 summary"><p>Returns the underlying <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a>.</p>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_WebService_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.WebService*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_WebService" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.WebService">WebService</h4>
+  <div class="markdown level1 summary"><p>Returns the underlying <a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RpcService RpcService { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public WebService WebService { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -145,24 +145,24 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_RpcService_remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_WebService_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This property is set only once, after successful service configuration.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder">CreateServiceBuilder()</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a> instance.</p>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual RpcServiceBuilder CreateServiceBuilder()</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual WebServiceBuilder CreateServiceBuilder()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -174,17 +174,17 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_CreateServiceBuilder_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Override this method if you want to use your own <a class="xref" href="Solti.Utils.Rpc.RpcService.html">RpcService</a> and/or <a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a> implementation.</p>
+  <div class="markdown level1 remarks"><p>Override this method if you want to use your own builder.</p>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt">OnBuilt()</h4>
-  <div class="markdown level1 summary"><p>Called once when the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_RpcService">RpcService</a> is built successfully.</p>
+  <div class="markdown level1 summary"><p>Called once when the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_WebService">WebService</a> is built successfully.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -195,13 +195,13 @@
   <div class="markdown level1 remarks"><p>Override this method if you need to implement one-time initialization logic that depends on the built service.</p>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure*"></a>
-  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.RpcServiceBuilder)">OnConfigure(RpcServiceBuilder)</h4>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.WebServiceBuilder)">OnConfigure(WebServiceBuilder)</h4>
   <div class="markdown level1 summary"><p>Invoked once on service setup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnConfigure(RpcServiceBuilder serviceBuilder)</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract void OnConfigure(WebServiceBuilder serviceBuilder)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -214,13 +214,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.RpcServiceBuilder.html">RpcServiceBuilder</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a></td>
         <td><span class="parametername">serviceBuilder</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder__remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_WebServiceBuilder__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Override this method to configure the RPC service being built.</p>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service*"></a>
@@ -289,7 +289,7 @@ public virtual void OnInstall()</code></pre>
     <pre><code class="lang-csharp hljs">public virtual void OnStart()</code></pre>
   </div>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStart_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>In most of cases you should not override this method. To configure your service instance use the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_RpcServiceBuilder_">OnConfigure(RpcServiceBuilder)</a> and <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt">OnBuilt()</a> methods.</p>
+  <div class="markdown level1 remarks"><p>In most of cases you should not override this method. To configure your service instance use the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_WebServiceBuilder_">OnConfigure(WebServiceBuilder)</a> and <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt">OnBuilt()</a> methods.</p>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnStop" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnStop">OnStop()</h4>
