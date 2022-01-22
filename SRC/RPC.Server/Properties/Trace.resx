@@ -121,7 +121,13 @@
     <value>Begin request processing.</value>
   </data>
   <data name="EXCEPTION_IN_LISTENER_THREAD" xml:space="preserve">
-    <value>Listener thread stopped due to an unhandled exception: {0}</value>
+    <value>Listener thread ({0}) stopped due to an unhandled exception: {1}</value>
+  </data>
+  <data name="LISTENER_THREAD_STARTED" xml:space="preserve">
+    <value>Listener thread ({0}) started.</value>
+  </data>
+  <data name="LISTENER_THREAD_STOPPED" xml:space="preserve">
+    <value>Listener thread ({0}) stopped.</value>
   </data>
   <data name="PREFLIGHT_REQUEST" xml:space="preserve">
     <value>Preflight request, processor won't be called.</value>

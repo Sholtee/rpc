@@ -13,6 +13,11 @@ namespace Solti.Utils.Rpc.Interfaces
     public interface IHttpSession
     {
         /// <summary>
+        /// Gets the server instance that started this session.
+        /// </summary>
+        IHttpServer Server { get; }
+
+        /// <summary>
         /// The HTTP request.
         /// </summary>
         IHttpRequest Request { get; }
@@ -21,11 +26,5 @@ namespace Solti.Utils.Rpc.Interfaces
         /// The HTTP response.
         /// </summary>
         IHttpResponse Response { get; }
-
-        /// <summary>
-        /// Notifies the request processor that the server is stopped so the operation should be cancelled.
-        /// </summary>
-        /// <remarks>It's safe to call the <see cref="CancellationToken.ThrowIfCancellationRequested()"/> method.</remarks>
-        CancellationToken Cancellation { get; }
     }
 }

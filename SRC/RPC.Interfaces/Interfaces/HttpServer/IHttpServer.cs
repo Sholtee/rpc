@@ -5,19 +5,22 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
+    using Primitives.Patterns;
+
     /// <summary>
     /// Describes an abstract HTTP server.
     /// </summary>
-    public interface IHttpServer: IDisposable
+    public interface IHttpServer: IDisposableEx
     {
         /// <summary>
-        /// Returns true if the server is listening.
+        /// Returns true if the server is started.
         /// </summary>
-        bool IsListening { get; }
+        bool IsStarted { get; }
 
         /// <summary>
         /// The URL on which the server listens.
@@ -26,20 +29,19 @@ namespace Solti.Utils.Rpc.Interfaces
         string Url { get; }
 
         /// <summary>
-        /// Callback, invoked when a reuqest is available.
+        /// If the server is listening, this method waits until a new request is availbale. 
         /// </summary>
-        /// <remarks>This callback should start a new <see cref="Task"/> for each sessions thus it won't block the listener thread.</remarks>
-        [SuppressMessage("Design", "CA1003:Use generic event handler instances")]
-        event Func<IHttpSession, Task> OnContextAvailable;
+        /// <exception cref="OperationCanceledException">Either the server was stopped or a <paramref name="cancellation"/> was requested.</exception>
+        Task<IHttpSession> WaitForSessionAsync(CancellationToken cancellation);
 
         /// <summary>
-        /// Starts the listener thread.
+        /// Starts the server.
         /// </summary>
         /// <exception cref="InvalidOperationException">The server has already been started.</exception>
         void Start();
 
         /// <summary>
-        /// Stops the listener thread.
+        /// Stops the server.
         /// </summary>
         /// <remarks>This method should not free resources so the already started sessions can gracefully terminate.</remarks>
         [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "The naming won't confuse the users.")]

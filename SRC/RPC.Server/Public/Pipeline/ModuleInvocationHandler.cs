@@ -6,10 +6,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,18 +29,18 @@ namespace Solti.Utils.Rpc.Pipeline
             string? SessionId,
             string Module,
             string Method,
-            HttpListenerRequest OriginalRequest,
+            IHttpRequest OriginalRequest,
             CancellationToken Cancellation
         ) : IRpcRequestContext
         {
-            public Stream Payload => OriginalRequest.InputStream;
+            public Stream Payload => OriginalRequest.Payload;
         };
 
         /// <summary>
         /// Creates the HTTP response.
         /// </summary>
         /// <remarks>This operation cannot be cancelled.</remarks>
-        protected virtual async Task CreateResponse(object? result, HttpListenerResponse response)
+        protected virtual async Task CreateResponse(object? result, IHttpResponse response)
         {
             if (response is null)
                 throw new ArgumentNullException(nameof(response));
@@ -52,10 +50,9 @@ namespace Solti.Utils.Rpc.Pipeline
                 case Stream stream:
                     try
                     {
-                        response.ContentType = "application/octet-stream";
-                        response.ContentEncoding = null;
+                        response.Headers["Content-Type"] = "application/octet-stream";
                         stream.Seek(0, SeekOrigin.Begin);
-                        await stream.CopyToAsync(response.OutputStream);
+                        await stream.CopyToAsync(response.Payload);
                     }
                     finally
                     {
@@ -67,9 +64,8 @@ namespace Solti.Utils.Rpc.Pipeline
                     }
                     break;
                 case Exception ex:
-                    response.ContentType = "application/json";
-                    response.ContentEncoding = Encoding.UTF8;
-                    await SafeSerializer.SerializeAsync(response.OutputStream, new RpcResponse
+                    response.Headers["Content-Type"] = "application/json; charset=UTF-8";
+                    await SafeSerializer.SerializeAsync(response.Payload, new RpcResponse
                     {
                         Exception = new ExceptionInfo
                         {
@@ -80,41 +76,37 @@ namespace Solti.Utils.Rpc.Pipeline
                     }, Parent.SerializerOptions);
                     break;
                 default:
-                    response.ContentType = "application/json";
-                    response.ContentEncoding = Encoding.UTF8;
-                    await SafeSerializer.SerializeAsync(response.OutputStream, new RpcResponse { Result = result }, Parent.SerializerOptions);
+                    response.Headers["Content-Type"] = "application/json; charset=UTF-8";
+                    await SafeSerializer.SerializeAsync(response.Payload, new RpcResponse { Result = result }, Parent.SerializerOptions);
                     break;
             }
         }
 
         /// <summary>
-        /// Parses the <paramref name="context"/> to RPC context.
+        /// Parses the <paramref name="context"/> to a RPC context.
         /// </summary>
-        protected virtual IRpcRequestContext CreateContext(RequestContext context)
+        protected virtual IRpcRequestContext CreateContext(IHttpSession context, in CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            HttpListenerRequest request = context.Request;
+            IHttpRequest request = context.Request;
 
             //
             // Metodus validalasa (POST eseten a keresnek kene legyen torzse).
             //
 
-            if (request.HttpMethod.ToUpperInvariant() is not "POST")
+            if (request.Method.ToUpperInvariant() is not "POST")
                 throw new HttpException(Errors.HTTP_METHOD_NOT_SUPPORTED) { Status = HttpStatusCode.MethodNotAllowed };
 
             //
-            // Tartalom validalasa. ContentType property bar nem nullable de lehet NULL.
+            // Tartalom validalasa.
             //
 
-            if (request.ContentType?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) is not true)
+            if (request.Headers["Content-Type"]?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) is not true)
                 throw new HttpException(Errors.HTTP_CONTENT_NOT_SUPPORTED) { Status = HttpStatusCode.BadRequest };
 
-            if (request.ContentEncoding?.WebName.Equals("utf-8", StringComparison.OrdinalIgnoreCase) is not true)
-                throw new HttpException(Errors.HTTP_ENCODING_NOT_SUPPORTED) { Status = HttpStatusCode.BadRequest };
-
-            NameValueCollection paramz = request.QueryString;
+            IReadOnlyDictionary<string, string> paramz = request.QueryParameters;
 
             //
             // Szukseges parameterek lekerdezese (nem kis-nagy betu erzekeny).
@@ -126,7 +118,7 @@ namespace Solti.Utils.Rpc.Pipeline
                 paramz[nameof(RpcRequestContext.Module)] ?? throw new HttpException(Errors.NO_MODULE) { Status = HttpStatusCode.BadRequest },
                 paramz[nameof(RpcRequestContext.Method)] ?? throw new HttpException(Errors.NO_METHOD) { Status = HttpStatusCode.BadRequest },
                 request,
-                context.Cancellation           
+                cancellation           
             );
         }
 
@@ -149,17 +141,17 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public async Task HandleAsync(RequestContext context)
+        public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            IRpcRequestContext rpcRequestContext = Parent.ContextStore[context.Scope] = CreateContext(context);
+            IRpcRequestContext rpcRequestContext = Parent.ContextStore[scope] = CreateContext(context, cancellation);
             object? result;
 
             try
             {
-                result = await Parent.ModuleInvocation!(context.Scope, rpcRequestContext, Parent.SerializerOptions);
+                result = await Parent.ModuleInvocation!(scope, rpcRequestContext, Parent.SerializerOptions);
             }
 
             catch (Exception ex)
@@ -183,7 +175,7 @@ namespace Solti.Utils.Rpc.Pipeline
 
             finally 
             {
-                Parent.ContextStore.Remove(context.Scope);
+                Parent.ContextStore.Remove(scope);
             }
 
             //
@@ -191,7 +183,7 @@ namespace Solti.Utils.Rpc.Pipeline
             //
 
             await CreateResponse(result, context.Response);
-            await Next.HandleAsync(context);
+            await Next.HandleAsync(scope, context, cancellation);
         }
     }
 

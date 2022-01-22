@@ -20,11 +20,10 @@ namespace Solti.Utils.Rpc.Servers
     using Internals;
     using Primitives.Patterns;
 
-    using TraceRes = Properties.Trace;
     using ErrorRes = Properties.Errors;
 
     /// <summary>
-    /// Implements a general Web Service over HTTP. 
+    /// Wraps the built-in <see cref="HttpListener"/> class to be used as a <see cref="IHttpServer"/> service. 
     /// </summary>
     public class HttpListenerWrapper : Disposable, IHttpServer
     {
@@ -84,73 +83,6 @@ namespace Solti.Utils.Rpc.Servers
 
         private bool FNeedToRemoveUrlReservation;
         private HttpListener FListener;
-        private Task? FListenerThread;
-        private readonly ManualResetEventSlim FTerminate;
-
-        private void Listen()
-        {
-            Trace.WriteLine(TraceRes.SERVICE_STARTED);
-
-            //
-            // Ha a kiszolgalo ujrainditasra kerul akkor az FListenerThread erteke is megvaltozik
-            //
-
-            Task listenerThread = FListenerThread!;
-
-            do
-            {
-                //
-                // Using mivel hasznaljuk az AsyncWaitHandle property-t, lasd: https://devblogs.microsoft.com/pfxteam/do-i-need-to-dispose-of-tasks/
-                //
-
-                using Task<HttpListenerContext> getContext = FListener.GetContextAsync();
-
-                if (WaitHandle.WaitAny(new WaitHandle[] { FTerminate.WaitHandle, ((IAsyncResult) getContext).AsyncWaitHandle }) is 0)
-                    break;
-
-                switch (getContext.Status)
-                {
-                    case TaskStatus.RanToCompletion:
-                        _ = RaiseContextAvailableEvent(getContext.Result);
-                        break;
-
-                    case TaskStatus.Faulted:
-                        Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.EXCEPTION_IN_LISTENER_THREAD, getContext.Exception));
-                        break;
-                }
-            } while (true);
-
-            Trace.WriteLine(TraceRes.SERVICE_TERMINATED);
-
-            async Task RaiseContextAvailableEvent(HttpListenerContext context)
-            {
-                //
-                // A feldolgozok CancellationToken-t kapnak ResetEvent helyett.
-                //
-
-                using CancellationTokenSource cancellation = new();
-
-                Task processor = OnContextAvailable!
-                (
-                    new HttpSession
-                    (
-                        new HttpListenerRequestWrapper(context.Request),
-                        new HttpListenerResponseWrapper(context.Response),
-                        cancellation.Token
-                    )
-                );
-
-                //
-                // Ha a fo szall leall akkor megszakitjuk a feldolgozokat.
-                //
-
-                if (await Task.WhenAny(processor, listenerThread) == listenerThread)
-                {
-                    cancellation.Cancel();
-                    await processor;
-                }
-            }
-        }
 
         private static HttpListener CreateCore(string url) 
         {
@@ -200,13 +132,7 @@ namespace Solti.Utils.Rpc.Servers
         protected override void Dispose(bool disposeManaged)
         {
             if (disposeManaged)
-            {
-                if (FListenerThread?.IsCompleted is false)
-                    Stop();
-
                 FListener.Close();
-                FTerminate.Dispose();
-            }
 
             base.Dispose(disposeManaged);
         }
@@ -216,17 +142,10 @@ namespace Solti.Utils.Rpc.Servers
         /// <summary>
         /// Creates a new <see cref="HttpListenerWrapper"/> instance.
         /// </summary>
-        public HttpListenerWrapper(string url)
-        {
-            FListener = CreateCore(url);
-            FTerminate = new ManualResetEventSlim(false);
-            Url = url;
-        }
+        public HttpListenerWrapper(string url) => FListener = CreateCore(Url = url);
 
-        /// <summary>
-        /// Returns true if the Web Service is listening.
-        /// </summary>
-        public bool IsListening => FListener.IsListening && FListenerThread?.IsCompleted is false;
+        /// <inheritdoc/>
+        public bool IsStarted => FListener.IsListening;
 
         /// <inheritdoc/>
         public string Url { get; }
@@ -237,18 +156,37 @@ namespace Solti.Utils.Rpc.Servers
         public bool ReserveUrl { get; set; } = true;
 
         /// <inheritdoc/>
-        public event Func<IHttpSession, Task> OnContextAvailable = _ => Task.CompletedTask;
+        public async Task<IHttpSession> WaitForSessionAsync(CancellationToken cancellation)
+        {
+            TaskCompletionSource<HttpListenerContext> cancelSignal = new();
+            cancellation.Register(cancelSignal.SetCanceled);
 
-        /// <summary>
-        /// Starts the listener.
-        /// </summary>
-        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
+            Task<HttpListenerContext> completed = await Task.WhenAny(FListener.GetContextAsync(), cancelSignal.Task);
+
+            HttpListenerContext context;
+            try
+            {
+                context = await completed;
+            }
+
+            //
+            // A kiszolgalo leallitasra kerult: https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.begingetcontext?view=net-6.0#exceptions
+            //
+
+            catch (HttpListenerException) { throw new OperationCanceledException(); }
+
+            return new HttpSession
+            (
+                this,
+                new HttpListenerRequestWrapper(context.Request),
+                new HttpListenerResponseWrapper(context.Response)
+            );        
+        }
+
+        /// <inheritdoc/>
         [SuppressMessage("Maintainability", "CA1508:Avoid dead conditional code", Justification = "There is no dead conditional code")]
         public void Start()
         {
-            if (FTerminate.IsSet)
-                FTerminate.Reset();
-
             again:
             try
             {
@@ -281,23 +219,11 @@ namespace Solti.Utils.Rpc.Servers
 
                 throw;
             }
-
-
-            FListenerThread = Task.Factory.StartNew(Listen, TaskCreationOptions.LongRunning);
-            FListenerThread.Start();
         }
 
-        /// <summary>
-        /// Stops the listener.
-        /// </summary>
+        /// <inheritdoc/>
         public void Stop()
         {
-            //
-            // Nem fogadunk tobb kerest valamint jelezzuk a meg aktiv feldolgozoknak h alljanak le.
-            //
-
-            FTerminate.Set();
-            FListenerThread!.Wait();
             FListener.Stop();
 
             if (FNeedToRemoveUrlReservation)

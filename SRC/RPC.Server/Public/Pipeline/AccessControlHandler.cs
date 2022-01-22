@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -27,14 +27,14 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Sets the "Access-Control-XxX" headers.
         /// </summary>
         /// <remarks>This method may be called parallelly.</remarks>
-        protected virtual void SetAcHeaders(RequestContext context)
+        protected virtual void SetAcHeaders(IHttpSession context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            HttpListenerResponse response = context.Response;
+            IHttpResponse response = context.Response;
 
-            string? origin = context.Request.Headers.Get("Origin");
+            string? origin = context.Request.Headers["Origin"];
 
             if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
             {
@@ -49,14 +49,14 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Determines whether the request is a preflight request or not.
         /// </summary>
-        protected static bool IsPreflight(RequestContext context)
+        protected static bool IsPreflight(IHttpSession context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             return context
                 .Request
-                .HttpMethod
+                .Method
                 .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
         }
 
@@ -91,18 +91,24 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public Task HandleAsync(RequestContext context)
+        public Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
+            if (scope is null)
+                throw new ArgumentNullException(nameof(scope));
+
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
             SetAcHeaders(context);
 
             if (IsPreflight(context))
             {
-                context.Scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
+                scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
                 context.Response.Close();
                 return Task.CompletedTask;
             }
 
-            return Next.HandleAsync(context);
+            return Next.HandleAsync(scope, context, cancellation);
         }
     }
 

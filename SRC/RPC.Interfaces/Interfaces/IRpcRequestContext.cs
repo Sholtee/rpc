@@ -45,6 +45,6 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// Gets the original request.
         /// </summary>
-        HttpListenerRequest OriginalRequest { get; }
+        IHttpRequest OriginalRequest { get; }
     }
 }

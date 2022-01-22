@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Pipeline
 {
+    using DI.Interfaces;
     using Interfaces;
 
     /// <summary>
@@ -51,13 +52,13 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public Task HandleAsync(RequestContext context)
+        public Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             ThrowIfRequestCountExceedsTheThreshold(context.Request.RemoteEndPoint, DateTime.UtcNow);
-            return Next.HandleAsync(context);
+            return Next.HandleAsync(scope, context, cancellation);
         }
     }
 

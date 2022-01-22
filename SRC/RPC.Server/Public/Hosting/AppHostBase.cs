@@ -57,7 +57,7 @@ namespace Solti.Utils.Rpc.Hosting
                 OnBuilt();
             }
 
-            WebService.Start();
+            _ = WebService.Start();
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Internals
@@ -50,6 +51,23 @@ namespace Solti.Utils.Rpc.Internals
             }
 
             throw new NotSupportedException();
+        }
+
+        public static async Task<bool> WaitAsync(this Task task, TimeSpan timeout)
+        {
+            using CancellationTokenSource timeoutCancellation = new();
+
+            if (await Task.WhenAny(task, Task.Delay(timeout, timeoutCancellation.Token)) == task)
+            {
+                //
+                // Leallitjuk a varakozast
+                //
+
+                timeoutCancellation.Cancel();
+                return true;
+            }
+
+            return false;
         }
     }
 }

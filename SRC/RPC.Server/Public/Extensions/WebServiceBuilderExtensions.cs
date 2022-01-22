@@ -7,11 +7,14 @@ using System;
 
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable CA1054 // URI-like parameters should not be strings
+
 namespace Solti.Utils.Rpc
 {
     using DI.Interfaces;
     using Internals;
     using Pipeline;
+    using Servers;
 
     /// <summary>
     /// Defines some handy extensons to the <see cref="WebServiceBuilder"/> class.
@@ -21,12 +24,13 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Builds a minimal web service.
         /// </summary>
-        public static WebService BuildMinimalService(this WebServiceBuilder webServiceBuilder)
+        public static WebService BuildMinimalService(this WebServiceBuilder webServiceBuilder, string url = "http://localhost:1986")
         {
             if (webServiceBuilder is null)
                 throw new ArgumentNullException(nameof(webServiceBuilder));
 
             return webServiceBuilder
+                .ConfigureBackend(_ => new HttpListenerWrapper(url) { ReserveUrl = true })
                 .ConfigureServices(svcs => svcs.Factory<ILogger>(i => TraceLogger.Create<WebService>(), Lifetime.Singleton))
                 .Build();
         }

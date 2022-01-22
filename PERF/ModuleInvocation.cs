@@ -4,7 +4,6 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System.IO;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
@@ -31,7 +30,7 @@ namespace Solti.Utils.Rpc.Perf
             Stream Payload
         ) : IRpcRequestContext
         {
-            public HttpListenerRequest OriginalRequest { get; }
+            public IHttpRequest OriginalRequest { get; }
             public CancellationToken Cancellation { get; }
         };
 

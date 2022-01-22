@@ -32,7 +32,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
             Stream Payload
         ) : IRpcRequestContext
         {
-            public HttpListenerRequest OriginalRequest { get; }
+            public IHttpRequest OriginalRequest { get; }
             public CancellationToken Cancellation { get; }
         };
 

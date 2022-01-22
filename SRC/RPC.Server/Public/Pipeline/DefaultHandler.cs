@@ -4,10 +4,12 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc
 {
+    using DI.Interfaces;
     using Interfaces;
 
     /// <summary>
@@ -18,10 +20,8 @@ namespace Solti.Utils.Rpc
         /// <inheritdoc/>
         public IRequestHandler? Next { get; }
 
-        /// <summary>
-        /// Closes the current session.
-        /// </summary>
-        public Task HandleAsync(RequestContext context)
+        /// <inheritdoc/>
+        public Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));

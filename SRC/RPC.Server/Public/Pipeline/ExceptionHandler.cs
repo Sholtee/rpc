@@ -6,6 +6,7 @@
 using System;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -26,15 +27,13 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Writes the given <paramref name="responseString"/> to the <paramref name="response"/>.
         /// </summary>
-        protected async static Task WriteResponseString(HttpListenerResponse response, string responseString)
+        protected async static Task WriteResponseString(IHttpResponse response, string responseString)
         {
             if (response is null)
                 throw new ArgumentNullException(nameof(response));
 
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-            response.ContentEncoding = Encoding.UTF8;
-            response.ContentLength64 = buffer.Length;
-            await response.OutputStream.WriteAsync
+            await response.Payload.WriteAsync
             (
 #if NETSTANDARD2_1_OR_GREATER
                 buffer.AsMemory(0, buffer.Length)
@@ -47,24 +46,24 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Processes unhandled exceptions.
         /// </summary>
-        protected virtual async Task ProcessUnhandledException(Exception ex, RequestContext context)
+        protected virtual async Task ProcessUnhandledException(Exception ex, IHttpSession context)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             try
             {
-                HttpListenerResponse response = context.Response;
+                IHttpResponse response = context.Response;
 
                 //
                 // Http kivetelek megadhatjak a hiba kodjat.
                 //
 
-                response.StatusCode = (int) ((ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError);
+                response.StatusCode = (ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError;
 
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    response.ContentType = "text/html";
+                    response.Headers["Content-Type"] = "text/html; charset=UTF-8";
 
                     //
                     // Itt ne hasznaljuk az context.Cancellation-t mivel lehet h pont a feldolgozo megszakitasa miatt kerultunk ide.
@@ -74,7 +73,7 @@ namespace Solti.Utils.Rpc.Pipeline
                     await WriteResponseString(response, ex.Message);
                 }
 
-                response.Close();
+                await response.Close();
             }
 
             //
@@ -94,18 +93,21 @@ namespace Solti.Utils.Rpc.Pipeline
         public CatchAllExceptionsHandler(IRequestHandler next) => Next = next ?? throw new ArgumentNullException(nameof(next));
 
         /// <inheritdoc/>
-        public async Task HandleAsync(RequestContext context)
+        public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
+            if (scope is null)
+                throw new ArgumentNullException(nameof(scope));
+
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
             try
             {
-                await Next.HandleAsync(context);
+                await Next.HandleAsync(scope, context, cancellation);
             }
             catch (Exception ex)
             {
-                context.Scope.TryGet<ILogger>()?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
+                scope.TryGet<ILogger>()?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
                 await ProcessUnhandledException(ex, context);
             }

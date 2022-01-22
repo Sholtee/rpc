@@ -13,6 +13,7 @@ namespace Solti.Utils.Rpc.Server.Sample
     using Hosting;
     using Interfaces;
     using Pipeline;
+    using Servers;
 
     public class AppHost : AppHostBase
     {
@@ -27,8 +28,8 @@ namespace Solti.Utils.Rpc.Server.Sample
 
         public override void OnConfigure(WebServiceBuilder serviceBuilder)
         {
-            serviceBuilder.Url = "http://localhost:1986/api/";
             serviceBuilder
+                .ConfigureBackend(_ => new HttpListenerWrapper("http://localhost:1986/api/") { ReserveUrl = true })
                 .DefineRpcService(conf => 
                 {
                     switch (conf) 

@@ -4,7 +4,6 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable CA1033 // Interface methods should be callable by child types
 
@@ -42,12 +41,6 @@ namespace Solti.Utils.Rpc
         }
 
         /// <summary>
-        /// The URL on which the service will listen.
-        /// </summary>
-        [SuppressMessage("Design", "CA1056:URI-like properties should not be strings", Justification = "HttpListener accepts non-standard URLs (see '+' & '*') too.")]
-        public string Url { get; set; } = "http://localhost:1986";
-
-        /// <summary>
         /// Configures the required services.
         /// </summary>
         public WebServiceBuilder ConfigureServices(Action<IServiceCollection> configCallback)
@@ -71,9 +64,14 @@ namespace Solti.Utils.Rpc
         }
 
         /// <summary>
+        /// Configures the backend implementation.
+        /// </summary>
+        public WebServiceBuilder ConfigureBackend(Func<IInjector, IHttpServer> factory) => ConfigureServices(svcs => svcs.Factory<IHttpServer>(factory, Lifetime.Singleton));
+
+        /// <summary>
         /// Builds a new <see cref="WebService"/> instance.
         /// </summary>
-        public virtual WebService Build() => new WebService(Url, ServiceCollection);
+        public virtual WebService Build() => new WebService(ServiceCollection);
 
         IRequestPipeConfigurator<RequestHandlerFactory> IRequestPipeConfigurator<RequestHandlerFactory>.Use<TRequestHandlerFactory>(Action<TRequestHandlerFactory>? configCallback)
         {

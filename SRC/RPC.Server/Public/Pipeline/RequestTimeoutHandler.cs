@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Pipeline
 {
+    using DI.Interfaces;
     using Interfaces;
+    using Internals;
 
     /// <summary>
     /// Adds a timeout to the request processing.
@@ -35,7 +37,7 @@ namespace Solti.Utils.Rpc.Pipeline
         }
 
         /// <inheritdoc/>
-        public async Task HandleAsync(RequestContext context)
+        public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -46,16 +48,10 @@ namespace Solti.Utils.Rpc.Pipeline
             //   2) Maga a WebService kerul leallitasra
             //
 
-            using CancellationTokenSource
-                taskCancellation = new(),
-                linkedCancellation = CancellationTokenSource.CreateLinkedTokenSource(taskCancellation.Token, context.Cancellation);
+            using CancellationTokenSource taskCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellation);
 
-            Task task = Next.HandleAsync(new RequestContext(context) 
-            { 
-                Cancellation = linkedCancellation.Token
-            });
-
-            if (await Task.WhenAny(task, Task.Delay(Parent.Timeout)) != task)
+            Task task = Next.HandleAsync(scope, context, taskCancellation.Token);
+            if (!await task.WaitAsync(Parent.Timeout))
                 //
                 // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
                 //
@@ -63,10 +59,8 @@ namespace Solti.Utils.Rpc.Pipeline
                 taskCancellation.Cancel();
 
             //
-            // Itt a kovetkezo esetek lehetnek:
-            //   1) A feldolgozo idoben befejezte a feladatat, az "await" mar nem fog varakozni, jok vagyunk
-            //   2) A feldolgozo megszakizasra kerult (a kiszolgalo leallitasa vagy idotullepes maitt) -> OperationCanceledException
-            //   3) Vmi egyeb kivetel adodott a feldolgozoban
+            // Meg ha tudjuk is hogy a "task" befejezodott akkor is legyen "await" hogy ha kivetel
+            // volt akkor azt tovabb tudjuk dobni.
             //
 
             await task;

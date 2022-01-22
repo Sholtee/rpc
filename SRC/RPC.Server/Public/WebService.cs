@@ -6,25 +6,22 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
-#pragma warning disable CA1054 // URI-like parameters should not be strings
-#pragma warning disable CA1056 // URI-like properties should not be strings
-#pragma warning disable CA1031 // We have to catch all kind of exceptions here
-#pragma warning disable CA1508 // Avoid dead conditional code
+#pragma warning disable CA1031 // Do not catch general exception types
 
 namespace Solti.Utils.Rpc
 {
     using DI.Interfaces;
     using Interfaces;
+    using Internals;
     using Primitives.Patterns;
-    using Primitives.Threading;
-    using Properties;
+
+    using TraceRes = Properties.Trace;
 
     /// <summary>
     /// Implements a general Web Service over HTTP. 
@@ -32,129 +29,52 @@ namespace Solti.Utils.Rpc
     public class WebService: Disposable
     {
         #region Private
-        private bool FNeedToRemoveUrlReservation;
+        const int TERMINATED = -1;
+        
+        private int FActiveWorkers = TERMINATED;
 
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "See https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.system-idisposable-dispose?view=netcore-3.1#remarks")]
-        private HttpListener? FListener;
-        private Thread? FListenerThread;
-        [SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "This field is disposed correctly, see Stop() method")]
-        private CancellationTokenSource? FListenerCancellation;
+        private readonly ManualResetEventSlim FTerminatedSignal = new();
+        private readonly ManualResetEventSlim FStopSignal = new();
 
-        private readonly ExclusiveBlock FExclusiveBlock = new();
-
-        private int FActiveRequests;
-
-        [SuppressMessage("Reliability", "CA2008:Do not create tasks without passing a TaskScheduler")]
-        private void Listen()
+        private async Task CreateWorkerLoop()
         {
+            int workerId = Interlocked.Increment(ref FActiveWorkers);
+            Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STARTED, workerId));      
             try
             {
-                //
-                // Ez az injector csak a listener thread-hez tartozik, ezen a metoduson kivul TILOS hasznalni.
-                //
-
-                using IInjector scope = ScopeFactory.CreateScope();
-
-                ILogger? logger = scope.TryGet<ILogger>();
-
-                //
-                // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
-                // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
-                //
-
-                using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
+                while (true)
                 {
-                    [nameof(Url)] = Url
-                });
+                    using CancellationTokenSource cts = new();
 
-                logger?.LogInformation(Trace.SERVICE_STARTED);
+                    Task worker = CreateWorker(workerId, cts.Token);
 
-                do
-                {
-                    Task<HttpListenerContext> getContext = FListener!.GetContextAsync();
+                    if (await Task.WhenAny(worker, FStopSignal.AsTask()) != worker)
+                        cts.Cancel();
 
-                    if (WaitHandle.WaitAny(new WaitHandle[] { FListenerCancellation!.Token.WaitHandle, ((IAsyncResult) getContext).AsyncWaitHandle }) is 0)
-                        break;
+                    //
+                    // Meg ha tudjuk is hogy a "worker" befejezodott akkor is legyen "await" hogy ha kivetel
+                    // volt akkor azt tovabb tudjuk dobni.
+                    //
 
-                    switch (getContext.Status)
-                    {
-                        case TaskStatus.RanToCompletion:
-                            logger?.LogInformation(Trace.REQUEST_AVAILABLE);
-                            _ = CreateSession(getContext.Result);
-                            break;
-
-                        case TaskStatus.Faulted:
-                            logger?.LogError(getContext.Exception.ToString());
-                            break;
-                    }
-                } while (true);
-
-                logger?.LogInformation(Trace.SERVICE_TERMINATED);
+                    await worker;
+                }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Trace.WriteLine(string.Format(Trace.Culture, Trace.EXCEPTION_IN_LISTENER_THREAD, ex));
+                if (ex is not OperationCanceledException)
+                    Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.EXCEPTION_IN_LISTENER_THREAD, workerId, ex));
             }
-        }
-
-        private async Task CreateSession(HttpListenerContext context)
-        {
-            Interlocked.Increment(ref FActiveRequests);
-            try
+            finally
             {
-                await using IInjector scope = ScopeFactory.CreateScope();
+                //
+                // Leallitaskor is dekrementaljuk az FActiveRequests valtozot, igy ha az negativ erteket er el akkor az utolso
+                // feldolgozo fogja kikuldeni az ertesitest a sikeres leallasrol.
+                //
 
-                await scope.Get<IRequestHandler>().HandleAsync(new RequestContext
-                {
-                    Request      = context.Request,
-                    Response     = context.Response,
-                    Cancellation = FListenerCancellation!.Token,
-                    Scope        = scope
-                });
-            } 
-            finally { Interlocked.Decrement(ref FActiveRequests); }
-        }
-
-        private HttpListener CreateCore() 
-        {
-            HttpListener result = new()
-            {
-                IgnoreWriteExceptions = true
-            };
-
-            try
-            {
-                result.Prefixes.Add(Url);
+                if (Interlocked.Decrement(ref FActiveWorkers) is TERMINATED)
+                    FTerminatedSignal.Set();
             }
-            catch
-            {
-                result.Close();
-                throw;
-            }
-
-            return result;
-        }
-
-        private static void InvokeNetsh(string arguments) 
-        {
-            if (Environment.OSVersion.Platform is not PlatformID.Win32NT)
-                throw new PlatformNotSupportedException();
-
-            ProcessStartInfo psi = new("netsh", arguments)
-            {
-                Verb            = "runas",
-                CreateNoWindow  = true,
-                WindowStyle     = ProcessWindowStyle.Hidden,
-                UseShellExecute = true
-            };
-
-            Process netsh = System.Diagnostics.Process.Start(psi);
-            
-            netsh.WaitForExit();
-            if (netsh.ExitCode is not 0)
-                #pragma warning disable CA2201 // Do not change the exception type to preserve backward compatibility
-                throw new Exception(Errors.NETSH_INVOCATION_FAILED);
-                #pragma warning restore CA2201
+            Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STOPPED, workerId));
         }
         #endregion
 
@@ -165,9 +85,12 @@ namespace Solti.Utils.Rpc
             if (disposeManaged)
             {
                 if (IsStarted)
-                    Stop();
+                    Stop().GetAwaiter().GetResult(); // TODO: szebben
+
                 ScopeFactory.Dispose();
-                FExclusiveBlock.Dispose();
+
+                FTerminatedSignal.Dispose();
+                FStopSignal.Dispose();
             }
 
             base.Dispose(disposeManaged);
@@ -177,10 +100,57 @@ namespace Solti.Utils.Rpc
         protected override async ValueTask AsyncDispose()
         {
             if (IsStarted)
-                Stop();
+                await Stop();
 
             await ScopeFactory.DisposeAsync();
-            await FExclusiveBlock.DisposeAsync();
+
+            FTerminatedSignal.Dispose();
+            FStopSignal.Dispose();
+        }
+
+        /// <summary>
+        /// Creates a new worker <see cref="Task"/> that waits for a new session then processes it.
+        /// </summary>
+        protected virtual async Task CreateWorker(int workerId, CancellationToken cancellation)
+        {
+            await using IInjector scope = ScopeFactory.CreateScope();
+
+            IHttpServer server = scope.Get<IHttpServer>(); // singleton
+
+            IHttpSession httpSession = await server.WaitForSessionAsync(cancellation);
+
+            ILogger? logger = scope.TryGet<ILogger>();
+
+            //
+            // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
+            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
+            //
+
+            using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
+            {
+                ["Url"] = server.Url,
+                ["Worker ID"] = workerId,
+                ["Remote EndPoint"] = httpSession.Request.RemoteEndPoint
+            });
+
+            logger?.LogInformation(TraceRes.REQUEST_AVAILABLE);
+
+            try
+            {
+                await scope.Get<IRequestHandler>().HandleAsync(scope, httpSession, cancellation);
+
+                logger?.LogInformation(TraceRes.REQUEST_PROCESSED);
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, TraceRes.REQUEST_PROCESSING_FAILED);
+
+                if (!httpSession.Response.IsClosed)
+                {
+                    httpSession.Response.StatusCode = HttpStatusCode.InternalServerError;
+                    await httpSession.Response.Close();
+                }
+            }
         }
         #endregion
 
@@ -188,163 +158,90 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="WebService"/> instance.
         /// </summary>
-        public WebService(string url, IServiceCollection serviceCollection)
-        {
-            Url = url ?? throw new ArgumentNullException(nameof(url));
-            ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)));
-        }
-
-        /// <summary>
-        /// Returns true if the Web Service has already been started (which does not imply that it <see cref="IsListening"/>).
-        /// </summary>
-        public bool IsStarted => FListenerThread is not null;
-
-        /// <summary>
-        /// Returns true if the Web Service is listening.
-        /// </summary>
-        public bool IsListening => FListener?.IsListening is true && FListenerThread?.IsAlive is true;
+        public WebService(IServiceCollection serviceCollection) => ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)));
 
         /// <summary>
         /// Returns the <see cref="IScopeFactory"/> related to this instance.
         /// </summary>
-        public IScopeFactory ScopeFactory { get; }
+        public IScopeFactory ScopeFactory { get; protected init; }
 
         /// <summary>
-        /// The URL on which the server listens,
+        /// Starts the service.
         /// </summary>
-        public string Url { get; }
-
-        /// <summary>
-        /// Starts the Web Service.
-        /// </summary>
-        public void Start()
+        public async Task Start()
         {
-            using (FExclusiveBlock.Enter())
+            await using IInjector scope = ScopeFactory.CreateScope();
+
+            IHttpServer server = scope.Get<IHttpServer>(); // singleton
+            if (server.IsStarted || FActiveWorkers > TERMINATED)
+                throw new InvalidOperationException();
+
+            FStopSignal.Reset();
+            FTerminatedSignal.Reset();
+
+            FActiveWorkers = 0;
+
+            server.Start();
+
+            for (int i = 0; i < MaxWorkers; i++)
             {
-                if (IsStarted)
-                    return;
+                _ = CreateWorkerLoop();
+            }
+        }
 
-                createcore:
-                FListener = CreateCore();
+        /// <summary>
+        /// Stops the service.
+        /// </summary>
+        public async Task Stop()
+        {
+            await using IInjector scope = ScopeFactory.CreateScope();
 
+            IHttpServer server = scope.Get<IHttpServer>(); // singleton
+            if (!server.IsStarted)
+                throw new InvalidOperationException();
+
+            //
+            // Ujabb kereseket mar nem fogadunk.
+            //
+
+            server.Stop();
+
+            FStopSignal.Set();
+
+            if (Interlocked.Decrement(ref FActiveWorkers) is TERMINATED)
+                return;
+
+            //
+            // Megvarjuk amig mindenki leall
+            //
+
+            await FTerminatedSignal.AsTask();
+        }
+
+        /// <summary>
+        /// returns true if the server is started.
+        /// </summary>
+        public bool IsStarted
+        {
+            get
+            {
+                using IInjector scope = ScopeFactory.CreateScope();
                 try
                 {
-                    FListener.Start();
-                }
-                catch (Exception ex)
-                {
-                    //
-                    // Fasz se tudja miert de ha a Start() kivetelt dob akkor a HttpListener felszabaditasra kerul:
-                    // https://github.com/dotnet/runtime/blob/0e870dfca57021542351a79983ad3ac1d289a23f/src/libraries/System.Net.HttpListener/src/System/Net/Windows/HttpListener.Windows.cs#L266
-                    //
-
-                    FListener = null;
-
-                    if (Environment.OSVersion.Platform is PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode is 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
-                    {
-                        AddUrlReservation(Url);
-                        FNeedToRemoveUrlReservation = true;
-
-                        //
-                        // Megprobaljuk ujra letrehozni.
-                        //
-
-                        goto createcore;
-                    }
-
-                    //
-                    // Ha nem URL lefoglalos gondunk volt akkor tovabb dobjuk a kivetelt
-                    //
-
-                    throw;
-                }
-
-                FListenerCancellation = new CancellationTokenSource();
-
-                FListenerThread = new Thread(Listen);
-                FListenerThread.Start();
+                    return scope.Get<IHttpServer>().IsStarted; // singleton
+                } catch { return false; }
             }
         }
 
         /// <summary>
-        /// Shuts down the Web Service.
+        /// Returns true if the server is listening.
         /// </summary>
-        public void Stop() => Stop(TimeSpan.FromMinutes(2));
+        public bool IsListening => FActiveWorkers > 0;
 
         /// <summary>
-        /// Shuts down the Web Service.
+        /// The maximum number of worker threads.
         /// </summary>
-        public void Stop(TimeSpan timeout)
-        {
-            using (FExclusiveBlock.Enter())
-            {
-                if (!IsStarted)
-                    return;
-
-                //
-                // Nem fogadunk tobb kerest valamint jelezzuk a meg aktiv feldolgozoknak h alljanak le.
-                //
-
-                FListenerCancellation!.Cancel();
-
-                FListenerThread!.Join(); // ez utan mar biztosan nem kezdodik ujabb keres-feldolgozas
-                FListenerThread = null;
-
-                //
-                // Mielott magat a mogottes kiszolgalot leallitanak megvarjuk amig minden meg elo keres lezarasra kerul.
-                //
-
-                SpinWait.SpinUntil(() => FActiveRequests is 0, timeout);
-
-                //
-                // Kiszolgalo leallitasa.
-                //
-
-                FListener!.Close();
-                FListener = null;
-
-                //
-                // Ha a SpinWait-bol timeout-tal jottunk ki akkor meg lehet feldolgozo aki hivatkozza a megszakitast
-                // (viszont feldolgozoban keletkezett kivetel nem szopathatja be a kiszolgalot)
-                //
-
-                FListenerCancellation.Dispose();
-                FListenerCancellation = null;
-
-                if (FNeedToRemoveUrlReservation)
-                {
-                    try
-                    {
-                        RemoveUrlReservation(Url);
-                    }
-                    #pragma warning disable CA1031 // This method should not throw
-                    catch { }
-                    #pragma warning restore CA1031
-
-                    FNeedToRemoveUrlReservation = false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Adds an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
-        /// </summary>        
-        public static void AddUrlReservation(string url) => InvokeNetsh($"http add urlacl url={url ?? throw new ArgumentNullException(nameof(url))} user=\"{Environment.UserDomainName}\\{Environment.UserName}\" listen=yes");
-
-        /// <summary>
-        /// Binds an SSL certificate to the given IP and port.
-        /// </summary>
-        public static void AddSslCert(IPEndPoint ipPort, string certHash) => InvokeNetsh($"http add sslcert ipport={ipPort ?? throw new ArgumentNullException(nameof(ipPort))} certhash={certHash ?? throw new ArgumentNullException(nameof(certHash))} appid={Guid.NewGuid().ToString("B")}");
-
-        /// <summary>
-        /// Removes an URL reservation. For more information see http://msdn.microsoft.com/en-us/library/windows/desktop/cc307223(v=vs.85).aspx
-        /// </summary>
-        public static void RemoveUrlReservation(string url) => InvokeNetsh($"http delete urlacl url={url ?? throw new ArgumentNullException(nameof(url))}");
-
-        /// <summary>
-        /// Removes the bound SSL certificate.
-        /// </summary>
-        public static void RemoveSslCert(IPEndPoint ipPort) => InvokeNetsh($"http delete sslcert ipport={ipPort ?? throw new ArgumentNullException(nameof(ipPort))}");
+        public int MaxWorkers { get; set; } = Environment.ProcessorCount;
         #endregion
     }
 }
