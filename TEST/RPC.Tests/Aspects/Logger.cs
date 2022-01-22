@@ -5,6 +5,9 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -15,13 +18,24 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 {
     using DI.Interfaces;
     using Interfaces;
-    using Internals;
     using Primitives.Patterns;
     using Proxy.Generators;
 
     [TestFixture]
     public class LoggerTests
     {
+        private sealed record RpcRequestContext
+        (
+            string SessionId,
+            string Module,
+            string Method,
+            Stream Payload
+        ) : IRpcRequestContext
+        {
+            public IHttpRequest OriginalRequest { get; }
+            public CancellationToken Cancellation { get; }
+        };
+
         [ModuleLoggerAspect]
         public interface IModule
         {
@@ -73,8 +87,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void DefaultLoggers_ShouldBeAppliedByDefault()
         {
             Injector
-                .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, null, default));
+                .Setup(i => i.Get(typeof(IRpcRequestContext), null))
+                .Returns(new RpcRequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null));
 
             int callOrder = 0;
 
@@ -102,8 +116,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         public void DefaultLoggers_CanBeOverridden()
         {
             Injector
-                .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, null, default));
+                .Setup(i => i.Get(typeof(IRpcRequestContext), null))
+                .Returns(new RpcRequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null));
 
             BeginScope
                 .Setup(fn => fn(It.Is<Dictionary<string, object>>(d => d["Module"].ToString() == nameof(IModule) && d["Method"].ToString() == nameof(IModule.DoSomething) && d["SessionId"].ToString() == "cica")))
@@ -123,8 +137,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Throws(new Exception("This is the message"));
 
             Injector
-                .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null, null, default));
+                .Setup(i => i.Get(typeof(IRpcRequestContext), null))
+                .Returns(new RpcRequestContext("cica", nameof(IModule), nameof(IModule.DoSomething), null));
 
             int callOrder = 0;
 
@@ -160,8 +174,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Returns(Task.FromException<int>(new Exception("This is the message")));
 
             Injector
-                .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null, null, default));
+                .Setup(i => i.Get(typeof(IRpcRequestContext), null))
+                .Returns(new RpcRequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null));
 
             int callOrder = 0;
 
@@ -197,8 +211,8 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Returns(Task.FromResult(1986));
 
             Injector
-                .Setup(i => i.Get(typeof(IRequestContext), null))
-                .Returns(new RequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null, null, default));
+                .Setup(i => i.Get(typeof(IRpcRequestContext), null))
+                .Returns(new RpcRequestContext("cica", nameof(IModule), nameof(IModule.DoSomethingAsync), null));
 
             int callOrder = 0;
 

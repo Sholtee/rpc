@@ -25,7 +25,7 @@ namespace Solti.Utils.Rpc.Aspects
     {
         private IRoleManager RoleManager { get; }
 
-        private IRequestContext RequestContext { get; }
+        private IRpcRequestContext RequestContext { get; }
 
         private static IReadOnlyList<Enum> GetRequiredRoles(MethodInfo method)
         {
@@ -44,7 +44,7 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="RoleValidator{TInterface}"/> instance.
         /// </summary>
-        public RoleValidator(TInterface target, IRequestContext requestContext, IRoleManager roleManager) : base(target)
+        public RoleValidator(TInterface target, IRpcRequestContext requestContext, IRoleManager roleManager) : base(target)
         {
             RequestContext = requestContext ?? throw new ArgumentNullException(nameof(requestContext));
             RoleManager = roleManager ?? throw new ArgumentNullException(nameof(roleManager));   

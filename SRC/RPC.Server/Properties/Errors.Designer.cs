@@ -106,6 +106,33 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content-Type not supported..
+        /// </summary>
+        internal static string HTTP_CONTENT_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("HTTP_CONTENT_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content-Encoding not supported..
+        /// </summary>
+        internal static string HTTP_ENCODING_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("HTTP_ENCODING_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Http method not supported..
+        /// </summary>
+        internal static string HTTP_METHOD_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("HTTP_METHOD_NOT_SUPPORTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The length of the args array does not match the parameter count..
         /// </summary>
         internal static string INAPPROPRIATE_ARRAY_LENGTH {
@@ -142,7 +169,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request must specify a method..
+        ///   Looks up a localized string similar to Request must specify a module method..
         /// </summary>
         internal static string NO_METHOD {
             get {
@@ -201,6 +228,15 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string SC_INVOCATION_FAILED {
             get {
                 return ResourceManager.GetString("SC_INVOCATION_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scheme not supported..
+        /// </summary>
+        internal static string SCHEME_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("SCHEME_NOT_SUPPORTED", resourceCulture);
             }
         }
     }

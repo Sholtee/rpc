@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Moq;
@@ -22,6 +23,18 @@ namespace Solti.Utils.Rpc.Tests
     [TestFixture]
     public class ModuleInvocationTests
     {
+        private sealed record RpcRequestContext
+        (
+            string SessionId,
+            string Module,
+            string Method,
+            Stream Payload
+        ) : IRpcRequestContext
+        {
+            public IHttpRequest OriginalRequest { get; }
+            public CancellationToken Cancellation { get; }
+        };
+
         public interface IService
         {
             int Add(int a, int b);
@@ -68,7 +81,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(new Mock<IService>().Object);
 
-            await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), null, AsStream(1, 2), default));
+            await Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Add), AsStream(1, 2)), new JsonSerializerOptions());
 
             mockInjector.Verify(i => i.Get(It.IsAny<Type>(), null), Times.Once);
         }
@@ -86,7 +99,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), null, AsStream(1, 2), default)), Is.EqualTo(3));
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Add), AsStream(1, 2)), new JsonSerializerOptions()), Is.EqualTo(3));
             mockService.Verify(svc => svc.Add(1, 2), Times.Once);
         }
 
@@ -95,7 +108,7 @@ namespace Solti.Utils.Rpc.Tests
         {
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
 
-            Assert.ThrowsAsync<MissingModuleException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, "Invalid", nameof(IService.Add), null, AsStream(1, 2), default)));
+            Assert.ThrowsAsync<MissingModuleException>(() => Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, "Invalid", nameof(IService.Add), AsStream(1, 2)), new JsonSerializerOptions()));
         }
 
         [Test]
@@ -108,7 +121,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Invalid", null, null, default)));
+            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), "Invalid", null), new JsonSerializerOptions()));
         }
 
         public static IEnumerable<Stream> InvalidPayloads 
@@ -147,7 +160,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.ThrowsAsync<JsonException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Add), null, payload, default)));
+            Assert.ThrowsAsync<JsonException>(() => Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Add), payload), new JsonSerializerOptions()));
         }
 
         [Test]
@@ -162,7 +175,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.IsNull(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Void), null, AsStream(), default)));
+            Assert.IsNull(await Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Void), AsStream()), new JsonSerializerOptions()));
             mockService.Verify(svc => svc.Void(), Times.Once);
         }
 
@@ -178,8 +191,8 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Bar), null, AsStream(), default)));
-            Assert.DoesNotThrowAsync(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), "Cica", null, AsStream(), default)));
+            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Bar), AsStream()), new JsonSerializerOptions()));
+            Assert.DoesNotThrowAsync(() => Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), "Cica", AsStream()), new JsonSerializerOptions()));
         }
 
         [Test]
@@ -192,7 +205,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Ignored), null, AsStream(), default)));
+            Assert.ThrowsAsync<MissingMethodException>(() => Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Ignored), AsStream()), new JsonSerializerOptions()));
         }
 
         [Test]
@@ -208,7 +221,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.Async), null, AsStream(), default)), Is.Null);
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.Async), AsStream()), new JsonSerializerOptions()), Is.Null);
             mockService.Verify(i => i.Async(), Times.Once);
         }
 
@@ -225,7 +238,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Setup(i => i.Get(typeof(IService), null))
                 .Returns(mockService.Object);
 
-            Assert.That(await Invocation.Invoke(mockInjector.Object, new RequestContext(null, nameof(IService), nameof(IService.AsyncHavingRetVal), null, AsStream(), default)), Is.EqualTo(1));
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService), nameof(IService.AsyncHavingRetVal), AsStream()), new JsonSerializerOptions()), Is.EqualTo(1));
             mockService.Verify(i => i.AsyncHavingRetVal(), Times.Once);
         }
 

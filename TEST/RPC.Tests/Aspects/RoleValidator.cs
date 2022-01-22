@@ -72,7 +72,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(rm => rm.GetAssignedRoles("cica"))
                 .Returns(data.Roles);
 
-            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockRequest = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockRequest
                 .SetupGet(r => r.SessionId)
                 .Returns("cica");
@@ -106,7 +106,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(rm => rm.GetAssignedRoles("cica"))
                 .Returns(data.Roles);
 
-            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockRequest = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockRequest
                 .SetupGet(r => r.SessionId)
                 .Returns("cica");
@@ -140,7 +140,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(rm => rm.GetAssignedRolesAsync("cica", It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((Enum) data.Roles));
 
-            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockRequest = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockRequest
                 .SetupGet(r => r.SessionId)
                 .Returns("cica");
@@ -181,7 +181,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
                 .Setup(rm => rm.GetAssignedRoles(sessionId))
                 .Returns(roles);
 
-            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockRequest = new Mock<IRpcRequestContext>(MockBehavior.Strict);
             mockRequest
                 .SetupGet(r => r.SessionId)
                 .Returns(sessionId);
@@ -203,7 +203,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);;
 
-            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockRequest = new Mock<IRpcRequestContext>(MockBehavior.Strict);
 
             Type proxyType = ProxyGenerator<IModule, RoleValidator<IModule>>.GetGeneratedType();
 
@@ -225,7 +225,7 @@ namespace Solti.Utils.Rpc.Aspects.Tests
 
             var mockRoleManager = new Mock<IRoleManager>(MockBehavior.Strict);
 
-            var mockRequest = new Mock<IRequestContext>(MockBehavior.Strict);
+            var mockRequest = new Mock<IRpcRequestContext>(MockBehavior.Strict);
 
             using IScopeFactory scopeFacrory = ScopeFactory.Create(svcs => svcs
                 .Factory(injector => mockModule.Object, Lifetime.Scoped)

@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* IClock.cs                                                                     *
+* IRequestPipeConfig.cs                                                         *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -8,13 +8,13 @@ using System;
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
-    /// Describes an abstract clock.
+    /// Describes how to configure the request pipeline.
     /// </summary>
-    public interface IClock 
+    public interface IRequestPipeConfigurator<TRequestHandlerBase>
     {
         /// <summary>
-        /// Returns the current time.
+        /// 
         /// </summary>
-        DateTime UtcNow { get; }
+        IRequestPipeConfigurator<TRequestHandlerBase> Use<TRequestHandler>(Action<TRequestHandler>? configCallback = null) where TRequestHandler: TRequestHandlerBase, new();
     }
 }

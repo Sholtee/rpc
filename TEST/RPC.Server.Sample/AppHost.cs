@@ -9,10 +9,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Solti.Utils.Rpc.Server.Sample
 {
+    using DI.Interfaces;
     using Hosting;
     using Interfaces;
-
-    using DI.Interfaces;
+    using Pipeline;
+    using Servers;
 
     public class AppHost : AppHostBase
     {
@@ -25,31 +26,31 @@ namespace Solti.Utils.Rpc.Server.Sample
             descriptor.Name = "Calculator";
         }
 
-        public override void OnConfigure(RpcServiceBuilder serviceBuilder)
+        public override void OnConfigure(WebServiceBuilder serviceBuilder)
         {
-            base.OnConfigure(serviceBuilder);
-
             serviceBuilder
-                .ConfigureWebService(new WebServiceDescriptor
+                .ConfigureBackend(_ => new HttpListenerBackend("http://localhost:1986/api/") { ReserveUrl = true })
+                .ConfigureRpcService(conf => 
                 {
-                    Url = "http://localhost:1986/api/",
-                    AllowedOrigins = new[]
+                    switch (conf) 
                     {
-                        "http://localhost:1987"
+                        case Modules modules:
+                            modules.Register<ICalculator, Calculator>();
+                            break;
+                        case RpcAccessControl ac:
+                            ac.AllowedOrigins.Add("http://localhost:1987");
+                            break;
                     }
-                })
-                .ConfigureServices(services =>
+                }, useDefaultLogger: false)
+                .ConfigureServices(services => 
                 {
                     //
                     // A naplozas kikapcsolhato mivel az a teljesitmeny teszteket negativan befolyasolja.
                     //
 
                     if (!Args.Any(arg => arg.ToLowerInvariant() is "-nolog"))
-                    {
-                        services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Singleton);
-                    }
-                })
-                .ConfigureModules(modules => modules.Register<ICalculator, Calculator>());
+                        services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Scoped);
+                });
         }
     }
 }

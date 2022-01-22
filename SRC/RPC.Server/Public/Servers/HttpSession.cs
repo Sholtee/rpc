@@ -1,17 +1,16 @@
 ﻿/********************************************************************************
-* RpcResponse.cs                                                                *
+* HttpSession.cs                                                                *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-
-namespace Solti.Utils.Rpc.Internals
+namespace Solti.Utils.Rpc.Servers
 {
     using Interfaces;
 
-    internal sealed class RpcResponse
+    /// <summary>
+    /// Default <see cref="IHttpSession"/> implementation.
+    /// </summary>
+    public sealed record HttpSession(IHttpServer Server, IHttpRequest Request, IHttpResponse Response) : IHttpSession
     {
-        public object? Result { get; init; }
-
-        public ExceptionInfo? Exception { get; init; }
     }
 }

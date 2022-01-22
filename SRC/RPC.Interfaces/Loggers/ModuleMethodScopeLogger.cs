@@ -19,7 +19,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <inheritdoc/>
         public override object? Invoke(LogContext context, Func<object?> callNext)
         {
-            IRequestContext cntx = context.Scope.Get<IRequestContext>();
+            IRpcRequestContext cntx = context.Scope.Get<IRpcRequestContext>();
 
             using IDisposable? logScope = context.Logger.BeginScope(new Dictionary<string, object>
             {

@@ -16,6 +16,6 @@ namespace Solti.Utils.Rpc.Internals
 
         public Task<string> Name => Task.FromResult(MainModule.FileVersionInfo.ProductName);
 
-        public Task<Version> Version => Task.FromResult((Version) MainModule.FileVersionInfo);
+        public Task<Version> Version => Task.FromResult((Version)MainModule.FileVersionInfo);
     }
 }

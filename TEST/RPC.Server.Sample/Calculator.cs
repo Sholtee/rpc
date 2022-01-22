@@ -14,8 +14,8 @@ namespace Solti.Utils.Rpc.Server.Sample
 
     internal class Calculator : ICalculator
     {
-        private readonly IRequestContext FContext;
-        public Calculator(IRequestContext context) => FContext = context ?? throw new ArgumentNullException(nameof(context));
+        private readonly IRpcRequestContext FContext;
+        public Calculator(IRpcRequestContext context) => FContext = context ?? throw new ArgumentNullException(nameof(context));
         public int Add(int a, int b) => a + b;
         public Task<int> AddAsync(int a, int b)
         {
