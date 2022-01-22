@@ -39,16 +39,29 @@ namespace Solti.Utils.Rpc
         private async Task CreateWorkerLoop()
         {
             int workerId = Interlocked.Increment(ref FActiveWorkers);
-            Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STARTED, workerId));      
+
+            //
+            // Mindenkepp Trace-re keruljon.
+            //
+
+            ILogger logger = TraceLogger.Create<WebService>();
+
+            using IDisposable logScope = logger.BeginScope(new Dictionary<string, object>
+            {
+                ["Worker ID"] = workerId,
+            });
+
+            logger.LogInformation(TraceRes.LISTENER_THREAD_STARTED);     
             try
             {
+                Task stopSignal = FStopSignal.AsTask();
                 while (true)
                 {
                     using CancellationTokenSource cts = new();
 
-                    Task worker = CreateWorker(workerId, cts.Token);
+                    Task worker = CreateWorker(cts.Token);
 
-                    if (await Task.WhenAny(worker, FStopSignal.AsTask()) != worker)
+                    if (await Task.WhenAny(worker, stopSignal) == stopSignal)
                         cts.Cancel();
 
                     //
@@ -62,7 +75,7 @@ namespace Solti.Utils.Rpc
             catch (Exception ex)
             {
                 if (ex is not OperationCanceledException)
-                    Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.EXCEPTION_IN_LISTENER_THREAD, workerId, ex));
+                    logger.LogError(ex, TraceRes.EXCEPTION_IN_LISTENER_THREAD);
             }
             finally
             {
@@ -74,7 +87,7 @@ namespace Solti.Utils.Rpc
                 if (Interlocked.Decrement(ref FActiveWorkers) is TERMINATED)
                     FTerminatedSignal.Set();
             }
-            Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STOPPED, workerId));
+            logger.LogInformation(TraceRes.LISTENER_THREAD_STOPPED);
         }
         #endregion
 
@@ -111,13 +124,13 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new worker <see cref="Task"/> that waits for a new session then processes it.
         /// </summary>
-        protected virtual async Task CreateWorker(int workerId, CancellationToken cancellation)
+        protected virtual async Task CreateWorker(CancellationToken cancellation)
         {
             await using IInjector scope = ScopeFactory.CreateScope();
 
             IHttpServer server = scope.Get<IHttpServer>(); // singleton
 
-            IHttpSession httpSession = await server.WaitForSessionAsync(cancellation);
+            IHttpSession context = await server.WaitForSessionAsync(cancellation);
 
             ILogger? logger = scope.TryGet<ILogger>();
 
@@ -129,15 +142,14 @@ namespace Solti.Utils.Rpc
             using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
             {
                 ["Url"] = server.Url,
-                ["Worker ID"] = workerId,
-                ["Remote EndPoint"] = httpSession.Request.RemoteEndPoint
+                ["Remote EndPoint"] = context.Request.RemoteEndPoint
             });
 
             logger?.LogInformation(TraceRes.REQUEST_AVAILABLE);
 
             try
             {
-                await scope.Get<IRequestHandler>().HandleAsync(scope, httpSession, cancellation);
+                await scope.Get<IRequestHandler>().HandleAsync(scope, context, cancellation);
 
                 logger?.LogInformation(TraceRes.REQUEST_PROCESSED);
             }
@@ -145,10 +157,10 @@ namespace Solti.Utils.Rpc
             {
                 logger?.LogError(ex, TraceRes.REQUEST_PROCESSING_FAILED);
 
-                if (!httpSession.Response.IsClosed)
+                if (!context.Response.IsClosed)
                 {
-                    httpSession.Response.StatusCode = HttpStatusCode.InternalServerError;
-                    await httpSession.Response.Close();
+                    context.Response.StatusCode = HttpStatusCode.InternalServerError;
+                    await context.Response.Close();
                 }
             }
         }
