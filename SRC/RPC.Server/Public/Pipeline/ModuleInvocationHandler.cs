@@ -64,7 +64,7 @@ namespace Solti.Utils.Rpc.Pipeline
                     }
                     break;
                 case Exception ex:
-                    response.Headers["Content-Type"] = "application/json; charset=UTF-8";
+                    response.Headers["Content-Type"] = "application/json";
                     await SafeSerializer.SerializeAsync(response.Payload, new RpcResponse
                     {
                         Exception = new ExceptionInfo
@@ -76,7 +76,7 @@ namespace Solti.Utils.Rpc.Pipeline
                     }, Parent.SerializerOptions);
                     break;
                 default:
-                    response.Headers["Content-Type"] = "application/json; charset=UTF-8";
+                    response.Headers["Content-Type"] = "application/json";
                     await SafeSerializer.SerializeAsync(response.Payload, new RpcResponse { Result = result }, Parent.SerializerOptions);
                     break;
             }

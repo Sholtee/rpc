@@ -63,7 +63,7 @@ namespace Solti.Utils.Rpc.Pipeline
 
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    response.Headers["Content-Type"] = "text/html; charset=UTF-8";
+                    response.Headers["Content-Type"] = "text/html";
 
                     //
                     // Itt ne hasznaljuk az context.Cancellation-t mivel lehet h pont a feldolgozo megszakitasa miatt kerultunk ide.
