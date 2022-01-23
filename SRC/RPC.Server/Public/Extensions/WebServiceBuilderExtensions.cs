@@ -39,7 +39,7 @@ namespace Solti.Utils.Rpc
         /// Defines a basic RPC service.
         /// </summary>
         /// <remarks>The defined RPC service uses: <see cref="ExceptionCatcher"/>, <see cref="RequestLimiter"/>, <see cref="RpcAccessControl"/>, <see cref="RequestTimeout"/> and <see cref="Modules"/>.</remarks>
-        public static WebServiceBuilder ConfigureRpcService(this WebServiceBuilder webServiceBuilder, Action<RequestHandlerFactory> configurator, bool useDefaultLogger = true)
+        public static WebServiceBuilder ConfigureRpcService(this WebServiceBuilder webServiceBuilder, Action<RequestHandlerBuilder> configurator, bool useDefaultLogger = true)
         {
             if (webServiceBuilder is null)
                 throw new ArgumentNullException(nameof(webServiceBuilder));

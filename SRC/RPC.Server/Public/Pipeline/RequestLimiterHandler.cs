@@ -65,8 +65,13 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Limits how many times a remote client can access local resources (in a given period of time).
     /// </summary>
-    public class RequestLimiter : RequestHandlerFactory
+    public class RequestLimiter : RequestHandlerBuilder
     {
+        /// <summary>
+        /// Creates a new <see cref="RequestLimiter"/> instance.
+        /// </summary>
+        public RequestLimiter(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+
         /// <summary>
         /// The interval on which the request counting takes palce.
         /// </summary>
@@ -82,6 +87,6 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RequestLimiterHandler"/> instance.
         /// </summary>
-        protected override IRequestHandler Create(IRequestHandler next) => new RequestLimiterHandler(next, this);
+        public override IRequestHandler Build(IRequestHandler next) => new RequestLimiterHandler(next, this);
     }
 }

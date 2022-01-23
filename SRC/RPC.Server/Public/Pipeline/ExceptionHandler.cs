@@ -127,14 +127,19 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures the request pipeline to be "exception proof".
     /// </summary>
-    public class ExceptionCatcher : RequestHandlerFactory, ISupportsLog
+    public class ExceptionCatcher : RequestHandlerBuilder, ISupportsLog
     {
+        /// <summary>
+        /// Creates a new <see cref="ExceptionCatcher"/> instance.
+        /// </summary>
+        public ExceptionCatcher(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+
         /// <summary>
         /// If set to true, the <see cref="ILogger"/> service will be invoked in case of unhandled exception.
         /// </summary>
         public bool AllowLogs { get; set; } = true;
 
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new ExceptionCatcherHandler(next, this);
+        public override IRequestHandler Build(IRequestHandler next) => new ExceptionCatcherHandler(next, this);
     }
 }

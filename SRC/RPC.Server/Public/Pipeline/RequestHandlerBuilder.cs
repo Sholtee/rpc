@@ -1,11 +1,12 @@
 ﻿/********************************************************************************
-* RequestHandlerFactory.cs                                                      *
+* RequestHandlerBuilder.cs                                                      *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable CA1716 // Identifiers should not match keywords
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 namespace Solti.Utils.Rpc.Pipeline
 {
@@ -13,25 +14,29 @@ namespace Solti.Utils.Rpc.Pipeline
     using Interfaces;
 
     /// <summary>
-    /// Creates <see cref="IRequestHandler"/> instances.
+    /// Builds <see cref="IRequestHandler"/> instances.
     /// </summary>
-    public abstract class RequestHandlerFactory
+    public abstract class RequestHandlerBuilder: IBuilder<IRequestHandler, IRequestHandler>
     {
         /// <summary>
-        /// Called once the factory configuration is finished. 
+        /// Creates a new <see cref="RequestHandlerBuilder"/> isntance.
         /// </summary>
-        /// <remarks>You should not call this method directly.</remarks>
-        protected internal virtual void FinishConfiguration() => WebServiceBuilder.Pipe.ApplyProxy((_, _, next) => Create((IRequestHandler) next));
+        protected RequestHandlerBuilder(WebServiceBuilder webServiceBuilder)
+        {
+            WebServiceBuilder = webServiceBuilder ?? throw new ArgumentNullException(nameof(webServiceBuilder));
+            WebServiceBuilder.Pipe.ApplyProxy((_, _, next) => Build((IRequestHandler) next));
+        }
 
         /// <summary>
         /// Creates a new <see cref="IRequestHandler"/> instance.
         /// </summary>
         /// <remarks>You should not call this method directly.</remarks>
-        protected abstract IRequestHandler Create(IRequestHandler next);
+        [SuppressMessage("Naming", "CA1725:Parameter names should match base declaration")]
+        public abstract IRequestHandler Build(IRequestHandler next);
 
         /// <summary>
         /// The <see cref="Rpc.WebServiceBuilder"/> that instantiated this class.
         /// </summary>
-        public WebServiceBuilder WebServiceBuilder { get; init; }
+        public WebServiceBuilder WebServiceBuilder { get; }
     }
 }

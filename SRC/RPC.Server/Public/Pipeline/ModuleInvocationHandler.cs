@@ -194,7 +194,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures services to be accessible via Remote Procedure Call.
     /// </summary>
-    public class Modules : RequestHandlerFactory, IModuleRegistry
+    public class Modules : RequestHandlerBuilder, IModuleRegistry
     {
         private ModuleInvocationBuilder ModuleInvocationBuilder { get; } = new();
 
@@ -206,24 +206,26 @@ namespace Solti.Utils.Rpc.Pipeline
         //   threadLocal == null;
         //
 
-        internal IDictionary<IInjector, IRpcRequestContext> ContextStore { get; } = new ConcurrentDictionary<IInjector, IRpcRequestContext>();
+        internal IDictionary<IInjector, IRpcRequestContext> ContextStore { get; } = new ConcurrentDictionary<IInjector, IRpcRequestContext>(); // TODO: "concurrencyLevel" beallitasa
+
+        internal ModuleInvocation? ModuleInvocation { get; private set; }
 
         /// <inheritdoc/>
-        protected internal override void FinishConfiguration()
+        public override IRequestHandler Build(IRequestHandler next)
         {
-            ModuleInvocation = ModuleInvocationBuilder.Build();
-            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(scope => ContextStore[scope] ?? throw new InvalidOperationException(), Lifetime.Scoped));
-            base.FinishConfiguration();
+            if (ModuleInvocation is null)
+                lock (ModuleInvocationBuilder)
+                    if (ModuleInvocation is null)
+                        ModuleInvocation = ModuleInvocationBuilder.Build();
+
+            return new ModuleInvocationHandler(next, this);
         }
 
-        /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new ModuleInvocationHandler(next, this);
-
         /// <summary>
-        /// The built <see cref="Internals.ModuleInvocation"/> delegate.
+        /// Creates a new <see cref="Modules"/> instance.
         /// </summary>
-        /// <remarks>This property is set once the <see cref="FinishConfiguration()"/> method is called.</remarks>
-        public ModuleInvocation? ModuleInvocation { get; private set; }
+        public Modules(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) =>
+            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(scope => ContextStore[scope] ?? throw new InvalidOperationException(), Lifetime.Scoped));
 
         /// <summary>
         /// The serializer options.

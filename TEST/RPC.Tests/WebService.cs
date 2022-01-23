@@ -45,8 +45,12 @@ namespace Solti.Utils.Rpc.Tests
             public RequestDelegatorHandler(Func<IHttpSession, CancellationToken, Task> onRequest) => OnRequest = onRequest;
         }
 
-        private sealed class RequestDelegator : RequestHandlerFactory
+        private sealed class RequestDelegator : RequestHandlerBuilder
         {
+            public RequestDelegator(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder)
+            {
+            }
+
             public Func<IHttpSession, CancellationToken, Task> Handler { get; private set; } = async (context, _) =>
             {
                 IHttpResponse response = context.Response;
@@ -61,12 +65,12 @@ namespace Solti.Utils.Rpc.Tests
 
             public void SetHandler(Func<IHttpSession, CancellationToken, Task> handler) => Handler = handler;
 
-            protected override IRequestHandler Create(IRequestHandler next) => new RequestDelegatorHandler(Handler);
+            public override IRequestHandler Build(IRequestHandler next) => new RequestDelegatorHandler(Handler);
         }
 
         private WebService Svc { get; set; }
 
-        private static WebServiceBuilder CreateBuilder(Action<RequestHandlerFactory> config = null) => new WebServiceBuilder()
+        private static WebServiceBuilder CreateBuilder(Action<RequestHandlerBuilder> config = null) => new WebServiceBuilder()
             .ConfigureBackend(_ => new HttpListenerBackend(TestUrl) { ReserveUrl = true })
             .ConfigurePipeline(pipe => pipe
                 .Use<RequestDelegator>(config)
@@ -75,7 +79,7 @@ namespace Solti.Utils.Rpc.Tests
                 .Use<RequestLimiter>(config)
                 .Use<ExceptionCatcher>());
 
-        private static WebService CreateService(Action<RequestHandlerFactory> config = null) => CreateBuilder(config).Build();
+        private static WebService CreateService(Action<RequestHandlerBuilder> config = null) => CreateBuilder(config).Build();
 
         [TearDown]
         public void TeardownFixture() 

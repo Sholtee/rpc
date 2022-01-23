@@ -4,20 +4,19 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-
-#pragma warning disable CA1033 // Interface methods should be callable by child types
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Solti.Utils.Rpc
 {
     using DI;
     using DI.Interfaces;
     using Interfaces;
-    using Pipeline;
 
     /// <summary>
     /// Builds <see cref="WebService"/> instances.
     /// </summary>
-    public class WebServiceBuilder : IRequestPipeConfigurator<RequestHandlerFactory>
+    public class WebServiceBuilder : IBuilder<WebService, CancellationToken>
     {
         /// <summary>
         /// The <see cref="IServiceCollection"/> containing all the necessary service to build a <see cref="WebService"/> instance.
@@ -55,11 +54,12 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Configures the request pipeline.
         /// </summary>
-        public WebServiceBuilder ConfigurePipeline(Action<IRequestPipeConfigurator<RequestHandlerFactory>> configCallback)
+        public WebServiceBuilder ConfigurePipeline(Action<IRequestPipeConfigurator> configCallback)
         {
             if (configCallback is null)
                 throw new ArgumentNullException(nameof(configCallback));
-            configCallback(this);
+
+            configCallback(new RequestPipeConfigurator(this));
             return this;
         }
 
@@ -71,17 +71,26 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Builds a new <see cref="WebService"/> instance.
         /// </summary>
-        public virtual WebService Build() => new WebService(ServiceCollection);
+        [SuppressMessage("Naming", "CA1725:Parameter names should match base declaration")]
+        public virtual WebService Build(CancellationToken cancellation = default) => new WebService(ServiceCollection, null, cancellation); // TODO: ScopeOptions is be lehesssen allitani
 
-        IRequestPipeConfigurator<RequestHandlerFactory> IRequestPipeConfigurator<RequestHandlerFactory>.Use<TRequestHandlerFactory>(Action<TRequestHandlerFactory>? configCallback)
+        private sealed class RequestPipeConfigurator : IRequestPipeConfigurator
         {
-            TRequestHandlerFactory factory = new()
+            public WebServiceBuilder WebServiceBuilder { get; }
+
+            public RequestPipeConfigurator(WebServiceBuilder webServiceBuilder) => WebServiceBuilder = webServiceBuilder;
+
+            IRequestPipeConfigurator IRequestPipeConfigurator.Use<TRequestHandlerBuilder>(Action<TRequestHandlerBuilder>? configCallback)
             {
-                WebServiceBuilder = this
-            };
-            configCallback?.Invoke(factory);
-            factory.FinishConfiguration();
-            return this;
+                //
+                // Mivel minden egyes builder-re csak egyszer lesz meghivva ezert pont jo
+                // az Activator-os peldanyositas is
+                //
+
+                TRequestHandlerBuilder factory = (TRequestHandlerBuilder) Activator.CreateInstance(typeof(TRequestHandlerBuilder), WebServiceBuilder);
+                configCallback?.Invoke(factory);
+                return this;
+            }
         }
     }
 }

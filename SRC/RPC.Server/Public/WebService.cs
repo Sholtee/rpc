@@ -166,9 +166,9 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="WebService"/> instance.
         /// </summary>
-        public WebService(IServiceCollection serviceCollection)
+        public WebService(IServiceCollection serviceCollection, ScopeOptions? scopeOptions, CancellationToken cancellation)
         {
-            ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)));
+            ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)), scopeOptions, cancellation);
 
             IInjector root = (IInjector) ScopeFactory;
 

@@ -70,14 +70,19 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures the amount of time allowed to serve a request.
     /// </summary>
-    public class RequestTimeout : RequestHandlerFactory
+    public class RequestTimeout : RequestHandlerBuilder
     {
+        /// <summary>
+        /// Creates a new <see cref="RequestTimeout"/> instance.
+        /// </summary>
+        public RequestTimeout(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+
         /// <summary>
         /// The request timeout.
         /// </summary>
         public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new RequestTimeoutHandler(next, this);
+        public override IRequestHandler Build(IRequestHandler next) => new RequestTimeoutHandler(next, this);
     }
 }

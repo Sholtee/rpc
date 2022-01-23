@@ -134,8 +134,13 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Specifies how to handle access control HTTP requests.
     /// </summary>
-    public class HttpAccessControl : RequestHandlerFactory, ISupportsLog
+    public class HttpAccessControl : RequestHandlerBuilder, ISupportsLog
     {
+        /// <summary>
+        /// Creates a new <see cref="HttpAccessControl"/> instance.
+        /// </summary>
+        public HttpAccessControl(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+
         /// <summary>
         /// The allowed origins. See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
         /// </summary>
@@ -160,7 +165,7 @@ namespace Solti.Utils.Rpc.Pipeline
         public bool AllowLogs { get; set; } = true;
 
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new HttpAccessControlHandler(next, this);
+        public override IRequestHandler Build(IRequestHandler next) => new HttpAccessControlHandler(next, this);
     }
 
     /// <summary>
@@ -169,6 +174,11 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <remarks>Allowed method: POST, Allowed headers: Content-Type, Content-Length</remarks>
     public class RpcAccessControl : HttpAccessControl
     {
+        /// <summary>
+        /// Creates a new <see cref="RpcAccessControl"/> instance.
+        /// </summary>
+        public RpcAccessControl(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+
         /// <summary>
         /// Allows POST method only.
         /// </summary>

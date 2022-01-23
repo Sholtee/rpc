@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* IRequestPipeConfig.cs                                                         *
+* IRequestPipeConfigurator.cs                                                   *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -10,11 +10,11 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Describes how to configure the request pipeline.
     /// </summary>
-    public interface IRequestPipeConfigurator<TRequestHandlerBase>
+    public interface IRequestPipeConfigurator
     {
         /// <summary>
-        /// 
+        /// Uses the given <typeparamref name="TRequestHandlerBuilder"/> to configure the request pipe.
         /// </summary>
-        IRequestPipeConfigurator<TRequestHandlerBase> Use<TRequestHandler>(Action<TRequestHandler>? configCallback = null) where TRequestHandler: TRequestHandlerBase, new();
+        IRequestPipeConfigurator Use<TRequestHandlerBuilder>(Action<TRequestHandlerBuilder>? configCallback = null) where TRequestHandlerBuilder : IBuilder<IRequestHandler, IRequestHandler>;
     }
 }
