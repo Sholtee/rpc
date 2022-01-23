@@ -20,9 +20,9 @@ namespace Solti.Utils.Rpc.Pipeline
     using Properties;
 
     /// <summary>
-    /// Processes unhandled exceptions.
+    /// Catches unhandled exception thrown by the <see cref="Next"/> handler. 
     /// </summary>
-    public class CatchAllExceptionsHandler : IRequestHandler
+    public class ExceptionCatcherHandler : IRequestHandler
     {
         /// <summary>
         /// Writes the given <paramref name="responseString"/> to the <paramref name="response"/>.
@@ -87,10 +87,19 @@ namespace Solti.Utils.Rpc.Pipeline
         public IRequestHandler Next { get; }
 
         /// <summary>
-        /// Creates a new <see cref="CatchAllExceptionsHandler"/> instance.
+        /// The parent instance.
+        /// </summary>
+        public ExceptionCatcher Parent { get; }
+
+        /// <summary>
+        /// Creates a new <see cref="ExceptionCatcherHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public CatchAllExceptionsHandler(IRequestHandler next) => Next = next ?? throw new ArgumentNullException(nameof(next));
+        public ExceptionCatcherHandler(IRequestHandler next, ExceptionCatcher parent)
+        {
+            Next   = next   ?? throw new ArgumentNullException(nameof(next));
+            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        }
 
         /// <inheritdoc/>
         public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
@@ -107,7 +116,8 @@ namespace Solti.Utils.Rpc.Pipeline
             }
             catch (Exception ex)
             {
-                scope.TryGet<ILogger>()?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
+                if (Parent.AllowLogs)
+                    scope.TryGet<ILogger>()?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
                 await ProcessUnhandledException(ex, context);
             }
@@ -115,11 +125,16 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Catches unhandled exceptions.
+    /// Configures the request pipeline to be "exception proof".
     /// </summary>
-    public class ExceptionCatcher : RequestHandlerFactory
+    public class ExceptionCatcher : RequestHandlerFactory, ISupportsLog
     {
+        /// <summary>
+        /// If set to true, the <see cref="ILogger"/> service will be invoked in case of unhandled exception.
+        /// </summary>
+        public bool AllowLogs { get; set; } = true;
+
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new CatchAllExceptionsHandler(next);
+        protected override IRequestHandler Create(IRequestHandler next) => new ExceptionCatcherHandler(next, this);
     }
 }

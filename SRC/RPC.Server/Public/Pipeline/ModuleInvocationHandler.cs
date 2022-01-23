@@ -20,7 +20,7 @@ namespace Solti.Utils.Rpc.Pipeline
     using Properties;
 
     /// <summary>
-    /// Invokes a module method, described by the <see cref="IRpcRequestContext"/> and writes the result into the <see cref="HttpListenerResponse"/>.
+    /// Handles RPC module invocatios.
     /// </summary>
     public class ModuleInvocationHandler : IRequestHandler
     {
@@ -140,6 +140,10 @@ namespace Solti.Utils.Rpc.Pipeline
             Next   = next   ?? throw new ArgumentNullException(nameof(next));
         }
 
+        //
+        // A handler-ben nem kell semmit sem naplozni mert az itt mar oldhato aspektusokkal.
+        //
+
         /// <inheritdoc/>
         public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
@@ -188,7 +192,7 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Invokes a module method described by the <see cref="IRpcRequestContext"/> and writes the result into the <see cref="HttpListenerResponse"/>.
+    /// Configures services to be accessible via Remote Procedure Call.
     /// </summary>
     public class Modules : RequestHandlerFactory, IModuleRegistry
     {

@@ -68,7 +68,7 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Adds a timeout to the request processing.
+    /// Configures the amount of time allowed to serve a request.
     /// </summary>
     public class RequestTimeout : RequestHandlerFactory
     {

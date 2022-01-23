@@ -23,10 +23,11 @@ namespace Solti.Utils.Rpc.Pipeline
     /// </summary>
     public class HttpAccessControlHandler : IRequestHandler
     {
+        private static readonly string[] AllowAll = new string[] { "*" };
+
         /// <summary>
         /// Sets the "Access-Control-XxX" headers.
         /// </summary>
-        /// <remarks>This method may be called parallelly.</remarks>
         protected virtual void SetAcHeaders(IHttpSession context)
         {
             if (context is null)
@@ -36,7 +37,12 @@ namespace Solti.Utils.Rpc.Pipeline
 
             string? origin = context.Request.Headers["Origin"];
 
-            if (!string.IsNullOrEmpty(origin) && AllowedOrigins.Contains(origin))
+            //
+            // Ez itt trukkos mert bar elmeletben itt is visszaadhatnank "*"-t a kliens fele gyakorlatban pl a Chrome
+            // tuti nem eszi meg.
+            //
+
+            if (!string.IsNullOrEmpty(origin) && (AllowedOrigins == AllowAll || AllowedOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase)))
             {
                 response.Headers["Access-Control-Allow-Origin"] = origin;
                 response.Headers["Vary"] = "Origin";
@@ -75,6 +81,11 @@ namespace Solti.Utils.Rpc.Pipeline
         /// </summary>
         public IReadOnlyCollection<string> AllowedHeaders { get; }
 
+        /// <summary>
+        /// Returns true if the logging is allowed.
+        /// </summary>
+        public bool AllowLogs { get; }
+
         /// <inheritdoc/>
         public IRequestHandler Next { get; }
 
@@ -82,12 +93,18 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Creates a new <see cref="HttpAccessControlHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public HttpAccessControlHandler(IRequestHandler next, IReadOnlyCollection<string> allowedOrigins, IReadOnlyCollection<string> allowedMethods, IReadOnlyCollection<string> allowedHeaders)
+        public HttpAccessControlHandler(IRequestHandler next, HttpAccessControl parent)
         {
+            if (parent is null)
+                throw new ArgumentNullException(nameof(parent));
+
             Next = next ?? throw new ArgumentNullException(nameof(next));
-            AllowedOrigins = allowedOrigins ?? throw new ArgumentNullException(nameof(allowedOrigins));
-            AllowedMethods = allowedMethods ?? throw new ArgumentNullException(nameof(allowedMethods));
-            AllowedHeaders = allowedHeaders ?? throw new ArgumentNullException(nameof(allowedHeaders));
+
+            AllowedOrigins = parent.AllowedOrigins.Count is 0 ? AllowAll : new List<string>(parent.AllowedOrigins);
+            AllowedMethods = parent.AllowedMethods.Count is 0 ? AllowAll : new List<string>(parent.AllowedMethods);
+            AllowedHeaders = parent.AllowedHeaders.Count is 0 ? AllowAll : new List<string>(parent.AllowedHeaders);
+
+            AllowLogs = parent.AllowLogs;
         }
 
         /// <inheritdoc/>
@@ -103,7 +120,9 @@ namespace Solti.Utils.Rpc.Pipeline
 
             if (IsPreflight(context))
             {
-                scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
+                if (AllowLogs)
+                    scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
+
                 context.Response.Close();
                 return Task.CompletedTask;
             }
@@ -113,45 +132,53 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Handles access control HTTP requests.
+    /// Specifies how to handle access control HTTP requests.
     /// </summary>
-    public class HttpAccessControl : RequestHandlerFactory
+    public class HttpAccessControl : RequestHandlerFactory, ISupportsLog
     {
         /// <summary>
         /// The allowed origins. See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
         /// </summary>
+        /// <remarks>If this list is empty, all origins are allowed.</remarks>
         public ICollection<string> AllowedOrigins { get; } = new HashSet<string>();
 
         /// <summary>
         /// Allowed methods.
         /// </summary>
+        /// <remarks>If this list is empty, all kind of methods are allowed.</remarks>
         public virtual ICollection<string> AllowedMethods { get; } = new HashSet<string>();
 
         /// <summary>
         /// Allowed headers.
         /// </summary>
+        /// <remarks>If this list is empty, all kind of headers are allowed.</remarks>
         public virtual ICollection<string> AllowedHeaders { get; } = new HashSet<string>();
 
+        /// <summary>
+        /// Returns true if the logging is enabled.
+        /// </summary>
+        public bool AllowLogs { get; set; } = true;
+
         /// <inheritdoc/>
-        protected override IRequestHandler Create(IRequestHandler next) => new HttpAccessControlHandler
-        (
-            next,
-            (IReadOnlyCollection<string>) AllowedOrigins,
-            (IReadOnlyCollection<string>) (AllowedMethods.Count is 0 ? new string[] { "*" } : AllowedMethods),
-            (IReadOnlyCollection<string>) (AllowedHeaders.Count is 0 ? new string[] { "*" } : AllowedHeaders)
-        );
+        protected override IRequestHandler Create(IRequestHandler next) => new HttpAccessControlHandler(next, this);
     }
 
     /// <summary>
-    /// Handles access control HTTP requests.
+    /// Specifies how to handle access control HTTP requests (RPC specific).
     /// </summary>
     /// <remarks>Allowed method: POST, Allowed headers: Content-Type, Content-Length</remarks>
     public class RpcAccessControl : HttpAccessControl
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Allows POST method only.
+        /// </summary>
+        /// <remarks>This list is read-only.</remarks>
         public override ICollection<string> AllowedMethods { get; } = new string[] { "POST" };
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Allows Content-Type, Content-Length headers only.
+        /// </summary>
+        /// <remarks>This list is read-only.</remarks>
         public override ICollection<string> AllowedHeaders { get; } = new string[] { "Content-Type", "Content-Length" };
     }
 }

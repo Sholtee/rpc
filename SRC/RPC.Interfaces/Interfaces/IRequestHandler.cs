@@ -3,7 +3,6 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +21,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The next handler to be called.
         /// </summary>
-        /// <remarks>A handler should not invoke the <see cref="Next"/> instance after closing the session (calling the <see cref="HttpListenerResponse.Close()"/> method).</remarks>
+        /// <remarks>A handler should not invoke the <see cref="Next"/> instance after closing the session.</remarks>
         IRequestHandler? Next { get; }
 
         /// <summary>

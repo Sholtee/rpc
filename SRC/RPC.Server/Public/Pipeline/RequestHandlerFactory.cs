@@ -13,7 +13,7 @@ namespace Solti.Utils.Rpc.Pipeline
     using Interfaces;
 
     /// <summary>
-    /// Request handler factory.
+    /// Creates <see cref="IRequestHandler"/> instances.
     /// </summary>
     public abstract class RequestHandlerFactory
     {
@@ -24,13 +24,13 @@ namespace Solti.Utils.Rpc.Pipeline
         protected internal virtual void FinishConfiguration() => WebServiceBuilder.Pipe.ApplyProxy((_, _, next) => Create((IRequestHandler) next));
 
         /// <summary>
-        /// Creates a new request handler instance.
+        /// Creates a new <see cref="IRequestHandler"/> instance.
         /// </summary>
         /// <remarks>You should not call this method directly.</remarks>
         protected abstract IRequestHandler Create(IRequestHandler next);
 
         /// <summary>
-        /// The <see cref="Solti.Utils.Rpc.WebServiceBuilder"/> that instantiated this class.
+        /// The <see cref="Rpc.WebServiceBuilder"/> that instantiated this class.
         /// </summary>
         public WebServiceBuilder WebServiceBuilder { get; init; }
     }

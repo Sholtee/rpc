@@ -15,7 +15,7 @@ namespace Solti.Utils.Rpc.Pipeline
     using Interfaces;
 
     /// <summary>
-    /// Limits how many times a remote client could access the local resources (in a given period of time).
+    /// Rejects the request if the request count (made by a remote client) excceeds the threshold.
     /// </summary>
     public class RequestLimiterHandler : IRequestHandler
     {
@@ -63,7 +63,7 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Limits how many times a remote client could access the local resources (in a given period of time).
+    /// Limits how many times a remote client can access local resources (in a given period of time).
     /// </summary>
     public class RequestLimiter : RequestHandlerFactory
     {

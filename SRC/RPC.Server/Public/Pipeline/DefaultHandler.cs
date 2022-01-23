@@ -13,8 +13,9 @@ namespace Solti.Utils.Rpc
     using Interfaces;
 
     /// <summary>
-    /// The default request handler.
+    /// Closes the current session by calling the <see cref="IHttpResponse.Close"/> method.
     /// </summary>
+    /// <remarks>This handler has no configurator.</remarks>
     public sealed class DefaultHandler : IRequestHandler
     {
         /// <inheritdoc/>
