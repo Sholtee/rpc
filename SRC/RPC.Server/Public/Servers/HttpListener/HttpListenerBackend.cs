@@ -28,6 +28,10 @@ namespace Solti.Utils.Rpc.Servers
     public class HttpListenerBackend : Disposable, IHttpServer
     {
         #region Private
+        private const int
+            ERROR_OPERATION_ABORTED = 995,
+            ERROR_ACCESS_DENIED = 5;
+
         private sealed class HttpListenerRequestWrapper : IHttpRequest
         {
             public HttpListenerRequestWrapper(HttpListenerRequest originalRequest)
@@ -121,9 +125,11 @@ namespace Solti.Utils.Rpc.Servers
             
             netsh.WaitForExit();
             if (netsh.ExitCode is not 0)
-                #pragma warning disable CA2201 // Do not change the exception type to preserve backward compatibility
-                throw new Exception(ErrorRes.NETSH_INVOCATION_FAILED);
-                #pragma warning restore CA2201
+            {
+                InvalidOperationException ex = new(ErrorRes.NETSH_INVOCATION_FAILED);
+                ex.Data[nameof(netsh.ExitCode)] = netsh.ExitCode;
+                throw ex;
+            }
         }
         #endregion
 
@@ -173,7 +179,17 @@ namespace Solti.Utils.Rpc.Servers
             // A kiszolgalo leallitasra kerult: https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistener.begingetcontext?view=net-6.0#exceptions
             //
 
-            catch (HttpListenerException) { throw new OperationCanceledException(); }
+            catch (HttpListenerException ex) 
+            {
+                if (Environment.OSVersion.Platform is PlatformID.Win32NT)
+                    //
+                    // GetContextAsync()-nek ERROR_OPERATION_ABORTED-el kene elszalljon ha leallitjuk a kiszolgalot
+                    //
+
+                    Debug.Assert(ex.ErrorCode is ERROR_OPERATION_ABORTED);
+
+                throw new OperationCanceledException();
+            }
 
             return new HttpSession
             (
@@ -201,7 +217,7 @@ namespace Solti.Utils.Rpc.Servers
 
                 FListener = CreateCore(Url);
 
-                if (ReserveUrl && Environment.OSVersion.Platform is PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode is 5 /*ERROR_ACCESS_DENIED*/ && !FNeedToRemoveUrlReservation)
+                if (ReserveUrl && Environment.OSVersion.Platform is PlatformID.Win32NT && ex is HttpListenerException httpEx && httpEx.ErrorCode is ERROR_ACCESS_DENIED && !FNeedToRemoveUrlReservation)
                 {
                     AddUrlReservation(Url);
                     FNeedToRemoveUrlReservation = true;

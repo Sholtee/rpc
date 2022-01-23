@@ -31,6 +31,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// If the server is listening, this method waits until a new request is availbale. 
         /// </summary>
+        /// <remarks>It's safe to call this method parallelly.</remarks>
         /// <exception cref="OperationCanceledException">Either the server was stopped or a <paramref name="cancellation"/> was requested.</exception>
         Task<IHttpSession> WaitForSessionAsync(CancellationToken cancellation);
 

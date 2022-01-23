@@ -160,8 +160,8 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public void Start_ShouldValidateTheUrl() 
         {
-            Svc = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerBackend("invalid")).Build();
-            Assert.ThrowsAsync<ArgumentException>(Svc.Start);
+            WebServiceBuilder bldr = new WebServiceBuilder().ConfigureBackend(_ => new HttpListenerBackend("invalid"));
+            Assert.Throws<ArgumentException>(() => bldr.Build());
         }
 
         [Test]

@@ -70,7 +70,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Listener thread  stopped due to an unhandled exception.
+        ///   Looks up a localized string similar to Listener thread  ({0}) stopped due to an unhandled exception: ({1}).
         /// </summary>
         internal static string EXCEPTION_IN_LISTENER_THREAD {
             get {
@@ -79,7 +79,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Listener thread started..
+        ///   Looks up a localized string similar to Listener thread ({0}) started..
         /// </summary>
         internal static string LISTENER_THREAD_STARTED {
             get {
@@ -88,7 +88,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Listener thread stopped..
+        ///   Looks up a localized string similar to Listener thread  ({0}) stopped..
         /// </summary>
         internal static string LISTENER_THREAD_STOPPED {
             get {

@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,14 +44,7 @@ namespace Solti.Utils.Rpc
             // Mindenkepp Trace-re keruljon.
             //
 
-            ILogger logger = TraceLogger.Create<WebService>();
-
-            using IDisposable logScope = logger.BeginScope(new Dictionary<string, object>
-            {
-                ["Worker ID"] = workerId,
-            });
-
-            logger.LogInformation(TraceRes.LISTENER_THREAD_STARTED);     
+            Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STARTED, workerId));
             try
             {
                 Task stopSignal = FStopSignal.AsTask();
@@ -58,7 +52,7 @@ namespace Solti.Utils.Rpc
                 {
                     using CancellationTokenSource cts = new();
 
-                    Task worker = DoWork(cts.Token);
+                    Task worker = DoWork(workerId, cts.Token);
 
                     if (await Task.WhenAny(worker, stopSignal) == stopSignal)
                         cts.Cancel();
@@ -74,7 +68,7 @@ namespace Solti.Utils.Rpc
             catch (Exception ex)
             {
                 if (ex is not OperationCanceledException)
-                    logger.LogError(ex, TraceRes.EXCEPTION_IN_LISTENER_THREAD);
+                    Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.EXCEPTION_IN_LISTENER_THREAD, workerId, ex));
             }
             finally
             {
@@ -86,7 +80,7 @@ namespace Solti.Utils.Rpc
                 if (Interlocked.Decrement(ref FActiveWorkers) is TERMINATED)
                     FTerminatedSignal.Set();
             }
-            logger.LogInformation(TraceRes.LISTENER_THREAD_STOPPED);
+            Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STOPPED, workerId));
         }
         #endregion
 
@@ -123,13 +117,15 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new worker <see cref="Task"/> that waits for a new session then processes it.
         /// </summary>
-        protected virtual async Task DoWork(CancellationToken cancellation)
+        protected virtual async Task DoWork(int workerId, CancellationToken cancellation)
         {
+            IHttpSession context = await HttpServer.WaitForSessionAsync(cancellation);
+
             await using IInjector scope = ScopeFactory.CreateScope();
 
-            IHttpServer server = scope.Get<IHttpServer>(); // singleton
-
-            IHttpSession context = await server.WaitForSessionAsync(cancellation);
+            //
+            // Mivel nem tudjuk hogy a naplo szerviz szalbiztos e ezert minden munkafolyamat sajat peldanyt ker
+            //
 
             ILogger? logger = scope.TryGet<ILogger>();
 
@@ -140,7 +136,8 @@ namespace Solti.Utils.Rpc
 
             using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
             {
-                ["Url"] = server.Url,
+                ["Worker ID"] = workerId,
+                ["Url"] = HttpServer.Url,
                 ["Remote EndPoint"] = context.Request.RemoteEndPoint
             });
 
@@ -169,22 +166,38 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="WebService"/> instance.
         /// </summary>
-        public WebService(IServiceCollection serviceCollection) => ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)));
+        public WebService(IServiceCollection serviceCollection)
+        {
+            ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)));
+
+            IInjector root = (IInjector) ScopeFactory;
+
+            HttpServer = root.Get<IHttpServer>(); // singleton
+            Logger = root.TryGet<ILogger>();
+        }
 
         /// <summary>
         /// Returns the <see cref="IScopeFactory"/> related to this instance.
         /// </summary>
-        public IScopeFactory ScopeFactory { get; protected init; }
+        public IScopeFactory ScopeFactory { get; protected init; }  // init kell, hogy leszarmazottban is beallithato legyen
+
+        /// <summary>
+        /// The underlying <see cref="IHttpServer"/> implementation.
+        /// </summary>
+        protected IHttpServer HttpServer { get; init; }
+
+        /// <summary>
+        /// The logger associated with this instance.
+        /// </summary>
+        /// <remarks>This logger belongs to the service itself, not intended to be used in worker threads.</remarks>
+        protected ILogger? Logger { get; init; } 
 
         /// <summary>
         /// Starts the service.
         /// </summary>
-        public async Task Start()
+        public Task Start()
         {
-            await using IInjector scope = ScopeFactory.CreateScope();
-
-            IHttpServer server = scope.Get<IHttpServer>(); // singleton
-            if (server.IsStarted || FActiveWorkers > TERMINATED)
+            if (HttpServer.IsStarted || FActiveWorkers is not TERMINATED)
                 throw new InvalidOperationException();
 
             FStopSignal.Reset();
@@ -192,14 +205,16 @@ namespace Solti.Utils.Rpc
 
             FActiveWorkers = 0;
 
-            server.Start();
+            HttpServer.Start();
 
             for (int i = 0; i < MaxWorkers; i++)
             {
                 _ = CreateWorkerLoop();
             }
 
-            scope.TryGet<ILogger>()?.LogInformation(TraceRes.SERVICE_STARTED);
+            Logger?.LogInformation(TraceRes.SERVICE_STARTED);
+
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -207,46 +222,35 @@ namespace Solti.Utils.Rpc
         /// </summary>
         public async Task Stop()
         {
-            await using IInjector scope = ScopeFactory.CreateScope();
-
-            IHttpServer server = scope.Get<IHttpServer>(); // singleton
-            if (!server.IsStarted)
+            if (!HttpServer.IsStarted)
                 throw new InvalidOperationException();
+
+            //
+            // Workerek ertesitese hogy alljanak le.
+            //
+
+            FStopSignal.Set();
 
             //
             // Ujabb kereseket mar nem fogadunk.
             //
 
-            server.Stop();
+            HttpServer.Stop();
 
-            FStopSignal.Set();
+            if (Interlocked.Decrement(ref FActiveWorkers) is not TERMINATED)
+                //
+                // Megvarjuk amig mindenki leall
+                //
 
-            if (Interlocked.Decrement(ref FActiveWorkers) is TERMINATED)
-                return;
+                await FTerminatedSignal.AsTask();
 
-            //
-            // Megvarjuk amig mindenki leall
-            //
-
-            await FTerminatedSignal.AsTask();
-
-            scope.TryGet<ILogger>()?.LogInformation(TraceRes.SERVICE_TERMINATED);
+            Logger?.LogInformation(TraceRes.SERVICE_TERMINATED);
         }
 
         /// <summary>
         /// returns true if the server is started.
         /// </summary>
-        public bool IsStarted
-        {
-            get
-            {
-                using IInjector scope = ScopeFactory.CreateScope();
-                try
-                {
-                    return scope.Get<IHttpServer>().IsStarted; // singleton
-                } catch { return false; }
-            }
-        }
+        public bool IsStarted => HttpServer.IsStarted;
 
         /// <summary>
         /// Returns true if the server is listening.
