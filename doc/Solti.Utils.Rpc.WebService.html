@@ -132,6 +132,30 @@
   </table>
   <h3 id="properties">Properties
   </h3>
+  <a id="Solti_Utils_Rpc_WebService_HttpServer_" data-uid="Solti.Utils.Rpc.WebService.HttpServer*"></a>
+  <h4 id="Solti_Utils_Rpc_WebService_HttpServer" data-uid="Solti.Utils.Rpc.WebService.HttpServer">HttpServer</h4>
+  <div class="markdown level1 summary"><p>The underlying <a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a> implementation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IHttpServer HttpServer { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpServer.html">IHttpServer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_WebService_IsListening_" data-uid="Solti.Utils.Rpc.WebService.IsListening*"></a>
   <h4 id="Solti_Utils_Rpc_WebService_IsListening" data-uid="Solti.Utils.Rpc.WebService.IsListening">IsListening</h4>
   <div class="markdown level1 summary"><p>Returns true if the server is listening.</p>
@@ -180,6 +204,33 @@
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_WebService_Logger_" data-uid="Solti.Utils.Rpc.WebService.Logger*"></a>
+  <h4 id="Solti_Utils_Rpc_WebService_Logger" data-uid="Solti.Utils.Rpc.WebService.Logger">Logger</h4>
+  <div class="markdown level1 summary"><p>The logger associated with this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ILogger Logger { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_WebService_Logger_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This logger belongs to the service itself, not intended to be used in worker threads.</p>
+</div>
   <a id="Solti_Utils_Rpc_WebService_MaxWorkers_" data-uid="Solti.Utils.Rpc.WebService.MaxWorkers*"></a>
   <h4 id="Solti_Utils_Rpc_WebService_MaxWorkers" data-uid="Solti.Utils.Rpc.WebService.MaxWorkers">MaxWorkers</h4>
   <div class="markdown level1 summary"><p>The maximum number of worker threads.</p>
@@ -283,13 +334,13 @@
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Solti.Utils.Primitives.Patterns.Disposable.Dispose(System.Boolean)</span></div>
   <a id="Solti_Utils_Rpc_WebService_DoWork_" data-uid="Solti.Utils.Rpc.WebService.DoWork*"></a>
-  <h4 id="Solti_Utils_Rpc_WebService_DoWork_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.WebService.DoWork(System.Threading.CancellationToken)">DoWork(CancellationToken)</h4>
+  <h4 id="Solti_Utils_Rpc_WebService_DoWork_System_Int32_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.WebService.DoWork(System.Int32,System.Threading.CancellationToken)">DoWork(Int32, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Creates a new worker <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a> that waits for a new session then processes it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual async Task DoWork(CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual async Task DoWork(int workerId, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -301,6 +352,11 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">workerId</span></td>
+        <td></td>
+      </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
         <td><span class="parametername">cancellation</span></td>
@@ -330,7 +386,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task Start()</code></pre>
+    <pre><code class="lang-csharp hljs">public Task Start()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">

@@ -4549,12 +4549,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebService.Dispose
   nameWithType: WebService.Dispose
-- uid: Solti.Utils.Rpc.WebService.DoWork(System.Threading.CancellationToken)
-  name: DoWork(CancellationToken)
-  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_DoWork_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.WebService.DoWork(System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.WebService.DoWork(System.Threading.CancellationToken)
-  nameWithType: WebService.DoWork(CancellationToken)
+- uid: Solti.Utils.Rpc.WebService.DoWork(System.Int32,System.Threading.CancellationToken)
+  name: DoWork(Int32, CancellationToken)
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_DoWork_System_Int32_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.WebService.DoWork(System.Int32,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.WebService.DoWork(System.Int32, System.Threading.CancellationToken)
+  nameWithType: WebService.DoWork(Int32, CancellationToken)
 - uid: Solti.Utils.Rpc.WebService.DoWork*
   name: DoWork
   href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_DoWork_
@@ -4562,6 +4562,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebService.DoWork
   nameWithType: WebService.DoWork
+- uid: Solti.Utils.Rpc.WebService.HttpServer
+  name: HttpServer
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_HttpServer
+  commentId: P:Solti.Utils.Rpc.WebService.HttpServer
+  fullName: Solti.Utils.Rpc.WebService.HttpServer
+  nameWithType: WebService.HttpServer
+- uid: Solti.Utils.Rpc.WebService.HttpServer*
+  name: HttpServer
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_HttpServer_
+  commentId: Overload:Solti.Utils.Rpc.WebService.HttpServer
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.WebService.HttpServer
+  nameWithType: WebService.HttpServer
 - uid: Solti.Utils.Rpc.WebService.IsListening
   name: IsListening
   href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_IsListening
@@ -4588,6 +4601,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebService.IsStarted
   nameWithType: WebService.IsStarted
+- uid: Solti.Utils.Rpc.WebService.Logger
+  name: Logger
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_Logger
+  commentId: P:Solti.Utils.Rpc.WebService.Logger
+  fullName: Solti.Utils.Rpc.WebService.Logger
+  nameWithType: WebService.Logger
+- uid: Solti.Utils.Rpc.WebService.Logger*
+  name: Logger
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_Logger_
+  commentId: Overload:Solti.Utils.Rpc.WebService.Logger
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.WebService.Logger
+  nameWithType: WebService.Logger
 - uid: Solti.Utils.Rpc.WebService.MaxWorkers
   name: MaxWorkers
   href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService_MaxWorkers
