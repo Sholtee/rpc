@@ -48,16 +48,17 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html">RequestHandlerBuilder</a></div>
     <div class="level2"><span class="xref">RequestTimeout</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-2.html">IBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>, <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_FinishConfiguration">RequestHandlerFactory.FinishConfiguration()</a>
-    </div>
-    <div>
-      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_WebServiceBuilder">RequestHandlerFactory.WebServiceBuilder</a>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder">RequestHandlerBuilder.WebServiceBuilder</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
@@ -85,8 +86,36 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_RequestTimeout_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RequestTimeout : RequestHandlerFactory</code></pre>
+    <pre><code class="lang-csharp hljs">public class RequestTimeout : RequestHandlerBuilder, IBuilder&lt;IRequestHandler, IRequestHandler&gt;</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_Solti_Utils_Rpc_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder)">RequestTimeout(WebServiceBuilder)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeout.html">RequestTimeout</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestTimeout(WebServiceBuilder webServiceBuilder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a></td>
+        <td><span class="parametername">webServiceBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Timeout_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.Timeout*"></a>
@@ -115,14 +144,14 @@
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Create_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.Create*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Create(IRequestHandler)</h4>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Build_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.Build*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeout.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Build(IRequestHandler)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override IRequestHandler Create(IRequestHandler next)</code></pre>
+    <pre><code class="lang-csharp hljs">public override IRequestHandler Build(IRequestHandler next)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -157,10 +186,14 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerFactory.Create(IRequestHandler)</a></div>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
+  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerBuilder.Build(IRequestHandler)</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_RequestTimeout_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
 </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-2.html">IBuilder&lt;TBuiltService, TParam&gt;</a>
+  </div>
 </article>
           </div>
           

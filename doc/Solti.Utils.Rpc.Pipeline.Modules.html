@@ -48,17 +48,18 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html">RequestHandlerBuilder</a></div>
     <div class="level2"><span class="xref">Modules</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-2.html">IBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>, <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_WebServiceBuilder">RequestHandlerFactory.WebServiceBuilder</a>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder">RequestHandlerBuilder.WebServiceBuilder</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
@@ -86,37 +87,38 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_Modules_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerFactory, IModuleRegistry</code></pre>
+    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerBuilder, IBuilder&lt;IRequestHandler, IRequestHandler&gt;, IModuleRegistry</code></pre>
   </div>
-  <h3 id="properties">Properties
+  <h3 id="constructors">Constructors
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation">ModuleInvocation</h4>
-  <div class="markdown level1 summary"><p>The built <a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a> delegate.</p>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules__ctor_Solti_Utils_Rpc_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder)">Modules(WebServiceBuilder)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ModuleInvocation ModuleInvocation { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Modules(WebServiceBuilder webServiceBuilder)</code></pre>
   </div>
-  <h5 class="propertyValue">Property Value</h5>
+  <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
+        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a></td>
+        <td><span class="parametername">webServiceBuilder</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This property is set once the <a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration">FinishConfiguration()</a> method is called.</p>
-</div>
+  <h3 id="properties">Properties
+  </h3>
   <a id="Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions" data-uid="Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions">SerializerOptions</h4>
   <div class="markdown level1 summary"><p>The serializer options.</p>
@@ -143,14 +145,14 @@
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_Modules_Create_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Create*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Create(IRequestHandler)</h4>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_Build_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Build*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Build(IRequestHandler)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override IRequestHandler Create(IRequestHandler next)</code></pre>
+    <pre><code class="lang-csharp hljs">public override IRequestHandler Build(IRequestHandler next)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,22 +187,8 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerFactory.Create(IRequestHandler)</a></div>
-  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
-</div>
-  <a id="Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration" data-uid="Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration">FinishConfiguration()</h4>
-  <div class="markdown level1 summary"><p>Called once the factory configuration is finished. </p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void FinishConfiguration()</code></pre>
-  </div>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_FinishConfiguration">RequestHandlerFactory.FinishConfiguration()</a></div>
-  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration_remarks">Remarks</h5>
+  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerBuilder.Build(IRequestHandler)</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_Modules_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
 </div>
   <a id="Solti_Utils_Rpc_Pipeline_Modules_Register_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register*"></a>
@@ -305,6 +293,9 @@
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-2.html">IBuilder&lt;TBuiltService, TParam&gt;</a>
+  </div>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a>
   </div>

@@ -809,6 +809,32 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync
   nameWithType: IAsyncPropertyValidator.ValidateAsync
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`2
+  name: IBuilder<TBuiltService, TParam>
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-2.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IBuilder`2
+  name.vb: IBuilder(Of TBuiltService, TParam)
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService, TParam>
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService, TParam)
+  nameWithType: IBuilder<TBuiltService, TParam>
+  nameWithType.vb: IBuilder(Of TBuiltService, TParam)
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`2.Build(`1)
+  name: Build(TParam)
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-2.html#Solti_Utils_Rpc_Interfaces_IBuilder_2_Build__1_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IBuilder`2.Build(`1)
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService, TParam>.Build(TParam)
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService, TParam).Build(TParam)
+  nameWithType: IBuilder<TBuiltService, TParam>.Build(TParam)
+  nameWithType.vb: IBuilder(Of TBuiltService, TParam).Build(TParam)
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`2.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-2.html#Solti_Utils_Rpc_Interfaces_IBuilder_2_Build_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IBuilder`2.Build
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService, TParam>.Build
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService, TParam).Build
+  nameWithType: IBuilder<TBuiltService, TParam>.Build
+  nameWithType.vb: IBuilder(Of TBuiltService, TParam).Build
 - uid: Solti.Utils.Rpc.Interfaces.IConditionalValidatior
   name: IConditionalValidatior
   href: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html
@@ -1283,33 +1309,28 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IRequestHandler.Next
   nameWithType: IRequestHandler.Next
-- uid: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1
-  name: IRequestPipeConfigurator<TRequestHandlerBase>
-  href: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html
-  commentId: T:Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1
-  name.vb: IRequestPipeConfigurator(Of TRequestHandlerBase)
-  fullName: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<TRequestHandlerBase>
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator(Of TRequestHandlerBase)
-  nameWithType: IRequestPipeConfigurator<TRequestHandlerBase>
-  nameWithType.vb: IRequestPipeConfigurator(Of TRequestHandlerBase)
-- uid: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1.Use*
+- uid: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator
+  name: IRequestPipeConfigurator
+  href: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator
+  nameWithType: IRequestPipeConfigurator
+- uid: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use*
   name: Use
-  href: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html#Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_1_Use_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1.Use
+  href: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.html#Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Use_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<TRequestHandlerBase>.Use
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator(Of TRequestHandlerBase).Use
-  nameWithType: IRequestPipeConfigurator<TRequestHandlerBase>.Use
-  nameWithType.vb: IRequestPipeConfigurator(Of TRequestHandlerBase).Use
-- uid: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1.Use``1(System.Action{``0})
-  name: Use<TRequestHandler>(Action<TRequestHandler>)
-  href: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html#Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_1_Use__1_System_Action___0__
-  commentId: M:Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1.Use``1(System.Action{``0})
-  name.vb: Use(Of TRequestHandler)(Action(Of TRequestHandler))
-  fullName: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<TRequestHandlerBase>.Use<TRequestHandler>(System.Action<TRequestHandler>)
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator(Of TRequestHandlerBase).Use(Of TRequestHandler)(System.Action(Of TRequestHandler))
-  nameWithType: IRequestPipeConfigurator<TRequestHandlerBase>.Use<TRequestHandler>(Action<TRequestHandler>)
-  nameWithType.vb: IRequestPipeConfigurator(Of TRequestHandlerBase).Use(Of TRequestHandler)(Action(Of TRequestHandler))
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use
+  nameWithType: IRequestPipeConfigurator.Use
+- uid: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use``1(System.Action{``0})
+  name: Use<TRequestHandlerBuilder>(Action<TRequestHandlerBuilder>)
+  href: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.html#Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Use__1_System_Action___0__
+  commentId: M:Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use``1(System.Action{``0})
+  name.vb: Use(Of TRequestHandlerBuilder)(Action(Of TRequestHandlerBuilder))
+  fullName: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use<TRequestHandlerBuilder>(System.Action<TRequestHandlerBuilder>)
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.Use(Of TRequestHandlerBuilder)(System.Action(Of TRequestHandlerBuilder))
+  nameWithType: IRequestPipeConfigurator.Use<TRequestHandlerBuilder>(Action<TRequestHandlerBuilder>)
+  nameWithType.vb: IRequestPipeConfigurator.Use(Of TRequestHandlerBuilder)(Action(Of TRequestHandlerBuilder))
 - uid: Solti.Utils.Rpc.Interfaces.IRoleManager
   name: IRoleManager
   href: Solti.Utils.Rpc.Interfaces.IRoleManager.html
@@ -3246,6 +3267,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   nameWithType: ExceptionCatcher
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: ExceptionCatcher(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.ExceptionCatcher(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: ExceptionCatcher.ExceptionCatcher(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor*
+  name: ExceptionCatcher
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.ExceptionCatcher
+  nameWithType: ExceptionCatcher.ExceptionCatcher
 - uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
   name: AllowLogs
   href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_AllowLogs
@@ -3259,19 +3293,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
   nameWithType: ExceptionCatcher.AllowLogs
-- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: Create(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: ExceptionCatcher.Create(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create*
-  name: Create
-  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_Create_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: ExceptionCatcher.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create
-  nameWithType: ExceptionCatcher.Create
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build
+  nameWithType: ExceptionCatcher.Build
 - uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler
   name: ExceptionCatcherHandler
   href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html
@@ -3362,6 +3396,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.HttpAccessControl
   fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl
   nameWithType: HttpAccessControl
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: HttpAccessControl(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.HttpAccessControl(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: HttpAccessControl.HttpAccessControl(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor*
+  name: HttpAccessControl
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.HttpAccessControl
+  nameWithType: HttpAccessControl.HttpAccessControl
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedHeaders
   name: AllowedHeaders
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedHeaders
@@ -3414,19 +3461,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs
   nameWithType: HttpAccessControl.AllowLogs
-- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: Create(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: HttpAccessControl.Create(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create*
-  name: Create
-  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: HttpAccessControl.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create
-  nameWithType: HttpAccessControl.Create
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build
+  nameWithType: HttpAccessControl.Build
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler
   name: HttpAccessControlHandler
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html
@@ -3643,45 +3690,32 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.Modules
   fullName: Solti.Utils.Rpc.Pipeline.Modules
   nameWithType: Modules
-- uid: Solti.Utils.Rpc.Pipeline.Modules.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: Create(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: Modules.Create(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.Modules.Create*
-  name: Create
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_Create_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.Create
+- uid: Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: Modules(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.Modules(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: Modules.Modules(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.Modules.#ctor*
+  name: Modules
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.Create
-  nameWithType: Modules.Create
-- uid: Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration
-  name: FinishConfiguration()
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration
-  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration()
-  nameWithType: Modules.FinishConfiguration()
-- uid: Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration*
-  name: FinishConfiguration
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_FinishConfiguration_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.Modules
+  nameWithType: Modules.Modules
+- uid: Solti.Utils.Rpc.Pipeline.Modules.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: Modules.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.Modules.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.Build
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.FinishConfiguration
-  nameWithType: Modules.FinishConfiguration
-- uid: Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation
-  name: ModuleInvocation
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation
-  commentId: P:Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation
-  nameWithType: Modules.ModuleInvocation
-- uid: Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation*
-  name: ModuleInvocation
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation
-  nameWithType: Modules.ModuleInvocation
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.Build
+  nameWithType: Modules.Build
 - uid: Solti.Utils.Rpc.Pipeline.Modules.Register*
   name: Register
   href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_Register_
@@ -3720,70 +3754,83 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions
   nameWithType: Modules.SerializerOptions
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory
-  name: RequestHandlerFactory
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html
-  commentId: T:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory
-  nameWithType: RequestHandlerFactory
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: Create(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: RequestHandlerFactory.Create(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.Create*
-  name: Create
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_Create_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.Create
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
+  name: RequestHandlerBuilder
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html
+  commentId: T:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
+  nameWithType: RequestHandlerBuilder
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: RequestHandlerBuilder(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.RequestHandlerBuilder(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: RequestHandlerBuilder.RequestHandlerBuilder(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor*
+  name: RequestHandlerBuilder
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.Create
-  nameWithType: RequestHandlerFactory.Create
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.FinishConfiguration
-  name: FinishConfiguration()
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_FinishConfiguration
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.FinishConfiguration
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.FinishConfiguration()
-  nameWithType: RequestHandlerFactory.FinishConfiguration()
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.FinishConfiguration*
-  name: FinishConfiguration
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_FinishConfiguration_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.FinishConfiguration
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.RequestHandlerBuilder
+  nameWithType: RequestHandlerBuilder.RequestHandlerBuilder
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: RequestHandlerBuilder.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.FinishConfiguration
-  nameWithType: RequestHandlerFactory.FinishConfiguration
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.WebServiceBuilder
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build
+  nameWithType: RequestHandlerBuilder.Build
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
   name: WebServiceBuilder
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_WebServiceBuilder
-  commentId: P:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.WebServiceBuilder
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.WebServiceBuilder
-  nameWithType: RequestHandlerFactory.WebServiceBuilder
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.WebServiceBuilder*
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder
+  commentId: P:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
+  nameWithType: RequestHandlerBuilder.WebServiceBuilder
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder*
   name: WebServiceBuilder
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html#Solti_Utils_Rpc_Pipeline_RequestHandlerFactory_WebServiceBuilder_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.WebServiceBuilder
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.WebServiceBuilder
-  nameWithType: RequestHandlerFactory.WebServiceBuilder
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
+  nameWithType: RequestHandlerBuilder.WebServiceBuilder
 - uid: Solti.Utils.Rpc.Pipeline.RequestLimiter
   name: RequestLimiter
   href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html
   commentId: T:Solti.Utils.Rpc.Pipeline.RequestLimiter
   fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter
   nameWithType: RequestLimiter
-- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: Create(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestLimiter.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: RequestLimiter.Create(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.Create*
-  name: Create
-  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter_Create_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestLimiter.Create
+- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: RequestLimiter(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.RequestLimiter(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: RequestLimiter.RequestLimiter(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor*
+  name: RequestLimiter
+  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.Create
-  nameWithType: RequestLimiter.Create
+  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.RequestLimiter
+  nameWithType: RequestLimiter.RequestLimiter
+- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestLimiter.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: RequestLimiter.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestLimiter.Build
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.Build
+  nameWithType: RequestLimiter.Build
 - uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.Interval
   name: Interval
   href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter_Interval
@@ -3874,19 +3921,32 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.RequestTimeout
   fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout
   nameWithType: RequestTimeout
-- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: Create(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestTimeout.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: RequestTimeout.Create(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.Create*
-  name: Create
-  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout_Create_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestTimeout.Create
+- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: RequestTimeout(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.RequestTimeout(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: RequestTimeout.RequestTimeout(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor*
+  name: RequestTimeout
+  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.Create
-  nameWithType: RequestTimeout.Create
+  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.RequestTimeout
+  nameWithType: RequestTimeout.RequestTimeout
+- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestTimeout.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: RequestTimeout.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestTimeout.Build
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.Build
+  nameWithType: RequestTimeout.Build
 - uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.Timeout
   name: Timeout
   href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout_Timeout
@@ -3964,6 +4024,19 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.RpcAccessControl
   fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl
   nameWithType: RpcAccessControl
+- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: RpcAccessControl(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.RpcAccessControl(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: RpcAccessControl.RpcAccessControl(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor*
+  name: RpcAccessControl
+  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.RpcAccessControl
+  nameWithType: RpcAccessControl.RpcAccessControl
 - uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders
   name: AllowedHeaders
   href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedHeaders
@@ -4510,12 +4583,12 @@ references:
   commentId: T:Solti.Utils.Rpc.WebService
   fullName: Solti.Utils.Rpc.WebService
   nameWithType: WebService
-- uid: Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection)
-  name: WebService(IServiceCollection)
-  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService__ctor_Solti_Utils_DI_Interfaces_IServiceCollection_
-  commentId: M:Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection)
-  fullName: Solti.Utils.Rpc.WebService.WebService(Solti.Utils.DI.Interfaces.IServiceCollection)
-  nameWithType: WebService.WebService(IServiceCollection)
+- uid: Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection,Solti.Utils.DI.Interfaces.ScopeOptions,System.Threading.CancellationToken)
+  name: WebService(IServiceCollection, ScopeOptions, CancellationToken)
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService__ctor_Solti_Utils_DI_Interfaces_IServiceCollection_Solti_Utils_DI_Interfaces_ScopeOptions_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection,Solti.Utils.DI.Interfaces.ScopeOptions,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.WebService.WebService(Solti.Utils.DI.Interfaces.IServiceCollection, Solti.Utils.DI.Interfaces.ScopeOptions, System.Threading.CancellationToken)
+  nameWithType: WebService.WebService(IServiceCollection, ScopeOptions, CancellationToken)
 - uid: Solti.Utils.Rpc.WebService.#ctor*
   name: WebService
   href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService__ctor_
@@ -4685,12 +4758,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebServiceBuilder.WebServiceBuilder
   nameWithType: WebServiceBuilder.WebServiceBuilder
-- uid: Solti.Utils.Rpc.WebServiceBuilder.Build
-  name: Build()
-  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_Build
-  commentId: M:Solti.Utils.Rpc.WebServiceBuilder.Build
-  fullName: Solti.Utils.Rpc.WebServiceBuilder.Build()
-  nameWithType: WebServiceBuilder.Build()
+- uid: Solti.Utils.Rpc.WebServiceBuilder.Build(System.Threading.CancellationToken)
+  name: Build(CancellationToken)
+  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_Build_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.WebServiceBuilder.Build(System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.WebServiceBuilder.Build(System.Threading.CancellationToken)
+  nameWithType: WebServiceBuilder.Build(CancellationToken)
 - uid: Solti.Utils.Rpc.WebServiceBuilder.Build*
   name: Build
   href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_Build_
@@ -4714,15 +4787,15 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebServiceBuilder.ConfigureBackend
   nameWithType: WebServiceBuilder.ConfigureBackend
-- uid: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action{Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator{Solti.Utils.Rpc.Pipeline.RequestHandlerFactory}})
-  name: ConfigurePipeline(Action<IRequestPipeConfigurator<RequestHandlerFactory>>)
-  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_ConfigurePipeline_System_Action_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory___
-  commentId: M:Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action{Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator{Solti.Utils.Rpc.Pipeline.RequestHandlerFactory}})
-  name.vb: ConfigurePipeline(Action(Of IRequestPipeConfigurator(Of RequestHandlerFactory)))
-  fullName: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action<Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>>)
-  fullName.vb: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action(Of Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator(Of Solti.Utils.Rpc.Pipeline.RequestHandlerFactory)))
-  nameWithType: WebServiceBuilder.ConfigurePipeline(Action<IRequestPipeConfigurator<RequestHandlerFactory>>)
-  nameWithType.vb: WebServiceBuilder.ConfigurePipeline(Action(Of IRequestPipeConfigurator(Of RequestHandlerFactory)))
+- uid: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action{Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator})
+  name: ConfigurePipeline(Action<IRequestPipeConfigurator>)
+  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_ConfigurePipeline_System_Action_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator__
+  commentId: M:Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action{Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator})
+  name.vb: ConfigurePipeline(Action(Of IRequestPipeConfigurator))
+  fullName: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action<Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator>)
+  fullName.vb: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action(Of Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator))
+  nameWithType: WebServiceBuilder.ConfigurePipeline(Action<IRequestPipeConfigurator>)
+  nameWithType.vb: WebServiceBuilder.ConfigurePipeline(Action(Of IRequestPipeConfigurator))
 - uid: Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline*
   name: ConfigurePipeline
   href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_ConfigurePipeline_
@@ -4772,24 +4845,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection
   nameWithType: WebServiceBuilder.ServiceCollection
-- uid: Solti.Utils.Rpc.WebServiceBuilder.Solti#Utils#Rpc#Interfaces#IRequestPipeConfigurator{Solti#Utils#Rpc#Pipeline#RequestHandlerFactory}#Use*
-  name: IRequestPipeConfigurator<RequestHandlerFactory>.Use
-  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory__Use_
-  commentId: Overload:Solti.Utils.Rpc.WebServiceBuilder.Solti#Utils#Rpc#Interfaces#IRequestPipeConfigurator{Solti#Utils#Rpc#Pipeline#RequestHandlerFactory}#Use
-  isSpec: "True"
-  name.vb: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use
-  fullName: Solti.Utils.Rpc.WebServiceBuilder.Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use
-  nameWithType: WebServiceBuilder.IRequestPipeConfigurator<RequestHandlerFactory>.Use
-  nameWithType.vb: WebServiceBuilder.Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use
-- uid: Solti.Utils.Rpc.WebServiceBuilder.Solti#Utils#Rpc#Interfaces#IRequestPipeConfigurator{Solti#Utils#Rpc#Pipeline#RequestHandlerFactory}#Use``1(System.Action{``0})
-  name: IRequestPipeConfigurator<RequestHandlerFactory>.Use<TRequestHandler>(Action<TRequestHandler>)
-  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory__Use__1_System_Action___0__
-  commentId: M:Solti.Utils.Rpc.WebServiceBuilder.Solti#Utils#Rpc#Interfaces#IRequestPipeConfigurator{Solti#Utils#Rpc#Pipeline#RequestHandlerFactory}#Use``1(System.Action{``0})
-  name.vb: Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use(Of TRequestHandlerFactory)(Action(Of TRequestHandlerFactory))
-  fullName: Solti.Utils.Rpc.WebServiceBuilder.Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use<TRequestHandler>(System.Action<TRequestHandler>)
-  fullName.vb: Solti.Utils.Rpc.WebServiceBuilder.Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use(Of TRequestHandlerFactory)(System.Action(Of TRequestHandlerFactory))
-  nameWithType: WebServiceBuilder.IRequestPipeConfigurator<RequestHandlerFactory>.Use<TRequestHandler>(Action<TRequestHandler>)
-  nameWithType.vb: WebServiceBuilder.Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>.Use(Of TRequestHandlerFactory)(Action(Of TRequestHandlerFactory))
 - uid: Solti.Utils.Rpc.WebServiceBuilderExtensions
   name: WebServiceBuilderExtensions
   href: Solti.Utils.Rpc.WebServiceBuilderExtensions.html
@@ -4809,15 +4864,15 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebServiceBuilderExtensions.BuildMinimalService
   nameWithType: WebServiceBuilderExtensions.BuildMinimalService
-- uid: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder,System.Action{Solti.Utils.Rpc.Pipeline.RequestHandlerFactory},System.Boolean)
-  name: ConfigureRpcService(WebServiceBuilder, Action<RequestHandlerFactory>, Boolean)
-  href: Solti.Utils.Rpc.WebServiceBuilderExtensions.html#Solti_Utils_Rpc_WebServiceBuilderExtensions_ConfigureRpcService_Solti_Utils_Rpc_WebServiceBuilder_System_Action_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory__System_Boolean_
-  commentId: M:Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder,System.Action{Solti.Utils.Rpc.Pipeline.RequestHandlerFactory},System.Boolean)
-  name.vb: ConfigureRpcService(WebServiceBuilder, Action(Of RequestHandlerFactory), Boolean)
-  fullName: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder, System.Action<Solti.Utils.Rpc.Pipeline.RequestHandlerFactory>, System.Boolean)
-  fullName.vb: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder, System.Action(Of Solti.Utils.Rpc.Pipeline.RequestHandlerFactory), System.Boolean)
-  nameWithType: WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action<RequestHandlerFactory>, Boolean)
-  nameWithType.vb: WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action(Of RequestHandlerFactory), Boolean)
+- uid: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder,System.Action{Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder},System.Boolean)
+  name: ConfigureRpcService(WebServiceBuilder, Action<RequestHandlerBuilder>, Boolean)
+  href: Solti.Utils.Rpc.WebServiceBuilderExtensions.html#Solti_Utils_Rpc_WebServiceBuilderExtensions_ConfigureRpcService_Solti_Utils_Rpc_WebServiceBuilder_System_Action_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__System_Boolean_
+  commentId: M:Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder,System.Action{Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder},System.Boolean)
+  name.vb: ConfigureRpcService(WebServiceBuilder, Action(Of RequestHandlerBuilder), Boolean)
+  fullName: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder, System.Action<Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder>, System.Boolean)
+  fullName.vb: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(Solti.Utils.Rpc.WebServiceBuilder, System.Action(Of Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder), System.Boolean)
+  nameWithType: WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action<RequestHandlerBuilder>, Boolean)
+  nameWithType.vb: WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action(Of RequestHandlerBuilder), Boolean)
 - uid: Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService*
   name: ConfigureRpcService
   href: Solti.Utils.Rpc.WebServiceBuilderExtensions.html#Solti_Utils_Rpc_WebServiceBuilderExtensions_ConfigureRpcService_

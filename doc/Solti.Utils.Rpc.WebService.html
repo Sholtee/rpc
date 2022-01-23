@@ -105,13 +105,13 @@
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_WebService__ctor_" data-uid="Solti.Utils.Rpc.WebService.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_WebService__ctor_Solti_Utils_DI_Interfaces_IServiceCollection_" data-uid="Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection)">WebService(IServiceCollection)</h4>
+  <h4 id="Solti_Utils_Rpc_WebService__ctor_Solti_Utils_DI_Interfaces_IServiceCollection_Solti_Utils_DI_Interfaces_ScopeOptions_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection,Solti.Utils.DI.Interfaces.ScopeOptions,System.Threading.CancellationToken)">WebService(IServiceCollection, ScopeOptions, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WebService(IServiceCollection serviceCollection)</code></pre>
+    <pre><code class="lang-csharp hljs">public WebService(IServiceCollection serviceCollection, ScopeOptions scopeOptions, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -126,6 +126,16 @@
       <tr>
         <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceCollection</span></td>
         <td><span class="parametername">serviceCollection</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.ScopeOptions</span></td>
+        <td><span class="parametername">scopeOptions</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellation</span></td>
         <td></td>
       </tr>
     </tbody>

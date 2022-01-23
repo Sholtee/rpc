@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface IRequestPipeConfigurator&lt;TRequestHandlerBase&gt;
+    <title>Interface IBuilder&lt;TBuiltService, TParam&gt;
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface IRequestPipeConfigurator&lt;TRequestHandlerBase&gt;
+    <meta name="title" content="Interface IBuilder&lt;TBuiltService, TParam&gt;
    | RPC.NET ">
     <meta name="generator" content="docfx 2.58.0.0">
     
@@ -37,19 +37,19 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.IBuilder`2">
   
   
-  <h1 id="Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_1" data-uid="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1" class="text-break">Interface IRequestPipeConfigurator&lt;TRequestHandlerBase&gt;
+  <h1 id="Solti_Utils_Rpc_Interfaces_IBuilder_2" data-uid="Solti.Utils.Rpc.Interfaces.IBuilder`2" class="text-break">Interface IBuilder&lt;TBuiltService, TParam&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Describes how to configure the request pipeline.</p>
+  <div class="markdown level0 summary"><p>Defines a service that is responsible for building another services.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_1_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Interfaces_IBuilder_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IRequestPipeConfigurator&lt;TRequestHandlerBase&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IBuilder&lt;TBuiltService, TParam&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -61,21 +61,25 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TRequestHandlerBase</span></td>
+        <td><span class="parametername">TBuiltService</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TParam</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_1_Use_" data-uid="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1.Use*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_1_Use__1_System_Action___0__" data-uid="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator`1.Use``1(System.Action{``0})">Use&lt;TRequestHandler&gt;(Action&lt;TRequestHandler&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <a id="Solti_Utils_Rpc_Interfaces_IBuilder_2_Build_" data-uid="Solti.Utils.Rpc.Interfaces.IBuilder`2.Build*"></a>
+  <h4 id="Solti_Utils_Rpc_Interfaces_IBuilder_2_Build__1_" data-uid="Solti.Utils.Rpc.Interfaces.IBuilder`2.Build(`1)">Build(TParam)</h4>
+  <div class="markdown level1 summary"><p>Builds a new <code data-dev-comment-type="typeparamref" class="typeparamref">TBuiltService</code> instance.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IRequestPipeConfigurator&lt;TRequestHandlerBase&gt; Use&lt;TRequestHandler&gt;(Action&lt;TRequestHandler&gt; configCallback = null)
-    where TRequestHandler : TRequestHandlerBase, new()</code></pre>
+    <pre><code class="lang-csharp hljs">TBuiltService Build(TParam param)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -88,8 +92,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TRequestHandler&gt;</td>
-        <td><span class="parametername">configCallback</span></td>
+        <td><span class="xref">TParam</span></td>
+        <td><span class="parametername">param</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -104,22 +108,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html">IRequestPipeConfigurator</a>&lt;TRequestHandlerBase&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TRequestHandler</span></td>
+        <td><span class="xref">TBuiltService</span></td>
         <td></td>
       </tr>
     </tbody>

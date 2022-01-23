@@ -52,7 +52,7 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html">IRequestPipeConfigurator</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a>&gt;</div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-2.html">IBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -82,7 +82,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_WebServiceBuilder_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class WebServiceBuilder : IRequestPipeConfigurator&lt;RequestHandlerFactory&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class WebServiceBuilder : IBuilder&lt;WebService, CancellationToken&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -148,14 +148,31 @@
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_WebServiceBuilder_Build_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Build*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_Build" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Build">Build()</h4>
+  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_Build_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Build(System.Threading.CancellationToken)">Build(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Builds a new <a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual WebService Build()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual WebService Build(CancellationToken cancellation = default(CancellationToken))</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -213,13 +230,13 @@
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_WebServiceBuilder_ConfigurePipeline_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_ConfigurePipeline_System_Action_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory___" data-uid="Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action{Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator{Solti.Utils.Rpc.Pipeline.RequestHandlerFactory}})">ConfigurePipeline(Action&lt;IRequestPipeConfigurator&lt;RequestHandlerFactory&gt;&gt;)</h4>
+  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_ConfigurePipeline_System_Action_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator__" data-uid="Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action{Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator})">ConfigurePipeline(Action&lt;IRequestPipeConfigurator&gt;)</h4>
   <div class="markdown level1 summary"><p>Configures the request pipeline.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WebServiceBuilder ConfigurePipeline(Action&lt;IRequestPipeConfigurator&lt;RequestHandlerFactory&gt;&gt; configCallback)</code></pre>
+    <pre><code class="lang-csharp hljs">public WebServiceBuilder ConfigurePipeline(Action&lt;IRequestPipeConfigurator&gt; configCallback)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -232,7 +249,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html">IRequestPipeConfigurator</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator.html">IRequestPipeConfigurator</a>&gt;</td>
         <td><span class="parametername">configCallback</span></td>
         <td></td>
       </tr>
@@ -294,74 +311,16 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="eii">Explicit Interface Implementations
-  </h3>
-  <a id="Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory__Use_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Solti#Utils#Rpc#Interfaces#IRequestPipeConfigurator{Solti#Utils#Rpc#Pipeline#RequestHandlerFactory}#Use*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Interfaces_IRequestPipeConfigurator_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory__Use__1_System_Action___0__" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Solti#Utils#Rpc#Interfaces#IRequestPipeConfigurator{Solti#Utils#Rpc#Pipeline#RequestHandlerFactory}#Use``1(System.Action{``0})">IRequestPipeConfigurator&lt;RequestHandlerFactory&gt;.Use&lt;TRequestHandler&gt;(Action&lt;TRequestHandler&gt;)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IRequestPipeConfigurator&lt;RequestHandlerFactory&gt; IRequestPipeConfigurator&lt;RequestHandlerFactory&gt;.Use&lt;TRequestHandlerFactory&gt;(Action&lt;TRequestHandlerFactory&gt; configCallback)
-    where TRequestHandlerFactory : RequestHandlerFactory, new()</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TRequestHandlerFactory&gt;</td>
-        <td><span class="parametername">configCallback</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html">IRequestPipeConfigurator</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TRequestHandlerFactory</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator-1.html">IRequestPipeConfigurator&lt;TRequestHandlerBase&gt;</a>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-2.html">IBuilder&lt;TBuiltService, TParam&gt;</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.WebServiceBuilderExtensions.html#Solti_Utils_Rpc_WebServiceBuilderExtensions_BuildMinimalService_Solti_Utils_Rpc_WebServiceBuilder_System_String_">WebServiceBuilderExtensions.BuildMinimalService(WebServiceBuilder, String)</a>
   </div>
   <div>
-      <a class="xref" href="Solti.Utils.Rpc.WebServiceBuilderExtensions.html#Solti_Utils_Rpc_WebServiceBuilderExtensions_ConfigureRpcService_Solti_Utils_Rpc_WebServiceBuilder_System_Action_Solti_Utils_Rpc_Pipeline_RequestHandlerFactory__System_Boolean_">WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action&lt;RequestHandlerFactory&gt;, Boolean)</a>
+      <a class="xref" href="Solti.Utils.Rpc.WebServiceBuilderExtensions.html#Solti_Utils_Rpc_WebServiceBuilderExtensions_ConfigureRpcService_Solti_Utils_Rpc_WebServiceBuilder_System_Action_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__System_Boolean_">WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action&lt;RequestHandlerBuilder&gt;, Boolean)</a>
   </div>
 </article>
           </div>
