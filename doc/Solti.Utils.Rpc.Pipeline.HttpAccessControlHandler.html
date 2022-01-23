@@ -87,13 +87,13 @@
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_System_Collections_Generic_IReadOnlyCollection_System_String__System_Collections_Generic_IReadOnlyCollection_System_String__System_Collections_Generic_IReadOnlyCollection_System_String__" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String})">HttpAccessControlHandler(IRequestHandler, IReadOnlyCollection&lt;String&gt;, IReadOnlyCollection&lt;String&gt;, IReadOnlyCollection&lt;String&gt;)</h4>
+  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_HttpAccessControl_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.HttpAccessControl)">HttpAccessControlHandler(IRequestHandler, HttpAccessControl)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html">HttpAccessControlHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public HttpAccessControlHandler(IRequestHandler next, IReadOnlyCollection&lt;string&gt; allowedOrigins, IReadOnlyCollection&lt;string&gt; allowedMethods, IReadOnlyCollection&lt;string&gt; allowedHeaders)</code></pre>
+    <pre><code class="lang-csharp hljs">public HttpAccessControlHandler(IRequestHandler next, HttpAccessControl parent)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -111,23 +111,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td><span class="parametername">allowedOrigins</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td><span class="parametername">allowedMethods</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td><span class="parametername">allowedHeaders</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html">HttpAccessControl</a></td>
+        <td><span class="parametername">parent</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_System_Collections_Generic_IReadOnlyCollection_System_String__System_Collections_Generic_IReadOnlyCollection_System_String__System_Collections_Generic_IReadOnlyCollection_System_String___remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_HttpAccessControl__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This handler requires a <code data-dev-comment-type="paramref" class="paramref">next</code> value to be supplied.</p>
 </div>
   <h3 id="properties">Properties
@@ -204,6 +194,30 @@
       </tr>
     </tbody>
   </table>
+  <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_AllowLogs_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_AllowLogs" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs">AllowLogs</h4>
+  <div class="markdown level1 summary"><p>Returns true if the logging is allowed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowLogs { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_Next_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.Next*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_Next" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.Next">Next</h4>
   <div class="markdown level1 summary"><p>The next handler to be called.</p>
@@ -229,7 +243,7 @@
     </tbody>
   </table>
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_Next_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>A handler should not invoke the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html#Solti_Utils_Rpc_Interfaces_IRequestHandler_Next">Next</a> instance after closing the session (calling the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenerresponse.close#system-net-httplistenerresponse-close">Close()</a> method).</p>
+  <div class="markdown level1 remarks"><p>A handler should not invoke the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html#Solti_Utils_Rpc_Interfaces_IRequestHandler_Next">Next</a> instance after closing the session.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
@@ -351,9 +365,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_SetAcHeaders_Solti_Utils_Rpc_Interfaces_IHttpSession__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This method may be called parallelly.</p>
-</div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>

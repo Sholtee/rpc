@@ -42,7 +42,7 @@
   
   <h1 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl" data-uid="Solti.Utils.Rpc.Pipeline.RpcAccessControl" class="text-break">Class RpcAccessControl
   </h1>
-  <div class="markdown level0 summary"><p>Handles access control HTTP requests.</p>
+  <div class="markdown level0 summary"><p>Specifies how to handle access control HTTP requests (RPC specific).</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -52,10 +52,17 @@
     <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html">HttpAccessControl</a></div>
     <div class="level3"><span class="xref">RpcAccessControl</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins">HttpAccessControl.AllowedOrigins</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs">HttpAccessControl.AllowLogs</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_">HttpAccessControl.Create(IRequestHandler)</a>
@@ -92,7 +99,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RpcAccessControl : HttpAccessControl</code></pre>
+    <pre><code class="lang-csharp hljs">public class RpcAccessControl : HttpAccessControl, ISupportsLog</code></pre>
   </div>
   <h5 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Allowed method: POST, Allowed headers: Content-Type, Content-Length</p>
@@ -101,7 +108,7 @@
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedHeaders_" data-uid="Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedHeaders" data-uid="Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders">AllowedHeaders</h4>
-  <div class="markdown level1 summary"><p>Allowed headers.</p>
+  <div class="markdown level1 summary"><p>Allows Content-Type, Content-Length headers only.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -125,9 +132,12 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedHeaders">HttpAccessControl.AllowedHeaders</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedHeaders_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This list is read-only.</p>
+</div>
   <a id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedMethods_" data-uid="Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedMethods" data-uid="Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods">AllowedMethods</h4>
-  <div class="markdown level1 summary"><p>Allowed methods.</p>
+  <div class="markdown level1 summary"><p>Allows POST method only.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -151,6 +161,13 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods">HttpAccessControl.AllowedMethods</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedMethods_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This list is read-only.</p>
+</div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a>
+  </div>
 </article>
           </div>
           

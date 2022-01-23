@@ -42,7 +42,7 @@
   
   <h1 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl" class="text-break">Class HttpAccessControl
   </h1>
-  <div class="markdown level0 summary"><p>Handles access control HTTP requests.</p>
+  <div class="markdown level0 summary"><p>Specifies how to handle access control HTTP requests.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -51,6 +51,10 @@
     <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a></div>
     <div class="level2"><span class="xref">HttpAccessControl</span></div>
       <div class="level3"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RpcAccessControl.html">RpcAccessControl</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -86,7 +90,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HttpAccessControl : RequestHandlerFactory</code></pre>
+    <pre><code class="lang-csharp hljs">public class HttpAccessControl : RequestHandlerFactory, ISupportsLog</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -114,6 +118,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedHeaders_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If this list is empty, all kind of headers are allowed.</p>
+</div>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedMethods*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedMethods">AllowedMethods</h4>
   <div class="markdown level1 summary"><p>Allowed methods.</p>
@@ -138,6 +145,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If this list is empty, all kind of methods are allowed.</p>
+</div>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedOrigins*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedOrigins">AllowedOrigins</h4>
   <div class="markdown level1 summary"><p>The allowed origins. See <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">https://en.wikipedia.org/wiki/Cross-origin_resource_sharing</a></p>
@@ -162,11 +172,38 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If this list is empty, all origins are allowed.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs">AllowLogs</h4>
+  <div class="markdown level1 summary"><p>Returns true if the logging is enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowLogs { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Create(IRequestHandler)</h4>
-  <div class="markdown level1 summary"><p>Creates a new request handler instance.</p>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -210,6 +247,10 @@
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
 </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a>
+  </div>
 </article>
           </div>
           

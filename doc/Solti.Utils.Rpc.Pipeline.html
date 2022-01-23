@@ -46,41 +46,41 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
-      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html">CatchAllExceptionsHandler</a></h4>
-      <section><p>Processes unhandled exceptions.</p>
-</section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html">ExceptionCatcher</a></h4>
-      <section><p>Catches unhandled exceptions.</p>
+      <section><p>Configures the request pipeline to be &quot;exception proof&quot;.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html">ExceptionCatcherHandler</a></h4>
+      <section><p>Catches unhandled exception thrown by the <a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next">Next</a> handler. </p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html">HttpAccessControl</a></h4>
-      <section><p>Handles access control HTTP requests.</p>
+      <section><p>Specifies how to handle access control HTTP requests.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html">HttpAccessControlHandler</a></h4>
       <section><p>Handles access control HTTP requests.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html">ModuleInvocationHandler</a></h4>
-      <section><p>Invokes a module method, described by the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a> and writes the result into the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenerresponse">HttpListenerResponse</a>.</p>
+      <section><p>Handles RPC module invocatios.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></h4>
-      <section><p>Invokes a module method described by the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a> and writes the result into the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.net.httplistenerresponse">HttpListenerResponse</a>.</p>
+      <section><p>Configures services to be accessible via Remote Procedure Call.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerFactory.html">RequestHandlerFactory</a></h4>
-      <section><p>Request handler factory.</p>
+      <section><p>Creates <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instances.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></h4>
-      <section><p>Limits how many times a remote client could access the local resources (in a given period of time).</p>
+      <section><p>Limits how many times a remote client can access local resources (in a given period of time).</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.html">RequestLimiterHandler</a></h4>
-      <section><p>Limits how many times a remote client could access the local resources (in a given period of time).</p>
+      <section><p>Rejects the request if the request count (made by a remote client) excceeds the threshold.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeout.html">RequestTimeout</a></h4>
-      <section><p>Adds a timeout to the request processing.</p>
+      <section><p>Configures the amount of time allowed to serve a request.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html">RequestTimeoutHandler</a></h4>
       <section><p>Adds a timeout to the request processing.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RpcAccessControl.html">RpcAccessControl</a></h4>
-      <section><p>Handles access control HTTP requests.</p>
+      <section><p>Specifies how to handle access control HTTP requests (RPC specific).</p>
 </section>
 </article>
           </div>

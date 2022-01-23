@@ -1458,6 +1458,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Version
   nameWithType: IServiceDescriptor.Version
+- uid: Solti.Utils.Rpc.Interfaces.ISupportsLog
+  name: ISupportsLog
+  href: Solti.Utils.Rpc.Interfaces.ISupportsLog.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.ISupportsLog
+  fullName: Solti.Utils.Rpc.Interfaces.ISupportsLog
+  nameWithType: ISupportsLog
+- uid: Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Interfaces.ISupportsLog.html#Solti_Utils_Rpc_Interfaces_ISupportsLog_AllowLogs
+  commentId: P:Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs
+  fullName: Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs
+  nameWithType: ISupportsLog.AllowLogs
+- uid: Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs*
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Interfaces.ISupportsLog.html#Solti_Utils_Rpc_Interfaces_ISupportsLog_AllowLogs_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs
+  nameWithType: ISupportsLog.AllowLogs
 - uid: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
   name: LengthBetweenAttribute
   href: Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.html
@@ -3221,83 +3240,25 @@ references:
   commentId: N:Solti.Utils.Rpc.Pipeline
   fullName: Solti.Utils.Rpc.Pipeline
   nameWithType: Solti.Utils.Rpc.Pipeline
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler
-  name: CatchAllExceptionsHandler
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html
-  commentId: T:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler
-  nameWithType: CatchAllExceptionsHandler
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  name: CatchAllExceptionsHandler(IRequestHandler)
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_
-  commentId: M:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.CatchAllExceptionsHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler)
-  nameWithType: CatchAllExceptionsHandler.CatchAllExceptionsHandler(IRequestHandler)
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.#ctor*
-  name: CatchAllExceptionsHandler
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler__ctor_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.#ctor
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.CatchAllExceptionsHandler
-  nameWithType: CatchAllExceptionsHandler.CatchAllExceptionsHandler
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
-  name: HandleAsync(IInjector, IHttpSession, CancellationToken)
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_HandleAsync_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpSession_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)
-  nameWithType: CatchAllExceptionsHandler.HandleAsync(IInjector, IHttpSession, CancellationToken)
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.HandleAsync*
-  name: HandleAsync
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_HandleAsync_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.HandleAsync
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.HandleAsync
-  nameWithType: CatchAllExceptionsHandler.HandleAsync
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.Next
-  name: Next
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_Next
-  commentId: P:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.Next
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.Next
-  nameWithType: CatchAllExceptionsHandler.Next
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.Next*
-  name: Next
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_Next_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.Next
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.Next
-  nameWithType: CatchAllExceptionsHandler.Next
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.ProcessUnhandledException(System.Exception,Solti.Utils.Rpc.Interfaces.IHttpSession)
-  name: ProcessUnhandledException(Exception, IHttpSession)
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_ProcessUnhandledException_System_Exception_Solti_Utils_Rpc_Interfaces_IHttpSession_
-  commentId: M:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.ProcessUnhandledException(System.Exception,Solti.Utils.Rpc.Interfaces.IHttpSession)
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.ProcessUnhandledException(System.Exception, Solti.Utils.Rpc.Interfaces.IHttpSession)
-  nameWithType: CatchAllExceptionsHandler.ProcessUnhandledException(Exception, IHttpSession)
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.ProcessUnhandledException*
-  name: ProcessUnhandledException
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_ProcessUnhandledException_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.ProcessUnhandledException
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.ProcessUnhandledException
-  nameWithType: CatchAllExceptionsHandler.ProcessUnhandledException
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String)
-  name: WriteResponseString(IHttpResponse, String)
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_WriteResponseString_Solti_Utils_Rpc_Interfaces_IHttpResponse_System_String_
-  commentId: M:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String)
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse, System.String)
-  nameWithType: CatchAllExceptionsHandler.WriteResponseString(IHttpResponse, String)
-- uid: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.WriteResponseString*
-  name: WriteResponseString
-  href: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.html#Solti_Utils_Rpc_Pipeline_CatchAllExceptionsHandler_WriteResponseString_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.WriteResponseString
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.CatchAllExceptionsHandler.WriteResponseString
-  nameWithType: CatchAllExceptionsHandler.WriteResponseString
 - uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   name: ExceptionCatcher
   href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html
   commentId: T:Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   nameWithType: ExceptionCatcher
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_AllowLogs
+  commentId: P:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
+  nameWithType: ExceptionCatcher.AllowLogs
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs*
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_AllowLogs_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs
+  nameWithType: ExceptionCatcher.AllowLogs
 - uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
   name: Create(IRequestHandler)
   href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
@@ -3311,6 +3272,90 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Create
   nameWithType: ExceptionCatcher.Create
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler
+  name: ExceptionCatcherHandler
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html
+  commentId: T:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler
+  nameWithType: ExceptionCatcherHandler
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.ExceptionCatcher)
+  name: ExceptionCatcherHandler(IRequestHandler, ExceptionCatcher)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_ExceptionCatcher_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.ExceptionCatcher)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ExceptionCatcherHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler, Solti.Utils.Rpc.Pipeline.ExceptionCatcher)
+  nameWithType: ExceptionCatcherHandler.ExceptionCatcherHandler(IRequestHandler, ExceptionCatcher)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor*
+  name: ExceptionCatcherHandler
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ExceptionCatcherHandler
+  nameWithType: ExceptionCatcherHandler.ExceptionCatcherHandler
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
+  name: HandleAsync(IInjector, IHttpSession, CancellationToken)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_HandleAsync_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpSession_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)
+  nameWithType: ExceptionCatcherHandler.HandleAsync(IInjector, IHttpSession, CancellationToken)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync*
+  name: HandleAsync
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_HandleAsync_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync
+  nameWithType: ExceptionCatcherHandler.HandleAsync
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next
+  name: Next
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next
+  commentId: P:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next
+  nameWithType: ExceptionCatcherHandler.Next
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next*
+  name: Next
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next
+  nameWithType: ExceptionCatcherHandler.Next
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent
+  name: Parent
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Parent
+  commentId: P:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent
+  nameWithType: ExceptionCatcherHandler.Parent
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent*
+  name: Parent
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Parent_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent
+  nameWithType: ExceptionCatcherHandler.Parent
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException(System.Exception,Solti.Utils.Rpc.Interfaces.IHttpSession)
+  name: ProcessUnhandledException(Exception, IHttpSession)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_ProcessUnhandledException_System_Exception_Solti_Utils_Rpc_Interfaces_IHttpSession_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException(System.Exception,Solti.Utils.Rpc.Interfaces.IHttpSession)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException(System.Exception, Solti.Utils.Rpc.Interfaces.IHttpSession)
+  nameWithType: ExceptionCatcherHandler.ProcessUnhandledException(Exception, IHttpSession)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException*
+  name: ProcessUnhandledException
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_ProcessUnhandledException_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException
+  nameWithType: ExceptionCatcherHandler.ProcessUnhandledException
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String)
+  name: WriteResponseString(IHttpResponse, String)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_WriteResponseString_Solti_Utils_Rpc_Interfaces_IHttpResponse_System_String_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse, System.String)
+  nameWithType: ExceptionCatcherHandler.WriteResponseString(IHttpResponse, String)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString*
+  name: WriteResponseString
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_WriteResponseString_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString
+  nameWithType: ExceptionCatcherHandler.WriteResponseString
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl
   name: HttpAccessControl
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html
@@ -3356,6 +3401,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedOrigins
   nameWithType: HttpAccessControl.AllowedOrigins
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs
+  commentId: P:Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs
+  nameWithType: HttpAccessControl.AllowLogs
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs*
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs
+  nameWithType: HttpAccessControl.AllowLogs
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.Create(Solti.Utils.Rpc.Interfaces.IRequestHandler)
   name: Create(IRequestHandler)
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Create_Solti_Utils_Rpc_Interfaces_IRequestHandler_
@@ -3375,15 +3433,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler
   fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler
   nameWithType: HttpAccessControlHandler
-- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String})
-  name: HttpAccessControlHandler(IRequestHandler, IReadOnlyCollection<String>, IReadOnlyCollection<String>, IReadOnlyCollection<String>)
-  href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html#Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_System_Collections_Generic_IReadOnlyCollection_System_String__System_Collections_Generic_IReadOnlyCollection_System_String__System_Collections_Generic_IReadOnlyCollection_System_String__
-  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String})
-  name.vb: HttpAccessControlHandler(IRequestHandler, IReadOnlyCollection(Of String), IReadOnlyCollection(Of String), IReadOnlyCollection(Of String))
-  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.HttpAccessControlHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler, System.Collections.Generic.IReadOnlyCollection<System.String>, System.Collections.Generic.IReadOnlyCollection<System.String>, System.Collections.Generic.IReadOnlyCollection<System.String>)
-  fullName.vb: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.HttpAccessControlHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler, System.Collections.Generic.IReadOnlyCollection(Of System.String), System.Collections.Generic.IReadOnlyCollection(Of System.String), System.Collections.Generic.IReadOnlyCollection(Of System.String))
-  nameWithType: HttpAccessControlHandler.HttpAccessControlHandler(IRequestHandler, IReadOnlyCollection<String>, IReadOnlyCollection<String>, IReadOnlyCollection<String>)
-  nameWithType.vb: HttpAccessControlHandler.HttpAccessControlHandler(IRequestHandler, IReadOnlyCollection(Of String), IReadOnlyCollection(Of String), IReadOnlyCollection(Of String))
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.HttpAccessControl)
+  name: HttpAccessControlHandler(IRequestHandler, HttpAccessControl)
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html#Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_HttpAccessControl_
+  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.HttpAccessControl)
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.HttpAccessControlHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler, Solti.Utils.Rpc.Pipeline.HttpAccessControl)
+  nameWithType: HttpAccessControlHandler.HttpAccessControlHandler(IRequestHandler, HttpAccessControl)
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.#ctor*
   name: HttpAccessControlHandler
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html#Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler__ctor_
@@ -3430,6 +3485,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowedOrigins
   nameWithType: HttpAccessControlHandler.AllowedOrigins
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html#Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_AllowLogs
+  commentId: P:Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs
+  nameWithType: HttpAccessControlHandler.AllowLogs
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs*
+  name: AllowLogs
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html#Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_AllowLogs_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.AllowLogs
+  nameWithType: HttpAccessControlHandler.AllowLogs
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
   name: HandleAsync(IInjector, IHttpSession, CancellationToken)
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html#Solti_Utils_Rpc_Pipeline_HttpAccessControlHandler_HandleAsync_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpSession_System_Threading_CancellationToken_
