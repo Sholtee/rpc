@@ -104,7 +104,7 @@ namespace Solti.Utils.Rpc.Pipeline
             //
 
             if (request.Headers["Content-Type"]?.StartsWith("application/json", StringComparison.OrdinalIgnoreCase) is not true)
-                throw new HttpException(Errors.HTTP_CONTENT_NOT_SUPPORTED) { Status = HttpStatusCode.BadRequest };
+                throw new HttpException(Errors.HTTP_CONTENT_NOT_SUPPORTED) { Status = HttpStatusCode.UnsupportedMediaType };
 
             IReadOnlyDictionary<string, string> paramz = request.QueryParameters;
 

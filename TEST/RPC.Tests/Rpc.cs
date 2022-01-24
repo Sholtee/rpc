@@ -396,7 +396,7 @@ namespace Solti.Utils.Rpc.Tests
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.MethodNotAllowed));
 
             response = await client.PostAsync(Host, new StringContent(string.Empty));
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.UnsupportedMediaType));
         }
 
         [Test]
