@@ -1189,37 +1189,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IHttpSession.Server
   nameWithType: IHttpSession.Server
-- uid: Solti.Utils.Rpc.Interfaces.IModuleRegistry
-  name: IModuleRegistry
-  href: Solti.Utils.Rpc.Interfaces.IModuleRegistry.html
-  commentId: T:Solti.Utils.Rpc.Interfaces.IModuleRegistry
-  fullName: Solti.Utils.Rpc.Interfaces.IModuleRegistry
-  nameWithType: IModuleRegistry
-- uid: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register*
-  name: Register
-  href: Solti.Utils.Rpc.Interfaces.IModuleRegistry.html#Solti_Utils_Rpc_Interfaces_IModuleRegistry_Register_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register
-  nameWithType: IModuleRegistry.Register
-- uid: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
-  name: Register<TInterface>(Func<IInjector, TInterface>)
-  href: Solti.Utils.Rpc.Interfaces.IModuleRegistry.html#Solti_Utils_Rpc_Interfaces_IModuleRegistry_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__
-  commentId: M:Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})
-  name.vb: Register(Of TInterface)(Func(Of IInjector, TInterface))
-  fullName: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register<TInterface>(System.Func<Solti.Utils.DI.Interfaces.IInjector, TInterface>)
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register(Of TInterface)(System.Func(Of Solti.Utils.DI.Interfaces.IInjector, TInterface))
-  nameWithType: IModuleRegistry.Register<TInterface>(Func<IInjector, TInterface>)
-  nameWithType.vb: IModuleRegistry.Register(Of TInterface)(Func(Of IInjector, TInterface))
-- uid: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register``2
-  name: Register<TInterface, TImplementation>()
-  href: Solti.Utils.Rpc.Interfaces.IModuleRegistry.html#Solti_Utils_Rpc_Interfaces_IModuleRegistry_Register__2
-  commentId: M:Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register``2
-  name.vb: Register(Of TInterface, TImplementation)()
-  fullName: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register<TInterface, TImplementation>()
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IModuleRegistry.Register(Of TInterface, TImplementation)()
-  nameWithType: IModuleRegistry.Register<TInterface, TImplementation>()
-  nameWithType.vb: IModuleRegistry.Register(Of TInterface, TImplementation)()
 - uid: Solti.Utils.Rpc.Interfaces.IParameterValidator
   name: IParameterValidator
   href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html
@@ -3262,25 +3231,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
   nameWithType: VerbAttribute.Verbs
-- uid: Solti.Utils.Rpc.ModuleRegistryExtensions
-  name: ModuleRegistryExtensions
-  href: Solti.Utils.Rpc.ModuleRegistryExtensions.html
-  commentId: T:Solti.Utils.Rpc.ModuleRegistryExtensions
-  fullName: Solti.Utils.Rpc.ModuleRegistryExtensions
-  nameWithType: ModuleRegistryExtensions
-- uid: Solti.Utils.Rpc.ModuleRegistryExtensions.InstallBuiltInModules(Solti.Utils.Rpc.Interfaces.IModuleRegistry)
-  name: InstallBuiltInModules(IModuleRegistry)
-  href: Solti.Utils.Rpc.ModuleRegistryExtensions.html#Solti_Utils_Rpc_ModuleRegistryExtensions_InstallBuiltInModules_Solti_Utils_Rpc_Interfaces_IModuleRegistry_
-  commentId: M:Solti.Utils.Rpc.ModuleRegistryExtensions.InstallBuiltInModules(Solti.Utils.Rpc.Interfaces.IModuleRegistry)
-  fullName: Solti.Utils.Rpc.ModuleRegistryExtensions.InstallBuiltInModules(Solti.Utils.Rpc.Interfaces.IModuleRegistry)
-  nameWithType: ModuleRegistryExtensions.InstallBuiltInModules(IModuleRegistry)
-- uid: Solti.Utils.Rpc.ModuleRegistryExtensions.InstallBuiltInModules*
+- uid: Solti.Utils.Rpc.ModulesExtensions
+  name: ModulesExtensions
+  href: Solti.Utils.Rpc.ModulesExtensions.html
+  commentId: T:Solti.Utils.Rpc.ModulesExtensions
+  fullName: Solti.Utils.Rpc.ModulesExtensions
+  nameWithType: ModulesExtensions
+- uid: Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules(Solti.Utils.Rpc.Pipeline.Modules)
+  name: InstallBuiltInModules(Modules)
+  href: Solti.Utils.Rpc.ModulesExtensions.html#Solti_Utils_Rpc_ModulesExtensions_InstallBuiltInModules_Solti_Utils_Rpc_Pipeline_Modules_
+  commentId: M:Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules(Solti.Utils.Rpc.Pipeline.Modules)
+  fullName: Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules(Solti.Utils.Rpc.Pipeline.Modules)
+  nameWithType: ModulesExtensions.InstallBuiltInModules(Modules)
+- uid: Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules*
   name: InstallBuiltInModules
-  href: Solti.Utils.Rpc.ModuleRegistryExtensions.html#Solti_Utils_Rpc_ModuleRegistryExtensions_InstallBuiltInModules_
-  commentId: Overload:Solti.Utils.Rpc.ModuleRegistryExtensions.InstallBuiltInModules
+  href: Solti.Utils.Rpc.ModulesExtensions.html#Solti_Utils_Rpc_ModulesExtensions_InstallBuiltInModules_
+  commentId: Overload:Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.ModuleRegistryExtensions.InstallBuiltInModules
-  nameWithType: ModuleRegistryExtensions.InstallBuiltInModules
+  fullName: Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules
+  nameWithType: ModulesExtensions.InstallBuiltInModules
 - uid: Solti.Utils.Rpc.Pipeline
   name: Solti.Utils.Rpc.Pipeline
   href: Solti.Utils.Rpc.Pipeline.html

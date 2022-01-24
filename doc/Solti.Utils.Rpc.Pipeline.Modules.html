@@ -54,7 +54,6 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
-    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -87,7 +86,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_Modules_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, IModuleRegistry</code></pre>
+    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -193,12 +192,12 @@
 </div>
   <a id="Solti_Utils_Rpc_Pipeline_Modules_Register_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</h4>
-  <div class="markdown level1 summary"><p>Registers a module.</p>
+  <div class="markdown level1 summary"><p>Registers a module to be accessible via Remote Procedure Call.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IModuleRegistry Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt; factory)
+    <pre><code class="lang-csharp hljs">public Modules Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt; factory)
     where TInterface : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -228,7 +227,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -250,12 +249,12 @@
   </table>
   <a id="Solti_Utils_Rpc_Pipeline_Modules_Register_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Register__2" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register``2">Register&lt;TInterface, TImplementation&gt;()</h4>
-  <div class="markdown level1 summary"><p>Registers a module.</p>
+  <div class="markdown level1 summary"><p>Registers a module to be accessible via Remote Procedure Call.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IModuleRegistry Register&lt;TInterface, TImplementation&gt;()
+    <pre><code class="lang-csharp hljs">public Modules Register&lt;TInterface, TImplementation&gt;()
     where TInterface : class where TImplementation : TInterface</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
@@ -268,7 +267,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -296,12 +295,9 @@
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
   </div>
-  <div>
-      <a class="xref" href="Solti.Utils.Rpc.Interfaces.IModuleRegistry.html">IModuleRegistry</a>
-  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
-      <a class="xref" href="Solti.Utils.Rpc.ModuleRegistryExtensions.html#Solti_Utils_Rpc_ModuleRegistryExtensions_InstallBuiltInModules_Solti_Utils_Rpc_Interfaces_IModuleRegistry_">ModuleRegistryExtensions.InstallBuiltInModules(IModuleRegistry)</a>
+      <a class="xref" href="Solti.Utils.Rpc.ModulesExtensions.html#Solti_Utils_Rpc_ModulesExtensions_InstallBuiltInModules_Solti_Utils_Rpc_Pipeline_Modules_">ModulesExtensions.InstallBuiltInModules(Modules)</a>
   </div>
 </article>
           </div>
