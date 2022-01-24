@@ -809,32 +809,58 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IAsyncPropertyValidator.ValidateAsync
   nameWithType: IAsyncPropertyValidator.ValidateAsync
-- uid: Solti.Utils.Rpc.Interfaces.IBuilder`2
-  name: IBuilder<TBuiltService, TParam>
-  href: Solti.Utils.Rpc.Interfaces.IBuilder-2.html
-  commentId: T:Solti.Utils.Rpc.Interfaces.IBuilder`2
-  name.vb: IBuilder(Of TBuiltService, TParam)
-  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService, TParam>
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService, TParam)
-  nameWithType: IBuilder<TBuiltService, TParam>
-  nameWithType.vb: IBuilder(Of TBuiltService, TParam)
-- uid: Solti.Utils.Rpc.Interfaces.IBuilder`2.Build(`1)
-  name: Build(TParam)
-  href: Solti.Utils.Rpc.Interfaces.IBuilder-2.html#Solti_Utils_Rpc_Interfaces_IBuilder_2_Build__1_
-  commentId: M:Solti.Utils.Rpc.Interfaces.IBuilder`2.Build(`1)
-  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService, TParam>.Build(TParam)
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService, TParam).Build(TParam)
-  nameWithType: IBuilder<TBuiltService, TParam>.Build(TParam)
-  nameWithType.vb: IBuilder(Of TBuiltService, TParam).Build(TParam)
-- uid: Solti.Utils.Rpc.Interfaces.IBuilder`2.Build*
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`1
+  name: IBuilder<TBuiltService>
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-1.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IBuilder`1
+  name.vb: IBuilder(Of TBuiltService)
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService)
+  nameWithType: IBuilder<TBuiltService>
+  nameWithType.vb: IBuilder(Of TBuiltService)
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`1.Build
+  name: Build()
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-1.html#Solti_Utils_Rpc_Interfaces_IBuilder_1_Build
+  commentId: M:Solti.Utils.Rpc.Interfaces.IBuilder`1.Build
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.Build()
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService).Build()
+  nameWithType: IBuilder<TBuiltService>.Build()
+  nameWithType.vb: IBuilder(Of TBuiltService).Build()
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`1.Build*
   name: Build
-  href: Solti.Utils.Rpc.Interfaces.IBuilder-2.html#Solti_Utils_Rpc_Interfaces_IBuilder_2_Build_
-  commentId: Overload:Solti.Utils.Rpc.Interfaces.IBuilder`2.Build
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-1.html#Solti_Utils_Rpc_Interfaces_IBuilder_1_Build_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IBuilder`1.Build
   isSpec: "True"
-  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService, TParam>.Build
-  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService, TParam).Build
-  nameWithType: IBuilder<TBuiltService, TParam>.Build
-  nameWithType.vb: IBuilder(Of TBuiltService, TParam).Build
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.Build
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService).Build
+  nameWithType: IBuilder<TBuiltService>.Build
+  nameWithType.vb: IBuilder(Of TBuiltService).Build
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`1.IParameterizedBuilder`1
+  name: IBuilder<TBuiltService>.IParameterizedBuilder<TParam>
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IBuilder`1.IParameterizedBuilder`1
+  name.vb: IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam)
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.IParameterizedBuilder<TParam>
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam)
+  nameWithType: IBuilder<TBuiltService>.IParameterizedBuilder<TParam>
+  nameWithType.vb: IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam)
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`1.IParameterizedBuilder`1.Build(`1)
+  name: Build(TParam)
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html#Solti_Utils_Rpc_Interfaces_IBuilder_1_IParameterizedBuilder_1_Build__1_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IBuilder`1.IParameterizedBuilder`1.Build(`1)
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.IParameterizedBuilder<TParam>.Build(TParam)
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam).Build(TParam)
+  nameWithType: IBuilder<TBuiltService>.IParameterizedBuilder<TParam>.Build(TParam)
+  nameWithType.vb: IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam).Build(TParam)
+- uid: Solti.Utils.Rpc.Interfaces.IBuilder`1.IParameterizedBuilder`1.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html#Solti_Utils_Rpc_Interfaces_IBuilder_1_IParameterizedBuilder_1_Build_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IBuilder`1.IParameterizedBuilder`1.Build
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.IParameterizedBuilder<TParam>.Build
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam).Build
+  nameWithType: IBuilder<TBuiltService>.IParameterizedBuilder<TParam>.Build
+  nameWithType.vb: IBuilder(Of TBuiltService).IParameterizedBuilder(Of TParam).Build
 - uid: Solti.Utils.Rpc.Interfaces.IConditionalValidatior
   name: IConditionalValidatior
   href: Solti.Utils.Rpc.Interfaces.IConditionalValidatior.html
