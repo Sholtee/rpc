@@ -194,7 +194,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures services to be accessible via Remote Procedure Call.
     /// </summary>
-    public class Modules : RequestHandlerBuilder, IModuleRegistry
+    public class Modules : RequestHandlerBuilder
     {
         private ModuleInvocationBuilder ModuleInvocationBuilder { get; } = new();
 
@@ -232,16 +232,20 @@ namespace Solti.Utils.Rpc.Pipeline
         /// </summary>
         public JsonSerializerOptions SerializerOptions { get; set; } = new JsonSerializerOptions();
 
-        /// <inheritdoc/>
-        public IModuleRegistry Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface
+        /// <summary>
+        /// Registers a module to be accessible via Remote Procedure Call.
+        /// </summary>
+        public Modules Register<TInterface, TImplementation>() where TInterface : class where TImplementation : TInterface
         {
             ModuleInvocationBuilder.AddModule<TInterface>();
             WebServiceBuilder.ConfigureServices(svcs => svcs.Service<TInterface, TImplementation>(Lifetime.Scoped));
             return this;
         }
 
-        /// <inheritdoc/>
-        public IModuleRegistry Register<TInterface>(Func<IInjector, TInterface> factory) where TInterface : class
+        /// <summary>
+        /// Registers a module to be accessible via Remote Procedure Call.
+        /// </summary>
+        public Modules Register<TInterface>(Func<IInjector, TInterface> factory) where TInterface : class
         {
             ModuleInvocationBuilder.AddModule<TInterface>();
             WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<TInterface>(factory, Lifetime.Scoped));

@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* ModuleRegistryExtensions.cs                                                   *
+* ModulesExtensions.cs                                                          *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -9,22 +9,23 @@ namespace Solti.Utils.Rpc
 {
     using Interfaces;
     using Internals;
+    using Pipeline;
 
     /// <summary>
-    /// Defines some extenions against the <see cref="IModuleRegistry"/> interface. 
+    /// Defines some extenions against the <see cref="Modules"/> class. 
     /// </summary>
-    public static class ModuleRegistryExtensions 
+    public static class ModulesExtensions 
     {
         /// <summary>
         /// Installs the built-in modules.
         /// </summary>
         /// <remarks>Currently this method installs the <see cref="IServiceDescriptor"/> module only.</remarks>
-        public static IModuleRegistry InstallBuiltInModules(this IModuleRegistry registry)
+        public static Modules InstallBuiltInModules(this Modules modules)
         {
-            if (registry is null)
-                throw new ArgumentNullException(nameof(registry));
+            if (modules is null)
+                throw new ArgumentNullException(nameof(modules));
 
-            return registry.Register<IServiceDescriptor, ServiceDescriptor>();
+            return modules.Register<IServiceDescriptor, ServiceDescriptor>();
         }
     }
 }
