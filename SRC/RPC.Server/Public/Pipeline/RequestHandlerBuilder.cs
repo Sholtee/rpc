@@ -16,7 +16,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Builds <see cref="IRequestHandler"/> instances.
     /// </summary>
-    public abstract class RequestHandlerBuilder: IBuilder<IRequestHandler, IRequestHandler>
+    public abstract class RequestHandlerBuilder: IBuilder<IRequestHandler>.IParameterizedBuilder<IRequestHandler>
     {
         /// <summary>
         /// Creates a new <see cref="RequestHandlerBuilder"/> isntance.

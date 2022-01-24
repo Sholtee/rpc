@@ -44,7 +44,7 @@ namespace Solti.Utils.Rpc.Internals
     /// <summary>
     /// Builds <see cref="ModuleInvocation"/> instances.
     /// </summary>
-    public class ModuleInvocationBuilder
+    public class ModuleInvocationBuilder: IBuilder<ModuleInvocation>
     {
         #region Private
         private static readonly MethodInfo InjectorGet = ((MethodCallExpression) ((Expression<Action<IInjector>>) (i => i.Get(null!, null))).Body).Method;
@@ -385,10 +385,12 @@ namespace Solti.Utils.Rpc.Internals
             if (iface.IsGenericTypeDefinition)
                 throw new ArgumentException(Errors.GENERIC_IFACE, nameof(iface));
 
-            MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface).Where
-            (
-                method => method.ReturnType.IsByRef || method.GetParameters().Any(para => para.ParameterType.IsByRef)
-            ).ToArray();
+            MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface)
+                .Where
+                (
+                    method => method.ReturnType.IsByRef || method.GetParameters().Any(para => para.ParameterType.IsByRef)
+                )
+                .ToArray();
 
             if (methodsHavingByRefParam.Any())
             {

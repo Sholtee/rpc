@@ -16,7 +16,7 @@ namespace Solti.Utils.Rpc
     /// <summary>
     /// Builds <see cref="WebService"/> instances.
     /// </summary>
-    public class WebServiceBuilder : IBuilder<WebService, CancellationToken>
+    public class WebServiceBuilder : IBuilder<WebService>.IParameterizedBuilder<CancellationToken>
     {
         /// <summary>
         /// The <see cref="IServiceCollection"/> containing all the necessary service to build a <see cref="WebService"/> instance.
