@@ -22,21 +22,6 @@ namespace Solti.Utils.Rpc.Internals
     /// </summary>
     public class CommandLineApplication
     {
-        private sealed class OrdinalIgnoreCaseComparer : EqualityComparer<string>
-        {
-            public override bool Equals(string x, string y) => x.Equals(y, StringComparison.OrdinalIgnoreCase);
-
-            public override int GetHashCode(string s) => s
-#if NETSTANDARD2_1_OR_GREATER
-                .GetHashCode(StringComparison.OrdinalIgnoreCase)
-#else
-                .ToUpperInvariant().GetHashCode()
-#endif           
-                ;
-
-            public static OrdinalIgnoreCaseComparer Instance { get; } = new OrdinalIgnoreCaseComparer();
-        }
-
         /// <summary>
         /// The command line arguments
         /// </summary>
@@ -102,7 +87,7 @@ namespace Solti.Utils.Rpc.Internals
                     .Where(m => m
                         .GetCustomAttribute<VerbAttribute>()?
                         .Verbs
-                        .SequenceEqual(verbs, OrdinalIgnoreCaseComparer.Instance) is true)
+                        .SequenceEqual(verbs, StringComparer.OrdinalIgnoreCase) is true)
                     .ToArray();
 
                 switch (compatibleMethods.Count)
