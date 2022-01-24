@@ -145,19 +145,19 @@ namespace Solti.Utils.Rpc.Pipeline
         /// The allowed origins. See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
         /// </summary>
         /// <remarks>If this list is empty, all origins are allowed.</remarks>
-        public ICollection<string> AllowedOrigins { get; } = new HashSet<string>();
+        public ICollection<string> AllowedOrigins { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Allowed methods.
         /// </summary>
         /// <remarks>If this list is empty, all kind of methods are allowed.</remarks>
-        public virtual ICollection<string> AllowedMethods { get; } = new HashSet<string>();
+        public virtual ICollection<string> AllowedMethods { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Allowed headers.
         /// </summary>
         /// <remarks>If this list is empty, all kind of headers are allowed.</remarks>
-        public virtual ICollection<string> AllowedHeaders { get; } = new HashSet<string>();
+        public virtual ICollection<string> AllowedHeaders { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Returns true if the logging is enabled.
