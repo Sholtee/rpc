@@ -12,7 +12,7 @@ namespace Solti.Utils.Rpc.Internals
     /// <summary>
     /// Describes the verb that triggers the annotated method.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class VerbAttribute: Attribute // ennek nem kell az Interfaces projektben lennie (nem a klienssel kozos osztaly)
     {
         /// <summary>

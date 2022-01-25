@@ -85,7 +85,7 @@ namespace Solti.Utils.Rpc.Internals
                 IReadOnlyList<MethodInfo> compatibleMethods = GetType()
                     .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy)
                     .Where(m => m
-                        .GetCustomAttribute<VerbAttribute>()?
+                        .GetCustomAttribute<VerbAttribute>(true)?
                         .Verbs
                         .SequenceEqual(verbs, StringComparer.OrdinalIgnoreCase) is true)
                     .ToArray();
