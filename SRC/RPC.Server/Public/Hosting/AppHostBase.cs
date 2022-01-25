@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Collections.Generic;
 
 namespace Solti.Utils.Rpc.Hosting
@@ -41,7 +42,8 @@ namespace Solti.Utils.Rpc.Hosting
         /// <summary>
         /// Invoked once on configuration phase.
         /// </summary>
-        public virtual void OnCofigureServices(IServiceCollection services) { }
+        /// <remarks>The primary place to configure services is the <see cref="OnConfigure(WebServiceBuilder)"/> method (using the <see cref="WebServiceBuilder.ConfigureServices(Action{IServiceCollection})"/>). Override this method only if you need scoped installation logic (<see cref="OnInstall(IInjector)"/> or <see cref="OnUnInstall(IInjector)"/>).</remarks>
+        public virtual void OnConfigureServices(IServiceCollection services) { }
 
         /// <summary>
         /// Called once when the <see cref="WebService"/> is built successfully.
@@ -60,7 +62,7 @@ namespace Solti.Utils.Rpc.Hosting
                 WebServiceBuilder serviceBuilder = CreateServiceBuilder();
 
                 OnConfigure(serviceBuilder);
-                OnCofigureServices(serviceBuilder.ServiceCollection);
+                OnConfigureServices(serviceBuilder.ServiceCollection);
 
                 WebService = serviceBuilder.Build();
                 OnBuilt();
