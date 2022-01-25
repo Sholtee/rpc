@@ -422,6 +422,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
   nameWithType: AppHostBase.OnBuilt
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
+  name: OnCofigureServices(IServiceCollection)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnCofigureServices_Solti_Utils_DI_Interfaces_IServiceCollection_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
+  nameWithType: AppHostBase.OnCofigureServices(IServiceCollection)
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices*
+  name: OnCofigureServices
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnCofigureServices_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices
+  nameWithType: AppHostBase.OnCofigureServices
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.WebServiceBuilder)
   name: OnConfigure(WebServiceBuilder)
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_WebServiceBuilder_
@@ -454,6 +467,12 @@ references:
   commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall()
   nameWithType: AppHostBase.OnInstall()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall(Solti.Utils.DI.Interfaces.IInjector)
+  name: OnInstall(IInjector)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall(Solti.Utils.DI.Interfaces.IInjector)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall(Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: AppHostBase.OnInstall(IInjector)
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*
   name: OnInstall
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_
@@ -506,6 +525,12 @@ references:
   commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall()
   nameWithType: AppHostBase.OnUnInstall()
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector)
+  name: OnUnInstall(IInjector)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_Solti_Utils_DI_Interfaces_IInjector_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector)
+  nameWithType: AppHostBase.OnUnInstall(IInjector)
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall*
   name: OnUnInstall
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_

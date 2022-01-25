@@ -194,9 +194,35 @@
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Override this method if you need to implement one-time initialization logic that depends on the built service.</p>
 </div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnCofigureServices_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnCofigureServices_Solti_Utils_DI_Interfaces_IServiceCollection_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)">OnCofigureServices(IServiceCollection)</h4>
+  <div class="markdown level1 summary"><p>Invoked once on configuration phase.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnCofigureServices(IServiceCollection services)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceCollection</span></td>
+        <td><span class="parametername">services</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.WebServiceBuilder)">OnConfigure(WebServiceBuilder)</h4>
-  <div class="markdown level1 summary"><p>Invoked once on service setup.</p>
+  <div class="markdown level1 summary"><p>Invoked once on configuration phase.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -265,6 +291,35 @@ public virtual void OnInstall()</code></pre>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Override this method to implement app specific installation logic.</p>
 </div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall(Solti.Utils.DI.Interfaces.IInjector)">OnInstall(IInjector)</h4>
+  <div class="markdown level1 summary"><p>Called on app install.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnInstall(IInjector scope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">scope</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_Solti_Utils_DI_Interfaces_IInjector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method to implement app specific installation logic.</p>
+</div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRun*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnRun" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnRun">OnRun()</h4>
   <div class="markdown level1 summary"><p>Starts the host as a command line application</p>
@@ -314,6 +369,35 @@ public virtual void OnInstall()</code></pre>
 public virtual void OnUnInstall()</code></pre>
   </div>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Override this method to implement app specific uninstallation logic.</p>
+</div>
+  <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall*"></a>
+  <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector)">OnUnInstall(IInjector)</h4>
+  <div class="markdown level1 summary"><p>Called on app uninstall.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnUnInstall(IInjector scope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
+        <td><span class="parametername">scope</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_Solti_Utils_DI_Interfaces_IInjector__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Override this method to implement app specific uninstallation logic.</p>
 </div>
 </article>
