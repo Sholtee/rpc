@@ -223,7 +223,7 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Service Control Manager invocation failed. Error {0}.
+        ///   Looks up a localized string similar to Service Control Manager invocation failed..
         /// </summary>
         internal static string SC_INVOCATION_FAILED {
             get {

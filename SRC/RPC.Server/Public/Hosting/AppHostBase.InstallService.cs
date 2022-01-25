@@ -20,20 +20,22 @@ namespace Solti.Utils.Rpc.Hosting
         {
             ProcessStartInfo psi = new("sc", arguments)
             {
-                Verb = "runas",
-                CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                Verb            = "runas",
+                CreateNoWindow  = true,
+                WindowStyle     = ProcessWindowStyle.Hidden,
                 UseShellExecute = true
             };
 
-            Process netsh = Process.Start(psi);
+            Process sc = Process.Start(psi);
 
-            netsh.WaitForExit();
+            sc.WaitForExit();
 
-            if (netsh.ExitCode is not 0)
-                #pragma warning disable CA2201 // To preserve backward compatibility keep throwing simple Exception only
-                throw new Exception(string.Format(Errors.Culture, Errors.SC_INVOCATION_FAILED, netsh.ExitCode));
-                #pragma warning restore CA2201
+            if (sc.ExitCode is not 0)
+            {
+                InvalidOperationException ex = new(Errors.SC_INVOCATION_FAILED);
+                ex.Data[nameof(sc.ExitCode)] = sc.ExitCode;
+                throw ex;
+            }
         }
 
         private static string GetSafeServiceName(Win32ServiceDescriptor serviceDescriptor) => serviceDescriptor.Name.Replace(' ', '_');
@@ -43,6 +45,12 @@ namespace Solti.Utils.Rpc.Hosting
         #pragma warning restore CS3016
         internal void OnInstallWin32Service()
         {
+            //
+            // Ha az alap telepites sikeres csak akkor telepitjuk a Win32 szervizt.
+            //
+
+            OnInstall();
+
             Win32ServiceDescriptor serviceDescriptor = new();
             OnConfigureWin32Service(serviceDescriptor);
 
@@ -59,8 +67,6 @@ namespace Solti.Utils.Rpc.Hosting
                 sb.Append($" depend= {string.Join("/", serviceDescriptor.Dependencies)}");
 
             InvokeScm(sb.ToString());
-
-            OnInstall();
         }
 
         #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
@@ -68,12 +74,12 @@ namespace Solti.Utils.Rpc.Hosting
         #pragma warning restore CS3016
         internal void OnUnInstallWin32Service()
         {
+            OnUnInstall();
+
             Win32ServiceDescriptor serviceDescriptor = new();
             OnConfigureWin32Service(serviceDescriptor);
 
             InvokeScm($"delete {GetSafeServiceName(serviceDescriptor)}");
-
-            OnUnInstall();
         }
         #endregion
 
