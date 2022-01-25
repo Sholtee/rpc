@@ -409,6 +409,22 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
   nameWithType: AppHostBase.CreateServiceBuilder
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope(System.Action{Solti.Utils.DI.Interfaces.IInjector})
+  name: InvokeInScope(Action<IInjector>)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_InvokeInScope_System_Action_Solti_Utils_DI_Interfaces_IInjector__
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope(System.Action{Solti.Utils.DI.Interfaces.IInjector})
+  name.vb: InvokeInScope(Action(Of IInjector))
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope(System.Action<Solti.Utils.DI.Interfaces.IInjector>)
+  fullName.vb: Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope(System.Action(Of Solti.Utils.DI.Interfaces.IInjector))
+  nameWithType: AppHostBase.InvokeInScope(Action<IInjector>)
+  nameWithType.vb: AppHostBase.InvokeInScope(Action(Of IInjector))
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope*
+  name: InvokeInScope
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_InvokeInScope_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope
+  nameWithType: AppHostBase.InvokeInScope
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
   name: OnBuilt()
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnBuilt
@@ -422,19 +438,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt
   nameWithType: AppHostBase.OnBuilt
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
-  name: OnCofigureServices(IServiceCollection)
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnCofigureServices_Solti_Utils_DI_Interfaces_IServiceCollection_
-  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
-  nameWithType: AppHostBase.OnCofigureServices(IServiceCollection)
-- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices*
-  name: OnCofigureServices
-  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnCofigureServices_
-  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnCofigureServices
-  nameWithType: AppHostBase.OnCofigureServices
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.WebServiceBuilder)
   name: OnConfigure(WebServiceBuilder)
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigure_Solti_Utils_Rpc_WebServiceBuilder_
@@ -448,6 +451,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure
   nameWithType: AppHostBase.OnConfigure
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
+  name: OnConfigureServices(IServiceCollection)
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureServices_Solti_Utils_DI_Interfaces_IServiceCollection_
+  commentId: M:Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices(Solti.Utils.DI.Interfaces.IServiceCollection)
+  nameWithType: AppHostBase.OnConfigureServices(IServiceCollection)
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices*
+  name: OnConfigureServices
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureServices_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices
+  nameWithType: AppHostBase.OnConfigureServices
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service(Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor)
   name: OnConfigureWin32Service(Win32ServiceDescriptor)
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_Solti_Utils_Rpc_Hosting_Win32ServiceDescriptor_
