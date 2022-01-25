@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Solti.Utils.Rpc.Hosting
 {
+    using DI.Interfaces;
     using Rpc.Internals;
 
     /// <summary>
@@ -32,10 +33,15 @@ namespace Solti.Utils.Rpc.Hosting
         public WebService? WebService { get; private set; }
 
         /// <summary>
-        /// Invoked once on service setup.
+        /// Invoked once on configuration phase.
         /// </summary>
         /// <remarks>Override this method to configure the RPC service being built.</remarks>
         public abstract void OnConfigure(WebServiceBuilder serviceBuilder);
+
+        /// <summary>
+        /// Invoked once on configuration phase.
+        /// </summary>
+        public virtual void OnCofigureServices(IServiceCollection services) { }
 
         /// <summary>
         /// Called once when the <see cref="WebService"/> is built successfully.
@@ -52,7 +58,10 @@ namespace Solti.Utils.Rpc.Hosting
             if (WebService is null)
             {
                 WebServiceBuilder serviceBuilder = CreateServiceBuilder();
+
                 OnConfigure(serviceBuilder);
+                OnCofigureServices(serviceBuilder.ServiceCollection);
+
                 WebService = serviceBuilder.Build();
                 OnBuilt();
             }

@@ -26,31 +26,28 @@ namespace Solti.Utils.Rpc.Server.Sample
             descriptor.Name = "Calculator";
         }
 
-        public override void OnConfigure(WebServiceBuilder serviceBuilder)
-        {
-            serviceBuilder
-                .ConfigureBackend(_ => new HttpListenerBackend("http://localhost:1986/api/") { ReserveUrl = true })
-                .ConfigureRpcService(conf => 
+        public override void OnConfigure(WebServiceBuilder serviceBuilder) => serviceBuilder
+            .ConfigureBackend(_ => new HttpListenerBackend("http://localhost:1986/api/") { ReserveUrl = true })
+            .ConfigureRpcService(conf => 
+            {
+                switch (conf) 
                 {
-                    switch (conf) 
-                    {
-                        case Modules modules:
-                            modules.Register<ICalculator, Calculator>();
-                            break;
-                        case RpcAccessControl ac:
-                            ac.AllowedOrigins.Add("http://localhost:1987");
-                            break;
-                    }
-                }, useDefaultLogger: false)
-                .ConfigureServices(services => 
-                {
-                    //
-                    // A naplozas kikapcsolhato mivel az a teljesitmeny teszteket negativan befolyasolja.
-                    //
+                    case Modules modules:
+                        modules.Register<ICalculator, Calculator>();
+                        break;
+                    case RpcAccessControl ac:
+                        ac.AllowedOrigins.Add("http://localhost:1987");
+                        break;
+                }
+            }, useDefaultLogger: false)
+            .ConfigureServices(services => 
+            {
+                //
+                // A naplozas kikapcsolhato mivel az a teljesitmeny teszteket negativan befolyasolja.
+                //
 
-                    if (!Args.Any(arg => arg.ToLowerInvariant() is "-nolog"))
-                        services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Scoped);
-                });
-        }
+                if (!Args.Any(arg => arg.ToLowerInvariant() is "-nolog"))
+                    services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Scoped);
+            });
     }
 }
