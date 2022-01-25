@@ -49,10 +49,10 @@ namespace Solti.Utils.Rpc
 
             webServiceBuilder
                 .ConfigurePipeline(pipeline => pipeline
-                    .Use<Modules>(registry =>
+                    .Use<Modules>(modules =>
                     {
-                        registry.InstallBuiltInModules();
-                        configurator(registry);
+                        modules.InstallBuiltInModules();
+                        configurator(modules);
                     })
                     .Use<RequestTimeout>(configurator)
                     .Use<RpcAccessControl>(configurator)
