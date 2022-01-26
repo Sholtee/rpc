@@ -280,7 +280,7 @@
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_Solti_Utils_Rpc_Hosting_Win32ServiceDescriptor_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service(Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor)">OnConfigureWin32Service(Win32ServiceDescriptor)</h4>
-  <div class="markdown level1 summary"><p>Called on service install/uninstall.</p>
+  <div class="markdown level1 summary"><p>Called on service install/uninstall  (&quot;YouApp.exe service [un]install&quot;).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -305,11 +305,11 @@
     </tbody>
   </table>
   <h5 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnConfigureWin32Service_Solti_Utils_Rpc_Hosting_Win32ServiceDescriptor__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Override this method to configure the Win32 service being installed.</p>
+  <div class="markdown level1 remarks"><p>Put Win32 Service configuration related stuffs here. App installation logic should be placed in the <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall">OnInstall()</a> and <a class="xref" href="Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall">OnUnInstall()</a> methods.</p>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall">OnInstall()</h4>
-  <div class="markdown level1 summary"><p>Called on app install.</p>
+  <div class="markdown level1 summary"><p>Called on app install (&quot;YouApp.exe [service] install&quot;).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -322,7 +322,7 @@ public virtual void OnInstall()</code></pre>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnInstall_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall(Solti.Utils.DI.Interfaces.IInjector)">OnInstall(IInjector)</h4>
-  <div class="markdown level1 summary"><p>Called on app install.</p>
+  <div class="markdown level1 summary"><p>Called on app install (&quot;YouApp.exe [service] install&quot;).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -389,7 +389,7 @@ public virtual void OnInstall()</code></pre>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall">OnUnInstall()</h4>
-  <div class="markdown level1 summary"><p>Called on app uninstall.</p>
+  <div class="markdown level1 summary"><p>Called on app uninstall (&quot;YouApp.exe [service] uninstall&quot;).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -402,7 +402,7 @@ public virtual void OnUnInstall()</code></pre>
 </div>
   <a id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall*"></a>
   <h4 id="Solti_Utils_Rpc_Hosting_AppHostBase_OnUnInstall_Solti_Utils_DI_Interfaces_IInjector_" data-uid="Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector)">OnUnInstall(IInjector)</h4>
-  <div class="markdown level1 summary"><p>Called on app uninstall.</p>
+  <div class="markdown level1 summary"><p>Called on app uninstall (&quot;YouApp.exe [service] uninstall&quot;).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
