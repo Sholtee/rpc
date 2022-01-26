@@ -68,13 +68,19 @@ namespace Solti.Utils.Rpc.Hosting
                 OnBuilt();
             }
 
-            _ = WebService.Start();
+            WebService
+                .Start()
+                .GetAwaiter()
+                .GetResult();
         }
 
         /// <summary>
         /// Called on host termination
         /// </summary>
         /// <remarks>Override this method if you need to do some resource cleanup.</remarks>
-        public virtual void OnStop() => WebService?.Stop();
+        public virtual void OnStop() => WebService?
+            .Stop()
+            .GetAwaiter()
+            .GetResult();
     }
 }

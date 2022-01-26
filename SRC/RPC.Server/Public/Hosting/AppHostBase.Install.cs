@@ -26,27 +26,27 @@ namespace Solti.Utils.Rpc.Hosting
         }
 
         /// <summary>
-        /// Called on app install.
+        /// Called on app install ("YouApp.exe [service] install").
         /// </summary>
         /// <remarks>Override this method to implement app specific installation logic.</remarks>
         [Verb("install")]
         public virtual void OnInstall() => InvokeInScope(OnInstall);
 
         /// <summary>
-        /// Called on app install.
+        /// Called on app install ("YouApp.exe [service] install").
         /// </summary>
         /// <remarks>Override this method to implement app specific installation logic.</remarks>
         public virtual void OnInstall(IInjector scope) { }
 
         /// <summary>
-        /// Called on app uninstall.
+        /// Called on app uninstall ("YouApp.exe [service] uninstall").
         /// </summary>
         /// <remarks>Override this method to implement app specific uninstallation logic.</remarks>
         [Verb("uninstall")]
         public virtual void OnUnInstall() => InvokeInScope(OnUnInstall);
 
         /// <summary>
-        /// Called on app uninstall.
+        /// Called on app uninstall ("YouApp.exe [service] uninstall").
         /// </summary>
         /// <remarks>Override this method to implement app specific uninstallation logic.</remarks>
         public virtual void OnUnInstall(IInjector scope) { }

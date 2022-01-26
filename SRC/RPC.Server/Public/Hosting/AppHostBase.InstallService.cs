@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
+#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
+
 namespace Solti.Utils.Rpc.Hosting
 {
     using Properties;
@@ -40,9 +42,7 @@ namespace Solti.Utils.Rpc.Hosting
 
         private static string GetSafeServiceName(Win32ServiceDescriptor serviceDescriptor) => serviceDescriptor.Name.Replace(' ', '_');
 
-        #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
         [Verb("service", "install")]
-        #pragma warning restore CS3016
         internal void OnInstallWin32Service()
         {
             //
@@ -69,9 +69,7 @@ namespace Solti.Utils.Rpc.Hosting
             InvokeScm(sb.ToString());
         }
 
-        #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
         [Verb("service", "uninstall")]
-        #pragma warning restore CS3016
         internal void OnUnInstallWin32Service()
         {
             OnUnInstall();
@@ -84,9 +82,9 @@ namespace Solti.Utils.Rpc.Hosting
         #endregion
 
         /// <summary>
-        /// Called on service install/uninstall.
+        /// Called on service install/uninstall  ("YouApp.exe service [un]install").
         /// </summary>
-        /// <remarks>Override this method to configure the Win32 service being installed.</remarks>
+        /// <remarks>Put Win32 Service configuration related stuffs here. App installation logic should be placed in the <see cref="OnInstall()"/> and <see cref="OnUnInstall()"/> methods.</remarks>
         public virtual void OnConfigureWin32Service(Win32ServiceDescriptor descriptor) {}
     }
 }
