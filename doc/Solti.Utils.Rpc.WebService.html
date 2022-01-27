@@ -105,13 +105,13 @@
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_WebService__ctor_" data-uid="Solti.Utils.Rpc.WebService.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_WebService__ctor_Solti_Utils_DI_Interfaces_IServiceCollection_Solti_Utils_DI_Interfaces_ScopeOptions_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection,Solti.Utils.DI.Interfaces.ScopeOptions,System.Threading.CancellationToken)">WebService(IServiceCollection, ScopeOptions, CancellationToken)</h4>
+  <h4 id="Solti_Utils_Rpc_WebService__ctor_Solti_Utils_Rpc_Interfaces_IDiProvider_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.Rpc.Interfaces.IDiProvider,System.Threading.CancellationToken)">WebService(IDiProvider, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WebService(IServiceCollection serviceCollection, ScopeOptions scopeOptions, CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">public WebService(IDiProvider diProvider, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -124,13 +124,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceCollection</span></td>
-        <td><span class="parametername">serviceCollection</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.ScopeOptions</span></td>
-        <td><span class="parametername">scopeOptions</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IDiProvider.html">IDiProvider</a></td>
+        <td><span class="parametername">diProvider</span></td>
         <td></td>
       </tr>
       <tr>
@@ -149,7 +144,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected IHttpServer HttpServer { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected IHttpServer HttpServer { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,7 +216,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected ILogger Logger { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected ILogger Logger { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -272,7 +267,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IScopeFactory ScopeFactory { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IScopeFactory ScopeFactory { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">

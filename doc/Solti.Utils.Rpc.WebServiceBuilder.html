@@ -95,8 +95,58 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public WebServiceBuilder()</code></pre>
   </div>
+  <a id="Solti_Utils_Rpc_WebServiceBuilder__ctor_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_WebServiceBuilder__ctor_Solti_Utils_Rpc_Interfaces_IDiProvider_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.#ctor(Solti.Utils.Rpc.Interfaces.IDiProvider)">WebServiceBuilder(IDiProvider)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WebServiceBuilder(IDiProvider diProvder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IDiProvider.html">IDiProvider</a></td>
+        <td><span class="parametername">diProvder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
+  <a id="Solti_Utils_Rpc_WebServiceBuilder_DiProvider_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.DiProvider*"></a>
+  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_DiProvider" data-uid="Solti.Utils.Rpc.WebServiceBuilder.DiProvider">DiProvider</h4>
+  <div class="markdown level1 summary"><p>The DI backend.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IDiProvider DiProvider { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IDiProvider.html">IDiProvider</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_WebServiceBuilder_Pipe_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Pipe*"></a>
   <h4 id="Solti_Utils_Rpc_WebServiceBuilder_Pipe" data-uid="Solti.Utils.Rpc.WebServiceBuilder.Pipe">Pipe</h4>
   <div class="markdown level1 summary"><p>The <span class="xref">Solti.Utils.DI.Interfaces.AbstractServiceEntry</span> containing the pipe definition.</p>
@@ -117,30 +167,6 @@
     <tbody>
       <tr>
         <td><span class="xref">Solti.Utils.DI.Interfaces.AbstractServiceEntry</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Solti_Utils_Rpc_WebServiceBuilder_ServiceCollection_" data-uid="Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection*"></a>
-  <h4 id="Solti_Utils_Rpc_WebServiceBuilder_ServiceCollection" data-uid="Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection">ServiceCollection</h4>
-  <div class="markdown level1 summary"><p>The <span class="xref">Solti.Utils.DI.Interfaces.IServiceCollection</span> containing all the necessary service to build a <a class="xref" href="Solti.Utils.Rpc.WebService.html">WebService</a> instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected IServiceCollection ServiceCollection { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Solti.Utils.DI.Interfaces.IServiceCollection</span></td>
         <td></td>
       </tr>
     </tbody>

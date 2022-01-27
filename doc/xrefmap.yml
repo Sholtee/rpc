@@ -368,6 +368,51 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.DefaultHandler.Next
   nameWithType: DefaultHandler.Next
+- uid: Solti.Utils.Rpc.DiProvider
+  name: DiProvider
+  href: Solti.Utils.Rpc.DiProvider.html
+  commentId: T:Solti.Utils.Rpc.DiProvider
+  fullName: Solti.Utils.Rpc.DiProvider
+  nameWithType: DiProvider
+- uid: Solti.Utils.Rpc.DiProvider.CreateFactory(System.Threading.CancellationToken)
+  name: CreateFactory(CancellationToken)
+  href: Solti.Utils.Rpc.DiProvider.html#Solti_Utils_Rpc_DiProvider_CreateFactory_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.DiProvider.CreateFactory(System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.DiProvider.CreateFactory(System.Threading.CancellationToken)
+  nameWithType: DiProvider.CreateFactory(CancellationToken)
+- uid: Solti.Utils.Rpc.DiProvider.CreateFactory*
+  name: CreateFactory
+  href: Solti.Utils.Rpc.DiProvider.html#Solti_Utils_Rpc_DiProvider_CreateFactory_
+  commentId: Overload:Solti.Utils.Rpc.DiProvider.CreateFactory
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.DiProvider.CreateFactory
+  nameWithType: DiProvider.CreateFactory
+- uid: Solti.Utils.Rpc.DiProvider.ScopeOptions
+  name: ScopeOptions
+  href: Solti.Utils.Rpc.DiProvider.html#Solti_Utils_Rpc_DiProvider_ScopeOptions
+  commentId: P:Solti.Utils.Rpc.DiProvider.ScopeOptions
+  fullName: Solti.Utils.Rpc.DiProvider.ScopeOptions
+  nameWithType: DiProvider.ScopeOptions
+- uid: Solti.Utils.Rpc.DiProvider.ScopeOptions*
+  name: ScopeOptions
+  href: Solti.Utils.Rpc.DiProvider.html#Solti_Utils_Rpc_DiProvider_ScopeOptions_
+  commentId: Overload:Solti.Utils.Rpc.DiProvider.ScopeOptions
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.DiProvider.ScopeOptions
+  nameWithType: DiProvider.ScopeOptions
+- uid: Solti.Utils.Rpc.DiProvider.Services
+  name: Services
+  href: Solti.Utils.Rpc.DiProvider.html#Solti_Utils_Rpc_DiProvider_Services
+  commentId: P:Solti.Utils.Rpc.DiProvider.Services
+  fullName: Solti.Utils.Rpc.DiProvider.Services
+  nameWithType: DiProvider.Services
+- uid: Solti.Utils.Rpc.DiProvider.Services*
+  name: Services
+  href: Solti.Utils.Rpc.DiProvider.html#Solti_Utils_Rpc_DiProvider_Services_
+  commentId: Overload:Solti.Utils.Rpc.DiProvider.Services
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.DiProvider.Services
+  nameWithType: DiProvider.Services
 - uid: Solti.Utils.Rpc.Hosting
   name: Solti.Utils.Rpc.Hosting
   href: Solti.Utils.Rpc.Hosting.html
@@ -409,6 +454,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder
   nameWithType: AppHostBase.CreateServiceBuilder
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider
+  name: DiProvider
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_DiProvider
+  commentId: P:Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider
+  nameWithType: AppHostBase.DiProvider
+- uid: Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider*
+  name: DiProvider
+  href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_DiProvider_
+  commentId: Overload:Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider
+  nameWithType: AppHostBase.DiProvider
 - uid: Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope(System.Action{Solti.Utils.DI.Interfaces.IInjector})
   name: InvokeInScope(Action<IInjector>)
   href: Solti.Utils.Rpc.Hosting.AppHostBase.html#Solti_Utils_Rpc_Hosting_AppHostBase_InvokeInScope_System_Action_Solti_Utils_DI_Interfaces_IInjector__
@@ -940,6 +998,38 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull
   nameWithType: ICustomValidator.SupportsNull
+- uid: Solti.Utils.Rpc.Interfaces.IDiProvider
+  name: IDiProvider
+  href: Solti.Utils.Rpc.Interfaces.IDiProvider.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IDiProvider
+  fullName: Solti.Utils.Rpc.Interfaces.IDiProvider
+  nameWithType: IDiProvider
+- uid: Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory(System.Threading.CancellationToken)
+  name: CreateFactory(CancellationToken)
+  href: Solti.Utils.Rpc.Interfaces.IDiProvider.html#Solti_Utils_Rpc_Interfaces_IDiProvider_CreateFactory_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory(System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory(System.Threading.CancellationToken)
+  nameWithType: IDiProvider.CreateFactory(CancellationToken)
+- uid: Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory*
+  name: CreateFactory
+  href: Solti.Utils.Rpc.Interfaces.IDiProvider.html#Solti_Utils_Rpc_Interfaces_IDiProvider_CreateFactory_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory
+  nameWithType: IDiProvider.CreateFactory
+- uid: Solti.Utils.Rpc.Interfaces.IDiProvider.Services
+  name: Services
+  href: Solti.Utils.Rpc.Interfaces.IDiProvider.html#Solti_Utils_Rpc_Interfaces_IDiProvider_Services
+  commentId: P:Solti.Utils.Rpc.Interfaces.IDiProvider.Services
+  fullName: Solti.Utils.Rpc.Interfaces.IDiProvider.Services
+  nameWithType: IDiProvider.Services
+- uid: Solti.Utils.Rpc.Interfaces.IDiProvider.Services*
+  name: Services
+  href: Solti.Utils.Rpc.Interfaces.IDiProvider.html#Solti_Utils_Rpc_Interfaces_IDiProvider_Services_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IDiProvider.Services
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IDiProvider.Services
+  nameWithType: IDiProvider.Services
 - uid: Solti.Utils.Rpc.Interfaces.IgnoreAttribute
   name: IgnoreAttribute
   href: Solti.Utils.Rpc.Interfaces.IgnoreAttribute.html
@@ -4619,12 +4709,12 @@ references:
   commentId: T:Solti.Utils.Rpc.WebService
   fullName: Solti.Utils.Rpc.WebService
   nameWithType: WebService
-- uid: Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection,Solti.Utils.DI.Interfaces.ScopeOptions,System.Threading.CancellationToken)
-  name: WebService(IServiceCollection, ScopeOptions, CancellationToken)
-  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService__ctor_Solti_Utils_DI_Interfaces_IServiceCollection_Solti_Utils_DI_Interfaces_ScopeOptions_System_Threading_CancellationToken_
-  commentId: M:Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.DI.Interfaces.IServiceCollection,Solti.Utils.DI.Interfaces.ScopeOptions,System.Threading.CancellationToken)
-  fullName: Solti.Utils.Rpc.WebService.WebService(Solti.Utils.DI.Interfaces.IServiceCollection, Solti.Utils.DI.Interfaces.ScopeOptions, System.Threading.CancellationToken)
-  nameWithType: WebService.WebService(IServiceCollection, ScopeOptions, CancellationToken)
+- uid: Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.Rpc.Interfaces.IDiProvider,System.Threading.CancellationToken)
+  name: WebService(IDiProvider, CancellationToken)
+  href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService__ctor_Solti_Utils_Rpc_Interfaces_IDiProvider_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.WebService.#ctor(Solti.Utils.Rpc.Interfaces.IDiProvider,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.WebService.WebService(Solti.Utils.Rpc.Interfaces.IDiProvider, System.Threading.CancellationToken)
+  nameWithType: WebService.WebService(IDiProvider, CancellationToken)
 - uid: Solti.Utils.Rpc.WebService.#ctor*
   name: WebService
   href: Solti.Utils.Rpc.WebService.html#Solti_Utils_Rpc_WebService__ctor_
@@ -4787,6 +4877,12 @@ references:
   commentId: M:Solti.Utils.Rpc.WebServiceBuilder.#ctor
   fullName: Solti.Utils.Rpc.WebServiceBuilder.WebServiceBuilder()
   nameWithType: WebServiceBuilder.WebServiceBuilder()
+- uid: Solti.Utils.Rpc.WebServiceBuilder.#ctor(Solti.Utils.Rpc.Interfaces.IDiProvider)
+  name: WebServiceBuilder(IDiProvider)
+  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder__ctor_Solti_Utils_Rpc_Interfaces_IDiProvider_
+  commentId: M:Solti.Utils.Rpc.WebServiceBuilder.#ctor(Solti.Utils.Rpc.Interfaces.IDiProvider)
+  fullName: Solti.Utils.Rpc.WebServiceBuilder.WebServiceBuilder(Solti.Utils.Rpc.Interfaces.IDiProvider)
+  nameWithType: WebServiceBuilder.WebServiceBuilder(IDiProvider)
 - uid: Solti.Utils.Rpc.WebServiceBuilder.#ctor*
   name: WebServiceBuilder
   href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder__ctor_
@@ -4855,6 +4951,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebServiceBuilder.ConfigureServices
   nameWithType: WebServiceBuilder.ConfigureServices
+- uid: Solti.Utils.Rpc.WebServiceBuilder.DiProvider
+  name: DiProvider
+  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_DiProvider
+  commentId: P:Solti.Utils.Rpc.WebServiceBuilder.DiProvider
+  fullName: Solti.Utils.Rpc.WebServiceBuilder.DiProvider
+  nameWithType: WebServiceBuilder.DiProvider
+- uid: Solti.Utils.Rpc.WebServiceBuilder.DiProvider*
+  name: DiProvider
+  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_DiProvider_
+  commentId: Overload:Solti.Utils.Rpc.WebServiceBuilder.DiProvider
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.WebServiceBuilder.DiProvider
+  nameWithType: WebServiceBuilder.DiProvider
 - uid: Solti.Utils.Rpc.WebServiceBuilder.Pipe
   name: Pipe
   href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_Pipe
@@ -4868,19 +4977,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.WebServiceBuilder.Pipe
   nameWithType: WebServiceBuilder.Pipe
-- uid: Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection
-  name: ServiceCollection
-  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_ServiceCollection
-  commentId: P:Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection
-  fullName: Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection
-  nameWithType: WebServiceBuilder.ServiceCollection
-- uid: Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection*
-  name: ServiceCollection
-  href: Solti.Utils.Rpc.WebServiceBuilder.html#Solti_Utils_Rpc_WebServiceBuilder_ServiceCollection_
-  commentId: Overload:Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.WebServiceBuilder.ServiceCollection
-  nameWithType: WebServiceBuilder.ServiceCollection
 - uid: Solti.Utils.Rpc.WebServiceBuilderExtensions
   name: WebServiceBuilderExtensions
   href: Solti.Utils.Rpc.WebServiceBuilderExtensions.html
