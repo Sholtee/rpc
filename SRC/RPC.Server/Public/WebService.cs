@@ -166,31 +166,38 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="WebService"/> instance.
         /// </summary>
-        public WebService(IServiceCollection serviceCollection, ScopeOptions? scopeOptions, CancellationToken cancellation)
+        public WebService(IDiProvider diProvider, CancellationToken cancellation) // TBD: konstruktorba megszakitas???
         {
-            ScopeFactory = DI.ScopeFactory.Create(serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection)), scopeOptions, cancellation);
+            if (diProvider is null)
+                throw new ArgumentNullException(nameof(diProvider));
+
+            ScopeFactory = diProvider.CreateFactory(cancellation);
+
+            //
+            // TODO: Egyedi IScopeFactory implementacioknal a factory nem biztos hogy a gyoker scope is egyben.
+            //
 
             IInjector root = (IInjector) ScopeFactory;
 
             HttpServer = root.Get<IHttpServer>(); // singleton
-            Logger = root.TryGet<ILogger>();
+            Logger = root.TryGet<ILogger>(); // singleton | scoped
         }
 
         /// <summary>
         /// Returns the <see cref="IScopeFactory"/> related to this instance.
         /// </summary>
-        public IScopeFactory ScopeFactory { get; protected init; }  // init kell, hogy leszarmazottban is beallithato legyen
+        public IScopeFactory ScopeFactory { get; }
 
         /// <summary>
         /// The underlying <see cref="IHttpServer"/> implementation.
         /// </summary>
-        protected IHttpServer HttpServer { get; init; }
+        protected IHttpServer HttpServer { get; }
 
         /// <summary>
         /// The logger associated with this instance.
         /// </summary>
         /// <remarks>This logger belongs to the service itself, not intended to be used in worker threads.</remarks>
-        protected ILogger? Logger { get; init; } 
+        protected ILogger? Logger { get; } 
 
         /// <summary>
         /// Starts the service.

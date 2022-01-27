@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace Solti.Utils.Rpc.Hosting
 {
     using DI.Interfaces;
+    using Interfaces;
     using Rpc.Internals;
 
     /// <summary>
@@ -25,13 +26,19 @@ namespace Solti.Utils.Rpc.Hosting
         /// Creates a new <see cref="WebServiceBuilder"/> instance.
         /// </summary>
         /// <remarks>Override this method if you want to use your own builder.</remarks>
-        protected virtual WebServiceBuilder CreateServiceBuilder() => new();
+        protected virtual WebServiceBuilder CreateServiceBuilder() => new(DiProvider);
 
         /// <summary>
         /// Returns the underlying <see cref="Rpc.WebService"/>.
         /// </summary>
         /// <remarks>This property is set only once, after successful service configuration.</remarks>
         public WebService? WebService { get; private set; }
+
+        /// <summary>
+        /// The DI backend.
+        /// </summary>
+        /// <remarks>This property can be set in initialization time only.</remarks>
+        public IDiProvider DiProvider { get; init; } = new DiProvider();
 
         /// <summary>
         /// Invoked once on configuration phase.
@@ -62,7 +69,7 @@ namespace Solti.Utils.Rpc.Hosting
                 WebServiceBuilder serviceBuilder = CreateServiceBuilder();
 
                 OnConfigure(serviceBuilder);
-                OnConfigureServices(serviceBuilder.ServiceCollection);
+                OnConfigureServices(DiProvider.Services);
 
                 WebService = serviceBuilder.Build();
                 OnBuilt();

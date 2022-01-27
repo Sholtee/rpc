@@ -21,7 +21,13 @@ namespace Solti.Utils.Rpc.Hosting
             if (invocation is null)
                 throw new ArgumentNullException(nameof(invocation));
 
-            using IInjector root = (IInjector) ScopeFactory.Create(OnConfigureServices); // TODO: ScopeOptions is be lehesssen allitani
+            OnConfigureServices(DiProvider.Services);
+            
+            //
+            // TODO: Egyedi IScopeFactory implementacioknal a factory nem biztos hogy a gyoker scope is egyben.
+            //
+
+            using IInjector root = (IInjector) DiProvider.CreateFactory();
             invocation(root);
         }
 

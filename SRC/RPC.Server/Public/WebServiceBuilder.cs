@@ -9,7 +9,6 @@ using System.Threading;
 
 namespace Solti.Utils.Rpc
 {
-    using DI;
     using DI.Interfaces;
     using Interfaces;
 
@@ -19,9 +18,9 @@ namespace Solti.Utils.Rpc
     public class WebServiceBuilder : IBuilder<WebService>.IParameterizedBuilder<CancellationToken>
     {
         /// <summary>
-        /// The <see cref="IServiceCollection"/> containing all the necessary service to build a <see cref="WebService"/> instance.
+        /// The DI backend.
         /// </summary>
-        protected internal IServiceCollection ServiceCollection { get; }
+        protected internal IDiProvider DiProvider { get; }
 
         /// <summary>
         /// The <see cref="AbstractServiceEntry"/> containing the pipe definition.
@@ -31,10 +30,16 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="WebServiceBuilder"/> instance.
         /// </summary>
-        public WebServiceBuilder()
+        public WebServiceBuilder() : this(new DiProvider()) { }
+
+        /// <summary>
+        /// Creates a new <see cref="WebServiceBuilder"/> instance.
+        /// </summary>
+        public WebServiceBuilder(IDiProvider diProvder)
         {
-            ServiceCollection = new ServiceCollection();
-            Pipe = ServiceCollection
+            DiProvider = diProvder ?? throw new ArgumentNullException(nameof(diProvder));
+            Pipe = DiProvider
+                .Services
                 .Service<IRequestHandler, DefaultHandler>(Lifetime.Scoped)
                 .LastEntry;
         }
@@ -47,7 +52,7 @@ namespace Solti.Utils.Rpc
             if (configCallback is null)
                 throw new ArgumentNullException(nameof(configCallback));
 
-            configCallback(ServiceCollection);
+            configCallback(DiProvider.Services);
             return this;
         }
 
@@ -72,7 +77,7 @@ namespace Solti.Utils.Rpc
         /// Builds a new <see cref="WebService"/> instance.
         /// </summary>
         [SuppressMessage("Naming", "CA1725:Parameter names should match base declaration")]
-        public virtual WebService Build(CancellationToken cancellation = default) => new WebService(ServiceCollection, null, cancellation); // TODO: ScopeOptions is be lehesssen allitani
+        public virtual WebService Build(CancellationToken cancellation = default) => new(DiProvider, cancellation);
 
         private sealed class RequestPipeConfigurator : IRequestPipeConfigurator
         {
