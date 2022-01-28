@@ -8,7 +8,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,8 +39,11 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Creates the HTTP response.
         /// </summary>
         /// <remarks>This operation cannot be cancelled.</remarks>
-        protected virtual async Task CreateResponse(object? result, IHttpResponse response)
+        protected virtual async Task CreateResponse(object? result, IInjector scope, IHttpResponse response)
         {
+            if (scope is null)
+                throw new ArgumentNullException(nameof(scope));
+
             if (response is null)
                 throw new ArgumentNullException(nameof(response));
 
@@ -65,19 +67,32 @@ namespace Solti.Utils.Rpc.Pipeline
                     break;
                 case Exception ex:
                     response.Headers["Content-Type"] = "application/json";
-                    await SafeSerializer.SerializeAsync(response.Payload, new RpcResponse
-                    {
-                        Exception = new ExceptionInfo
+                    await scope.Get<IJsonSerializer>().SerializeAsync
+                    (
+                        typeof(RpcResponse),
+                        new RpcResponse
                         {
-                            TypeName = ex.GetType().AssemblyQualifiedName,
-                            Message  = ex.Message,
-                            Data     = ex.Data
-                        }
-                    }, Parent.SerializerOptions);
+                            Exception = new ExceptionInfo
+                            {
+                                TypeName = ex.GetType().AssemblyQualifiedName,
+                                Message  = ex.Message,
+                                Data     = ex.Data
+                            }
+                        },
+                        response.Payload
+                    );
                     break;
                 default:
                     response.Headers["Content-Type"] = "application/json";
-                    await SafeSerializer.SerializeAsync(response.Payload, new RpcResponse { Result = result }, Parent.SerializerOptions);
+                    await scope.Get<IJsonSerializer>().SerializeAsync
+                    (
+                        typeof(RpcResponse),
+                        new RpcResponse 
+                        {
+                            Result = result
+                        }, 
+                        response.Payload
+                    );
                     break;
             }
         }
@@ -155,7 +170,7 @@ namespace Solti.Utils.Rpc.Pipeline
 
             try
             {
-                result = await Parent.ModuleInvocation!(scope, rpcRequestContext, Parent.SerializerOptions);
+                result = await Parent.ModuleInvocation!(scope, rpcRequestContext);
             }
 
             catch (Exception ex)
@@ -186,7 +201,7 @@ namespace Solti.Utils.Rpc.Pipeline
             // A valasz kiirasat mar nem lehet megszakitani.
             //
 
-            await CreateResponse(result, context.Response);
+            await CreateResponse(result, scope, context.Response);
             await Next.HandleAsync(scope, context, cancellation);
         }
     }
@@ -224,13 +239,26 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="Modules"/> instance.
         /// </summary>
-        public Modules(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) =>
-            WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<IRpcRequestContext>(scope => ContextStore[scope] ?? throw new InvalidOperationException(), Lifetime.Scoped));
+        public Modules(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) => WebServiceBuilder
+            .ConfigureServices(svcs => svcs
+                .Factory<IRpcRequestContext>(scope => ContextStore[scope] ?? throw new InvalidOperationException(), Lifetime.Scoped)
+                .Service<IJsonSerializer, JsonSerializerBackend>(Lifetime.Singleton));
 
         /// <summary>
-        /// The serializer options.
+        /// Overrides the default serializer miplementation.
         /// </summary>
-        public JsonSerializerOptions SerializerOptions { get; set; } = new JsonSerializerOptions();
+        public Modules ConfigureSerializer(Func<IInjector, IJsonSerializer> factory)
+        {
+            if (factory is null)
+                throw new ArgumentNullException(nameof(factory));
+
+            WebServiceBuilder
+                .ConfigureServices(svcs => svcs
+                    .Remove<IJsonSerializer>()
+                    .Factory<IJsonSerializer>(factory, Lifetime.Singleton));
+
+            return this;
+        }
 
         /// <summary>
         /// Registers a module to be accessible via Remote Procedure Call.

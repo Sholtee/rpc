@@ -4,14 +4,12 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +24,7 @@ namespace Solti.Utils.Rpc.Internals
     /// <summary>
     /// Executes module methods.
     /// </summary>
-    public delegate Task<object?> ModuleInvocation(IInjector injector, IRpcRequestContext context, JsonSerializerOptions serializerOptions);
+    public delegate Task<object?> ModuleInvocation(IInjector scope, IRpcRequestContext context); // TBD: context scope-bol?
 
     /// <summary>
     /// Builds <see cref="ModuleInvocation"/> instances.
@@ -107,7 +105,7 @@ namespace Solti.Utils.Rpc.Internals
                 .Distinct();
 
         //
-        // (injector, ctx, serializerOpts) =>
+        // (scope, ctx) =>
         // {
         //   switch (ctx.Module)
         //   {
@@ -118,8 +116,8 @@ namespace Solti.Utils.Rpc.Internals
         //         case "Method_1":
         //            return DoInvoke
         //            (
-        //              deserializer(context.Payload, serializerOpts, context.Cancellation),
-        //              args => ((IModuleA) injector.Get(typeof(IModuleA), null)).Method_1((T0) arg0, (T1) arg1, ...),
+        //              deserializer(scope, context.Payload, context.Cancellation),
+        //              args => ((IModuleA) scope.Get(typeof(IModuleA), null)).Method_1((T0) arg0, (T1) arg1, ...),
         //              task => (object) ((Task<TResult>) task).Result | null
         //            );
         //         ...
@@ -136,9 +134,8 @@ namespace Solti.Utils.Rpc.Internals
         private Expression<ModuleInvocation> BuildExpression(IEnumerable<Type> interfaces) 
         {
             ParameterExpression
-                injector       = Expression.Parameter(typeof(IInjector), nameof(injector)),
-                context        = Expression.Parameter(typeof(IRpcRequestContext), nameof(context)),
-                serializerOpts = Expression.Parameter(typeof(JsonSerializerOptions), nameof(serializerOpts));
+                scope   = Expression.Parameter(typeof(IInjector), nameof(scope)),
+                context = Expression.Parameter(typeof(IRpcRequestContext), nameof(context));
 
             MemberExpression
                 module = GetFromContext(context, ctx => ctx.Module),
@@ -174,31 +171,29 @@ namespace Solti.Utils.Rpc.Internals
                         defaultBody: Throw<MissingModuleException>(new[] { typeof(string) }, module)
                     )
                 ),
-                injector,
-                context,
-                serializerOpts
+                scope,
+                context
             );
 
             Expression InvokeModule(Type module, MethodInfo ifaceMethod)
             {
                 //
-                // A "localInjector" valtozo egy workaround mivel (gozom nincs miert) ha switch esetek szama eler egy szamot
+                // A "localScope" valtozo egy workaround mivel (gozom nincs miert) ha switch esetek szama eler egy szamot
                 // akkor a ModuleInvocationDelegate osszeallitasakor a fordito elszall InvalidOperationException-el.
                 //
-                // A "context"-re es a "serializerOpts"-ra nem kell ilyen valtozo mivel oket nem akarjuk egy belso lambda-ban
-                // is hasznalni.
+                // A "context"-re nem kell ilyen valtozo mivel ot nem akarjuk egy belso lambda-ban is hasznalni.
                 //
 
-                ParameterExpression localInjector = Expression.Parameter(typeof(IInjector), nameof(localInjector));
+                ParameterExpression localScope = Expression.Parameter(typeof(IInjector), nameof(localScope));
 
                 //
-                // DoInvoke(deserializer(context.Payload, serializerOpts, context.Cancellation), args => {...invokeModule...}, task => {...getResult...})
+                // DoInvoke(deserializer(scope, context.Payload, context.Cancellation), args => {...invokeModule...}, task => {...getResult...})
                 //
 
                 return Expression.Block
                 (
-                    new[] { localInjector },
-                    Expression.Assign(localInjector, injector),
+                    new[] { localScope },
+                    Expression.Assign(localScope, scope),
                     Expression.Invoke
                     (
                         Expression.Constant((Func<Task<object?[]>, Func<object?[], object>, Func<Task, object?>, Task<object?>>) DoInvoke),
@@ -211,8 +206,8 @@ namespace Solti.Utils.Rpc.Internals
                 Expression BuildDeserializerInvocation() => Expression.Invoke
                 (
                     Expression.Constant(GetDeserializerFor(ifaceMethod)),
+                    localScope,
                     GetFromContext(context, ctx => ctx.Payload),
-                    serializerOpts,
                     GetFromContext(context, ctx => ctx.Cancellation)
                 );
 
@@ -221,20 +216,20 @@ namespace Solti.Utils.Rpc.Internals
                     ParameterExpression args = Expression.Parameter(typeof(object?[]), nameof(args));
 
                     //
-                    // args => ((TInterface) injector.Get(typeof(TInterface), null)).Method((T0) args[0], ..., (TN) args[N])
+                    // args => ((TInterface) scope.Get(typeof(TInterface), null)).Method((T0) args[0], ..., (TN) args[N])
                     //
 
                     Expression invokeModule = Expression.Call
                     (
                         //
-                        // (TInterface) injector.Get(typeof(TInterface), null)
+                        // (TInterface) scope.Get(typeof(TInterface), null)
                         //
 
                         instance: Expression.Convert
                         (
                             Expression.Call
                             (
-                                localInjector,
+                                localScope,
                                 InjectorGet,
                                 Expression.Constant(module),
                                 Expression.Constant(null, typeof(string))
@@ -334,7 +329,7 @@ namespace Solti.Utils.Rpc.Internals
         /// <summary>
         /// Gets the deserializer for the given method.
         /// </summary>
-        protected virtual Func<Stream, JsonSerializerOptions, CancellationToken, Task<object?[]>> GetDeserializerFor(MethodInfo ifaceMethod)
+        protected virtual Func<IInjector, Stream, CancellationToken, Task<object?[]>> GetDeserializerFor(MethodInfo ifaceMethod)
         {
             if (ifaceMethod is null)
                 throw new ArgumentNullException(nameof(ifaceMethod));
@@ -348,7 +343,9 @@ namespace Solti.Utils.Rpc.Internals
                 .Select(param => param.ParameterType)
                 .ToArray();
 
-            return (stm, opts, cancellation) => MultiTypeArrayDeserializer.DeserializeAsync(stm, opts, elementTypes, cancellation);
+            return (injector, stm, cancellation) => injector
+                .Get<IJsonSerializer>()
+                .DeserializeMultiTypeArrayAsync(elementTypes, stm, cancellation);
         }
         #endregion
 

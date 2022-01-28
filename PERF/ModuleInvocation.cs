@@ -5,7 +5,6 @@
 ********************************************************************************/
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 using System.Threading;
 
 using BenchmarkDotNet.Attributes;
@@ -74,7 +73,9 @@ namespace Solti.Utils.Rpc.Perf
             bldr.AddModule<IModule>();
             Invoke = bldr.Build();
 
-            ScopeFactory = DI.ScopeFactory.Create(svcs => svcs.Service<IModule, Module>(Lifetime.Scoped));
+            ScopeFactory = DI.ScopeFactory.Create(svcs => svcs
+                .Service<IModule, Module>(Lifetime.Scoped)
+                .Service<IJsonSerializer, JsonSerializerBackend>(Lifetime.Singleton));
 
             Context = new RpcRequestContext(null, nameof(IModule), nameof(IModule.Foo), Payload);
         }
@@ -100,7 +101,7 @@ namespace Solti.Utils.Rpc.Perf
 
             for (int i = 0; i < OperationsPerInvoke; i++)
             {
-                Invoke(injector, Context, new JsonSerializerOptions()).GetAwaiter().GetResult();
+                Invoke(injector, Context).GetAwaiter().GetResult();
             }
         }
     }

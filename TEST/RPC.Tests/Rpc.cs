@@ -646,8 +646,15 @@ namespace Solti.Utils.Rpc.Tests
                 switch (conf)
                 {
                     case Modules modules:
-                        modules.SerializerOptions.PropertyNamingPolicy = new LowerCasePolicy();
-                        modules.Register(i => mockModule.Object);
+                        modules
+                            .ConfigureSerializer(_ => new JsonSerializerBackend 
+                            {
+                                Options = new JsonSerializerOptions
+                                {
+                                    PropertyNamingPolicy = new LowerCasePolicy()
+                                }
+                            })
+                            .Register(i => mockModule.Object);
                         break;
                 }
             });

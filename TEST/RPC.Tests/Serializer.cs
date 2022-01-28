@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* MultiTypeArrayDeserializer.cs                                                 *
+* Serializer.cs                                                                 *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -11,15 +11,20 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Tests
 {
-    using Internals;
+    using DI.Interfaces;
 
     [TestFixture]
-    public class MultiTypeArrayDeserializerTests
+    public class SerializerTests
     {
         private struct MyClass 
         {
             public string Foo { get; set; }
         }
+
+        public JsonSerializerBackend Serializer { get; set; }
+
+        [SetUp]
+        public void Setup() => Serializer = new JsonSerializerBackend();
 
         public static IEnumerable<(string Json, Type[] Types, object[] Result)> TestCases 
         {
@@ -35,9 +40,9 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [TestCaseSource(nameof(TestCases))]
-        public void Deserialize_ShouldWorkWith((string Json, Type[] Types, object[] Result) testCase) 
+        public void DeserializeMultiTypeArray_ShouldWorkWith((string Json, Type[] Types, object[] Result) testCase) 
         {
-            object[] result = MultiTypeArrayDeserializer.Deserialize(testCase.Json, new JsonSerializerOptions(), testCase.Types);
+            object[] result = Serializer.DeserializeMultiTypeArray(testCase.Types, testCase.Json);
 
             Assert.That(result.Length, Is.EqualTo(testCase.Result.Length));
 
@@ -49,10 +54,21 @@ namespace Solti.Utils.Rpc.Tests
 
         [TestCase("[]")]
         [TestCase("[1, 2]")]
-        public void Deserialize_ShouldThrowOnInvalidLength(string jsonString) => Assert.Throws<JsonException>(() => MultiTypeArrayDeserializer.Deserialize(jsonString, new JsonSerializerOptions(), new[] { typeof(int) }));
+        public void DeserializeMultiTypeArray_ShouldThrowOnInvalidLength(string jsonString) => Assert.Throws<JsonException>(() => Serializer.DeserializeMultiTypeArray(new[] { typeof(int) }, jsonString));
 
         [TestCase("{}")]
         [TestCase("{\"0\": 1}")]
-        public void Deserialize_ShouldThrowOnInvalidJson(string jsonString) => Assert.Throws<JsonException>(() => MultiTypeArrayDeserializer.Deserialize(jsonString, new JsonSerializerOptions(), new[] { typeof(int) }));
+        public void DeserializeMultiTypeArray_ShouldThrowOnInvalidJson(string jsonString) => Assert.Throws<JsonException>(() => Serializer.DeserializeMultiTypeArray(new[] { typeof(int) }, jsonString));
+
+        [Test]
+        public void Serialize_ShouldSerializeTypes() =>
+            Assert.That(Serializer.Serialize(new { Type = typeof(int) }), Is.EqualTo("{\"Type\":\"System.Int32\"}"));
+
+        [Test]
+        public void Serialize_ShouldSerializeServiceEntries()
+        {
+            AbstractServiceEntry entry = new MissingServiceEntry(typeof(IModifiedServiceCollection), null);
+            Assert.That(Serializer.Serialize(entry), Is.EqualTo($"\"{entry}\""));
+        }
     }
 }

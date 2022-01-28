@@ -65,7 +65,7 @@ namespace Solti.Utils.Rpc.Internals
                     return null;
 
                 Action<object, object?> setter = prop.ToSetter();
-                TypeConverter converter = TypeDescriptor.GetConverter(prop.PropertyType);
+                System.ComponentModel.TypeConverter converter = TypeDescriptor.GetConverter(prop.PropertyType);
 
                 return val => setter(result, converter.ConvertFromString(val));
             }
