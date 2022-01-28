@@ -1320,6 +1320,41 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.IHttpSession.Server
   nameWithType: IHttpSession.Server
+- uid: Solti.Utils.Rpc.Interfaces.IJsonSerializer
+  name: IJsonSerializer
+  href: Solti.Utils.Rpc.Interfaces.IJsonSerializer.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.IJsonSerializer
+  fullName: Solti.Utils.Rpc.Interfaces.IJsonSerializer
+  nameWithType: IJsonSerializer
+- uid: Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList{System.Type},System.IO.Stream,System.Threading.CancellationToken)
+  name: DeserializeMultiTypeArrayAsync(IReadOnlyList<Type>, Stream, CancellationToken)
+  href: Solti.Utils.Rpc.Interfaces.IJsonSerializer.html#Solti_Utils_Rpc_Interfaces_IJsonSerializer_DeserializeMultiTypeArrayAsync_System_Collections_Generic_IReadOnlyList_System_Type__System_IO_Stream_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList{System.Type},System.IO.Stream,System.Threading.CancellationToken)
+  name.vb: DeserializeMultiTypeArrayAsync(IReadOnlyList(Of Type), Stream, CancellationToken)
+  fullName: Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList<System.Type>, System.IO.Stream, System.Threading.CancellationToken)
+  fullName.vb: Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList(Of System.Type), System.IO.Stream, System.Threading.CancellationToken)
+  nameWithType: IJsonSerializer.DeserializeMultiTypeArrayAsync(IReadOnlyList<Type>, Stream, CancellationToken)
+  nameWithType.vb: IJsonSerializer.DeserializeMultiTypeArrayAsync(IReadOnlyList(Of Type), Stream, CancellationToken)
+- uid: Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync*
+  name: DeserializeMultiTypeArrayAsync
+  href: Solti.Utils.Rpc.Interfaces.IJsonSerializer.html#Solti_Utils_Rpc_Interfaces_IJsonSerializer_DeserializeMultiTypeArrayAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync
+  nameWithType: IJsonSerializer.DeserializeMultiTypeArrayAsync
+- uid: Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync(System.Type,System.Object,System.IO.Stream,System.Threading.CancellationToken)
+  name: SerializeAsync(Type, Object, Stream, CancellationToken)
+  href: Solti.Utils.Rpc.Interfaces.IJsonSerializer.html#Solti_Utils_Rpc_Interfaces_IJsonSerializer_SerializeAsync_System_Type_System_Object_System_IO_Stream_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync(System.Type,System.Object,System.IO.Stream,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync(System.Type, System.Object, System.IO.Stream, System.Threading.CancellationToken)
+  nameWithType: IJsonSerializer.SerializeAsync(Type, Object, Stream, CancellationToken)
+- uid: Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync*
+  name: SerializeAsync
+  href: Solti.Utils.Rpc.Interfaces.IJsonSerializer.html#Solti_Utils_Rpc_Interfaces_IJsonSerializer_SerializeAsync_
+  commentId: Overload:Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync
+  nameWithType: IJsonSerializer.SerializeAsync
 - uid: Solti.Utils.Rpc.Interfaces.IParameterValidator
   name: IParameterValidator
   href: Solti.Utils.Rpc.Interfaces.IParameterValidator.html
@@ -3362,6 +3397,54 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Internals.VerbAttribute.Verbs
   nameWithType: VerbAttribute.Verbs
+- uid: Solti.Utils.Rpc.JsonSerializerBackend
+  name: JsonSerializerBackend
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html
+  commentId: T:Solti.Utils.Rpc.JsonSerializerBackend
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend
+  nameWithType: JsonSerializerBackend
+- uid: Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList{System.Type},System.IO.Stream,System.Threading.CancellationToken)
+  name: DeserializeMultiTypeArrayAsync(IReadOnlyList<Type>, Stream, CancellationToken)
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html#Solti_Utils_Rpc_JsonSerializerBackend_DeserializeMultiTypeArrayAsync_System_Collections_Generic_IReadOnlyList_System_Type__System_IO_Stream_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList{System.Type},System.IO.Stream,System.Threading.CancellationToken)
+  name.vb: DeserializeMultiTypeArrayAsync(IReadOnlyList(Of Type), Stream, CancellationToken)
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList<System.Type>, System.IO.Stream, System.Threading.CancellationToken)
+  fullName.vb: Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList(Of System.Type), System.IO.Stream, System.Threading.CancellationToken)
+  nameWithType: JsonSerializerBackend.DeserializeMultiTypeArrayAsync(IReadOnlyList<Type>, Stream, CancellationToken)
+  nameWithType.vb: JsonSerializerBackend.DeserializeMultiTypeArrayAsync(IReadOnlyList(Of Type), Stream, CancellationToken)
+- uid: Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync*
+  name: DeserializeMultiTypeArrayAsync
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html#Solti_Utils_Rpc_JsonSerializerBackend_DeserializeMultiTypeArrayAsync_
+  commentId: Overload:Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync
+  nameWithType: JsonSerializerBackend.DeserializeMultiTypeArrayAsync
+- uid: Solti.Utils.Rpc.JsonSerializerBackend.Options
+  name: Options
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html#Solti_Utils_Rpc_JsonSerializerBackend_Options
+  commentId: P:Solti.Utils.Rpc.JsonSerializerBackend.Options
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend.Options
+  nameWithType: JsonSerializerBackend.Options
+- uid: Solti.Utils.Rpc.JsonSerializerBackend.Options*
+  name: Options
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html#Solti_Utils_Rpc_JsonSerializerBackend_Options_
+  commentId: Overload:Solti.Utils.Rpc.JsonSerializerBackend.Options
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend.Options
+  nameWithType: JsonSerializerBackend.Options
+- uid: Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync(System.Type,System.Object,System.IO.Stream,System.Threading.CancellationToken)
+  name: SerializeAsync(Type, Object, Stream, CancellationToken)
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html#Solti_Utils_Rpc_JsonSerializerBackend_SerializeAsync_System_Type_System_Object_System_IO_Stream_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync(System.Type,System.Object,System.IO.Stream,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync(System.Type, System.Object, System.IO.Stream, System.Threading.CancellationToken)
+  nameWithType: JsonSerializerBackend.SerializeAsync(Type, Object, Stream, CancellationToken)
+- uid: Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync*
+  name: SerializeAsync
+  href: Solti.Utils.Rpc.JsonSerializerBackend.html#Solti_Utils_Rpc_JsonSerializerBackend_SerializeAsync_
+  commentId: Overload:Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync
+  nameWithType: JsonSerializerBackend.SerializeAsync
 - uid: Solti.Utils.Rpc.ModulesExtensions
   name: ModulesExtensions
   href: Solti.Utils.Rpc.ModulesExtensions.html
@@ -3758,12 +3841,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateContext
   nameWithType: ModuleInvocationHandler.CreateContext
-- uid: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object,Solti.Utils.Rpc.Interfaces.IHttpResponse)
-  name: CreateResponse(Object, IHttpResponse)
-  href: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html#Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_System_Object_Solti_Utils_Rpc_Interfaces_IHttpResponse_
-  commentId: M:Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object,Solti.Utils.Rpc.Interfaces.IHttpResponse)
-  fullName: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object, Solti.Utils.Rpc.Interfaces.IHttpResponse)
-  nameWithType: ModuleInvocationHandler.CreateResponse(Object, IHttpResponse)
+- uid: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object,Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpResponse)
+  name: CreateResponse(Object, IInjector, IHttpResponse)
+  href: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html#Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_System_Object_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpResponse_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object,Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpResponse)
+  fullName: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object, Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpResponse)
+  nameWithType: ModuleInvocationHandler.CreateResponse(Object, IInjector, IHttpResponse)
 - uid: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse*
   name: CreateResponse
   href: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html#Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_
@@ -3842,6 +3925,22 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.Modules.Build
   nameWithType: Modules.Build
+- uid: Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer(System.Func{Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IJsonSerializer})
+  name: ConfigureSerializer(Func<IInjector, IJsonSerializer>)
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_ConfigureSerializer_System_Func_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IJsonSerializer__
+  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer(System.Func{Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IJsonSerializer})
+  name.vb: ConfigureSerializer(Func(Of IInjector, IJsonSerializer))
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer(System.Func<Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IJsonSerializer>)
+  fullName.vb: Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer(System.Func(Of Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IJsonSerializer))
+  nameWithType: Modules.ConfigureSerializer(Func<IInjector, IJsonSerializer>)
+  nameWithType.vb: Modules.ConfigureSerializer(Func(Of IInjector, IJsonSerializer))
+- uid: Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer*
+  name: ConfigureSerializer
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_ConfigureSerializer_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer
+  nameWithType: Modules.ConfigureSerializer
 - uid: Solti.Utils.Rpc.Pipeline.Modules.Register*
   name: Register
   href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_Register_
@@ -3867,19 +3966,6 @@ references:
   fullName.vb: Solti.Utils.Rpc.Pipeline.Modules.Register(Of TInterface, TImplementation)()
   nameWithType: Modules.Register<TInterface, TImplementation>()
   nameWithType.vb: Modules.Register(Of TInterface, TImplementation)()
-- uid: Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions
-  name: SerializerOptions
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions
-  commentId: P:Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions
-  nameWithType: Modules.SerializerOptions
-- uid: Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions*
-  name: SerializerOptions
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions
-  nameWithType: Modules.SerializerOptions
 - uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
   name: RequestHandlerBuilder
   href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html

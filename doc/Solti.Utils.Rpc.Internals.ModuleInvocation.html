@@ -49,7 +49,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Internals_ModuleInvocation_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate Task&lt;object&gt; ModuleInvocation(IInjector injector, IRpcRequestContext context, JsonSerializerOptions serializerOptions);</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate Task&lt;object&gt; ModuleInvocation(IInjector scope, IRpcRequestContext context);</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -63,17 +63,12 @@
     <tbody>
       <tr>
         <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
-        <td><span class="parametername">injector</span></td>
+        <td><span class="parametername">scope</span></td>
         <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a></td>
         <td><span class="parametername">context</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
-        <td><span class="parametername">serializerOptions</span></td>
         <td></td>
       </tr>
     </tbody>

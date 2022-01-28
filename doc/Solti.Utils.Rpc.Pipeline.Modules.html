@@ -116,32 +116,6 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_SerializerOptions" data-uid="Solti.Utils.Rpc.Pipeline.Modules.SerializerOptions">SerializerOptions</h4>
-  <div class="markdown level1 summary"><p>The serializer options.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public JsonSerializerOptions SerializerOptions { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions">JsonSerializerOptions</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_Modules_Build_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Build*"></a>
@@ -190,6 +164,47 @@
   <h5 id="Solti_Utils_Rpc_Pipeline_Modules_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
 </div>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_ConfigureSerializer_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_ConfigureSerializer_System_Func_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IJsonSerializer__" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer(System.Func{Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IJsonSerializer})">ConfigureSerializer(Func&lt;IInjector, IJsonSerializer&gt;)</h4>
+  <div class="markdown level1 summary"><p>Overrides the default serializer miplementation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Modules ConfigureSerializer(Func&lt;IInjector, IJsonSerializer&gt; factory)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<span class="xref">Solti.Utils.DI.Interfaces.IInjector</span>, <a class="xref" href="Solti.Utils.Rpc.Interfaces.IJsonSerializer.html">IJsonSerializer</a>&gt;</td>
+        <td><span class="parametername">factory</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Solti_Utils_Rpc_Pipeline_Modules_Register_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_Modules_Register__1_System_Func_Solti_Utils_DI_Interfaces_IInjector___0__" data-uid="Solti.Utils.Rpc.Pipeline.Modules.Register``1(System.Func{Solti.Utils.DI.Interfaces.IInjector,``0})">Register&lt;TInterface&gt;(Func&lt;IInjector, TInterface&gt;)</h4>
   <div class="markdown level1 summary"><p>Registers a module to be accessible via Remote Procedure Call.</p>
