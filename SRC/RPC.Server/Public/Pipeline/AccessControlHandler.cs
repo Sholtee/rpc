@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,53 +20,10 @@ namespace Solti.Utils.Rpc.Pipeline
     using Properties;
 
     /// <summary>
-    /// Handles access control HTTP requests.
+    /// Specifies the <see cref="HttpAccessControlHandler"/> configuration.
     /// </summary>
-    public class HttpAccessControlHandler : IRequestHandler
+    public interface IHttpAccessControlHandlerConfig
     {
-        private static readonly string[] AllowAll = new string[] { "*" };
-
-        /// <summary>
-        /// Sets the "Access-Control-XxX" headers.
-        /// </summary>
-        protected virtual void SetAcHeaders(IHttpSession context)
-        {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
-            IHttpResponse response = context.Response;
-
-            string? origin = context.Request.Headers["Origin"];
-
-            //
-            // Ez itt trukkos mert bar elmeletben itt is visszaadhatnank "*"-t a kliens fele gyakorlatban pl a Chrome
-            // tuti nem eszi meg.
-            //
-
-            if (!string.IsNullOrEmpty(origin) && (AllowedOrigins == AllowAll || AllowedOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase)))
-            {
-                response.Headers["Access-Control-Allow-Origin"] = origin;
-                response.Headers["Vary"] = "Origin";
-            }
-
-            response.Headers["Access-Control-Allow-Methods"] = string.Join(", ", AllowedMethods);
-            response.Headers["Access-Control-Allow-Headers"] = string.Join(", ", AllowedHeaders);
-        }
-
-        /// <summary>
-        /// Determines whether the request is a preflight request or not.
-        /// </summary>
-        protected static bool IsPreflight(IHttpSession context)
-        {
-            if (context is null)
-                throw new ArgumentNullException(nameof(context));
-
-            return context
-                .Request
-                .Method
-                .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
-        }
-
         /// <summary>
         /// The allowed origins. See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
         /// </summary>
@@ -85,30 +43,62 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Returns true if the logging is allowed.
         /// </summary>
         public bool AllowLogs { get; }
+    }
 
-        /// <inheritdoc/>
-        public IRequestHandler Next { get; }
+    /// <summary>
+    /// Handles access control HTTP requests.
+    /// </summary>
+    public class HttpAccessControlHandler : RequestHandlerBase<IHttpAccessControlHandlerConfig>
+    {
+        /// <summary>
+        /// Sets the "Access-Control-XxX" headers.
+        /// </summary>
+        protected virtual void SetAcHeaders(IHttpSession context)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            IHttpResponse response = context.Response;
+
+            string? origin = context.Request.Headers["Origin"];
+
+            //
+            // Ez itt trukkos mert bar elmeletben itt is visszaadhatnank "*"-t a kliens fele gyakorlatban pl a Chrome
+            // tuti nem eszi meg.
+            //
+
+            if (!string.IsNullOrEmpty(origin) && (Config.AllowedOrigins.Contains("*") || Config.AllowedOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase)))
+            {
+                response.Headers["Access-Control-Allow-Origin"] = origin;
+                response.Headers["Vary"] = "Origin";
+            }
+
+            response.Headers["Access-Control-Allow-Methods"] = string.Join(", ", Config.AllowedMethods);
+            response.Headers["Access-Control-Allow-Headers"] = string.Join(", ", Config.AllowedHeaders);
+        }
+
+        /// <summary>
+        /// Determines whether the request is a preflight request or not.
+        /// </summary>
+        protected static bool IsPreflight(IHttpSession context)
+        {
+            if (context is null)
+                throw new ArgumentNullException(nameof(context));
+
+            return context
+                .Request
+                .Method
+                .Equals(HttpMethod.Options.ToString(), StringComparison.OrdinalIgnoreCase);
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpAccessControlHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public HttpAccessControlHandler(IRequestHandler next, HttpAccessControl parent)
-        {
-            if (parent is null)
-                throw new ArgumentNullException(nameof(parent));
-
-            Next = next ?? throw new ArgumentNullException(nameof(next));
-
-            AllowedOrigins = parent.AllowedOrigins.Count is 0 ? AllowAll : new List<string>(parent.AllowedOrigins);
-            AllowedMethods = parent.AllowedMethods.Count is 0 ? AllowAll : new List<string>(parent.AllowedMethods);
-            AllowedHeaders = parent.AllowedHeaders.Count is 0 ? AllowAll : new List<string>(parent.AllowedHeaders);
-
-            AllowLogs = parent.AllowLogs;
-        }
+        public HttpAccessControlHandler(IRequestHandler next, IHttpAccessControlHandlerConfig config): base(next, config) { }
 
         /// <inheritdoc/>
-        public Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
+        public override Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (scope is null)
                 throw new ArgumentNullException(nameof(scope));
@@ -120,9 +110,10 @@ namespace Solti.Utils.Rpc.Pipeline
 
             if (IsPreflight(context))
             {
-                if (AllowLogs)
+                if (Config.AllowLogs)
                     scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
 
+                context.Response.StatusCode = HttpStatusCode.NoContent;
                 context.Response.Close();
                 return Task.CompletedTask;
             }
@@ -134,7 +125,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Specifies how to handle access control HTTP requests.
     /// </summary>
-    public class HttpAccessControl : RequestHandlerBuilder, ISupportsLog
+    public class HttpAccessControl : RequestHandlerBuilder, IHttpAccessControlHandlerConfig
     {
         /// <summary>
         /// Creates a new <see cref="HttpAccessControl"/> instance.
@@ -144,28 +135,40 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// The allowed origins. See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
         /// </summary>
-        /// <remarks>If this list is empty, all origins are allowed.</remarks>
+        /// <remarks>If the collection is empty, all origins are allowed.</remarks>
         public ICollection<string> AllowedOrigins { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Allowed methods.
         /// </summary>
-        /// <remarks>If this list is empty, all kind of methods are allowed.</remarks>
+        /// <remarks>If the collection is empty, all kind of methods are allowed.</remarks>
         public virtual ICollection<string> AllowedMethods { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Allowed headers.
         /// </summary>
-        /// <remarks>If this list is empty, all kind of headers are allowed.</remarks>
+        /// <remarks>If the collection is empty, all kind of headers are allowed.</remarks>
         public virtual ICollection<string> AllowedHeaders { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        /// <inheritdoc/>
+        public override IRequestHandler Build(IRequestHandler next) => new HttpAccessControlHandler(next, this);
 
         /// <summary>
         /// Returns true if the logging is enabled.
         /// </summary>
-        public bool AllowLogs { get; set; } = true;
+        public bool AllowLogs { get; set; }
 
-        /// <inheritdoc/>
-        public override IRequestHandler Build(IRequestHandler next) => new HttpAccessControlHandler(next, this);
+        private static readonly string[] AllowAll = new[] { "*" };
+
+        private static IReadOnlyCollection<string> AllowAllIfEmpty(ICollection<string> coll) => coll.Count is 0
+            ? AllowAll
+            : coll as IReadOnlyCollection<string> ?? coll.ToArray();
+
+        IReadOnlyCollection<string> IHttpAccessControlHandlerConfig.AllowedOrigins => AllowAllIfEmpty(AllowedOrigins);
+
+        IReadOnlyCollection<string> IHttpAccessControlHandlerConfig.AllowedMethods => AllowAllIfEmpty(AllowedMethods);
+
+        IReadOnlyCollection<string> IHttpAccessControlHandlerConfig.AllowedHeaders => AllowAllIfEmpty(AllowedHeaders);
     }
 
     /// <summary>

@@ -275,17 +275,9 @@ namespace Solti.Utils.Rpc.Tests
         [Test]
         public async Task Service_ShouldRejectTheRequestIfTheRequestCountReachesTheThreshold()
         {
-            Svc = 
-                CreateBuilder(conf => 
-                {
-                    switch (conf)
-                    {
-                        case RequestLimiter requestLimiter:
-                            requestLimiter.Interval = () => TimeSpan.FromSeconds(1);
-                            requestLimiter.Threshold = () => 1;
-                            break;
-                    }
-                })
+            Svc = CreateBuilder(conf => (conf as RequestLimiter)?
+                    .SetStaticInterval(TimeSpan.FromSeconds(1))
+                    .SetStaticThreshold(1))
                 .Build();
             await Svc.Start();
 

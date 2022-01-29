@@ -408,6 +408,11 @@ namespace Solti.Utils.Rpc.Internals
             ModuleInvocationExtensions.RelatedModules.Add(result, FModules.ToArray());
             return result;
         }
+
+        /// <summary>
+        /// Empty <see cref="ModuleInvocation"/> delegate.
+        /// </summary>
+        public static ModuleInvocation EmptyDelegate { get; } = new ModuleInvocationBuilder().Build(); // Nem ide kene de delegate-bol nem lehet leszarmazni
         #endregion
     }
 }

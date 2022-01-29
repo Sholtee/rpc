@@ -20,9 +20,20 @@ namespace Solti.Utils.Rpc.Pipeline
     using Properties;
 
     /// <summary>
-    /// Catches unhandled exception thrown by the <see cref="Next"/> handler. 
+    /// Specifies the <see cref="ExceptionCatcherHandler"/> configuration.
     /// </summary>
-    public class ExceptionCatcherHandler : IRequestHandler
+    public interface IExceptionCatcherHandlerConfig
+    {
+        /// <summary>
+        /// Returns true if the logging is allowed.
+        /// </summary>
+        public bool AllowLogs { get; }
+    }
+
+    /// <summary>
+    /// Catches unhandled exception thrown by the encapsulated handler. 
+    /// </summary>
+    public class ExceptionCatcherHandler : RequestHandlerBase<IExceptionCatcherHandlerConfig>
     {
         /// <summary>
         /// Writes the given <paramref name="responseString"/> to the <paramref name="response"/>.
@@ -83,26 +94,14 @@ namespace Solti.Utils.Rpc.Pipeline
             catch (ObjectDisposedException) { }
         }
 
-        /// <inheritdoc/>
-        public IRequestHandler Next { get; }
-
-        /// <summary>
-        /// The parent instance.
-        /// </summary>
-        public ExceptionCatcher Parent { get; }
-
         /// <summary>
         /// Creates a new <see cref="ExceptionCatcherHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public ExceptionCatcherHandler(IRequestHandler next, ExceptionCatcher parent)
-        {
-            Next   = next   ?? throw new ArgumentNullException(nameof(next));
-            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        }
+        public ExceptionCatcherHandler(IRequestHandler next, IExceptionCatcherHandlerConfig config) :base(next, config) { }
 
         /// <inheritdoc/>
-        public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
+        public override async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (scope is null)
                 throw new ArgumentNullException(nameof(scope));
@@ -116,7 +115,7 @@ namespace Solti.Utils.Rpc.Pipeline
             }
             catch (Exception ex)
             {
-                if (Parent.AllowLogs)
+                if (Config.AllowLogs)
                     scope.TryGet<ILogger>()?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
 
                 await ProcessUnhandledException(ex, context);
@@ -127,7 +126,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures the request pipeline to be "exception proof".
     /// </summary>
-    public class ExceptionCatcher : RequestHandlerBuilder, ISupportsLog
+    public class ExceptionCatcher : RequestHandlerBuilder, IExceptionCatcherHandlerConfig
     {
         /// <summary>
         /// Creates a new <see cref="ExceptionCatcher"/> instance.

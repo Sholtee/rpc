@@ -19,9 +19,25 @@ namespace Solti.Utils.Rpc.Pipeline
     using Properties;
 
     /// <summary>
+    /// Specifies the <see cref="ModuleInvocationHandler"/> configuration.
+    /// </summary>
+    public interface IModuleInvocationHandlerConfig
+    {
+        /// <summary>
+        /// The context store.
+        /// </summary>
+        IDictionary<IInjector, IRpcRequestContext> ContextStore { get; }
+
+        /// <summary>
+        /// In runtime built delegate containing the module invocation logic.
+        /// </summary>
+        ModuleInvocation ModuleInvocation { get; }
+    }
+
+    /// <summary>
     /// Handles RPC module invocatios.
     /// </summary>
-    public class ModuleInvocationHandler : IRequestHandler
+    public class ModuleInvocationHandler : RequestHandlerBase<IModuleInvocationHandlerConfig>
     {
         private sealed record RpcRequestContext
         (
@@ -39,7 +55,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Creates the HTTP response.
         /// </summary>
         /// <remarks>This operation cannot be cancelled.</remarks>
-        protected virtual async Task CreateResponse(object? result, IInjector scope, IHttpResponse response)
+        protected virtual async Task CreateResponse(IInjector scope, IHttpResponse response, object? result)
         {
             if (scope is null)
                 throw new ArgumentNullException(nameof(scope));
@@ -137,40 +153,28 @@ namespace Solti.Utils.Rpc.Pipeline
             );
         }
 
-        /// <inheritdoc/>
-        public IRequestHandler Next { get; }
-
-        /// <summary>
-        /// The parent instance.
-        /// </summary>
-        public Modules Parent { get; }
-
         /// <summary>
         /// Creates a new <see cref="ModuleInvocationHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public ModuleInvocationHandler(IRequestHandler next, Modules parent)
-        {
-            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-            Next   = next   ?? throw new ArgumentNullException(nameof(next));
-        }
+        public ModuleInvocationHandler(IRequestHandler next, IModuleInvocationHandlerConfig config): base(next, config) { }
 
         //
         // A handler-ben nem kell semmit sem naplozni mert az itt mar oldhato aspektusokkal.
         //
 
         /// <inheritdoc/>
-        public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
+        public override async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
 
-            IRpcRequestContext rpcRequestContext = Parent.ContextStore[scope] = CreateContext(context, cancellation);
+            IRpcRequestContext rpcRequestContext = Config.ContextStore[scope] = CreateContext(context, cancellation);
             object? result;
 
             try
             {
-                result = await Parent.ModuleInvocation!(scope, rpcRequestContext);
+                result = await Config.ModuleInvocation(scope, rpcRequestContext);
             }
 
             catch (Exception ex)
@@ -194,14 +198,14 @@ namespace Solti.Utils.Rpc.Pipeline
 
             finally 
             {
-                Parent.ContextStore.Remove(scope);
+                Config.ContextStore.Remove(scope);
             }
 
             //
             // A valasz kiirasat mar nem lehet megszakitani.
             //
 
-            await CreateResponse(result, scope, context.Response);
+            await CreateResponse(scope, context.Response, result);
             await Next.HandleAsync(scope, context, cancellation);
         }
     }
@@ -209,7 +213,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures services to be accessible via Remote Procedure Call.
     /// </summary>
-    public class Modules : RequestHandlerBuilder
+    public class Modules : RequestHandlerBuilder, IModuleInvocationHandlerConfig
     {
         private ModuleInvocationBuilder ModuleInvocationBuilder { get; } = new();
 
@@ -221,16 +225,18 @@ namespace Solti.Utils.Rpc.Pipeline
         //   threadLocal == null;
         //
 
-        internal IDictionary<IInjector, IRpcRequestContext> ContextStore { get; } = new ConcurrentDictionary<IInjector, IRpcRequestContext>(); // TODO: "concurrencyLevel" beallitasa
+        /// <inheritdoc/>
+        public IDictionary<IInjector, IRpcRequestContext> ContextStore { get; } = new ConcurrentDictionary<IInjector, IRpcRequestContext>(); // TODO: "concurrencyLevel" beallitasa
 
-        internal ModuleInvocation? ModuleInvocation { get; private set; }
+        /// <inheritdoc/>
+        public ModuleInvocation ModuleInvocation { get; private set; } = ModuleInvocationBuilder.EmptyDelegate;
 
         /// <inheritdoc/>
         public override IRequestHandler Build(IRequestHandler next)
         {
-            if (ModuleInvocation is null)
+            if (ModuleInvocation == ModuleInvocationBuilder.EmptyDelegate)
                 lock (ModuleInvocationBuilder)
-                    if (ModuleInvocation is null)
+                    if (ModuleInvocation == ModuleInvocationBuilder.EmptyDelegate)
                         ModuleInvocation = ModuleInvocationBuilder.Build();
 
             return new ModuleInvocationHandler(next, this);

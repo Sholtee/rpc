@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Creates a new <see cref="WebServiceBuilder"/> instance.
         /// </summary>
-        public WebServiceBuilder() : this(new DiProvider()) { }
+        public WebServiceBuilder() : this(new InjectorDotNetBackend()) { }
 
         /// <summary>
         /// Creates a new <see cref="WebServiceBuilder"/> instance.

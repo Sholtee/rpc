@@ -14,30 +14,29 @@ namespace Solti.Utils.Rpc.Pipeline
     using Internals;
 
     /// <summary>
-    /// Adds a timeout to the request processing.
+    /// Specifies the <see cref="RequestTimeoutHandler"/> configuration.
     /// </summary>
-    public class RequestTimeoutHandler : IRequestHandler
+    public interface IRequestTimeoutHandlerConfig
     {
         /// <summary>
-        /// The parent instance.
+        /// The request timeout.
         /// </summary>
-        public RequestTimeout Parent { get; }
+        public TimeSpan Timeout { get; }
+    }
 
-        /// <inheritdoc/>
-        public IRequestHandler Next { get; }
-
+    /// <summary>
+    /// Adds a timeout to the request processing.
+    /// </summary>
+    public class RequestTimeoutHandler : RequestHandlerBase<IRequestTimeoutHandlerConfig>
+    {
         /// <summary>
         /// Creates a new <see cref="RequestTimeoutHandler"/> instance.
         /// </summary>
         /// <remarks>This handler requires a <paramref name="next"/> value to be supplied.</remarks>
-        public RequestTimeoutHandler(IRequestHandler next, RequestTimeout parent)
-        {
-            Next   = next   ?? throw new ArgumentNullException(nameof(next));
-            Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        }
+        public RequestTimeoutHandler(IRequestHandler next, IRequestTimeoutHandlerConfig config): base(next, config) { }
 
         /// <inheritdoc/>
-        public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
+        public override async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)
         {
             if (context is null)
                 throw new ArgumentNullException(nameof(context));
@@ -51,7 +50,7 @@ namespace Solti.Utils.Rpc.Pipeline
             using CancellationTokenSource taskCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellation);
 
             Task task = Next.HandleAsync(scope, context, taskCancellation.Token);
-            if (!await task.WaitAsync(Parent.Timeout))
+            if (!await task.WaitAsync(Config.Timeout))
                 //
                 // Elkuldjuk a megszakitas kerelmet a feldolgozonak.
                 //
@@ -70,7 +69,7 @@ namespace Solti.Utils.Rpc.Pipeline
     /// <summary>
     /// Configures the amount of time allowed to serve a request.
     /// </summary>
-    public class RequestTimeout : RequestHandlerBuilder
+    public class RequestTimeout : RequestHandlerBuilder, IRequestTimeoutHandlerConfig
     {
         /// <summary>
         /// Creates a new <see cref="RequestTimeout"/> instance.
