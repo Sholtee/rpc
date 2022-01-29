@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.WebUtilities;
 
+#pragma warning disable CA2201 // Do not raise reserved exception types
+
 namespace Solti.Utils.Rpc
 {
     using Interfaces;
@@ -235,26 +237,33 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Processes the <see cref="ExceptionInfo"/> returned by the remote host.
         /// </summary>
-        protected virtual void ProcessRemoteError(ExceptionInfo exception) 
+        protected virtual void ProcessRemoteError(ExceptionInfo info) 
         {
-            if (exception is null)
-                throw new ArgumentNullException(nameof(exception));
+            if (info is null)
+                throw new ArgumentNullException(nameof(info));
 
-            Type? remoteException = Type.GetType(exception.TypeName, throwOnError: false);
-            
+            Type? remoteException = Type.GetType(info.TypeName, throwOnError: false);
+
+            Exception? ex = null;
+
             if (remoteException is not null && typeof(Exception).IsAssignableFrom(remoteException))
             {
                 Func<object?[], object>? ctor = remoteException
                     .GetConstructor(new[] { typeof(string) })
                     ?.ToStaticDelegate();
 
-                if (ctor is not null) 
-                    throw new RpcException(Resources.RPC_FAILED, (Exception) ctor(new object?[] { exception.Message }));
+                if (ctor is not null)
+                    ex = (Exception) ctor(new object?[] { info.Message });
             }
 
-            #pragma warning disable CA2201 // Since there is no concrete error type we have to fall back to Exception
-            throw new RpcException(Resources.RPC_FAILED, new Exception(exception.Message));
-            #pragma warning restore CA2201
+            ex ??= new Exception(info.Message);
+
+            foreach (KeyValuePair<string, string> kvp in info.Data)
+            {
+                ex.Data[kvp.Key] = kvp.Value;
+            }
+
+            throw new RpcException(Resources.RPC_FAILED, ex);
         }
 
         /// <summary>

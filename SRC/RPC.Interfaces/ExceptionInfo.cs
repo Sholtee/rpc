@@ -3,7 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Solti.Utils.Rpc.Interfaces
@@ -28,7 +28,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// Custom data associated with the exception.
         /// </summary>
         [SuppressMessage("Usage", "CA2227:Collection properties should be read only")]
-        public IDictionary Data { get; set; }
+        public IDictionary<string, string> Data { get; set; }
     }
     #pragma warning restore CS8618
 }

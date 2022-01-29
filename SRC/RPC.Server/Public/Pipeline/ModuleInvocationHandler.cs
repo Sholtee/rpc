@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -83,6 +84,13 @@ namespace Solti.Utils.Rpc.Pipeline
                     break;
                 case Exception ex:
                     response.Headers["Content-Type"] = "application/json";
+
+                    Dictionary<string, string> data = new(ex.Data.Count);
+                    foreach (DictionaryEntry entry in ex.Data)
+                    {
+                        data[entry.Key.ToString()] = entry.Value?.ToString() ?? string.Empty;
+                    }
+
                     await scope.Get<IJsonSerializer>().SerializeAsync
                     (
                         typeof(RpcResponse),
@@ -92,7 +100,7 @@ namespace Solti.Utils.Rpc.Pipeline
                             {
                                 TypeName = ex.GetType().AssemblyQualifiedName,
                                 Message  = ex.Message,
-                                Data     = ex.Data
+                                Data     = data
                             }
                         },
                         response.Payload

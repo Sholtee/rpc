@@ -282,6 +282,28 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
+        public async Task Client_ShouldAccessDataFromTheRemoteException()
+        {
+            Exception ex = new InvalidOperationException("cica");
+            ex.Data["mica"] = "kutya";
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+            mockModule
+                .Setup(i => i.Faulty())
+                .Returns(Task.FromException(ex));
+
+            ServerBuilder.ConfigureRpcService(conf => (conf as Modules)?.Register(injector => mockModule.Object));
+            await StartServer();
+
+            IModule proxy = await ClientFactory.CreateClient<IModule>();
+
+            ex = Assert.ThrowsAsync<RpcException>(proxy.Faulty);
+            Assert.That(ex.InnerException, Is.InstanceOf<InvalidOperationException>());
+            Assert.That(ex.InnerException.Message, Is.EqualTo("cica"));
+            Assert.That(ex.InnerException.Data["mica"], Is.EqualTo("kutya"));
+        }
+
+        [Test]
         public async Task Client_ShouldHandleRemoteExceptionsThrownByMethodReturningAValueType()
         {
             var mockModule = new Mock<IModule>(MockBehavior.Strict);
