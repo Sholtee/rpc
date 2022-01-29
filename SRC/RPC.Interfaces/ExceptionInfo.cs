@@ -24,6 +24,10 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string Message { get; set; }
 
+        //
+        // Nem lehet IDictionary mert akkor a tipusos deszerializalas nem mukodne.
+        //
+
         /// <summary>
         /// Custom data associated with the exception.
         /// </summary>
