@@ -38,7 +38,7 @@ namespace Solti.Utils.Rpc.Hosting
         /// The DI backend.
         /// </summary>
         /// <remarks>This property can be set in initialization time only.</remarks>
-        public IDiProvider DiProvider { get; init; } = new DiProvider();
+        public IDiProvider DiProvider { get; init; } = new InjectorDotNetBackend();
 
         /// <summary>
         /// Invoked once on configuration phase.

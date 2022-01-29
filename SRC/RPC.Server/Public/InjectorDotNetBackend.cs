@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* DiProvider.cs                                                                 *
+* InjectorDotNetBackend.cs                                                      *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -12,9 +12,9 @@ namespace Solti.Utils.Rpc
     using Interfaces;
 
     /// <summary>
-    /// The default <see cref="IDiProvider"/> implementation
+    /// The default <see cref="IDiProvider"/> implementation using the <see cref="ServiceCollection"/> and <see cref="ScopeFactory"/> classes.
     /// </summary>
-    public class DiProvider : IDiProvider
+    public class InjectorDotNetBackend : IDiProvider
     {
         /// <summary>
         /// The configuration applied on each created scope.
