@@ -117,7 +117,7 @@
        Admin = 4
      }
 
-     [RoleValidatorAspect] // to usse this aspect you have to implement and register the IRoleManager service
+     [RoleValidatorAspect] // to use this aspect you have to implement and register the IRoleManager service
      public interface IModule
      {
        [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
@@ -126,7 +126,7 @@
        Task<string> PrintAsync();
        [RequiredRoles(MyRoles.Anonymous)]
        void Login();
-       void MissingRequiredRoleAttribute(); // will throw since there is not RequiredRoles attribute
+       void MissingRequiredRoleAttribute(); // will throw since there is no RequiredRoles attribute
      }	 
 	 ```
      - `LoggerAspectAttribute`:
