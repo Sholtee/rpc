@@ -1,7 +1,7 @@
 # RPC.NET [![Build status](https://ci.appveyor.com/api/projects/status/sqgld5a86pha51wf/branch/master?svg=true)](https://ci.appveyor.com/project/Sholtee/rpc/branch/master) ![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/rpc/master) [![Coverage Status](https://coveralls.io/repos/github/Sholtee/rpc/badge.svg?branch=master)](https://coveralls.io/github/Sholtee/rpc?branch=master) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/sholtee/rpc/master)
-> Simple, lightweight RPC implementation for .NET
+> Simple, lightweight RPC server implementation for .NET
 
-**This documentation refers the version 5.X of the library**
+**This documentation refers the version 6.X of the library**
 
 |Name|Package|
 |:--:|:--:|
@@ -267,7 +267,7 @@ using Solti.Utils.Rpc.Interfaces;
 public enum MyRoles
 {
   Anonymous,
-  StandardUser,
+  AuthenticatedUser,
   MayPrint,
   Admin
 }
@@ -275,13 +275,15 @@ public enum MyRoles
 [RoleValidatorAspect]
 public interface IModule
 {
-  // Admins or standard user having print right are able to print 
-  [RequiredRoles(MyRoles.StandardUser | MyRoles.MayPrint, MyRoles.Admin)]
+  // Admins or any authenticated user having print right are able to print 
+  [RequiredRoles(MyRoles.AuthenticatedUser | MyRoles.MayPrint, MyRoles.Admin)]
   void Print();
-  [RequiredRoles(MyRoles.StandardUser | MyRoles.MayPrint, MyRoles.Admin)]
+  [RequiredRoles(MyRoles.AuthenticatedUser | MyRoles.MayPrint, MyRoles.Admin)]
   Task<string> PrintAsync();
   [RequiredRoles(MyRoles.Anonymous)]
-  void Login();
+  string Login(string user, string pw); // returns the new session id
+  [RequiredRoles(MyRoles.AuthenticatedUser)]
+  void Logout();
   // will throw on every invocation since there is no RequiredRoles attribute
   void MissingRequiredRoleAttribute();
 }
@@ -297,6 +299,8 @@ public class RoleManagerService: IRoleManager
       return MyRoles.Anonymous;
 
     // acquire the roles assigned to the user
+    MyRoles assignedRoles = ...;
+    return assignedRoles | MyRoles.AuthenticatedUser;
   }
   public Task<Enum> GetAssignedRolesAsync(string? sessionId, CancellationToken cancellation) => Task.FromResult(GetAssignedRoles(sessionId));
 }
@@ -305,7 +309,31 @@ webServiceBuilder
   .ConfigureRpcService(conf => (conf as Modules)?.Register<IModule, Module>())
   .ConfigureServices(services => services.Service<IRoleManager, RoleManagerService>(Lifetime.Scoped));
 ```
+### Transaction manager aspect
+To ensure database consistency we can define [transactions](https://docs.oracle.com/cd/B19306_01/server.102/b14220/transact.htm#i1666 ) using aspects:
+```csharp
+using System.Data;
+using System.Threading.Tasks;
+using Solti.Urils.Rpc.Interfaces;
 
+[TransactionAspect]
+public interface IModule
+{
+  void NonTransactional();
+  [Transactional]
+  void DoSomething(object arg);
+  [Transactional(IsolationLevel = IsolationLevel.Serializable)]
+  Task<int> DoSomethingAsync();
+}
+```
+`TransactionAspect` requires the `IDbConnection` service to be installed:
+```csharp
+using System.Data;
+
+webServiceBuilder
+  .ConfigureRpcService(conf => (conf as Modules)?.Register<IModule, Module>())
+  .ConfigureServices(services => services.Factory<IDbConnection>(injector => /*create a new db connection*/, Lifetime.Scoped));
+```
 ## How to listen on HTTPS (Windows only)
 Requires [this](https://raw.githubusercontent.com/Sholtee/rpc.boilerplate/master/BUILD/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
 1. If you don't have your own, create a self-signed certificate
