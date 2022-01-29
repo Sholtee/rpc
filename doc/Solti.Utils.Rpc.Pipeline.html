@@ -50,7 +50,7 @@
       <section><p>Configures the request pipeline to be &quot;exception proof&quot;.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html">ExceptionCatcherHandler</a></h4>
-      <section><p>Catches unhandled exception thrown by the <a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next">Next</a> handler. </p>
+      <section><p>Catches unhandled exception thrown by the encapsulated handler. </p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html">HttpAccessControl</a></h4>
       <section><p>Specifies how to handle access control HTTP requests.</p>
@@ -63,6 +63,9 @@
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></h4>
       <section><p>Configures services to be accessible via Remote Procedure Call.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html">RequestHandlerBase&lt;TConfiguration&gt;</a></h4>
+      <section><p>Defines the base class for request handlers.</p>
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html">RequestHandlerBuilder</a></h4>
       <section><p>Builds <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instances.</p>
@@ -81,6 +84,23 @@
 </section>
       <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.RpcAccessControl.html">RpcAccessControl</a></h4>
       <section><p>Specifies how to handle access control HTTP requests (RPC specific).</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig.html">IExceptionCatcherHandlerConfig</a></h4>
+      <section><p>Specifies the <a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html">ExceptionCatcherHandler</a> configuration.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.html">IHttpAccessControlHandlerConfig</a></h4>
+      <section><p>Specifies the <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html">HttpAccessControlHandler</a> configuration.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.html">IModuleInvocationHandlerConfig</a></h4>
+      <section><p>Specifies the <a class="xref" href="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html">ModuleInvocationHandler</a> configuration.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html">IRequestLimiterHandlerConfig</a></h4>
+      <section><p>Specifies the <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.html">RequestLimiterHandler</a> configuration.</p>
+</section>
+      <h4><a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.html">IRequestTimeoutHandlerConfig</a></h4>
+      <section><p>Specifies the <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html">RequestTimeoutHandler</a> configuration.</p>
 </section>
 </article>
           </div>

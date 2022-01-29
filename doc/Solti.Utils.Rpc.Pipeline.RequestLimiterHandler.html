@@ -48,7 +48,8 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">RequestLimiterHandler</span></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html">RequestHandlerBase</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html">IRequestLimiterHandlerConfig</a>&gt;</div>
+    <div class="level2"><span class="xref">RequestLimiterHandler</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -56,6 +57,12 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Config">RequestHandlerBase&lt;IRequestLimiterHandlerConfig&gt;.Config</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next">RequestHandlerBase&lt;IRequestLimiterHandlerConfig&gt;.Next</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
@@ -82,18 +89,18 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RequestLimiterHandler : IRequestHandler</code></pre>
+    <pre><code class="lang-csharp hljs">public class RequestLimiterHandler : RequestHandlerBase&lt;IRequestLimiterHandlerConfig&gt;, IRequestHandler</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_RequestLimiter_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.RequestLimiter)">RequestLimiterHandler(IRequestHandler, RequestLimiter)</h4>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig)">RequestLimiterHandler(IRequestHandler, IRequestLimiterHandlerConfig)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.html">RequestLimiterHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RequestLimiterHandler(IRequestHandler next, RequestLimiter parent)</code></pre>
+    <pre><code class="lang-csharp hljs">public RequestLimiterHandler(IRequestHandler next, IRequestLimiterHandlerConfig config)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -111,68 +118,15 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></td>
-        <td><span class="parametername">parent</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html">IRequestLimiterHandlerConfig</a></td>
+        <td><span class="parametername">config</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_RequestLimiter__remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This handler requires a <code data-dev-comment-type="paramref" class="paramref">next</code> value to be supplied.</p>
 </div>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_Next_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.Next*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_Next" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.Next">Next</h4>
-  <div class="markdown level1 summary"><p>The next handler to be called.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IRequestHandler Next { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_Next_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>A handler should not invoke the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html#Solti_Utils_Rpc_Interfaces_IRequestHandler_Next">Next</a> instance after closing the session.</p>
-</div>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_Parent_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.Parent*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_Parent" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.Parent">Parent</h4>
-  <div class="markdown level1 summary"><p>The parent instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RequestLimiter Parent { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_RequestLimiterHandler_HandleAsync_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.HandleAsync*"></a>
@@ -182,7 +136,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">public override Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -226,6 +180,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Rpc.Pipeline.RequestHandlerBase&lt;Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig&gt;.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>

@@ -48,7 +48,8 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">ModuleInvocationHandler</span></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html">RequestHandlerBase</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.html">IModuleInvocationHandlerConfig</a>&gt;</div>
+    <div class="level2"><span class="xref">ModuleInvocationHandler</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -56,6 +57,12 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Config">RequestHandlerBase&lt;IModuleInvocationHandlerConfig&gt;.Config</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next">RequestHandlerBase&lt;IModuleInvocationHandlerConfig&gt;.Next</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
@@ -82,18 +89,18 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ModuleInvocationHandler : IRequestHandler</code></pre>
+    <pre><code class="lang-csharp hljs">public class ModuleInvocationHandler : RequestHandlerBase&lt;IModuleInvocationHandlerConfig&gt;, IRequestHandler</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_Modules_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.Modules)">ModuleInvocationHandler(IRequestHandler, Modules)</h4>
+  <h4 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IModuleInvocationHandlerConfig_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig)">ModuleInvocationHandler(IRequestHandler, IModuleInvocationHandlerConfig)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html">ModuleInvocationHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ModuleInvocationHandler(IRequestHandler next, Modules parent)</code></pre>
+    <pre><code class="lang-csharp hljs">public ModuleInvocationHandler(IRequestHandler next, IModuleInvocationHandlerConfig config)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -111,68 +118,15 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></td>
-        <td><span class="parametername">parent</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.html">IModuleInvocationHandlerConfig</a></td>
+        <td><span class="parametername">config</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_Modules__remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IModuleInvocationHandlerConfig__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This handler requires a <code data-dev-comment-type="paramref" class="paramref">next</code> value to be supplied.</p>
 </div>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_Next_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.Next*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_Next" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.Next">Next</h4>
-  <div class="markdown level1 summary"><p>The next handler to be called.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IRequestHandler Next { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_Next_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>A handler should not invoke the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html#Solti_Utils_Rpc_Interfaces_IRequestHandler_Next">Next</a> instance after closing the session.</p>
-</div>
-  <a id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_Parent_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.Parent*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_Parent" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.Parent">Parent</h4>
-  <div class="markdown level1 summary"><p>The parent instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Modules Parent { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateContext_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateContext*"></a>
@@ -222,13 +176,13 @@
     </tbody>
   </table>
   <a id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_System_Object_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpResponse_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(System.Object,Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpResponse)">CreateResponse(Object, IInjector, IHttpResponse)</h4>
+  <h4 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpResponse_System_Object_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpResponse,System.Object)">CreateResponse(IInjector, IHttpResponse, Object)</h4>
   <div class="markdown level1 summary"><p>Creates the HTTP response.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual async Task CreateResponse(object result, IInjector scope, IHttpResponse response)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual async Task CreateResponse(IInjector scope, IHttpResponse response, object result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -241,11 +195,6 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
-        <td><span class="parametername">result</span></td>
-        <td></td>
-      </tr>
-      <tr>
         <td><span class="xref">Solti.Utils.DI.Interfaces.IInjector</span></td>
         <td><span class="parametername">scope</span></td>
         <td></td>
@@ -253,6 +202,11 @@
       <tr>
         <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IHttpResponse.html">IHttpResponse</a></td>
         <td><span class="parametername">response</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">result</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -272,7 +226,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_System_Object_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpResponse__remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_CreateResponse_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpResponse_System_Object__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This operation cannot be cancelled.</p>
 </div>
   <a id="Solti_Utils_Rpc_Pipeline_ModuleInvocationHandler_HandleAsync_" data-uid="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.HandleAsync*"></a>
@@ -282,7 +236,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">public override async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -326,6 +280,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Rpc.Pipeline.RequestHandlerBase&lt;Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig&gt;.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>

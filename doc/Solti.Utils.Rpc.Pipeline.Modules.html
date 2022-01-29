@@ -54,6 +54,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.html">IModuleInvocationHandlerConfig</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -86,7 +87,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_Modules_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class Modules : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, IModuleInvocationHandlerConfig</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -112,6 +113,56 @@
       <tr>
         <td><a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a></td>
         <td><span class="parametername">webServiceBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_ContextStore_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ContextStore*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_ContextStore" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ContextStore">ContextStore</h4>
+  <div class="markdown level1 summary"><p>The context store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;IInjector, IRpcRequestContext&gt; ContextStore { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<span class="xref">Solti.Utils.DI.Interfaces.IInjector</span>, <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRpcRequestContext.html">IRpcRequestContext</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation_" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_Modules_ModuleInvocation" data-uid="Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation">ModuleInvocation</h4>
+  <div class="markdown level1 summary"><p>In runtime built delegate containing the module invocation logic.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ModuleInvocation ModuleInvocation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Internals.ModuleInvocation.html">ModuleInvocation</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -309,6 +360,9 @@
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.html">IModuleInvocationHandlerConfig</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

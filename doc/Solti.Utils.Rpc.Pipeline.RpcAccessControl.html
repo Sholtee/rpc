@@ -55,7 +55,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
-    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a></div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.html">IHttpAccessControlHandlerConfig</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -63,10 +63,19 @@
       <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins">HttpAccessControl.AllowedOrigins</a>
     </div>
     <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_">HttpAccessControl.Build(IRequestHandler)</a>
+    </div>
+    <div>
       <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs">HttpAccessControl.AllowLogs</a>
     </div>
     <div>
-      <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_">HttpAccessControl.Build(IRequestHandler)</a>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedOrigins">HttpAccessControl.IHttpAccessControlHandlerConfig.AllowedOrigins</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedMethods">HttpAccessControl.IHttpAccessControlHandlerConfig.AllowedMethods</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedHeaders">HttpAccessControl.IHttpAccessControlHandlerConfig.AllowedHeaders</a>
     </div>
     <div>
       <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder">RequestHandlerBuilder.WebServiceBuilder</a>
@@ -97,7 +106,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RpcAccessControl : HttpAccessControl, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, ISupportsLog</code></pre>
+    <pre><code class="lang-csharp hljs">public class RpcAccessControl : HttpAccessControl, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, IHttpAccessControlHandlerConfig</code></pre>
   </div>
   <h5 id="Solti_Utils_Rpc_Pipeline_RpcAccessControl_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Allowed method: POST, Allowed headers: Content-Type, Content-Length</p>
@@ -195,7 +204,7 @@
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
   </div>
   <div>
-      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.html">IHttpAccessControlHandlerConfig</a>
   </div>
 </article>
           </div>

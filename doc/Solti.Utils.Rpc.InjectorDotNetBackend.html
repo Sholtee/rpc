@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class DiProvider
+    <title>Class InjectorDotNetBackend
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class DiProvider
+    <meta name="title" content="Class InjectorDotNetBackend
    | RPC.NET ">
     <meta name="generator" content="docfx 2.58.0.0">
     
@@ -37,18 +37,18 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.DiProvider">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend">
   
   
-  <h1 id="Solti_Utils_Rpc_DiProvider" data-uid="Solti.Utils.Rpc.DiProvider" class="text-break">Class DiProvider
+  <h1 id="Solti_Utils_Rpc_InjectorDotNetBackend" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend" class="text-break">Class InjectorDotNetBackend
   </h1>
-  <div class="markdown level0 summary"><p>The default <a class="xref" href="Solti.Utils.Rpc.Interfaces.IDiProvider.html">IDiProvider</a> implementation</p>
+  <div class="markdown level0 summary"><p>The default <a class="xref" href="Solti.Utils.Rpc.Interfaces.IDiProvider.html">IDiProvider</a> implementation using the <span class="xref">Solti.Utils.DI.ServiceCollection</span> and <span class="xref">Solti.Utils.DI.ScopeFactory</span> classes.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">DiProvider</span></div>
+    <div class="level1"><span class="xref">InjectorDotNetBackend</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -80,14 +80,14 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.html">Solti.Utils.Rpc</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
-  <h5 id="Solti_Utils_Rpc_DiProvider_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_InjectorDotNetBackend_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DiProvider : IDiProvider</code></pre>
+    <pre><code class="lang-csharp hljs">public class InjectorDotNetBackend : IDiProvider</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_DiProvider_ScopeOptions_" data-uid="Solti.Utils.Rpc.DiProvider.ScopeOptions*"></a>
-  <h4 id="Solti_Utils_Rpc_DiProvider_ScopeOptions" data-uid="Solti.Utils.Rpc.DiProvider.ScopeOptions">ScopeOptions</h4>
+  <a id="Solti_Utils_Rpc_InjectorDotNetBackend_ScopeOptions_" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions*"></a>
+  <h4 id="Solti_Utils_Rpc_InjectorDotNetBackend_ScopeOptions" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions">ScopeOptions</h4>
   <div class="markdown level1 summary"><p>The configuration applied on each created scope.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -110,8 +110,8 @@
       </tr>
     </tbody>
   </table>
-  <a id="Solti_Utils_Rpc_DiProvider_Services_" data-uid="Solti.Utils.Rpc.DiProvider.Services*"></a>
-  <h4 id="Solti_Utils_Rpc_DiProvider_Services" data-uid="Solti.Utils.Rpc.DiProvider.Services">Services</h4>
+  <a id="Solti_Utils_Rpc_InjectorDotNetBackend_Services_" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend.Services*"></a>
+  <h4 id="Solti_Utils_Rpc_InjectorDotNetBackend_Services" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend.Services">Services</h4>
   <div class="markdown level1 summary"><p>Services from which the scopes will be created.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -136,8 +136,8 @@
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_DiProvider_CreateFactory_" data-uid="Solti.Utils.Rpc.DiProvider.CreateFactory*"></a>
-  <h4 id="Solti_Utils_Rpc_DiProvider_CreateFactory_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.DiProvider.CreateFactory(System.Threading.CancellationToken)">CreateFactory(CancellationToken)</h4>
+  <a id="Solti_Utils_Rpc_InjectorDotNetBackend_CreateFactory_" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend.CreateFactory*"></a>
+  <h4 id="Solti_Utils_Rpc_InjectorDotNetBackend_CreateFactory_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.InjectorDotNetBackend.CreateFactory(System.Threading.CancellationToken)">CreateFactory(CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Creates a new <span class="xref">Solti.Utils.DI.Interfaces.IScopeFactory</span> instance against the given <a class="xref" href="Solti.Utils.Rpc.Interfaces.IDiProvider.html#Solti_Utils_Rpc_Interfaces_IDiProvider_Services">Services</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>

@@ -42,13 +42,14 @@
   
   <h1 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler" class="text-break">Class ExceptionCatcherHandler
   </h1>
-  <div class="markdown level0 summary"><p>Catches unhandled exception thrown by the <a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next">Next</a> handler. </p>
+  <div class="markdown level0 summary"><p>Catches unhandled exception thrown by the encapsulated handler. </p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">ExceptionCatcherHandler</span></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html">RequestHandlerBase</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig.html">IExceptionCatcherHandlerConfig</a>&gt;</div>
+    <div class="level2"><span class="xref">ExceptionCatcherHandler</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -56,6 +57,12 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Config">RequestHandlerBase&lt;IExceptionCatcherHandlerConfig&gt;.Config</a>
+    </div>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next">RequestHandlerBase&lt;IExceptionCatcherHandlerConfig&gt;.Next</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
@@ -82,18 +89,18 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ExceptionCatcherHandler : IRequestHandler</code></pre>
+    <pre><code class="lang-csharp hljs">public class ExceptionCatcherHandler : RequestHandlerBase&lt;IExceptionCatcherHandlerConfig&gt;, IRequestHandler</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_ExceptionCatcher_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.ExceptionCatcher)">ExceptionCatcherHandler(IRequestHandler, ExceptionCatcher)</h4>
+  <h4 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IExceptionCatcherHandlerConfig_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig)">ExceptionCatcherHandler(IRequestHandler, IExceptionCatcherHandlerConfig)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html">ExceptionCatcherHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExceptionCatcherHandler(IRequestHandler next, ExceptionCatcher parent)</code></pre>
+    <pre><code class="lang-csharp hljs">public ExceptionCatcherHandler(IRequestHandler next, IExceptionCatcherHandlerConfig config)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -111,68 +118,15 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html">ExceptionCatcher</a></td>
-        <td><span class="parametername">parent</span></td>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig.html">IExceptionCatcherHandlerConfig</a></td>
+        <td><span class="parametername">config</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_ExceptionCatcher__remarks">Remarks</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IExceptionCatcherHandlerConfig__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This handler requires a <code data-dev-comment-type="paramref" class="paramref">next</code> value to be supplied.</p>
 </div>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Next">Next</h4>
-  <div class="markdown level1 summary"><p>The next handler to be called.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IRequestHandler Next { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Next_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>A handler should not invoke the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html#Solti_Utils_Rpc_Interfaces_IRequestHandler_Next">Next</a> instance after closing the session.</p>
-</div>
-  <a id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Parent_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_Parent" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.Parent">Parent</h4>
-  <div class="markdown level1 summary"><p>The parent instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExceptionCatcher Parent { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html">ExceptionCatcher</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_HandleAsync_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync*"></a>
@@ -182,7 +136,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">public override async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -226,6 +180,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Solti.Utils.Rpc.Pipeline.RequestHandlerBase&lt;Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig&gt;.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)</span></div>
   <a id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_ProcessUnhandledException_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_ProcessUnhandledException_System_Exception_Solti_Utils_Rpc_Interfaces_IHttpSession_" data-uid="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException(System.Exception,Solti.Utils.Rpc.Interfaces.IHttpSession)">ProcessUnhandledException(Exception, IHttpSession)</h4>
   <div class="markdown level1 summary"><p>Processes unhandled exceptions.</p>

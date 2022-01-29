@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class RequestTimeoutHandler
+    <title>Class RequestHandlerBase&lt;TConfiguration&gt;
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class RequestTimeoutHandler
+    <meta name="title" content="Class RequestHandlerBase&lt;TConfiguration&gt;
    | RPC.NET ">
     <meta name="generator" content="docfx 2.58.0.0">
     
@@ -37,19 +37,23 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1">
   
   
-  <h1 id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler" class="text-break">Class RequestTimeoutHandler
+  <h1 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1" class="text-break">Class RequestHandlerBase&lt;TConfiguration&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Adds a timeout to the request processing.</p>
+  <div class="markdown level0 summary"><p>Defines the base class for request handlers.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html">RequestHandlerBase</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.html">IRequestTimeoutHandlerConfig</a>&gt;</div>
-    <div class="level2"><span class="xref">RequestTimeoutHandler</span></div>
+    <div class="level1"><span class="xref">RequestHandlerBase&lt;TConfiguration&gt;</span></div>
+      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html">ExceptionCatcherHandler</a></div>
+      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html">HttpAccessControlHandler</a></div>
+      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html">ModuleInvocationHandler</a></div>
+      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.html">RequestLimiterHandler</a></div>
+      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html">RequestTimeoutHandler</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -57,12 +61,6 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Config">RequestHandlerBase&lt;IRequestTimeoutHandlerConfig&gt;.Config</a>
-    </div>
-    <div>
-      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next">RequestHandlerBase&lt;IRequestTimeoutHandlerConfig&gt;.Next</a>
-    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
@@ -87,20 +85,35 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Pipeline.html">Solti.Utils.Rpc.Pipeline</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RequestTimeoutHandler : RequestHandlerBase&lt;IRequestTimeoutHandlerConfig&gt;, IRequestHandler</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class RequestHandlerBase&lt;TConfiguration&gt; : IRequestHandler where TConfiguration : class</code></pre>
   </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TConfiguration</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="constructors">Constructors
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IRequestTimeoutHandlerConfig_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig)">RequestTimeoutHandler(IRequestHandler, IRequestTimeoutHandlerConfig)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html">RequestTimeoutHandler</a> instance.</p>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler__0_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,`0)">RequestHandlerBase(IRequestHandler, TConfiguration)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html">RequestHandlerBase&lt;TConfiguration&gt;</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RequestTimeoutHandler(IRequestHandler next, IRequestTimeoutHandlerConfig config)</code></pre>
+    <pre><code class="lang-csharp hljs">protected RequestHandlerBase(IRequestHandler next, TConfiguration config)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -118,25 +131,75 @@
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.html">IRequestTimeoutHandlerConfig</a></td>
+        <td><span class="xref">TConfiguration</span></td>
         <td><span class="parametername">config</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_IRequestTimeoutHandlerConfig__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This handler requires a <code data-dev-comment-type="paramref" class="paramref">next</code> value to be supplied.</p>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Config_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.Config*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Config" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.Config">Config</h4>
+  <div class="markdown level1 summary"><p>The configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TConfiguration Config { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TConfiguration</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.Next*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.Next">Next</h4>
+  <div class="markdown level1 summary"><p>The next handler to be called.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IRequestHandler Next { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_Next_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A handler should not invoke the <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html#Solti_Utils_Rpc_Interfaces_IRequestHandler_Next">Next</a> instance after closing the session.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler_HandleAsync_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.HandleAsync*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestTimeoutHandler_HandleAsync_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpSession_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)">HandleAsync(IInjector, IHttpSession, CancellationToken)</h4>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_HandleAsync_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.HandleAsync*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBase_1_HandleAsync_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpSession_System_Threading_CancellationToken_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)">HandleAsync(IInjector, IHttpSession, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Does some handler specific work.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override async Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract Task HandleAsync(IInjector scope, IHttpSession context, CancellationToken cancellation)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -180,8 +243,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Solti.Utils.Rpc.Pipeline.RequestHandlerBase&lt;Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig&gt;.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>

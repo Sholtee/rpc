@@ -54,6 +54,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html">IRequestLimiterHandlerConfig</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -86,7 +87,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RequestLimiter : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class RequestLimiter : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, IRequestLimiterHandlerConfig</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -116,62 +117,6 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Interval_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Interval*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Interval" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Interval">Interval</h4>
-  <div class="markdown level1 summary"><p>The interval on which the request counting takes palce.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Func&lt;TimeSpan&gt; Interval { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Interval_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This property is a func so the returned value can be changed in runtime.</p>
-</div>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Threshold_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Threshold*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Threshold" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Threshold">Threshold</h4>
-  <div class="markdown level1 summary"><p>The request threshold.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Func&lt;int&gt; Threshold { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Threshold_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This property is a func so the returned value can be changed in runtime.</p>
-</div>
   <h3 id="methods">Methods
   </h3>
   <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Build_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Build*"></a>
@@ -217,9 +162,224 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerBuilder.Build(IRequestHandler)</a></div>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetDynamicInterval_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetDynamicInterval*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetDynamicInterval_System_Func_System_TimeSpan__" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetDynamicInterval(System.Func{System.TimeSpan})">SetDynamicInterval(Func&lt;TimeSpan&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets a function to be used to get the <a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html#Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Interval">Interval</a> value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestLimiter SetDynamicInterval(Func&lt;TimeSpan&gt; getter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a>&gt;</td>
+        <td><span class="parametername">getter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetDynamicThreshold_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetDynamicThreshold*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetDynamicThreshold_System_Func_System_Int32__" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetDynamicThreshold(System.Func{System.Int32})">SetDynamicThreshold(Func&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets a function to be used to get the <a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html#Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Threshold">Threshold</a> value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestLimiter SetDynamicThreshold(Func&lt;int&gt; getter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">getter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetStaticInterval_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetStaticInterval*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetStaticInterval_System_TimeSpan_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetStaticInterval(System.TimeSpan)">SetStaticInterval(TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Setsthe <a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html#Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Interval">Interval</a> value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestLimiter SetStaticInterval(TimeSpan interval)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td><span class="parametername">interval</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetStaticThreshold_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetStaticThreshold*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_SetStaticThreshold_System_Int32_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.SetStaticThreshold(System.Int32)">SetStaticThreshold(Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the <a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html#Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Threshold">Threshold</a> value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RequestLimiter SetStaticThreshold(int threshold)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">threshold</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Interval_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Solti#Utils#Rpc#Pipeline#IRequestLimiterHandlerConfig#Interval*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Interval" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Solti#Utils#Rpc#Pipeline#IRequestLimiterHandlerConfig#Interval">IRequestLimiterHandlerConfig.Interval</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TimeSpan IRequestLimiterHandlerConfig.Interval { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Threshold_" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Solti#Utils#Rpc#Pipeline#IRequestLimiterHandlerConfig#Threshold*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_RequestLimiter_Solti_Utils_Rpc_Pipeline_IRequestLimiterHandlerConfig_Threshold" data-uid="Solti.Utils.Rpc.Pipeline.RequestLimiter.Solti#Utils#Rpc#Pipeline#IRequestLimiterHandlerConfig#Threshold">IRequestLimiterHandlerConfig.Threshold</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int IRequestLimiterHandlerConfig.Threshold { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.html">IRequestLimiterHandlerConfig</a>
   </div>
 </article>
           </div>

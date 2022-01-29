@@ -54,6 +54,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.html">IRequestTimeoutHandlerConfig</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -86,7 +87,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_RequestTimeout_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RequestTimeout : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class RequestTimeout : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, IRequestTimeoutHandlerConfig</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -193,6 +194,9 @@
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.html">IRequestTimeoutHandlerConfig</a>
   </div>
 </article>
           </div>

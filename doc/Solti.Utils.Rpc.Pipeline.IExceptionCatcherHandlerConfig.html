@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interface ISupportsLog
+    <title>Interface IExceptionCatcherHandlerConfig
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Interface ISupportsLog
+    <meta name="title" content="Interface IExceptionCatcherHandlerConfig
    | RPC.NET ">
     <meta name="generator" content="docfx 2.58.0.0">
     
@@ -37,30 +37,30 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Interfaces.ISupportsLog">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig">
   
   
-  <h1 id="Solti_Utils_Rpc_Interfaces_ISupportsLog" data-uid="Solti.Utils.Rpc.Interfaces.ISupportsLog" class="text-break">Interface ISupportsLog
+  <h1 id="Solti_Utils_Rpc_Pipeline_IExceptionCatcherHandlerConfig" data-uid="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig" class="text-break">Interface IExceptionCatcherHandlerConfig
   </h1>
-  <div class="markdown level0 summary"><p>Indicates that a service supports logging.</p>
+  <div class="markdown level0 summary"><p>Specifies the <a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html">ExceptionCatcherHandler</a> configuration.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Interfaces.html">Solti.Utils.Rpc.Interfaces</a></h6>
-  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Interfaces.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Interfaces_ISupportsLog_syntax">Syntax</h5>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Pipeline.html">Solti.Utils.Rpc.Pipeline</a></h6>
+  <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
+  <h5 id="Solti_Utils_Rpc_Pipeline_IExceptionCatcherHandlerConfig_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ISupportsLog</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IExceptionCatcherHandlerConfig</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Interfaces_ISupportsLog_AllowLogs_" data-uid="Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs*"></a>
-  <h4 id="Solti_Utils_Rpc_Interfaces_ISupportsLog_AllowLogs" data-uid="Solti.Utils.Rpc.Interfaces.ISupportsLog.AllowLogs">AllowLogs</h4>
-  <div class="markdown level1 summary"><p>Allows logging if the <a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a> service is accessible.</p>
+  <a id="Solti_Utils_Rpc_Pipeline_IExceptionCatcherHandlerConfig_AllowLogs_" data-uid="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig.AllowLogs*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_IExceptionCatcherHandlerConfig_AllowLogs" data-uid="Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig.AllowLogs">AllowLogs</h4>
+  <div class="markdown level1 summary"><p>Returns true if the logging is allowed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool AllowLogs { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">bool AllowLogs { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">

@@ -55,7 +55,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
-    <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a></div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.html">IHttpAccessControlHandlerConfig</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -88,7 +88,7 @@
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HttpAccessControl : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, ISupportsLog</code></pre>
+    <pre><code class="lang-csharp hljs">public class HttpAccessControl : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, IHttpAccessControlHandlerConfig</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -145,7 +145,7 @@
     </tbody>
   </table>
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedHeaders_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>If this list is empty, all kind of headers are allowed.</p>
+  <div class="markdown level1 remarks"><p>If the collection is empty, all kind of headers are allowed.</p>
 </div>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedMethods*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedMethods">AllowedMethods</h4>
@@ -172,7 +172,7 @@
     </tbody>
   </table>
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedMethods_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>If this list is empty, all kind of methods are allowed.</p>
+  <div class="markdown level1 remarks"><p>If the collection is empty, all kind of methods are allowed.</p>
 </div>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedOrigins*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedOrigins">AllowedOrigins</h4>
@@ -199,7 +199,7 @@
     </tbody>
   </table>
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowedOrigins_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>If this list is empty, all origins are allowed.</p>
+  <div class="markdown level1 remarks"><p>If the collection is empty, all origins are allowed.</p>
 </div>
   <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs*"></a>
   <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_AllowLogs" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs">AllowLogs</h4>
@@ -273,12 +273,83 @@
   <h5 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
 </div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedHeaders_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Solti#Utils#Rpc#Pipeline#IHttpAccessControlHandlerConfig#AllowedHeaders*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedHeaders" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Solti#Utils#Rpc#Pipeline#IHttpAccessControlHandlerConfig#AllowedHeaders">IHttpAccessControlHandlerConfig.AllowedHeaders</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyCollection&lt;string&gt; IHttpAccessControlHandlerConfig.AllowedHeaders { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedMethods_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Solti#Utils#Rpc#Pipeline#IHttpAccessControlHandlerConfig#AllowedMethods*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedMethods" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Solti#Utils#Rpc#Pipeline#IHttpAccessControlHandlerConfig#AllowedMethods">IHttpAccessControlHandlerConfig.AllowedMethods</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyCollection&lt;string&gt; IHttpAccessControlHandlerConfig.AllowedMethods { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedOrigins_" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Solti#Utils#Rpc#Pipeline#IHttpAccessControlHandlerConfig#AllowedOrigins*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_HttpAccessControl_Solti_Utils_Rpc_Pipeline_IHttpAccessControlHandlerConfig_AllowedOrigins" data-uid="Solti.Utils.Rpc.Pipeline.HttpAccessControl.Solti#Utils#Rpc#Pipeline#IHttpAccessControlHandlerConfig#AllowedOrigins">IHttpAccessControlHandlerConfig.AllowedOrigins</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyCollection&lt;string&gt; IHttpAccessControlHandlerConfig.AllowedOrigins { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
   </div>
   <div>
-      <a class="xref" href="Solti.Utils.Rpc.Interfaces.ISupportsLog.html">ISupportsLog</a>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.html">IHttpAccessControlHandlerConfig</a>
   </div>
 </article>
           </div>
