@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
@@ -21,14 +22,28 @@ namespace Solti.Utils.Rpc.Interfaces
         {
             IRpcRequestContext cntx = context.Scope.Get<IRpcRequestContext>();
 
-            using IDisposable? logScope = context.Logger.BeginScope(new Dictionary<string, object>
+            IDisposable logScope = context.Logger.BeginScope(new Dictionary<string, object>
             {
                 [nameof(cntx.Module)]    = cntx.Module,
                 [nameof(cntx.Method)]    = cntx.Method,
                 [nameof(cntx.SessionId)] = cntx.SessionId ?? "NULL"
             });
 
-            return callNext();
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType))
+            {
+                Task task = (Task) callNext()!;
+                task.ContinueWith(_ => logScope.Dispose(), default, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+                return task;
+            }
+
+            try
+            {
+                return callNext();
+            }
+            finally
+            {
+                logScope.Dispose();
+            }
         }
     }
 }

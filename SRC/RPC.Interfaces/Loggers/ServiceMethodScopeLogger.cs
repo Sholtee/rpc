@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Interfaces
 {
@@ -16,14 +17,28 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <inheritdoc/>
         public override object? Invoke(LogContext context, Func<object?> callNext)
         {
-            using IDisposable? logScope = context.Logger.BeginScope(new Dictionary<string, object>
+            IDisposable logScope = context.Logger.BeginScope(new Dictionary<string, object>
             {
                 ["Service"] = context.Method.ReflectedType,
                 ["Method"] = context.Method
                 // TODO: szerviz nev
             });
 
-            return callNext();
+            if (typeof(Task).IsAssignableFrom(context.Method.ReturnType))
+            {
+                Task task = (Task) callNext()!;
+                task.ContinueWith(_ => logScope.Dispose(), default, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+                return task;
+            }
+
+            try
+            {
+                return callNext();
+            }
+            finally
+            {
+                logScope.Dispose();
+            }
         }
     }
 }
