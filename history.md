@@ -75,3 +75,12 @@
   - *done:* Console app host doesn't echo the pressed keys
 - 5.0.2:
   - *fixed:* Missing `async` method support in `[Exception|StopWatch]Logger`
+- 6.0.0-preview1:
+  - *breaking:* The server has been rewritten using the "chain of responsibility" pattern. For more information see the [pipeline](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Server/Public/Pipeline ) folder.
+  - *breaking:* Dropped `RpcServiceBuilder` (it's substituted by the `WebServicebuilder` class). For an example check out the [sample server](https://github.com/Sholtee/rpc/blob/master/TEST/RPC.Server.Sample/AppHost.cs ) project
+  - *breaking:* `WebService` class has been made public
+  - *breaking:* Typed `ExceptionInfo.Data`
+  - *introduced:* The underlying HTTP server can be replaced
+  - *introduced:* The underlying DI ecosystem can be replaced
+  - *fixed:* Some logger issue
+  - *fixed:* Parameter/property name could not be determined in case of validation exception
