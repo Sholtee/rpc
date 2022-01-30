@@ -113,12 +113,12 @@
    - They may be decorated by [aspects](https://github.com/Sholtee/injector#aspects )
    - Each session has its own module instance
 ## Modules
-- are also services
-- are accessible remotely (see [how it works](#How-it-works ) section)
-- may have [dependencies](https://github.com/Sholtee/injector#registering-services ) (defined in the `ConfigureServices()` method)
-- are registered in a `Scoped` lifetime
+- They are also services
+- They are accessible remotely (see [how it works](#How-it-works ) section)
+- They may have [dependencies](https://github.com/Sholtee/injector#registering-services ) (defined in the `ConfigureServices()` method)
+- They are registered in a `Scoped` lifetime
 
-Note that the `ConfigureRpcService()` (see above) method implicitly registeres the [IServiceDescriptor](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Interfaces.IServiceDescriptor.html ) module which is intended to describe the RPC service itself and exposes only the name and version of your app.
+Note that the `ConfigureRpcService()` (see above) method implicitly registers the [IServiceDescriptor](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Interfaces.IServiceDescriptor.html ) module which describes the RPC service itself and exposes only the name and version of your app.
 
 A basic module looks like this:
 ```csharp
@@ -138,7 +138,7 @@ public class Calculator : ICalculator
 {
   private readonly IRequestContext FContext;
   // You can access the request context as a regular dependency
-  public Calculator(IRequestContext context) => FContext = context ?? throw new ArgumentNullException(nameof(context));
+  public Calculator(IRequestContext context, /*other dependencies go here*/) => FContext = context ?? throw new ArgumentNullException(nameof(context));
   public int Add(int a, int b) => a + b;
   public Task<int> AddAsync(int a, int b)
   {
@@ -149,7 +149,7 @@ public class Calculator : ICalculator
 }
 ```
 ## Aspects
-[Aspects](https://github.com/Sholtee/injector#aspects ) are intended to separate common functionality from the actual behavior (in case of modules this means the business logic). In practice aspects are implemented with [interceptors](https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html ) and [attributes](https://sholtee.github.io/injector/doc/Solti.Utils.DI.Interfaces.AspectAttribute.html ):
+[Aspects](https://github.com/Sholtee/injector#aspects ) are intended to separate common functionality from the actual behavior (in case of modules this means the business logic). In this library aspects are implemented with [interceptors](https://sholtee.github.io/proxygen/doc/Solti.Utils.Proxy.InterfaceInterceptor-1.html ) and [attributes](https://sholtee.github.io/injector/doc/Solti.Utils.DI.Interfaces.AspectAttribute.html ):
 ```csharp
 using Solti.Utils.DI.Interfaces;
 
@@ -215,6 +215,7 @@ public interface IModule
 webServiceBuilder
   .ConfigureRpcService(conf => (conf as Modules)?.Register<IModule, Module>());
 ```
+In this library, aspects reside in the [interfaces](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects ) while interceptors in the [server](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Server/Public/Aspects ) project.
 ### Parameter validation aspect
 `ParameterValidatorAspect` aims that its name suggests:
 ```csharp
@@ -239,7 +240,7 @@ Built-in validators are the follows:
    ```csharp
    void DoSomethingElse([Must(typeof(CustomValidationLogic))] ComplexData arg);
    ```
-- `ValidatePropertiesAttribute`: Instructs the system to executes validators placed on properties.
+- `ValidatePropertiesAttribute`: Instructs the system to execute validators placed on properties.
    ```csharp
    public class ComplexData
    {
@@ -258,8 +259,9 @@ public sealed class MyValidatorAttribute : Attribute, IParameterValidator, IProp
 {
 }
 ```
+For more informtaion check out the [sources](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects/ParameterValidation ) or the [documentation](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Interfaces.html )!
 ### Authorization aspect
-By default the system uses "role based" authorization. It means that every user (even an anonymous) has its own set of assigned roles (for e.g.: `AuthenticatedUser`, `Admin`) and every module method must provide a role list required the calling user to have:
+By default the system uses "role based" authorization. It means that every user (even an anonymous) must have its own set of assigned roles (for e.g.: `AuthenticatedUser`, `Admin`) and every module method provide a role list required the calling user to have:
 ```csharp
 using Solti.Utils.Rpc.Interfaces;
 
@@ -309,6 +311,7 @@ webServiceBuilder
   .ConfigureRpcService(conf => (conf as Modules)?.Register<IModule, Module>())
   .ConfigureServices(services => services.Service<IRoleManager, RoleManagerService>(Lifetime.Scoped));
 ```
+If the authorization fails the system throws an `AuthenticationException`.
 ### Transaction manager aspect
 To ensure database consistency we can define [transactions](https://docs.oracle.com/cd/B19306_01/server.102/b14220/transact.htm#i1666 ) using aspects:
 ```csharp
@@ -334,6 +337,53 @@ webServiceBuilder
   .ConfigureRpcService(conf => (conf as Modules)?.Register<IModule, Module>())
   .ConfigureServices(services => services.Factory<IDbConnection>(injector => /*create a new db connection*/, Lifetime.Scoped));
 ```
+### Logger aspect
+```csharp
+using Solti.Utils.Rpc.Interfaces;
+
+[LoggerAspect(typeof(typeof(ModuleMethodScopeLogger), typeof(ExceptionLogger), typeof(ParameterLogger), typeof(StopWatchLogger)))] // set the default log behaviors to run
+public interface IUserManager
+{
+  [Loggers(typeof(ModuleMethodScopeLogger), typeof(ExceptionLogger), typeof(StopWatchLogger))] // don't log parameteres (may contain sensitive data)
+  Task<UserEx> Login(string emailOrUserName, string pw);
+
+  Task Logout(); // will run the default behaviors
+}
+```
+`LoggerAspect` uses the [ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=dotnet-plat-ext-6.0 ) service as a backend so you have to register it:
+```csharp
+using Microsoft.Extensions.Logging;
+
+public class ConsoleLogger : Solti.Utils.Rpc.Internals.LoggerBase 
+{
+  protected override void LogCore(string message) => Console.Out.WriteLine(message);
+
+  public static ILogger Create<TCategory>() => new ConsoleLogger(GetDefaultCategory<TCategory>());
+
+  public ConsoleLogger(string category) : base(category) { }
+}
+...
+webServiceBuilder
+  // Modules/services may also request the backend to do some method specific logging.
+  .ConfigureServices(services => services.Factory<ILogger>(i => ConsoleLogger.Create<AppHost>(), Lifetime.Scoped));
+```
+Built-in log behaviors are the follows:
+- `ExceptionLogger`: Logs the unhandled exceptions then rethrows it
+- `ModuleMethodScopeLogger`: Creates a new [log scope](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger.beginscope?view=dotnet-plat-ext-6.0 ) containing the module and method name (intended to be used on module interfaes)
+- `ParameterLogger`: Logs the parameter names and values (note that this logger should be disabled when a method accepts sensitive data, e.g. passwords)
+- `ServiceMethodScopeLogger`: Creates a new [log scope](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger.beginscope?view=dotnet-plat-ext-6.0 ) containing the service and method name (intended to be used on service interfaes)
+- `StopWatchLogger`: Logs the elapsed time while the method invocation takes place
+You can define your own log behavior by descending from the `Solti.Utils.Rpc.Interfaces.LoggerBase` (not be confused about the Solti.Utils.Rpc.Internals.LoggerBase class).
+
+A sample log looks like this:
+```
+'Solti.Utils.Rpc.Server.Sample.exe' (AppHost): [Worker ID = 1, Url = http://localhost:1986/api/, Remote EndPoint = [::1]:50173] Information: Request available.
+'Solti.Utils.Rpc.Server.Sample.exe' (AppHost): [Worker ID = 1, Url = http://localhost:1986/api/, Remote EndPoint = [::1]:50173] Information: Request processed successfully.
+'Solti.Utils.Rpc.Server.Sample.exe' (AppHost): [Worker ID = 2, Url = http://localhost:1986/api/, Remote EndPoint = [::1]:50173] Information: Request available.
+'Solti.Utils.Rpc.Server.Sample.exe' (AppHost): [Worker ID = 2, Url = http://localhost:1986/api/, Remote EndPoint = [::1]:50173] [Module = IUserManager, Method = Logout, SessionId = NULL] Information: Parameters: 
+'Solti.Utils.Rpc.Server.Sample.exe' (AppHost): [Worker ID = 2, Url = http://localhost:1986/api/, Remote EndPoint = [::1]:50173] [Module = IUserManager, Method = Logout, SessionId = NULL] Information: Time elapsed: 0ms
+'Solti.Utils.Rpc.Server.Sample.exe' (AppHost): [Worker ID = 2, Url = http://localhost:1986/api/, Remote EndPoint = [::1]:50173] Information: Request processed successfully.
+```
 ## How to listen on HTTPS (Windows only)
 Requires [this](https://raw.githubusercontent.com/Sholtee/rpc.boilerplate/master/BUILD/cert.ps1 ) script to be loaded (`.(".\cert.ps1")`)
 1. If you don't have your own, create a self-signed certificate
@@ -344,7 +394,7 @@ Requires [this](https://raw.githubusercontent.com/Sholtee/rpc.boilerplate/master
    ```ps
    Bind-Certificate -P12Cert ".Cert\certificate.p12" -Password "cica" -IpPort "127.0.0.1:1986"
    ```
-## Resources
+## Additional resources
 [API docs](https://sholtee.github.io/rpc )
 
 [Version history](https://github.com/Sholtee/rpc/tree/master/history.md )
