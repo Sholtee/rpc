@@ -10,8 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-using Microsoft.Extensions.Logging;
-
 namespace Solti.Utils.Rpc.Internals
 {
     using Properties;
@@ -125,13 +123,8 @@ namespace Solti.Utils.Rpc.Internals
         public virtual void OnRun() { }
 
         /// <summary>
-        /// The logger related to this instance.
-        /// </summary>
-        public ILogger Logger { get; set; } = TraceLogger.Create<CommandLineApplication>();
-
-        /// <summary>
         /// Called on unhandled exception
         /// </summary>
-        public virtual void OnUnhandledException(Exception ex) => Logger.LogError(ex?.ToString() ?? "Unknown error");
+        public virtual void OnUnhandledException(Exception ex) => System.Diagnostics.Trace.TraceError(ex?.ToString() ?? "Unknown error");
     }
 }
