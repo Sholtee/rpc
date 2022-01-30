@@ -261,7 +261,7 @@ public sealed class MyValidatorAttribute : Attribute, IParameterValidator, IProp
 ```
 For more informtaion check out the [sources](https://github.com/Sholtee/rpc/tree/master/SRC/RPC.Interfaces/Attributes/Aspects/ParameterValidation ) or the [documentation](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Interfaces.html )!
 ### Authorization aspect
-By default the system uses "role based" authorization. It means that every user (even an anonymous) must have its own set of assigned roles (for e.g.: `AuthenticatedUser`, `Admin`) and every module method provide a role list required the calling user to have:
+By default the system uses "role based" authorization. It means that every user (even the anonymous) must have its own set of assigned roles (for e.g.: `AuthenticatedUser`, `Admin`) and every module method provides a role list required the calling user to have:
 ```csharp
 using Solti.Utils.Rpc.Interfaces;
 
