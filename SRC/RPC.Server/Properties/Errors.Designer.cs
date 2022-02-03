@@ -61,6 +61,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generic members must have an alias..
+        /// </summary>
+        internal static string ALIAS_REQUIRED {
+            get {
+                return ResourceManager.GetString("ALIAS_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to More than one methods are annotated with the same verb..
         /// </summary>
         internal static string AMBIGOUS_TARGET {

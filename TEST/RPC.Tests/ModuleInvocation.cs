@@ -278,10 +278,17 @@ namespace Solti.Utils.Rpc.Tests
         [TestCaseSource(nameof(RandomInterfaces))]
         public void ModuleInvocationBuilder_ShouldWorkWith(Type iface) => Assert.DoesNotThrow(() =>
         {
-            var bldr = new ModuleInvocationBuilder();
+            ModuleInvocationBuilder bldr = new();
             bldr.AddModule(iface);
             bldr.Build();
         });
+
+        [Test]
+        public void ModuleInvocationBuilder_ShouldThrowOnGenericInterfaceIfThereIsNoAlias()
+        {
+            ModuleInvocationBuilder bldr = new();
+            Assert.Throws<InvalidOperationException>(() => bldr.AddModule(typeof(IList<int>)));
+        }
 
         [Test]
         public void ModuleInvocationBuilder_ShouldHandleMultipleModules() => Assert.DoesNotThrow(() =>

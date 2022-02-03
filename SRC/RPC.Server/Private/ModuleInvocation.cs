@@ -369,6 +369,13 @@ namespace Solti.Utils.Rpc.Internals
             if (iface.IsGenericTypeDefinition)
                 throw new ArgumentException(Errors.GENERIC_IFACE, nameof(iface));
 
+            //
+            // Modul neve ne "IModule`1" es tarsai legyen
+            //
+
+            if (iface.IsGenericType && iface.GetCustomAttribute<AliasAttribute>() is null)
+                throw new InvalidOperationException(Errors.ALIAS_REQUIRED);
+
             MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface)
                 .Where
                 (
