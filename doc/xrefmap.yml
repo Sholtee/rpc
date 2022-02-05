@@ -4501,51 +4501,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.HandleAsync
   nameWithType: RequestTimeoutHandler.HandleAsync
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl
-  name: RpcAccessControl
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html
-  commentId: T:Solti.Utils.Rpc.Pipeline.RpcAccessControl
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl
-  nameWithType: RpcAccessControl
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
-  name: RpcAccessControl(WebServiceBuilder, RequestHandlerBuilder)
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.RpcAccessControl(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
-  nameWithType: RpcAccessControl.RpcAccessControl(WebServiceBuilder, RequestHandlerBuilder)
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor*
-  name: RpcAccessControl
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.RpcAccessControl
-  nameWithType: RpcAccessControl.RpcAccessControl
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders
-  name: AllowedHeaders
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedHeaders
-  commentId: P:Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders
-  nameWithType: RpcAccessControl.AllowedHeaders
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders*
-  name: AllowedHeaders
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedHeaders_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedHeaders
-  nameWithType: RpcAccessControl.AllowedHeaders
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods
-  name: AllowedMethods
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedMethods
-  commentId: P:Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods
-  nameWithType: RpcAccessControl.AllowedMethods
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods*
-  name: AllowedMethods
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl_AllowedMethods_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods
-  nameWithType: RpcAccessControl.AllowedMethods
 - uid: Solti.Utils.Rpc.Pipeline.SchemaProvider
   name: SchemaProvider
   href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html
