@@ -638,6 +638,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Name
   nameWithType: Win32ServiceDescriptor.Name
+- uid: Solti.Utils.Rpc.IHttpResponseExtensions
+  name: IHttpResponseExtensions
+  href: Solti.Utils.Rpc.IHttpResponseExtensions.html
+  commentId: T:Solti.Utils.Rpc.IHttpResponseExtensions
+  fullName: Solti.Utils.Rpc.IHttpResponseExtensions
+  nameWithType: IHttpResponseExtensions
+- uid: Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String,System.Threading.CancellationToken)
+  name: WriteResponseString(IHttpResponse, String, CancellationToken)
+  href: Solti.Utils.Rpc.IHttpResponseExtensions.html#Solti_Utils_Rpc_IHttpResponseExtensions_WriteResponseString_Solti_Utils_Rpc_Interfaces_IHttpResponse_System_String_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse, System.String, System.Threading.CancellationToken)
+  nameWithType: IHttpResponseExtensions.WriteResponseString(IHttpResponse, String, CancellationToken)
+- uid: Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString*
+  name: WriteResponseString
+  href: Solti.Utils.Rpc.IHttpResponseExtensions.html#Solti_Utils_Rpc_IHttpResponseExtensions_WriteResponseString_
+  commentId: Overload:Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString
+  nameWithType: IHttpResponseExtensions.WriteResponseString
 - uid: Solti.Utils.Rpc.InjectorDotNetBackend
   name: InjectorDotNetBackend
   href: Solti.Utils.Rpc.InjectorDotNetBackend.html
@@ -3541,19 +3560,6 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException
   nameWithType: ExceptionCatcherHandler.ProcessUnhandledException
-- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String)
-  name: WriteResponseString(IHttpResponse, String)
-  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_WriteResponseString_Solti_Utils_Rpc_Interfaces_IHttpResponse_System_String_
-  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse,System.String)
-  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString(Solti.Utils.Rpc.Interfaces.IHttpResponse, System.String)
-  nameWithType: ExceptionCatcherHandler.WriteResponseString(IHttpResponse, String)
-- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString*
-  name: WriteResponseString
-  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcherHandler_WriteResponseString_
-  commentId: Overload:Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString
-  isSpec: "True"
-  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.WriteResponseString
-  nameWithType: ExceptionCatcherHandler.WriteResponseString
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl
   name: HttpAccessControl
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html
