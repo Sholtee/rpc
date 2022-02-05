@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class RequestHandlerBuilder
+    <title>Class SchemaProvider
    | RPC.NET </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class RequestHandlerBuilder
+    <meta name="title" content="Class SchemaProvider
    | RPC.NET ">
     <meta name="generator" content="docfx 2.58.0.0">
     
@@ -37,31 +37,30 @@
       <div role="main" class="container body-content hide-when-search">
         <div class="article row grid">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder">
+            <article class="content wrap" id="_content" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider">
   
   
-  <h1 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder" class="text-break">Class RequestHandlerBuilder
+  <h1 id="Solti_Utils_Rpc_Pipeline_SchemaProvider" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider" class="text-break">Class SchemaProvider
   </h1>
-  <div class="markdown level0 summary"><p>Builds <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instances.</p>
+  <div class="markdown level0 summary"><p>Configures the request pipeline to be &quot;exception proof&quot;.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">RequestHandlerBuilder</span></div>
-      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html">ExceptionCatcher</a></div>
-      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.HttpAccessControl.html">HttpAccessControl</a></div>
-      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.Modules.html">Modules</a></div>
-      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestLimiter.html">RequestLimiter</a></div>
-      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestTimeout.html">RequestTimeout</a></div>
-      <div class="level2"><a class="xref" href="Solti.Utils.Rpc.Pipeline.SchemaProvider.html">SchemaProvider</a></div>
+    <div class="level1"><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html">RequestHandlerBuilder</a></div>
+    <div class="level2"><span class="xref">SchemaProvider</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder.IParameterizedBuilder</a>&lt;<a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a>&gt;</div>
+    <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.html">ISchemaProviderHandlerConfig</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder">RequestHandlerBuilder.WebServiceBuilder</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
@@ -86,20 +85,20 @@
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Solti.Utils.Rpc.Pipeline.html">Solti.Utils.Rpc.Pipeline</a></h6>
   <h6><strong>Assembly</strong>: Solti.Utils.Rpc.Server.dll</h6>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_syntax">Syntax</h5>
+  <h5 id="Solti_Utils_Rpc_Pipeline_SchemaProvider_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class RequestHandlerBuilder : IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class SchemaProvider : RequestHandlerBuilder, IBuilder&lt;IRequestHandler&gt;.IParameterizedBuilder&lt;IRequestHandler&gt;, ISchemaProviderHandlerConfig</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_Solti_Utils_Rpc_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder)">RequestHandlerBuilder(WebServiceBuilder)</h4>
-  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html">RequestHandlerBuilder</a> isntance.</p>
+  <a id="Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_Solti_Utils_Rpc_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder)">SchemaProvider(WebServiceBuilder)</h4>
+  <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Pipeline.SchemaProvider.html">SchemaProvider</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected RequestHandlerBuilder(WebServiceBuilder webServiceBuilder)</code></pre>
+    <pre><code class="lang-csharp hljs">public SchemaProvider(WebServiceBuilder webServiceBuilder)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -120,14 +119,14 @@
   </table>
   <h3 id="properties">Properties
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder">WebServiceBuilder</h4>
-  <div class="markdown level1 summary"><p>The <a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a> that instantiated this class.</p>
+  <a id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Schema_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Schema" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema">Schema</h4>
+  <div class="markdown level1 summary"><p>The actual schema</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WebServiceBuilder WebServiceBuilder { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, object&gt; Schema { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -139,21 +138,21 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Solti.Utils.Rpc.WebServiceBuilder.html">WebServiceBuilder</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build*"></a>
-  <h4 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Build(IRequestHandler)</h4>
+  <a id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Build_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.Build*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)">Build(IRequestHandler)</h4>
   <div class="markdown level1 summary"><p>Creates a new <a class="xref" href="Solti.Utils.Rpc.Interfaces.IRequestHandler.html">IRequestHandler</a> instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract IRequestHandler Build(IRequestHandler next)</code></pre>
+    <pre><code class="lang-csharp hljs">public override IRequestHandler Build(IRequestHandler next)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -187,12 +186,98 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_">RequestHandlerBuilder.Build(IRequestHandler)</a></div>
+  <h5 id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>You should not call this method directly.</p>
 </div>
+  <a id="Solti_Utils_Rpc_Pipeline_SchemaProvider_GetMemberId_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_SchemaProvider_GetMemberId_System_Reflection_MemberInfo_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId(System.Reflection.MemberInfo)">GetMemberId(MemberInfo)</h4>
+  <div class="markdown level1 summary"><p>Gets the unique ID of a member.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual string GetMemberId(MemberInfo member)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.memberinfo">MemberInfo</a></td>
+        <td><span class="parametername">member</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Register_" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.Register*"></a>
+  <h4 id="Solti_Utils_Rpc_Pipeline_SchemaProvider_Register__1" data-uid="Solti.Utils.Rpc.Pipeline.SchemaProvider.Register``1">Register&lt;TInterface&gt;()</h4>
+  <div class="markdown level1 summary"><p>Registers a module interface in the schema &quot;database&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SchemaProvider Register&lt;TInterface&gt;()
+    where TInterface : class</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Solti.Utils.Rpc.Pipeline.SchemaProvider.html">SchemaProvider</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInterface</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Solti.Utils.Rpc.Interfaces.IBuilder-1.IParameterizedBuilder-1.html">IBuilder&lt;TBuiltService&gt;.IParameterizedBuilder&lt;TParam&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.html">ISchemaProviderHandlerConfig</a>
   </div>
 </article>
           </div>

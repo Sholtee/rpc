@@ -3913,6 +3913,25 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.Timeout
   nameWithType: IRequestTimeoutHandlerConfig.Timeout
+- uid: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig
+  name: ISchemaProviderHandlerConfig
+  href: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.html
+  commentId: T:Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig
+  fullName: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig
+  nameWithType: ISchemaProviderHandlerConfig
+- uid: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema
+  name: Schema
+  href: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.html#Solti_Utils_Rpc_Pipeline_ISchemaProviderHandlerConfig_Schema
+  commentId: P:Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema
+  fullName: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema
+  nameWithType: ISchemaProviderHandlerConfig.Schema
+- uid: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema*
+  name: Schema
+  href: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.html#Solti_Utils_Rpc_Pipeline_ISchemaProviderHandlerConfig_Schema_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema
+  nameWithType: ISchemaProviderHandlerConfig.Schema
 - uid: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler
   name: ModuleInvocationHandler
   href: Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html
@@ -4473,6 +4492,112 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.AllowedMethods
   nameWithType: RpcAccessControl.AllowedMethods
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider
+  name: SchemaProvider
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html
+  commentId: T:Solti.Utils.Rpc.Pipeline.SchemaProvider
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider
+  nameWithType: SchemaProvider
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  name: SchemaProvider(WebServiceBuilder)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_Solti_Utils_Rpc_WebServiceBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.SchemaProvider(Solti.Utils.Rpc.WebServiceBuilder)
+  nameWithType: SchemaProvider.SchemaProvider(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor*
+  name: SchemaProvider
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.SchemaProvider
+  nameWithType: SchemaProvider.SchemaProvider
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  name: Build(IRequestHandler)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Build_Solti_Utils_Rpc_Interfaces_IRequestHandler_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler)
+  nameWithType: SchemaProvider.Build(IRequestHandler)
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Build*
+  name: Build
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Build_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProvider.Build
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Build
+  nameWithType: SchemaProvider.Build
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId(System.Reflection.MemberInfo)
+  name: GetMemberId(MemberInfo)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_GetMemberId_System_Reflection_MemberInfo_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId(System.Reflection.MemberInfo)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId(System.Reflection.MemberInfo)
+  nameWithType: SchemaProvider.GetMemberId(MemberInfo)
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId*
+  name: GetMemberId
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_GetMemberId_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId
+  nameWithType: SchemaProvider.GetMemberId
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register*
+  name: Register
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Register_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProvider.Register
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register
+  nameWithType: SchemaProvider.Register
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register``1
+  name: Register<TInterface>()
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Register__1
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.Register``1
+  name.vb: Register(Of TInterface)()
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register<TInterface>()
+  fullName.vb: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register(Of TInterface)()
+  nameWithType: SchemaProvider.Register<TInterface>()
+  nameWithType.vb: SchemaProvider.Register(Of TInterface)()
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema
+  name: Schema
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Schema
+  commentId: P:Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema
+  nameWithType: SchemaProvider.Schema
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema*
+  name: Schema
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Schema_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema
+  nameWithType: SchemaProvider.Schema
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler
+  name: SchemaProviderHandler
+  href: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.html
+  commentId: T:Solti.Utils.Rpc.Pipeline.SchemaProviderHandler
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler
+  nameWithType: SchemaProviderHandler
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig)
+  name: SchemaProviderHandler(IRequestHandler, ISchemaProviderHandlerConfig)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.html#Solti_Utils_Rpc_Pipeline_SchemaProviderHandler__ctor_Solti_Utils_Rpc_Interfaces_IRequestHandler_Solti_Utils_Rpc_Pipeline_ISchemaProviderHandlerConfig_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.#ctor(Solti.Utils.Rpc.Interfaces.IRequestHandler,Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.SchemaProviderHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler, Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig)
+  nameWithType: SchemaProviderHandler.SchemaProviderHandler(IRequestHandler, ISchemaProviderHandlerConfig)
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.#ctor*
+  name: SchemaProviderHandler
+  href: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.html#Solti_Utils_Rpc_Pipeline_SchemaProviderHandler__ctor_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.#ctor
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.SchemaProviderHandler
+  nameWithType: SchemaProviderHandler.SchemaProviderHandler
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
+  name: HandleAsync(IInjector, IHttpSession, CancellationToken)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.html#Solti_Utils_Rpc_Pipeline_SchemaProviderHandler_HandleAsync_Solti_Utils_DI_Interfaces_IInjector_Solti_Utils_Rpc_Interfaces_IHttpSession_System_Threading_CancellationToken_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector,Solti.Utils.Rpc.Interfaces.IHttpSession,System.Threading.CancellationToken)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpSession, System.Threading.CancellationToken)
+  nameWithType: SchemaProviderHandler.HandleAsync(IInjector, IHttpSession, CancellationToken)
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync*
+  name: HandleAsync
+  href: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.html#Solti_Utils_Rpc_Pipeline_SchemaProviderHandler_HandleAsync_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync
+  nameWithType: SchemaProviderHandler.HandleAsync
 - uid: Solti.Utils.Rpc.RpcClientFactory
   name: RpcClientFactory
   href: Solti.Utils.Rpc.RpcClientFactory.html
