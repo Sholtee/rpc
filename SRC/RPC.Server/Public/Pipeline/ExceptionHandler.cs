@@ -5,7 +5,6 @@
 ********************************************************************************/
 using System;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,25 +35,6 @@ namespace Solti.Utils.Rpc.Pipeline
     public class ExceptionCatcherHandler : RequestHandlerBase<IExceptionCatcherHandlerConfig>
     {
         /// <summary>
-        /// Writes the given <paramref name="responseString"/> to the <paramref name="response"/>.
-        /// </summary>
-        protected async static Task WriteResponseString(IHttpResponse response, string responseString)
-        {
-            if (response is null)
-                throw new ArgumentNullException(nameof(response));
-
-            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-            await response.Payload.WriteAsync
-            (
-#if NETSTANDARD2_1_OR_GREATER
-                buffer.AsMemory(0, buffer.Length)
-#else
-                buffer, 0, buffer.Length
-#endif
-            );
-        }
-
-        /// <summary>
         /// Processes unhandled exceptions.
         /// </summary>
         protected virtual async Task ProcessUnhandledException(Exception ex, IHttpSession context)
@@ -73,16 +53,12 @@ namespace Solti.Utils.Rpc.Pipeline
                 response.StatusCode = (ex as HttpException)?.Status ?? HttpStatusCode.InternalServerError;
 
                 if (!string.IsNullOrEmpty(ex.Message))
-                {
-                    response.Headers["Content-Type"] = "text/html";
-
                     //
                     // Itt ne hasznaljuk az context.Cancellation-t mivel lehet h pont a feldolgozo megszakitasa miatt kerultunk ide.
                     // Ilyen esetben a TaskCanceledException-t is gond nelkul szeretnenk feldolgozni.
                     //
 
-                    await WriteResponseString(response, ex.Message);
-                }
+                    await response.WriteResponseString(ex.Message);
 
                 await response.Close();
             }
