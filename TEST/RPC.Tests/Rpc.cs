@@ -413,7 +413,7 @@ namespace Solti.Utils.Rpc.Tests
 
             using var client = new HttpClient();
 
-            HttpResponseMessage response = await client.GetAsync(Host);
+            HttpResponseMessage response = await client.DeleteAsync(Host);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.MethodNotAllowed));
 
