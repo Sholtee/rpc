@@ -107,7 +107,14 @@
          .Use<RequestLimiter>(conf => {...})
          .Use<ExceptionCatcher>(conf => {...}));
      ```
-     As you can see every pipeline item (request handler) has its own configuration. For more information check [this](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.html ) out.
+     Where:
+     - [ExceptionCatcher](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html ) configures and registers the [ExceptionCacherHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html ). As its name suggests this handler catches unhandled exception and generates the appropriate HTTP response (by default HTTP 500 is returned).
+     - [RequestLimiter](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestLimiter.html ) configures and registers the [RequestLimiterHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.html ). It is aimed to reject the request if the reuqest count exceeds a threshold. Every remote endpoint has its own counter that resets after a specified interval. By default a remote client can made 1000 requests in every 10 seconds.
+     - [RpcAccessControl](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RpcAccessControl.html ) is used to register the [HttpAccessControlHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html ), set up to support RPC. You may tweak this handler if you want to set up [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing ).
+     - [RequestTimeout](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestTimeout.html ) installs a [RequestTimeoutHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html ) in order to make the request cancellable if the processing lasts too long. The default timeout is 10 seconds.
+     - [Modules](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.Modules.html ) installs the heart of the pipeline, the [ModuleInvocationHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html ). Its responsible for invoking the RPC module. The module and the method should be specified in the query part of the request while the serialized method parameters are in the request body. For more information see [how RPC works](#how-it-works)
+
+     As you can see every pipeline item (request handler) has its own configuration.
 3. layer: The exposed modules:
    - They are defined in [Modules](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.Modules.html ) pipeline item
    - They may be decorated by [aspects](https://github.com/Sholtee/injector#aspects )
