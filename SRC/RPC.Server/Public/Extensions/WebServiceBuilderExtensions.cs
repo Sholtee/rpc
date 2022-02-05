@@ -40,7 +40,7 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Defines a basic RPC service.
         /// </summary>
-        /// <remarks>The defined RPC service uses: <see cref="ExceptionCatcher"/>, <see cref="RequestLimiter"/>, <see cref="RpcAccessControl"/>, <see cref="RequestTimeout"/> and <see cref="Modules"/>.</remarks>
+        /// <remarks>The defined RPC service uses: <see cref="ExceptionCatcher"/>, <see cref="RequestLimiter"/>, <see cref="HttpAccessControl"/>, <see cref="RequestTimeout"/> and <see cref="Modules"/>.</remarks>
         public static WebServiceBuilder ConfigureRpcService(this WebServiceBuilder webServiceBuilder, Action<RequestHandlerBuilder> configurator, bool useDefaultLogger = true)
         {
             if (webServiceBuilder is null)
@@ -71,7 +71,15 @@ namespace Solti.Utils.Rpc
                         // Itt a "configurator" tudatosan nincs hivva, mert a PublishSchemaAttribute-al publikalunk
                         //
                     })
-                    .Use<RpcAccessControl>(configurator)
+                    .Use<HttpAccessControl>(hac => 
+                    {
+                        hac.AllowedMethods.Add("POST"); // module invocation
+                        hac.AllowedMethods.Add("GET"); // schema query
+                        hac.AllowedHeaders.Add("Content-Type");
+                        hac.AllowedHeaders.Add("Content-Length");
+
+                        configurator(hac);
+                    })
                     .Use<RequestLimiter>(configurator)
                     .Use<ExceptionCatcher>(configurator));
 

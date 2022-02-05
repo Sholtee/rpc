@@ -142,13 +142,13 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Allowed methods.
         /// </summary>
         /// <remarks>If the collection is empty, all kind of methods are allowed.</remarks>
-        public virtual ICollection<string> AllowedMethods { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public ICollection<string> AllowedMethods { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Allowed headers.
         /// </summary>
         /// <remarks>If the collection is empty, all kind of headers are allowed.</remarks>
-        public virtual ICollection<string> AllowedHeaders { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public ICollection<string> AllowedHeaders { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <inheritdoc/>
         public override IRequestHandler Build(IRequestHandler next) => new HttpAccessControlHandler(next, this);
@@ -169,42 +169,5 @@ namespace Solti.Utils.Rpc.Pipeline
         IReadOnlyCollection<string> IHttpAccessControlHandlerConfig.AllowedMethods => AllowAllIfEmpty(AllowedMethods);
 
         IReadOnlyCollection<string> IHttpAccessControlHandlerConfig.AllowedHeaders => AllowAllIfEmpty(AllowedHeaders);
-    }
-
-    /// <summary>
-    /// Specifies how to handle access control HTTP requests (RPC specific).
-    /// </summary>
-    /// <remarks>Allowed method: POST, Allowed headers: Content-Type, Content-Length</remarks>
-    public class RpcAccessControl : HttpAccessControl
-    {
-        /// <summary>
-        /// Creates a new <see cref="RpcAccessControl"/> instance.
-        /// </summary>
-        public RpcAccessControl(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) { }
-
-        /// <summary>
-        /// Allows POST method only.
-        /// </summary>
-        /// <remarks>This list is read-only.</remarks>
-        public override ICollection<string> AllowedMethods { get; } = new string[]
-        { 
-            //
-            // Module invocation
-            //
-
-            "POST",
-        
-            //
-            // Schema request
-            //
-
-            "GET"
-        };
-
-        /// <summary>
-        /// Allows Content-Type, Content-Length headers only.
-        /// </summary>
-        /// <remarks>This list is read-only.</remarks>
-        public override ICollection<string> AllowedHeaders { get; } = new string[] { "Content-Type", "Content-Length" };
     }
 }
