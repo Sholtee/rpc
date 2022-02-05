@@ -34,5 +34,27 @@ namespace Solti.Utils.Rpc.Internals
 
                 .Distinct();
         }
+
+        internal static IEnumerable<PropertyInfo> GetAllInterfaceProperties(this Type iface)
+        {
+            Debug.Assert(iface.IsInterface);
+
+            //
+            // A "BindingFlags.FlattenHierarchy" interface-ekre nem mukodik
+            //
+
+            return iface
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public /* | BindingFlags.FlattenHierarchy*/)
+                .Concat
+                (
+                    iface.GetInterfaces().SelectMany(GetAllInterfaceProperties)
+                )
+
+                //
+                // IIface: IA, IB ahol IA: IC es IB: IC -> Distinct()
+                //
+
+                .Distinct();
+        }
     }
 }

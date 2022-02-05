@@ -186,7 +186,20 @@ namespace Solti.Utils.Rpc.Pipeline
         /// Allows POST method only.
         /// </summary>
         /// <remarks>This list is read-only.</remarks>
-        public override ICollection<string> AllowedMethods { get; } = new string[] { "POST" };
+        public override ICollection<string> AllowedMethods { get; } = new string[]
+        { 
+            //
+            // Module invocation
+            //
+
+            "POST",
+        
+            //
+            // Schema request
+            //
+
+            "GET"
+        };
 
         /// <summary>
         /// Allows Content-Type, Content-Length headers only.

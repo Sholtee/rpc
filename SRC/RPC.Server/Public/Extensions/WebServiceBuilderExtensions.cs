@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Solti.Utils.Rpc
 {
     using DI.Interfaces;
+    using Interfaces;
     using Internals;
     using Pipeline;
     using Servers;
@@ -55,6 +56,11 @@ namespace Solti.Utils.Rpc
                         configurator(modules);
                     })
                     .Use<RequestTimeout>(configurator)
+                    .Use<SchemaProvider>(sp => 
+                    {
+                        sp.Register<IServiceDescriptor>();
+                        configurator(sp);
+                    })
                     .Use<RpcAccessControl>(configurator)
                     .Use<RequestLimiter>(configurator)
                     .Use<ExceptionCatcher>(configurator));

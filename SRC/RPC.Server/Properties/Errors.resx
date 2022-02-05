@@ -126,11 +126,8 @@
   <data name="BYREF_PARAMETER" xml:space="preserve">
     <value>ByRef parameters are not supported.</value>
   </data>
-  <data name="DEPENDENCY_NOT_AVAILABLE" xml:space="preserve">
-    <value>One or more dependencies are not available: {0}</value>
-  </data>
-  <data name="DEPENDENCY_NOT_RUNNING" xml:space="preserve">
-    <value>One or more dependencies are not running.</value>
+  <data name="DUPLICATE_MEMBER_ID" xml:space="preserve">
+    <value>One or more member has the same name. To solve this issue, try to use the AliasAttribute or raname the members.</value>
   </data>
   <data name="GENERIC_IFACE" xml:space="preserve">
     <value>Generic interfaces are not supported.</value>
@@ -162,9 +159,6 @@
   <data name="NOT_PARAMETERLESS" xml:space="preserve">
     <value>The target method should not contain any parameters.</value>
   </data>
-  <data name="NO_HOSTING" xml:space="preserve">
-    <value>No compatible hosting found.</value>
-  </data>
   <data name="NO_METHOD" xml:space="preserve">
     <value>Request must specify a module method.</value>
   </data>
@@ -173,9 +167,6 @@
   </data>
   <data name="NO_ROLES_SPECIFIED" xml:space="preserve">
     <value>There is no RequiredRoles attribute specified for the module method {0}.</value>
-  </data>
-  <data name="SCHEME_NOT_SUPPORTED" xml:space="preserve">
-    <value>Scheme not supported.</value>
   </data>
   <data name="SC_INVOCATION_FAILED" xml:space="preserve">
     <value>Service Control Manager invocation failed.</value>

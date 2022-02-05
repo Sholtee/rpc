@@ -88,20 +88,11 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to One or more dependencies are not available: {0}.
+        ///   Looks up a localized string similar to One or more member has the same name. To solve this issue, try to use the AliasAttribute or raname the members..
         /// </summary>
-        internal static string DEPENDENCY_NOT_AVAILABLE {
+        internal static string DUPLICATE_MEMBER_ID {
             get {
-                return ResourceManager.GetString("DEPENDENCY_NOT_AVAILABLE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to One or more dependencies are not running..
-        /// </summary>
-        internal static string DEPENDENCY_NOT_RUNNING {
-            get {
-                return ResourceManager.GetString("DEPENDENCY_NOT_RUNNING", resourceCulture);
+                return ResourceManager.GetString("DUPLICATE_MEMBER_ID", resourceCulture);
             }
         }
         
@@ -169,15 +160,6 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No compatible hosting found..
-        /// </summary>
-        internal static string NO_HOSTING {
-            get {
-                return ResourceManager.GetString("NO_HOSTING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Request must specify a module method..
         /// </summary>
         internal static string NO_METHOD {
@@ -237,15 +219,6 @@ namespace Solti.Utils.Rpc.Properties {
         internal static string SC_INVOCATION_FAILED {
             get {
                 return ResourceManager.GetString("SC_INVOCATION_FAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scheme not supported..
-        /// </summary>
-        internal static string SCHEME_NOT_SUPPORTED {
-            get {
-                return ResourceManager.GetString("SCHEME_NOT_SUPPORTED", resourceCulture);
             }
         }
     }
