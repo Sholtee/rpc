@@ -287,7 +287,7 @@ namespace Solti.Utils.Rpc.Tests
         public void ModuleInvocationBuilder_ShouldThrowOnGenericInterfaceIfThereIsNoAlias()
         {
             ModuleInvocationBuilder bldr = new();
-            Assert.Throws<InvalidOperationException>(() => bldr.AddModule(typeof(IList<int>)));
+            Assert.Throws<ArgumentException>(() => bldr.AddModule(typeof(IList<int>)));
         }
 
         [Test]
@@ -298,11 +298,16 @@ namespace Solti.Utils.Rpc.Tests
             bldr.Build();
         });
 
+        public interface IServiceHavingByRefParam
+        {
+            void Module(ref int val);
+        }
+
         [Test]
         public void ModuleInvocationBuilder_ShouldThrowOnByRefParameter() => Assert.Throws<ArgumentException>(() => 
         {
             var bldr = new ModuleInvocationBuilder();
-            bldr.AddModule<IDictionary<string, string>>();
+            bldr.AddModule<IServiceHavingByRefParam>();
         });
 
         [Test]

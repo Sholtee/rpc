@@ -374,7 +374,7 @@ namespace Solti.Utils.Rpc.Internals
             //
 
             if (iface.IsGenericType && iface.GetCustomAttribute<AliasAttribute>() is null)
-                throw new InvalidOperationException(Errors.ALIAS_REQUIRED);
+                throw new ArgumentException(Errors.ALIAS_REQUIRED, nameof(iface));
 
             MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface)
                 .Where
