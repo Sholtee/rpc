@@ -60,20 +60,31 @@ namespace Solti.Utils.Rpc.Internals
             Expression.Default(typeof(Task<object?>))
         );
 
-        private Expression CreateSwitch(Expression value, IEnumerable<(MemberInfo Member, Expression Body)> cases, Expression defaultBody) => Expression.Switch
-        (
-            switchValue: value,
-            defaultBody,
-            comparison: null, // default
-            cases: cases.Select
+        private Expression CreateSwitch(Expression value, IEnumerable<(MemberInfo Member, Expression Body)> cases, Expression defaultBody)
+        {
+            return Expression.Switch
             (
-                @case => Expression.SwitchCase
+                switchValue: value,
+                defaultBody,
+                comparison: ((Func<string, string, bool>) CompareStr).Method,
+                cases: cases.Select
                 (
-                    @case.Body,
-                    Expression.Constant(GetMemberId(@case.Member))
+                    @case => Expression.SwitchCase
+                    (
+                        @case.Body,
+                        Expression.Constant(GetMemberId(@case.Member))
+                    )
                 )
-            )
-        );
+
+
+            );
+
+            //
+            // Comparer-nek statikusnak kell lennie
+            //
+
+            static bool CompareStr(string a, string b) => StringComparer.OrdinalIgnoreCase.Equals(a, b);
+        }
 
         private static async Task<object?> DoInvoke(Task<object?[]> getArgs, Func<object?[], object> invocation, Func<Task, object?> getResult)
         {

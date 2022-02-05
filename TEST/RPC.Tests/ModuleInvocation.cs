@@ -111,6 +111,26 @@ namespace Solti.Utils.Rpc.Tests
         }
 
         [Test]
+        public async Task ModuleInvocation_ShouldBeCaseInsensitive()
+        {
+            var mockService = new Mock<IService>(MockBehavior.Strict);
+            mockService
+                .Setup(svc => svc.Add(1, 2))
+                .Returns<int, int>((a, b) => a + b);
+
+            var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
+            mockInjector
+                .Setup(i => i.Get(typeof(IService), null))
+                .Returns(mockService.Object);
+            mockInjector
+                .Setup(i => i.Get(typeof(IJsonSerializer), null))
+                .Returns(new JsonSerializerBackend());
+
+            Assert.That(await Invocation.Invoke(mockInjector.Object, new RpcRequestContext(null, nameof(IService).ToLower(), nameof(IService.Add).ToLower(), AsStream(1, 2))), Is.EqualTo(3));
+            mockService.Verify(svc => svc.Add(1, 2), Times.Once);
+        }
+
+        [Test]
         public void ModuleInvocation_ShouldThrowIfTheModuleNotFound() 
         {
             var mockInjector = new Mock<IInjector>(MockBehavior.Strict);
