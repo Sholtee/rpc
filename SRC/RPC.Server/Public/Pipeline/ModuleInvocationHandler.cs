@@ -153,9 +153,9 @@ namespace Solti.Utils.Rpc.Pipeline
 
             return new RpcRequestContext
             (
-                paramz[nameof(RpcRequestContext.SessionId)],
-                paramz[nameof(RpcRequestContext.Module)] ?? throw new HttpException(Errors.NO_MODULE) { Status = HttpStatusCode.BadRequest },
-                paramz[nameof(RpcRequestContext.Method)] ?? throw new HttpException(Errors.NO_METHOD) { Status = HttpStatusCode.BadRequest },
+                paramz[nameof(IRpcRequestContext.SessionId)],
+                paramz[nameof(IRpcRequestContext.Module)] ?? throw new HttpException(Errors.NO_MODULE) { Status = HttpStatusCode.BadRequest },
+                paramz[nameof(IRpcRequestContext.Method)] ?? throw new HttpException(Errors.NO_METHOD) { Status = HttpStatusCode.BadRequest },
                 request,
                 cancellation           
             );

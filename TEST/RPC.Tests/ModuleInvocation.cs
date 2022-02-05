@@ -289,7 +289,7 @@ namespace Solti.Utils.Rpc.Tests
             .GetExportedTypes()
             .Where
             (
-                t => t.IsInterface && !t.ContainsGenericParameters && !ModuleInvocationBuilder.GetAllInterfaceMethods(t).Any
+                t => t.IsInterface && !t.ContainsGenericParameters && !t.GetAllInterfaceMethods().Any
                 (
                     m => m.GetParameters().Any(p => p.ParameterType.IsByRef)
                 )
@@ -308,6 +308,18 @@ namespace Solti.Utils.Rpc.Tests
         {
             ModuleInvocationBuilder bldr = new();
             Assert.Throws<ArgumentException>(() => bldr.AddModule(typeof(IList<int>)));
+        }
+
+        public interface IInterfaceHavingGenericMethod
+        {
+            void Method<T>();
+        }
+
+        [Test]
+        public void ModuleInvocationBuilder_ShouldThrowOnGGenericMethod()
+        {
+            ModuleInvocationBuilder bldr = new();
+            Assert.Throws<ArgumentException>(() => bldr.AddModule(typeof(IInterfaceHavingGenericMethod)));
         }
 
         [Test]

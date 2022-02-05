@@ -97,24 +97,6 @@ namespace Solti.Utils.Rpc.Internals
             return getResult(task);
         }
 
-        internal static IEnumerable<MethodInfo> GetAllInterfaceMethods(Type iface) =>
-            //
-            // A "BindingFlags.FlattenHierarchy" interface-ekre nem mukodik
-            //
-
-            iface
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public /* | BindingFlags.FlattenHierarchy*/)
-                .Concat
-                (
-                    iface.GetInterfaces().SelectMany(GetAllInterfaceMethods)
-                )
-
-                //
-                // IIface: IA, IB ahol IA: IC es IB: IC -> Distinct()
-                //
-
-                .Distinct();
-
         //
         // (scope, ctx) =>
         // {
@@ -167,14 +149,17 @@ namespace Solti.Utils.Rpc.Internals
                                 (Expression) CreateSwitch
                                 (
                                     value: method, 
-                                    cases: GetAllInterfaceMethods(moduleType).Where(method => method.GetCustomAttribute<IgnoreAttribute>() is null).Select
-                                    (
-                                        methodType => 
+                                    cases: moduleType
+                                        .GetAllInterfaceMethods()
+                                        .Where(method => method.GetCustomAttribute<IgnoreAttribute>() is null)
+                                        .Select
                                         (
-                                            (MemberInfo) methodType,
-                                            (Expression) InvokeModule(moduleType, methodType)
-                                        )
-                                    ), 
+                                            methodType => 
+                                            (
+                                                (MemberInfo) methodType,
+                                                (Expression) InvokeModule(moduleType, methodType)
+                                            )
+                                        ), 
                                     defaultBody: Throw<MissingMethodException>(new[] { typeof(string), typeof(string) }, module, method)
                                 )
                             )
@@ -377,7 +362,9 @@ namespace Solti.Utils.Rpc.Internals
             if (!iface.IsInterface)
                 throw new ArgumentException(Errors.NOT_AN_INTERFACE, nameof(iface));
 
-            if (iface.IsGenericTypeDefinition)
+            MethodInfo[] methods = iface.GetAllInterfaceMethods().ToArray();
+
+            if (iface.IsGenericTypeDefinition || methods.Any(m => m.IsGenericMethodDefinition))
                 throw new ArgumentException(Errors.GENERIC_IFACE, nameof(iface));
 
             //
@@ -387,7 +374,7 @@ namespace Solti.Utils.Rpc.Internals
             if (iface.IsGenericType && iface.GetCustomAttribute<AliasAttribute>() is null)
                 throw new ArgumentException(Errors.ALIAS_REQUIRED, nameof(iface));
 
-            MethodInfo[] methodsHavingByRefParam = GetAllInterfaceMethods(iface)
+            MethodInfo[] methodsHavingByRefParam = methods
                 .Where
                 (
                     method => method.ReturnType.IsByRef || method.GetParameters().Any(para => para.ParameterType.IsByRef)
