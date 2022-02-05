@@ -388,6 +388,10 @@ namespace Solti.Utils.Rpc.Internals
                 throw ex;
             }
 
+            //
+            // TODO: Ellenorizni h az osszes tultoltott tag rendelkezik e AliasAttribute-al
+            //
+
             FModules.Add(iface);
         }
 

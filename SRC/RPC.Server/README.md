@@ -133,7 +133,7 @@ using Solti.Utils.Rpc.Interfaces;
 
 public interface ICalculator // it may be worth to put this interface to a separate assembly
 {
-  [Alias("AddInt")] // method will be exposed with this name
+  [Alias("AddInt")] // method will be exposed with this name, useful in case of overloaded methods
   int Add(int a, int b); // regular method
   double PI { get; } // property
   Task<int> AddAsync(int a, int b); // async methods also supported
