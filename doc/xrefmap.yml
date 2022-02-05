@@ -2448,6 +2448,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute.GetInterceptorType
   nameWithType: ParameterValidatorAspectAttribute.GetInterceptorType
+- uid: Solti.Utils.Rpc.Interfaces.PublishSchemaAttribute
+  name: PublishSchemaAttribute
+  href: Solti.Utils.Rpc.Interfaces.PublishSchemaAttribute.html
+  commentId: T:Solti.Utils.Rpc.Interfaces.PublishSchemaAttribute
+  fullName: Solti.Utils.Rpc.Interfaces.PublishSchemaAttribute
+  nameWithType: PublishSchemaAttribute
 - uid: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
   name: RequiredRolesAttribute
   href: Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.html
@@ -3476,12 +3482,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher
   nameWithType: ExceptionCatcher
-- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: ExceptionCatcher(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.ExceptionCatcher(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: ExceptionCatcher.ExceptionCatcher(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: ExceptionCatcher(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.ExceptionCatcher(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: ExceptionCatcher.ExceptionCatcher(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.#ctor*
   name: ExceptionCatcher
   href: Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html#Solti_Utils_Rpc_Pipeline_ExceptionCatcher__ctor_
@@ -3566,12 +3572,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.HttpAccessControl
   fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl
   nameWithType: HttpAccessControl
-- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: HttpAccessControl(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.HttpAccessControl(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: HttpAccessControl.HttpAccessControl(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: HttpAccessControl(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.HttpAccessControl.HttpAccessControl(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: HttpAccessControl.HttpAccessControl(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.HttpAccessControl.#ctor*
   name: HttpAccessControl
   href: Solti.Utils.Rpc.Pipeline.HttpAccessControl.html#Solti_Utils_Rpc_Pipeline_HttpAccessControl__ctor_
@@ -3999,12 +4005,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.Modules
   fullName: Solti.Utils.Rpc.Pipeline.Modules
   nameWithType: Modules
-- uid: Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: Modules(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.Modules.Modules(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: Modules.Modules(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: Modules(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.Modules.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.Modules(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: Modules.Modules(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.Modules.#ctor*
   name: Modules
   href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules__ctor_
@@ -4092,6 +4098,19 @@ references:
   fullName.vb: Solti.Utils.Rpc.Pipeline.Modules.Register(Of TInterface, TImplementation)()
   nameWithType: Modules.Register<TInterface, TImplementation>()
   nameWithType.vb: Modules.Register(Of TInterface, TImplementation)()
+- uid: Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules
+  name: RegisteredModules
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_RegisteredModules
+  commentId: P:Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules
+  nameWithType: Modules.RegisteredModules
+- uid: Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules*
+  name: RegisteredModules
+  href: Solti.Utils.Rpc.Pipeline.Modules.html#Solti_Utils_Rpc_Pipeline_Modules_RegisteredModules_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules
+  nameWithType: Modules.RegisteredModules
 - uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBase`1
   name: RequestHandlerBase<TConfiguration>
   href: Solti.Utils.Rpc.Pipeline.RequestHandlerBase-1.html
@@ -4175,12 +4194,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
   fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
   nameWithType: RequestHandlerBuilder
-- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: RequestHandlerBuilder(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.RequestHandlerBuilder(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: RequestHandlerBuilder.RequestHandlerBuilder(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: RequestHandlerBuilder(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.RequestHandlerBuilder(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: RequestHandlerBuilder.RequestHandlerBuilder(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.#ctor*
   name: RequestHandlerBuilder
   href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder__ctor_
@@ -4201,6 +4220,19 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build
   nameWithType: RequestHandlerBuilder.Build
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent
+  name: Parent
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Parent
+  commentId: P:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent
+  nameWithType: RequestHandlerBuilder.Parent
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent*
+  name: Parent
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_Parent_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent
+  nameWithType: RequestHandlerBuilder.Parent
 - uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
   name: WebServiceBuilder
   href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_WebServiceBuilder
@@ -4214,18 +4246,40 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder
   nameWithType: RequestHandlerBuilder.WebServiceBuilder
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions
+  name: RequestHandlerBuilderExtensions
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.html
+  commentId: T:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions
+  nameWithType: RequestHandlerBuilderExtensions
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent*
+  name: GetParent
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilderExtensions_GetParent_
+  commentId: Overload:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent
+  isSpec: "True"
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent
+  nameWithType: RequestHandlerBuilderExtensions.GetParent
+- uid: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent``1(Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: GetParent<TParent>(RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.html#Solti_Utils_Rpc_Pipeline_RequestHandlerBuilderExtensions_GetParent__1_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent``1(Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name.vb: GetParent(Of TParent)(RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent<TParent>(Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName.vb: Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent(Of TParent)(Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: RequestHandlerBuilderExtensions.GetParent<TParent>(RequestHandlerBuilder)
+  nameWithType.vb: RequestHandlerBuilderExtensions.GetParent(Of TParent)(RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.RequestLimiter
   name: RequestLimiter
   href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html
   commentId: T:Solti.Utils.Rpc.Pipeline.RequestLimiter
   fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter
   nameWithType: RequestLimiter
-- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: RequestLimiter(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.RequestLimiter(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: RequestLimiter.RequestLimiter(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: RequestLimiter(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestLimiter.RequestLimiter(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: RequestLimiter.RequestLimiter(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.RequestLimiter.#ctor*
   name: RequestLimiter
   href: Solti.Utils.Rpc.Pipeline.RequestLimiter.html#Solti_Utils_Rpc_Pipeline_RequestLimiter__ctor_
@@ -4376,12 +4430,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.RequestTimeout
   fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout
   nameWithType: RequestTimeout
-- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: RequestTimeout(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.RequestTimeout(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: RequestTimeout.RequestTimeout(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: RequestTimeout(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RequestTimeout.RequestTimeout(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: RequestTimeout.RequestTimeout(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.RequestTimeout.#ctor*
   name: RequestTimeout
   href: Solti.Utils.Rpc.Pipeline.RequestTimeout.html#Solti_Utils_Rpc_Pipeline_RequestTimeout__ctor_
@@ -4453,12 +4507,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.RpcAccessControl
   fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl
   nameWithType: RpcAccessControl
-- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: RpcAccessControl(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.RpcAccessControl(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: RpcAccessControl.RpcAccessControl(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: RpcAccessControl(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.RpcAccessControl.RpcAccessControl(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: RpcAccessControl.RpcAccessControl(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.RpcAccessControl.#ctor*
   name: RpcAccessControl
   href: Solti.Utils.Rpc.Pipeline.RpcAccessControl.html#Solti_Utils_Rpc_Pipeline_RpcAccessControl__ctor_
@@ -4498,12 +4552,12 @@ references:
   commentId: T:Solti.Utils.Rpc.Pipeline.SchemaProvider
   fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider
   nameWithType: SchemaProvider
-- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  name: SchemaProvider(WebServiceBuilder)
-  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_Solti_Utils_Rpc_WebServiceBuilder_
-  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder)
-  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.SchemaProvider(Solti.Utils.Rpc.WebServiceBuilder)
-  nameWithType: SchemaProvider.SchemaProvider(WebServiceBuilder)
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  name: SchemaProvider(WebServiceBuilder, RequestHandlerBuilder)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_Solti_Utils_Rpc_WebServiceBuilder_Solti_Utils_Rpc_Pipeline_RequestHandlerBuilder_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor(Solti.Utils.Rpc.WebServiceBuilder,Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.SchemaProvider(Solti.Utils.Rpc.WebServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder)
+  nameWithType: SchemaProvider.SchemaProvider(WebServiceBuilder, RequestHandlerBuilder)
 - uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.#ctor*
   name: SchemaProvider
   href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider__ctor_
@@ -4537,6 +4591,12 @@ references:
   isSpec: "True"
   fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId
   nameWithType: SchemaProvider.GetMemberId
+- uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register(System.Type)
+  name: Register(Type)
+  href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Register_System_Type_
+  commentId: M:Solti.Utils.Rpc.Pipeline.SchemaProvider.Register(System.Type)
+  fullName: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register(System.Type)
+  nameWithType: SchemaProvider.Register(Type)
 - uid: Solti.Utils.Rpc.Pipeline.SchemaProvider.Register*
   name: Register
   href: Solti.Utils.Rpc.Pipeline.SchemaProvider.html#Solti_Utils_Rpc_Pipeline_SchemaProvider_Register_
