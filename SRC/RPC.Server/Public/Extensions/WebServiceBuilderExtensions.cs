@@ -4,6 +4,7 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Reflection;
 
 using Microsoft.Extensions.Logging;
 
@@ -58,8 +59,17 @@ namespace Solti.Utils.Rpc
                     .Use<RequestTimeout>(configurator)
                     .Use<SchemaProvider>(sp => 
                     {
-                        sp.Register<IServiceDescriptor>();
-                        configurator(sp);
+                        Modules modules = sp.GetParent<Modules>()!;
+
+                        foreach (Type module in modules.RegisteredModules)
+                        {
+                            if (module.GetCustomAttribute<PublishSchemaAttribute>() is not null)
+                                sp.Register(module);
+                        }
+
+                        //
+                        // Itt a "configurator" tudatosan nincs hivva, mert a PublishSchemaAttribute-al publikalunk
+                        //
                     })
                     .Use<RpcAccessControl>(configurator)
                     .Use<RequestLimiter>(configurator)

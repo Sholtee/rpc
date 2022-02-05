@@ -82,7 +82,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RequestLimiter"/> instance.
         /// </summary>
-        public RequestLimiter(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+        public RequestLimiter(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) { }
 
         /// <summary>
         /// Sets a function to be used to get the <see cref="IRequestLimiterHandlerConfig.Interval"/> value.

@@ -74,7 +74,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RequestTimeout"/> instance.
         /// </summary>
-        public RequestTimeout(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+        public RequestTimeout(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) { }
 
         /// <summary>
         /// The request timeout.

@@ -30,7 +30,7 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Adds a timeout to the request processing.
+    /// Adds schema support to the request pipeline.
     /// </summary>
     public class SchemaProviderHandler : RequestHandlerBase<ISchemaProviderHandlerConfig>
     {
@@ -101,8 +101,9 @@ namespace Solti.Utils.Rpc.Pipeline
     }
 
     /// <summary>
-    /// Configures the request pipeline to be "exception proof".
+    /// Configures the schama provider.
     /// </summary>
+    /// <remarks>If you are using the <see cref="WebServiceBuilderExtensions.ConfigureRpcService(WebServiceBuilder, Action{RequestHandlerBuilder}, bool)"/> method, there is no need to configure the provider directly. Instead, use the <see cref="PublishSchemaAttribute"/>.</remarks>
     public class SchemaProvider : RequestHandlerBuilder, ISchemaProviderHandlerConfig
     {
         private readonly Dictionary<string, object> FSchema = new(StringComparer.OrdinalIgnoreCase);
@@ -121,7 +122,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="SchemaProvider"/> instance.
         /// </summary>
-        public SchemaProvider(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder)
+        public SchemaProvider(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent)
         {
             //
             // Itt nem kell regisztraljuk az IJsonSerializer szervizt, mivel az a Modules osztalyban ugy is
@@ -135,19 +136,26 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Registers a module interface in the schema "database".
         /// </summary>
-        public SchemaProvider Register<TInterface>() where TInterface : class 
+        public SchemaProvider Register(Type iface)
         {
-            Type interfaceType = typeof(TInterface);
+            if (iface is null)
+                throw new ArgumentNullException(nameof(iface));
+
+            if (!iface.IsInterface)
+                throw new ArgumentException(Errors.NOT_AN_INTERFACE, nameof(iface));
+
+            if (iface.IsGenericTypeDefinition)
+                throw new ArgumentException(Errors.GENERIC_IFACE, nameof(iface));
 
             try
             {
-                FSchema[GetMemberId(interfaceType)] = new
+                FSchema[GetMemberId(iface)] = new
                 {
-                    Methods = interfaceType
+                    Methods = iface
                         .GetAllInterfaceMethods()
                         .Where(m => !m.IsSpecialName)
                         .ToDictionary(GetMemberId, m => new { Layout = "TODO" }),
-                    Properties = interfaceType
+                    Properties = iface
                         .GetAllInterfaceProperties()
                         .ToDictionary(GetMemberId, p => new { Layout = "TODO", HasGetter = p.CanRead, HasSetter = p.CanWrite })
                 };
@@ -159,6 +167,11 @@ namespace Solti.Utils.Rpc.Pipeline
 
             return this;
         }
+
+        /// <summary>
+        /// Registers a module interface in the schema "database".
+        /// </summary>
+        public SchemaProvider Register<TInterface>() where TInterface: class => Register(typeof(TInterface));
 
         /// <inheritdoc/>
         public override IRequestHandler Build(IRequestHandler next) => new SchemaProviderHandler(next, this);

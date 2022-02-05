@@ -130,7 +130,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="HttpAccessControl"/> instance.
         /// </summary>
-        public HttpAccessControl(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+        public HttpAccessControl(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) { }
 
         /// <summary>
         /// The allowed origins. See https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
@@ -180,7 +180,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RpcAccessControl"/> instance.
         /// </summary>
-        public RpcAccessControl(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+        public RpcAccessControl(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) { }
 
         /// <summary>
         /// Allows POST method only.

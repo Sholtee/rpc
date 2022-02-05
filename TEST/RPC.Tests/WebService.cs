@@ -47,7 +47,7 @@ namespace Solti.Utils.Rpc.Tests
 
         private sealed class RequestDelegator : RequestHandlerBuilder
         {
-            public RequestDelegator(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder)
+            public RequestDelegator(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder parent) : base(webServiceBuilder, parent)
             {
             }
 

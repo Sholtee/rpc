@@ -107,7 +107,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="ExceptionCatcher"/> instance.
         /// </summary>
-        public ExceptionCatcher(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) { }
+        public ExceptionCatcher(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) { }
 
         /// <summary>
         /// If set to true, the <see cref="ILogger"/> service will be invoked in case of unhandled exception.

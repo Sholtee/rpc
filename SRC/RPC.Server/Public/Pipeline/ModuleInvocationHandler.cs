@@ -253,7 +253,7 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="Modules"/> instance.
         /// </summary>
-        public Modules(WebServiceBuilder webServiceBuilder) : base(webServiceBuilder) => WebServiceBuilder
+        public Modules(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent) : base(webServiceBuilder, parent) => WebServiceBuilder
             .ConfigureServices(svcs => svcs
                 .Factory<IRpcRequestContext>(scope => ContextStore[scope] ?? throw new InvalidOperationException(), Lifetime.Scoped)
                 .Service<IJsonSerializer, JsonSerializerBackend>(Lifetime.Singleton));
@@ -281,6 +281,7 @@ namespace Solti.Utils.Rpc.Pipeline
         {
             ModuleInvocationBuilder.AddModule<TInterface>();
             WebServiceBuilder.ConfigureServices(svcs => svcs.Service<TInterface, TImplementation>(Lifetime.Scoped));
+
             return this;
         }
 
@@ -293,5 +294,10 @@ namespace Solti.Utils.Rpc.Pipeline
             WebServiceBuilder.ConfigureServices(svcs => svcs.Factory<TInterface>(factory, Lifetime.Scoped));
             return this;
         }
+
+        /// <summary>
+        /// Returns the registered modules.
+        /// </summary>
+        public IReadOnlyCollection<Type> RegisteredModules => ModuleInvocationBuilder.Modules;
     }
 }

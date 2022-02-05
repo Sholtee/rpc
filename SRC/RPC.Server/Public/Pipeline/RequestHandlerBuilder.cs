@@ -21,10 +21,11 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <summary>
         /// Creates a new <see cref="RequestHandlerBuilder"/> isntance.
         /// </summary>
-        protected RequestHandlerBuilder(WebServiceBuilder webServiceBuilder)
+        protected RequestHandlerBuilder(WebServiceBuilder webServiceBuilder, RequestHandlerBuilder? parent)
         {
             WebServiceBuilder = webServiceBuilder ?? throw new ArgumentNullException(nameof(webServiceBuilder));
             WebServiceBuilder.Pipe.ApplyProxy((_, _, next) => Build((IRequestHandler) next));
+            Parent = parent;
         }
 
         /// <summary>
@@ -33,6 +34,11 @@ namespace Solti.Utils.Rpc.Pipeline
         /// <remarks>You should not call this method directly.</remarks>
         [SuppressMessage("Naming", "CA1725:Parameter names should match base declaration")]
         public abstract IRequestHandler Build(IRequestHandler next);
+
+        /// <summary>
+        /// The preceding <see cref="RequestHandlerBuilder"/>, if exists. 
+        /// </summary>
+        public RequestHandlerBuilder? Parent { get; }
 
         /// <summary>
         /// The <see cref="Rpc.WebServiceBuilder"/> that instantiated this class.

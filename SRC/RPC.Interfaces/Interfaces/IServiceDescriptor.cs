@@ -10,6 +10,7 @@ namespace Solti.Utils.Rpc.Interfaces
     /// <summary>
     /// Exposes the description of a RPC service.
     /// </summary>
+    [PublishSchema]
     public interface IServiceDescriptor
     {
         /// <summary>

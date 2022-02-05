@@ -83,6 +83,12 @@ namespace Solti.Utils.Rpc
         {
             public WebServiceBuilder WebServiceBuilder { get; }
 
+            //
+            // TODO: RequestHandlerBuilder legyen
+            //
+
+            public object? LastEntry { get; private set; }
+
             public RequestPipeConfigurator(WebServiceBuilder webServiceBuilder) => WebServiceBuilder = webServiceBuilder;
 
             IRequestPipeConfigurator IRequestPipeConfigurator.Use<TRequestHandlerBuilder>(Action<TRequestHandlerBuilder>? configCallback)
@@ -92,8 +98,8 @@ namespace Solti.Utils.Rpc
                 // az Activator-os peldanyositas is
                 //
 
-                TRequestHandlerBuilder factory = (TRequestHandlerBuilder) Activator.CreateInstance(typeof(TRequestHandlerBuilder), WebServiceBuilder);
-                configCallback?.Invoke(factory);
+                LastEntry = Activator.CreateInstance(typeof(TRequestHandlerBuilder), WebServiceBuilder, LastEntry);
+                configCallback?.Invoke((TRequestHandlerBuilder) LastEntry);
                 return this;
             }
         }

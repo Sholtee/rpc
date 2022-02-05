@@ -1,5 +1,5 @@
 ﻿/********************************************************************************
-* IgnoreAttribute.cs                                                            *
+* PublishSchemaAttribute.cs                                                     *
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
@@ -8,8 +8,8 @@ using System;
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>
-    /// Ignores a member.
+    /// Indicates that the schema of the annotated module should be published.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class IgnoreAttribute: Attribute { }
+    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
+    public sealed class PublishSchemaAttribute: Attribute { }
 }
