@@ -15,7 +15,7 @@
 
     For example: `http://www.example.org:1986/api?module=ICalculator`.
 
-   -The response contains the module schema in JSON format:
+   - The response contains the module schema in JSON format:
    ```json
    {
      "ICalculator": {
