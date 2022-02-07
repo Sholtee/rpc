@@ -8,6 +8,38 @@
 |**RPC.NET.Interfaces**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.interfaces)](https://www.nuget.org/packages/rpc.net.interfaces )|
 |**RPC.NET.Server**|[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/rpc.net.server)](https://www.nuget.org/packages/rpc.net.server )|
 ## How it works
+0. The client sends a *HTTP GET* to the server in order to grab the API schema (**optional**)
+   - The request *URI*
+     - Must use *HTTP* or *HTTPS* scheme
+     - Identifies the remote *module* in the query component
+
+    For example: `http://www.example.org:1986/api?module=ICalculator`.
+   -The response contains the module schema in JSON format:
+   ```json
+   {
+     "ICalculator": {
+       "Methods": {
+         "Add":{
+           "Layout": "TODO"
+         },
+         "AddAsync": {
+           "Layout": "TODO"
+         },
+         "ParseInt": {
+           "Layout": "TODO"
+         }
+       }
+       "Properties": {
+         "PI": {
+           "Layout": "TODO",
+           "HasGetter": true,
+           "HasSetter": false
+         }
+       }
+     }
+   }
+   ```
+   Note that the layout field is currently not supported (since neither the .NET nor the JS client doesn't require it)
 1. The client sends a *HTTP POST* to the server where 
    - The request *URI*
      - Must use *HTTP* or *HTTPS* scheme
@@ -19,14 +51,14 @@
    - The *request body* is an (UTF-8) *JSON* stringified array that contains the method arguments. For example: `["cica", 10]`.
 2. The type of response depends on the kind of the result:
    - If the remote method has a non `Stream` return value then the *content-type* is `application/json` and the *response body* contains the (UTF-8) *JSON* stringified result. The result is a wrapped object that contains the actual outcome of the method or the error description:
-     ```js
+     ```json
      {
        "Result": 12,
 	   "Exception": null
      }
      ```
 	 or
-     ```js
+     ```json
      {
        "Result": null,
 	   "Exception": {
@@ -103,15 +135,17 @@
          .Use<Modules>(conf => conf
            .Register<ICalculator, Calculator>()) // exposed (remotely visible) module
          .Use<RequestTimeout>(conf => {...})
-         .Use<RpcAccessControl>(conf => {...})
+         .Use<SchemaProvider>(conf => {...})
+         .Use<HttpAccessControl>(conf => {...})
          .Use<RequestLimiter>(conf => {...})
          .Use<ExceptionCatcher>(conf => {...}));
      ```
      Where:
      - [ExceptionCatcher](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.ExceptionCatcher.html ) configures and registers the [ExceptionCacherHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.html ). As its name suggests, this handler catches the unhandled exceptions and generates the appropriate HTTP response (by default HTTP 500 is returned).
      - [RequestLimiter](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestLimiter.html ) configures and registers the [RequestLimiterHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.html ). It is aimed to reject the request if the reuqest count exceeds a threshold. Every remote endpoint has its own counter that resets after a specified interval. By default a remote client can made 1000 requests in every 10 seconds.
-     - [RpcAccessControl](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RpcAccessControl.html ) is used to register the [HttpAccessControlHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html ), set up to support RPC. You may tweak this handler if you want to set up [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing ).
-     - [RequestTimeout](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestTimeout.html ) installs a [RequestTimeoutHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html ) in order to make the request cancellable if the processing lasts too long. The default timeout is 10 seconds.
+     - [HttpAccessControl](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.HttpAccessControl.html ) is used to register the [HttpAccessControlHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.html ), set up to support RPC. You may tweak this handler if you want to set up [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing ).
+     - [SchemaProvider](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.SchemaProvider.html ) installs the [SchemaProviderHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.html ) which is responsible for publishing the module schema. By default, schema is generated for the API's annotated with the `PublishSchemaAttribute`.
+     - [RequestTimeout](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestTimeout.html ) installs the [RequestTimeoutHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.html ) in order to make the request cancellable if the processing lasts too long. The default timeout is 10 seconds.
      - [Modules](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.Modules.html ) installs the heart of the pipeline, the [ModuleInvocationHandler](https://sholtee.github.io/rpc/doc/Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.html ). Its responsible for invoking the RPC module. The module and the method should be specified in the query part of the request while the serialized method parameters are in the request body. For more information see [how RPC works](#how-it-works)
 
      As you can see every pipeline item (request handler) has its own configuration.
