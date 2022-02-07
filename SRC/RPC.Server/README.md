@@ -14,6 +14,7 @@
      - Identifies the remote *module* in the query component
 
     For example: `http://www.example.org:1986/api?module=ICalculator`.
+
    -The response contains the module schema in JSON format:
    ```json
    {
