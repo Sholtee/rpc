@@ -16,6 +16,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -738,6 +739,35 @@ namespace Solti.Utils.Rpc.Tests
 
                 return paramz;
             }
+        }
+
+        [Test]
+        public async Task Client_MayRequestPublishedApiSchemaOnly()
+        {
+            //
+            // Nincs rajt PublishSchema
+            //
+
+            var mockModule = new Mock<IModule>(MockBehavior.Strict);
+
+            ServerBuilder.ConfigureRpcService(conf => (conf as Modules)?.Register(injector => mockModule.Object));
+            await StartServer();
+
+            using var client = new HttpClient();
+
+            //
+            // IServiceDescriptor alapbol regisztralva van es publikalt is a semaja
+            //
+
+            HttpResponseMessage response = await client.GetAsync(QueryHelpers.AddQueryString(Host, "module", "IServiceDescriptor"));
+
+            string s = await response.Content.ReadAsStringAsync();
+            Assert.That(s, Is.EqualTo(@"{""IServiceDescriptor"":{""Methods"":{},""Properties"":{""Name"":{""Layout"":""TODO"",""HasGetter"":true,""HasSetter"":false},""Version"":{""Layout"":""TODO"",""HasGetter"":true,""HasSetter"":false}}}}"));
+
+            response = await client.GetAsync(QueryHelpers.AddQueryString(Host, "module", "IModule"));
+
+            s = await response.Content.ReadAsStringAsync();
+            Assert.That(s, Is.EqualTo("{}"));
         }
     }
 }
