@@ -4,14 +4,12 @@
 ********************************************************************************/
 'use strict';
 
-(function(module, require) {
+(function(module) {
 
-module.exports = ({task, registerTask, initConfig, file, template, option}, dir) => {
+module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
     const
-        pkg     = file.readJSON('./package.json'),
-        target  = option('target'),
-        path    = require('path'),
-        process = require('process');
+        pkg    = file.readJSON('./package.json'),
+        target = option('target');
 
     initConfig({
         project: {
@@ -50,18 +48,24 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
                 outputFile: false,
                 quiet: false,
                 maxWarnings: -1,
-                failOnError: true
+                failOnError: true,
+                overrideConfig: {
+                    parser: '@babel/eslint-parser',
+                    parserOptions: {
+                        requireConfigFile: false
+                    }
+                }
             },
             app: {
                 options: {
-                    configFile: './build/eslint-build.json'
+                    overrideConfigFile: './build/eslint-build.json'
                 },
                 src: '<%= project.dirs.app %>/**/*.js'
 
             },
             tests: {
                 options: {
-                    configFile: './build/eslint-tests.json'
+                    overrideConfigFile: './build/eslint-build.json'
                 },
                 src: '<%= project.dirs.tests %>/**/*.spec.js'
             }
@@ -69,14 +73,24 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
         babel: {
             __umd_transform: ['@babel/plugin-transform-modules-umd', {moduleId: '<%= project.module %>'}],
             options: {
-                //sourceMap: true,
                 presets: ['@babel/preset-env'],
+                targets: {
+                    // fetch() API innentol van
+                    chrome: '42',
+                    firefox: '39',
+                    edge: '14'
+                },
+                //sourceMap: true,
                 //comments: false  // Ne hasznaljuk mert kiszedi a file header-t is
             },
             app: {
                 options: {
                     sourceType: 'module',
-                    plugins: ['istanbul', '<%= babel.__umd_transform%>']
+                    plugins: [
+                        'istanbul',
+                        '<%= babel.__umd_transform%>',
+                        ['transform-async-to-promises', {inlineHelpers: true}]
+                    ]
                 },
                 files: [{
                     expand: true,
@@ -99,7 +113,12 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
             dist: {
                 options: {
                     sourceType: 'module',
-                    plugins: ['<%= babel.__umd_transform%>', 'remove-comments', ['add-header-comment', {header: [`${pkg.name} v${pkg.version}`, 'Author: Denes Solti']}]]
+                    plugins: [
+                        '<%= babel.__umd_transform%>',
+                        ['transform-async-to-promises', {inlineHelpers: true}],
+                        'remove-comments',
+                        ['add-header-comment', {header: [`${pkg.name} v${pkg.version}`, 'Author: Denes Solti']}]
+                    ]
                 },
                 files: {
                     '<%= project.dirs.dist %>/<%= project.module %>.js': '<%= project.dirs.app %>/**/*.js'
@@ -200,14 +219,5 @@ module.exports = ({task, registerTask, initConfig, file, template, option}, dir)
     registerTask('lint', () => task.run([ // grunt lint --target=[tests|app]
         `eslint:${target}`
     ]));
-
-    function getTestResults(filter) {
-        filter = template.process(filter);
-
-        return file.expand(filter).map(file => ({
-            src: file,
-            dest: path.basename(file)
-        }));
-    }
 };
 })(module, require);
