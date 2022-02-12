@@ -162,32 +162,39 @@ export class ApiConnection {
   }
 
   async #fetch(url, options) {
-    //
-    // If this method is inlined, it has to be at the very beginning of the enclosing method.
-    // Otherwise, a malformed output will be generated.
-    //
-
-    async function addTimeout(promise, timeout) {
-      let
-        handle,
-        rto = new Promise((_, reject) => {
-          handle = setTimeout(() => reject(REQUEST_TIMED_OUT), timeout);
-        });
-      try {
-        return await Promise.race([promise, rto]);
-      } finally {
-        clearTimeout(handle);
-      }
-    }
-
-    const
-      promise = fetch(url, options),
-      response = await (this.timeout ? addTimeout(promise, this.timeout) : promise);
+    const response = await this.#addTimeout(fetch(url, options));
 
     if (!response.ok)
       throw (await response.text()) || response.statusText;
 
     return response;
+  }
+
+  //
+  // This method should not be inlined otherwise, a malformed code will be created.
+  //
+
+  async #addTimeout(promise) {
+    if (!this.timeout)
+      return promise; // It's fine to return the promise itself
+
+    let
+      handle,
+      rto = new Promise((_, reject) => {
+        handle = setTimeout(() => reject(REQUEST_TIMED_OUT), this.timeout);
+      });
+
+    console.assert(handle);
+
+    try {
+      return await Promise.race([promise, rto]);
+    } finally {
+      //
+      // Promise.prototype.finally() is available since Chrome 63 so let Babel do its work
+      //
+
+      clearTimeout(handle);
+    }
   }
 
   static #startWithLowerCase(str) {
