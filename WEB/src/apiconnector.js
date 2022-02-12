@@ -3,36 +3,29 @@
 *  Author: Denes Solti                                                          *
 ********************************************************************************/
 export const
-  STATUS_NOT_VALID = 'Inappropriate status: {0} ({1})',
   RESPONSE_NOT_VALID = 'Server response could not be processed',
   REQUEST_TIMED_OUT = 'Request timed out',
-  SIGNATURE_NOT_MATCH = 'The elements of the parameters array do not match the signature of the method';
+  SCHEMA_NOT_FOUND = 'Schema could not be found';
 
-// class
-export function ApiConnectionFactory(urlBase, /*can be mocked*/ {fetch = nativeFetch, URL = window.URL} = {}) {
-  Object.assign(this, {
-    sessionId: null,
-    headers: {},
-    timeout: 0,
-    $urlBase: urlBase,
-    $backend: {fetch, URL}
-  });
+export class ApiConnection {
+  #urlBase;
+  #resultProp;
+  #exceptionProp;
+  #propFmt;
 
-  Object.defineProperty(this, 'serviceVersion', {
-    enumerable: false,
-    get() {
-      return this.invoke('IServiceDescriptor', 'get_Version');
-    }
-  });
-}
+  sessionId = null;
+  headers = {};
+  timeout = 0;
 
-//
-// Ezeket a prototipuson definialjuk h dekoralhatoak legyenek
-//
+  constructor(urlBase, propFmt = ApiConnection.#startWithLowerCase) {
+    this.#urlBase = urlBase;
+    this.#resultProp = propFmt('Result');
+    this.#exceptionProp = propFmt('Exception');
+    this.#propFmt = propFmt;
+  }
 
-Object.assign(ApiConnectionFactory.prototype, {
-  invoke(module, method, args = []) {
-    const url = new this.$backend.URL(this.$urlBase);
+  async invoke(module, method, args = []) {
+    const url = new URL(this.#urlBase);
 
     url.searchParams.append('module', module);
     url.searchParams.append('method', method);
@@ -40,198 +33,169 @@ Object.assign(ApiConnectionFactory.prototype, {
     if (this.sessionId != null)
       url.searchParams.append('sessionId', this.sessionId);
 
-    const post = this.$backend.fetch(url.toString(), {
+    const response = await this.#fetch(url.toString(), {
       method: 'POST',
       headers: {...this.headers, 'Content-Type': 'application/json'},
       body: JSON.stringify(args)
     });
 
-    return (this.timeout <= 0 ? post : addTimeout(post, this.timeout)).then(response => {
-      if (!response.ok)
-        //
-        // Biztonsagos a then() agban kivetelt dobni: https://javascript.info/promise-error-handling
-        //
+    //
+    // Babel would generate enormous amount of helper code just because of this simple switch.
+    //
 
-        throw format(STATUS_NOT_VALID, response.status, response.statusText);
+    /*
+    switch (response.headers.get('Content-Type').toLowerCase()) {
+      case 'application/json': {
+        const data = ApiConnection.#loadJSON(await response.text(), this.#propFmt);
+        if (typeof data !== 'object')
+          break;
 
-      switch (response.headers.get('Content-Type').toLowerCase()) {
-        case 'text/html':
-          //
-          // Nem gond h Promise-t adunk vissza: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
-          //
+        const exception = data[this.#exceptionProp];
+        if (exception)
+          throw exception;
 
-          return response.text().then(txt => {
-            throw txt;
-          });
-        case 'application/json':
-          return response.json().then(json => {
-            if (typeof json === 'object') {
-              const exception = getProp(json, 'Exception');
-              if (exception)
-                throw exception;
-
-              //
-              // NULL is jo ertek
-              //
-
-              const result = getProp(json, 'Result');
-              if (typeof result !== 'undefined')
-                return result;
-            }
-            throw RESPONSE_NOT_VALID;
-          });
-        default:
-          throw RESPONSE_NOT_VALID;
+        return data[this.#resultProp];
       }
-    });
-
-    function addTimeout(promise, timeout) {
-      let handle;
-      return Promise
-        .race([
-          promise,
-          new Promise((_, reject) => {
-            handle = setTimeout(() => reject(REQUEST_TIMED_OUT), timeout);
-          })
-        ])
-        .finally(() => clearTimeout(handle));
-    }
-
-    function getProp(obj, prop) { // nem kis-nagy betu erzekeny
-      let key;
-      for (key in obj) {
-        if (key.toLowerCase() === prop.toLowerCase()) {
-          return obj[key];
-        }
+      case 'application/octet-stream': {
+        return response.body;
       }
     }
-  },
-  createConnection(module) {
-    const owner = this;
+    throw RESPONSE_NOT_VALID;
+    */
 
-    return Object.assign(function ApiConnection() {}, {
-      registerMethod(name, alias, layout) {
-        const fnName = alias || name;
+    const contentType = response.headers.get('Content-Type').toLowerCase();
+    if (contentType === 'application/json') {
+      const data = ApiConnection.#loadJSON(await response.text(), this.#propFmt);
+      if (typeof data === 'object') {
+        const exception = data[this.#exceptionProp];
+        if (exception)
+          throw exception;
 
-        this.prototype[fnName] = Object.defineProperty(invoke, 'name', {value: fnName});
-        if (layout)
-          this.decorate(fnName, validateLayout);
+        return data[this.#resultProp];
+      }
+    }
+    else if (contentType === 'application/octet-stream')
+      return response.body;
 
-        return this; // A hivasok lancba fuzhetoek legyenek
-
-        function invoke(...args) {
-          return owner.invoke(module, name, args);
-        }
-
-        function validateLayout(...args) {
-          return args.length !== layout.length || args.some(invalid)
-            ? Promise.reject(SIGNATURE_NOT_MATCH)
-            // eslint-disable-next-line no-invalid-this
-            : this.$base(...args);
-
-          function invalid(arg, i) {
-            const type = typeof layout[i] === 'function' ? layout[i] : window[layout[i]];
-            if (!type) return true;
-
-            //
-            // - NULL-t mindig valid erteknek tekintjuk
-            // - "instanceof" nem mukodik String es Number ertekekre (ha csak az nem new String(...)-el vt letrehozva)
-            //
-
-            return arg != null && !(arg instanceof type) && typeof arg !== type.name.toLowerCase();
-          }
-        }
-      },
-      registerProperty(name, alias) {
-        Object.defineProperty(this.prototype, alias || name, {
-          enumerable: true,
-          get: () =>  owner.invoke(module, `get_${name}`)
-
-          //
-          // Direkt nincs setter, mivel azon nem tudnank await-elni
-          //
-        });
-        return this;
-      },
-      decorate,
-      module
-    });
+    throw RESPONSE_NOT_VALID;
   }
-});
 
-Object.assign(ApiConnectionFactory, {
-  fromSchema(config, {fetch = nativeFetch, URL = window.URL} = {}) {
-    return typeof config === 'string'
-      ? fetch(config).then(response => response.json()).then(createApi)
-      : createApi(config);
+  decorateInvoke(newFn) { // TODO: fetch()-re
+    const baseFn = this.invoke;
+    this.invoke = Object.defineProperty(decorator, 'name', {value: baseFn.name}); // "decorator.name = ..." won't work
 
-    function createApi({urlBase, modules = {}}) {
-      const
-        factory = new ApiConnectionFactory(urlBase, {fetch, URL}),
-        api = {$factory: factory};
+    return this;
 
-      Object.entries(modules).forEach(([module, descriptor]) => {
-        const ModuleType = factory.createConnection(module);
+    function decorator(...args) {
+      /* eslint-disable no-invalid-this */
+      return newFn.apply(this, [
+        ...args,
+        (...baseArgs) => baseFn.apply(this, baseArgs)
+      ]);
+      /* eslint-enable no-invalid-this */
+    }
+  }
 
-        if (descriptor.methods)
-          Object.entries(descriptor.methods).forEach(([method, descriptor]) => {
-            if (typeof descriptor === 'string') {
-              ModuleType.registerMethod(method, descriptor);
-            } else {
-              const {alias, layout} = descriptor; // jol kezeli azt az esetet ha descriptor == true
-              ModuleType.registerMethod(method, alias, layout);
-            }
-          });
+  async createAPI(module) {
+    const url = new URL(this.#urlBase);
 
-        if (descriptor.properties)
-          Object.entries(descriptor.properties).forEach(([property, descriptor]) => {
-            if (typeof descriptor === 'string') {
-              ModuleType.registerProperty(property, descriptor);
-            } else {
-              const {alias} = descriptor; // jol kezeli azt az esetet ha descriptor == true
-              ModuleType.registerProperty(property, alias);
-            }
-          });
+    url.searchParams.append('module', module);
 
-        api[descriptor.alias || module] = new ModuleType();
+    const response = await this.#fetch(url.toString(), { method: 'GET' });
+    if (response.headers.get('Content-Type').toLowerCase() !== 'application/json')
+      throw RESPONSE_NOT_VALID;
+
+    //
+    // Don't use prop_fmt so the method and property names remain untouched
+    //
+
+    const schema = ApiConnection.#loadJSON(await response.text())[module];
+    if (!schema)
+      throw SCHEMA_NOT_FOUND;
+
+    for (const [method] of Object.entries(schema.Methods)) {
+      API.prototype[method] = function(...args) {
+        return this.$connection.invoke(module, method, args);
+      };
+    }
+
+    for (const [property, descriptor] of Object.entries(schema.Properties)) {
+      //
+      // Setters are not supported since setting a property value cannot return a Promise.
+      //
+
+      if (!descriptor.HasGetter)
+        continue;
+
+      Object.defineProperty(API.prototype, property, {
+        configurable: false,
+        enumerable: true,
+        get: function() {
+          return this.$connection.invoke(module, `get_${property}`, []);
+        }
       });
-
-      return api;
     }
-  },
-  decorate
-});
 
-/* eslint-disable no-invalid-this */
-function decorate(fn, newFn) {
-  const oldFn = this.prototype[fn];
-  this.prototype[fn] = Object.defineProperty(decorator, 'name', {value: oldFn.name}); // "decorator.name = ..." nem mukodik;
+    return new API(this);
 
-  return this;
-
-  function decorator(...args) {
-    this.$base = oldFn;
-    try {
-      return newFn.apply(this, args);
-    } finally {
-      delete this.$base;
+    function API(connection) {
+      this.$connection = connection;
     }
   }
+
+  static #loadJSON(str, fmt) {
+    return JSON.parse(str, !fmt ? undefined : function(key, value) {
+      /* eslint-disable no-invalid-this */
+      if (typeof this === 'object' && !Array.isArray(this) && key) {
+        this[fmt(key)] = value;
+
+        //
+        // By returning undefined, the original property will be removed:
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#using_the_reviver_parameter
+        //
+
+        return;
+      }
+      /* eslint-enable no-invalid-this */
+      return value;
+    });
+  }
+
+  async #fetch(url, options) {
+    //
+    // If this method is inlined, it has to be at the very beginning of the enclosing method.
+    // Otherwise, a malformed output will be generated.
+    //
+
+    async function addTimeout(promise, timeout) {
+      let
+        handle,
+        rto = new Promise((_, reject) => {
+          handle = setTimeout(() => reject(REQUEST_TIMED_OUT), timeout);
+        });
+      try {
+        return await Promise.race([promise, rto]);
+      } finally {
+        clearTimeout(handle);
+      }
+    }
+
+    const
+      promise = fetch(url, options),
+      response = await (this.timeout ? addTimeout(promise, this.timeout) : promise);
+
+    if (!response.ok)
+      throw (await response.text()) || response.statusText;
+
+    return response;
+  }
+
+  static #startWithLowerCase(str) {
+    if (str.length >= 2 && isUpper(str[0]) && !isUpper(str[1])) {
+      str[0] = str[0].toLowerCase();
+    }
+    return str;
+
+    function isUpper(chr) { return /[A-Z]/.test(chr); }
+  }
 }
-/* eslint-enable no-invalid-this */
-
-function format(str, ...args) {
-  return str.replace(/{(\d+)}/g, (match, number) => typeof args[number] !== 'undefined'
-    ? args[number]
-    : match);
-}
-
-//
-// const obj = {fetch};
-// ...
-// obj.fetch(...);
-//
-// A fenti kod faszan elszallhat (fetch()-en beluli "this" hivatkozas mar nem a "window" lesz)
-//
-
-function nativeFetch(...args) { return window.fetch(...args); }
