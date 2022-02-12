@@ -65,13 +65,19 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
             },
             tests: {
                 options: {
-                    overrideConfigFile: './build/eslint-build.json'
+                    overrideConfigFile: './build/eslint-tests.json'
                 },
                 src: '<%= project.dirs.tests %>/**/*.spec.js'
             }
         },
         babel: {
             __umd_transform: ['@babel/plugin-transform-modules-umd', {moduleId: '<%= project.module %>'}],
+            __app_files: [{
+                expand: true,
+                cwd: '<%= project.dirs.app %>',
+                src: ['**/*.js'],
+                dest: '<%= project.dirs.tmp %>'
+            }],
             options: {
                 presets: ['@babel/preset-env'],
                 targets: {
@@ -87,17 +93,22 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                 options: {
                     sourceType: 'module',
                     plugins: [
+                        'transform-async-to-promises',
+                        '<%= babel.__umd_transform%>'
+                    ]
+                },
+                files: '<%= babel.__app_files%>'
+            },
+            app_istanbul_instrumented: {
+                options: {
+                    sourceType: 'module',
+                    plugins: [
                         'istanbul',
                         'transform-async-to-promises',
                         '<%= babel.__umd_transform%>'
                     ]
                 },
-                files: [{
-                    expand: true,
-                    cwd: '<%= project.dirs.app %>',
-                    src: ['**/*.js'],
-                    dest: '<%= project.dirs.tmp %>'
-                }]
+                files: '<%= babel.__app_files%>'
             },
             tests: {
                 options: {
@@ -126,21 +137,16 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
             }
         },
         karma: {
-            test: {
+            __frameworks: ['detectBrowsers', 'jasmine', 'sinon'],
+            __files: [{
+                src: ['<%= project.dirs.node_modules %>/whatwg-fetch/dist/fetch.umd.js', '<%= project.dirs.tmp %>/**/*.js'],
+                included: true,
+                served: true
+            }],
+            tests_using_reporters: {
                 basePath: '',
-                frameworks: ['detectBrowsers', 'jasmine', 'sinon'],
-                files: [
-                    {
-                        src: ['<%= project.dirs.node_modules %>/whatwg-fetch/dist/fetch.umd.js', '<%= project.dirs.tmp %>/**/*.js'],
-                        included: true,
-                        served: true
-                    },
-                    {
-                        src: ['<%= project.dirs.tests %>/api.json'],
-                        included: false,
-                        served: true
-                    }
-                ],
+                frameworks: '<%= karma.__frameworks%>',
+                files: '<%= karma.__files%>',
                 exclude: [],
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
@@ -167,6 +173,29 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     enabled: true,
                     usePhantomJS: false,
                     preferHeadless: true,
+                    postDetection: availableBrowsers => availableBrowsers.filter(browser => browser.indexOf('IE') < 0)
+                }
+            },
+            tests: {
+                basePath: '',
+                frameworks: '<%= karma.__frameworks%>',
+                files: '<%= karma.__files%>',
+                exclude: [],
+                reporters: [],
+                port: 1986,
+                singleRun: false,
+                logLevel: 'ERROR',
+                plugins: [
+                    'karma-detect-browsers',
+                    'karma-chrome-launcher',
+                    'karma-firefox-launcher',
+                    'karma-jasmine',
+                    'karma-sinon'
+                ],
+                detectBrowsers: {
+                    enabled: true,
+                    usePhantomJS: false,
+                    preferHeadless: false,
                     postDetection: availableBrowsers => availableBrowsers.filter(browser => browser.indexOf('IE') < 0)
                 }
             }
@@ -202,11 +231,21 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
         'clean:tmp',
         'eslint:app',
         'eslint:tests',
-        'babel:app',
+        'babel:app_istanbul_instrumented',
         'babel:tests',
         'run:server', // a szulo process terminalasaval o is eltavozik
-        'karma:test',
+        'karma:tests_using_reporters',
         'replace:lcov'
+    ]));
+
+    registerTask('test_debug', () => task.run([ // grunt test_debug [--target=xXx.spec.js]
+        'clean:tmp',
+        'eslint:app',
+        'eslint:tests',
+        'babel:app',
+        'babel:tests',
+        'run:server',
+        'karma:tests'
     ]));
 
     registerTask('build', () => task.run([ // grunt build
