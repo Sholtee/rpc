@@ -12,9 +12,10 @@ export class ApiConnection {
   #resultProp;
   #exceptionProp;
   #propFmt;
+  #fetchImpl = (...args) => this.#fetch(...args);
+  #invokeImpl = (...args) => this.#invoke(...args);
 
   sessionId = null;
-  headers = {};
   timeout = 0;
 
   constructor(urlBase, propFmt = ApiConnection.#startWithLowerCase) {
@@ -24,75 +25,8 @@ export class ApiConnection {
     this.#propFmt = propFmt;
   }
 
-  async invoke(module, method, args = []) {
-    const url = new URL(this.#urlBase);
-
-    url.searchParams.append('module', module);
-    url.searchParams.append('method', method);
-
-    if (this.sessionId != null)
-      url.searchParams.append('sessionId', this.sessionId);
-
-    const response = await this.#fetch(url.toString(), {
-      method: 'POST',
-      headers: {...this.headers, 'Content-Type': 'application/json'},
-      body: JSON.stringify(args)
-    });
-
-    //
-    // Babel would generate enormous amount of helper code just because of this simple switch.
-    //
-
-    /*
-    switch (response.headers.get('Content-Type').toLowerCase()) {
-      case 'application/json': {
-        const data = ApiConnection.#loadJSON(await response.text(), this.#propFmt);
-        if (typeof data !== 'object')
-          break;
-
-        const exception = data[this.#exceptionProp];
-        if (exception)
-          throw exception;
-
-        return data[this.#resultProp];
-      }
-      case 'application/octet-stream': {
-        return response.body;
-      }
-    }
-    throw RESPONSE_NOT_VALID;
-    */
-
-    const contentType = response.headers.get('Content-Type').toLowerCase();
-    if (contentType === 'application/json') {
-      const data = ApiConnection.#loadJSON(await response.text(), this.#propFmt);
-      if (typeof data === 'object') {
-        const exception = data[this.#exceptionProp];
-        if (exception)
-          throw exception;
-
-        return data[this.#resultProp];
-      }
-    } else if (contentType === 'application/octet-stream')
-      return response.body;
-
-    throw RESPONSE_NOT_VALID;
-  }
-
-  decorateInvoke(newFn) { // TODO: fetch()-re
-    const baseFn = this.invoke;
-    this.invoke = Object.defineProperty(decorator, 'name', {value: baseFn.name}); // "decorator.name = ..." won't work
-
-    return this;
-
-    function decorator(...args) {
-      /* eslint-disable no-invalid-this */
-      return newFn.apply(this, [
-        ...args,
-        (...baseArgs) => baseFn.apply(this, baseArgs)
-      ]);
-      /* eslint-enable no-invalid-this */
-    }
+  invoke(module, method, args = []) {
+    return this.#invokeImpl(module, method, args);
   }
 
   async createAPI(module) {
@@ -100,7 +34,7 @@ export class ApiConnection {
 
     url.searchParams.append('module', module);
 
-    const response = await this.#fetch(url.toString(), { method: 'GET' });
+    const response = await this.#fetchImpl(url.toString(), { method: 'GET' });
     if (response.headers.get('Content-Type').toLowerCase() !== 'application/json')
       throw RESPONSE_NOT_VALID;
 
@@ -135,11 +69,59 @@ export class ApiConnection {
       });
     }
 
-    return new API(this);
+    //
+    // "API.name = ..." won't work
+    //
+
+    const Class = Object.defineProperty(API, 'name', {value: `${module}_API`});
+
+    return new Class(this);
 
     function API(connection) {
       this.$connection = connection;
     }
+  }
+
+  onFetch(fn) {
+    this.#fetchImpl = ApiConnection.#chain(this.#fetchImpl, fn);
+  }
+
+  onInvoke(fn) {
+    this.#invokeImpl = ApiConnection.#chain(this.#invokeImpl, fn);
+  }
+
+  async #invoke(module, method, args) {
+    const url = new URL(this.#urlBase);
+
+    url.searchParams.append('module', module);
+    url.searchParams.append('method', method);
+
+    if (this.sessionId != null)
+      url.searchParams.append('sessionId', this.sessionId);
+
+    const response = await this.#fetchImpl(url.toString(), {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(args)
+    });
+
+    switch (response.headers.get('Content-Type').toLowerCase()) {
+      case 'application/json': {
+        const data = ApiConnection.#loadJSON(await response.text(), this.#propFmt);
+        if (typeof data !== 'object')
+          break;
+
+        const exception = data[this.#exceptionProp];
+        if (exception)
+          throw exception;
+
+        return data[this.#resultProp];
+      }
+      case 'application/octet-stream': {
+        return response.body;
+      }
+    }
+    throw RESPONSE_NOT_VALID;
   }
 
   static #loadJSON(str, fmt) {
@@ -194,6 +176,10 @@ export class ApiConnection {
 
       clearTimeout(handle);
     }
+  }
+
+  static #chain(oldFn, newFn) {
+    return (...args) => newFn.apply(oldFn, args);
   }
 
   static #startWithLowerCase(str) {
