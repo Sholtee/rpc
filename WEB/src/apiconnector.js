@@ -73,8 +73,7 @@ export class ApiConnection {
 
         return data[this.#resultProp];
       }
-    }
-    else if (contentType === 'application/octet-stream')
+    } else if (contentType === 'application/octet-stream')
       return response.body;
 
     throw RESPONSE_NOT_VALID;
