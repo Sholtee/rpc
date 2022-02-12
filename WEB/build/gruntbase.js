@@ -88,8 +88,8 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     sourceType: 'module',
                     plugins: [
                         'istanbul',
-                        '<%= babel.__umd_transform%>',
-                        'transform-async-to-promises'
+                        'transform-async-to-promises',
+                        '<%= babel.__umd_transform%>'
                     ]
                 },
                 files: [{
@@ -114,8 +114,8 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                 options: {
                     sourceType: 'module',
                     plugins: [
-                        '<%= babel.__umd_transform%>',
                         'transform-async-to-promises',
+                        '<%= babel.__umd_transform%>',
                         'remove-comments',
                         ['add-header-comment', {header: [`${pkg.name} v${pkg.version}`, 'Author: Denes Solti']}]
                     ]
