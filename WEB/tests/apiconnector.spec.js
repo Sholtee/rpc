@@ -10,22 +10,32 @@ for (let file in window.__karma__.files) {
 */
 
 const
-    {ApiConnectionFactory, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT, SIGNATURE_NOT_MATCH} = window.apiconnector,
-    {fetch} = window.WHATWGFetch; // SinonJS csak XHR-t tud fake-elni
+    {ApiConnection, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT, SCHEMA_NOT_FOUND} = window.apiconnector,
 
-describe('ApiConnectionFactory', () => {
+    //
+    // WHATWGFetch uses XHR under the hood. It's required since SinonJS is able to fake XHR only.
+    //
+
+    {fetch} = window.WHATWGFetch;
+
+describe('ApiConnection', () => {
     const noop = function() {};
-
-    //
-    // Proxy generalas az elso megszolitaskor sokaig tarthat (ha a generalt asm-ek gyorsitotarazasa nincs beallitva)
-    //
 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
 
-    let factory;
+    let conn, oldFetch;
+
+    beforeAll(() => {
+        oldFetch = window.fetch;
+        window.fetch = fetch;
+    });
+
+    afterAll(() => {
+        window.fetch = oldFetch;
+    });
 
     beforeEach(() => {
-        factory = new ApiConnectionFactory('http://localhost:1986/api', {fetch});
+        conn = new ApiConnection('http://localhost:1986/api');
     });
 
     describe('invoke()', () => {
@@ -40,12 +50,21 @@ describe('ApiConnectionFactory', () => {
 
         afterEach(() => server.restore());
 
-        it('should return a Promise', () => expect(factory.invoke('ICalculator', 'Add', [1, 1])).toBeInstanceOf(Promise));
+        it('should return a Promise', () => expect(conn.invoke('ICalculator', 'Add', [1, 1])).toBeInstanceOf(Promise));
 
         it('should deserialize the result', done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            factory.invoke('ICalculator', 'Add', [1, 1]).then(result => {
+            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
                 expect(result).toBe(2);
+                done();
+            });
+            server.respond();
+        });
+
+        it('should deserialize complex result', done => {
+            server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": {"Cica": 1986}}']);
+            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
+                expect(result).toEqual({cica: 1986});
                 done();
             });
             server.respond();
@@ -53,7 +72,7 @@ describe('ApiConnectionFactory', () => {
 
         it('should handle malformed result', done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '1986']);
-            factory.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
+            conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
                 done();
             });
@@ -62,7 +81,7 @@ describe('ApiConnectionFactory', () => {
 
         it('should handle invalid content type',  done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'cica' }, '{"Exception": null, "Result": 2}']);
-            factory.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
+            conn.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
                 done();
             });
@@ -70,19 +89,19 @@ describe('ApiConnectionFactory', () => {
         });
 
         it('should handle text result',  done => {
-            server.respondWith('POST', api, [200, { 'Content-Type': 'text/html' }, 'akarmi']);
-            factory.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
+            server.respondWith('POST', api, [500, { 'Content-Type': 'text/html' }, 'akarmi']);
+            conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
                 expect(e).toEqual('akarmi');
                 done();
             });
             server.respond();
         });
 
-        it('should send the session ID', done => {
+        it('may send the session ID', done => {
             server.respondWith('POST', /http:\/\/localhost:1986\/api\?module=IGetMySessionIdBack&method=GetBack/, xhr =>
                 xhr.respond(200, { 'Content-Type': 'application/json' }, `{"Exception": null, "Result": "${new URL(xhr.url).searchParams.get('sessionId')}"}`));
-            factory.sessionId = 'cica';
-            factory.invoke('IGetMySessionIdBack', 'GetBack').then(result => {
+            conn.sessionId = 'cica';
+            conn.invoke('IGetMySessionIdBack', 'GetBack').then(result => {
                 expect(result).toBe('cica');
                 done();
             });
@@ -96,14 +115,18 @@ describe('ApiConnectionFactory', () => {
                 headers = xhr.requestHeaders;
             });
 
-            factory.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
+            conn.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
             server.respond();
 
             expect(headers['Content-Type']).toBe('application/json;charset=utf-8');
         });
 
-        it('should handle custom headers', () => {
-            factory.headers['my-header'] = 'value';
+        it('may send custom headers', () => {
+            conn.onFetch(function(url, opts) {
+                opts.headers['my-header'] = 'value';
+                // eslint-disable-next-line no-invalid-this
+                return this(url, opts);
+            });
 
             let headers = {};
 
@@ -111,24 +134,23 @@ describe('ApiConnectionFactory', () => {
                 headers = xhr.requestHeaders;
             });
 
-            factory.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
+            conn.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
             server.respond();
 
             expect(headers['my-header']).toBe('value');
         });
 
-        it('may be overridden', done => {
+        it('may be decorated', done => {
             let decoratorCalled = 0;
 
-            factory.constructor.decorate('invoke', function(...args) {
+            conn.onInvoke(function(...args) {
                 decoratorCalled++;
-                /* eslint-disable no-invalid-this */
-                return this.$base(...args);
-                /* eslint-enable no-invalid-this */
+                // eslint-disable-next-line no-invalid-this
+                return this(...args);
             });
 
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            factory.invoke('ICalculator', 'Add', [1, 1]).then(result => {
+            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
                 expect(result).toBe(2);
                 expect(decoratorCalled).toBe(1);
                 done();
@@ -136,24 +158,24 @@ describe('ApiConnectionFactory', () => {
             server.respond();
         });
 
-        it('may be overridden more than once', done => {
+        it('may be decorated more than once', done => {
             let
                 firstDecoratorCalled = 0,
                 secondDecoratorCalled = 0;
 
-            /* eslint-disable no-invalid-this */
-            factory.constructor.decorate('invoke', function(...args) {
+            conn.onInvoke(function(...args) {
                 firstDecoratorCalled++;
-                return this.$base(...args);
+                // eslint-disable-next-line no-invalid-this
+                return this(...args);
             });
-            factory.constructor.decorate('invoke', function(...args) {
+            conn.onInvoke(function(...args) {
                 secondDecoratorCalled++;
-                return this.$base(...args);
+                // eslint-disable-next-line no-invalid-this
+                return this(...args);
             });
-            /* eslint-enable no-invalid-this */
 
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            factory.invoke('ICalculator', 'Add', [1, 1]).then(result => {
+            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
                 expect(result).toBe(2);
                 expect(firstDecoratorCalled).toBe(1);
                 expect(secondDecoratorCalled).toBe(1);
@@ -161,219 +183,82 @@ describe('ApiConnectionFactory', () => {
             });
             server.respond();
         });
-    });
-
-    describe('API connection', () => {
-        it('should be configurable', () => {
-            const Calculator = factory.createConnection('ICalculator');
-
-            expect(typeof Calculator).toBe('function');
-            expect(Calculator.module).toBe('ICalculator');
-
-            Calculator
-                .registerMethod('Add', 'add')
-                .registerProperty('PI');
-
-            expect(typeof Calculator.prototype.add).toBe('function');
-            expect(typeof Calculator.prototype.PI).toBe('object');
-        });
-
-        ['Add', 'AddAsync'].forEach(method => it(`should support methods (${method})`, done => {
-            const Calculator = factory
-                .createConnection('ICalculator')
-                .registerMethod(method, 'add');
-
-            const inst = new Calculator();
-            inst.add(1, 2).then(result => {
-                expect(result).toEqual(3);
-                done();
-            });
-        }));
-
-        it('should support properties', done => {
-            const Calculator = factory
-                .createConnection('ICalculator')
-                .registerProperty('PI');
-
-            const inst = new Calculator();
-            inst.PI.then(PI => {
-                expect(PI).toEqual(Math.PI);
-                done();
-            });
-        });
 
         it('should handle remote exceptions', done => {
-            const Calculator = factory
-                .createConnection('ICalculator')
-                .registerMethod('ParseInt');
-
-            const inst = new Calculator();
-
-            // eslint-disable-next-line new-cap
-            inst.ParseInt('cica').catch(e => {
-                expect('Message' in e).toBeTrue();
-                expect(typeof e.TypeName).toBe('string');
-                expect(e.TypeName).toContain('System.FormatException');
+            server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": {"Message": "error"}, "Result": null}']);
+            conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
+                expect(e.message).toEqual('error');
                 done();
             });
+            server.respond();
         });
-
-        //
-        // SinonJS nem tamogatja a timeout hasznalatat, ezert itt teszteljuk
-        //
 
         it('should timeout', done => {
-            factory.timeout = 1;
-            const Calculator = factory
-                .createConnection('ICalculator')
-                .registerMethod('TimeConsumingOperation', 'timeConsumingOperation');
-
-            const inst = new Calculator();
-            inst.timeConsumingOperation().catch(e => {
-                expect(e).toBe(REQUEST_TIMED_OUT);
+            server.autoRespond = true;
+            server.autoRespondAfter = 1000;
+            conn.timeout = 20;
+            conn.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
+                expect(e).toEqual(REQUEST_TIMED_OUT);
                 done();
             });
         });
+    });
 
-        it('may validate the layout', done => {
-            const Calculator = factory
-                .createConnection('ICalculator')
-                .registerMethod('Add', 'add', [Number, 'Number']);
+    describe('createAPI', () => {
+        const schema = 'http://localhost:1986/api?module=ICalculator';
 
-            const inst = new Calculator();
-            inst.add(1, 2).then(result => {
-                expect(result).toEqual(3);
+        let server;
 
-                inst.add(1, 'cica').catch(e => {
-                    expect(e).toBe(SIGNATURE_NOT_MATCH);
+        beforeEach(function() {
+            server = sinon.createFakeServer();
+            server.autoRespond = false;
+        });
+
+        afterEach(() => server.restore());
+
+        it('should parse the schema', done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {"Add": {}}, "Properties": {"PI": {"HasGetter": true, "HasSetter": false}}}}']);
+            conn.createAPI('ICalculator').then(api => {
+                expect('add' in api).toBeTrue();
+                expect('PI' in api).toBeTrue();
+                done();
+            });
+            server.respond();
+        });
+
+        it('should throw if the schema cannot be found', done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{}']);
+            conn.createAPI('ICalculator').catch(e => {
+                expect(e).toBe(SCHEMA_NOT_FOUND);
+                done();
+            });
+            server.respond();
+        });
+
+        it('should support methods', done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {"Add": {}}, "Properties": {}}}']);
+            conn.createAPI('ICalculator').then(api => {
+                server.respondWith('POST', 'http://localhost:1986/api?module=ICalculator&method=Add', [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
+                api.add(1, 1).then(result => {
+                    expect(result).toBe(2);
                     done();
                 });
+                server.respond();
             });
+            server.respond();
         });
 
-        it('should have overridable methods', done => {
-            const Calculator = factory
-                .createConnection('ICalculator')
-                .registerMethod('Add', 'add');
-
-            let decoratorCalled = 0;
-
-            Calculator.decorate('add', function(...args) {
-                decoratorCalled++;
-                /* eslint-disable no-invalid-this */
-                return this.$base(...args);
-                /* eslint-enable no-invalid-this */
-            });
-
-            const inst = new Calculator();
-            inst.add(1, 1).then(result => {
-                expect(result).toBe(2);
-                expect(decoratorCalled).toBe(1);
-                done();
-            });
-        });
-    });
-
-    describe('version', () => {
-        it('should return the version of the remote host', () => {
-            factory.serviceVersion.then(version => {
-                expect(typeof version.Major).toBe('number');
-                expect(typeof version.Minor).toBe('number');
-                expect(typeof version.Patch).toBe('number');
-            });
-        });
-    });
-});
-
-describe('ApiConnectionFactory.fromSchema', () => {
-    it('should declare methods', done => {
-        const config = {
-            urlBase: 'http://localhost:1986/api',
-            modules: {
-                'ICalculator': {
-                    alias: 'calculator',
-                    methods: {
-                        Add: {
-                            alias: 'add'
-                        }
-                    }
-                }
-            }
-        };
-
-        const api = ApiConnectionFactory.fromSchema(config);
-        api.calculator.add(1, 1).then(result => {
-            expect(result).toEqual(2);
-            done();
-        });
-    });
-
-    it('should process the layout property', done => {
-        const config = {
-            urlBase: 'http://localhost:1986/api',
-            modules: {
-                'ICalculator': {
-                    alias: 'calculator',
-                    methods: {
-                        Add: {
-                            alias: 'add',
-                            layout: [Number, 'Number']
-                        }
-                    }
-                }
-            }
-        };
-
-        const api = ApiConnectionFactory.fromSchema(config);
-        api.calculator.add(1, 2).then(result => {
-            expect(result).toEqual(3);
-
-            api.calculator.add('cica').catch(e => {
-                expect(e).toBe(SIGNATURE_NOT_MATCH);
-                done();
-            });
-        });
-    });
-
-    it('should declare properties', done => {
-        const config = {
-            urlBase: 'http://localhost:1986/api',
-            modules: {
-                'ICalculator': {
-                    alias: 'calculator',
-                    properties: {
-                        PI: true
-                    }
-                }
-            }
-        };
-
-        const api = ApiConnectionFactory.fromSchema(config);
-        api.calculator.PI.then(result => {
-            expect(result).toEqual(Math.PI);
-            done();
-        });
-    });
-
-    it('should fetch the config', done => {
-        ApiConnectionFactory.fromSchema('base/tests/api.json').then(api => {
-            api.calculator.add(1, 2).then(result => {
-                expect(result).toEqual(3);
-
-                api.calculator.add('cica').catch(e => {
-                    expect(e).toBe(SIGNATURE_NOT_MATCH);
+        it('should support properties', done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {}, "Properties": {"PI": {"HasGetter": true}}}}']);
+            conn.createAPI('ICalculator').then(api => {
+                server.respondWith('POST', 'http://localhost:1986/api?module=ICalculator&method=get_PI', [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 3.14}']);
+                api.PI.then(result => {
+                    expect(result).toEqual(3.14);
                     done();
                 });
+                server.respond();
             });
-        });
-    });
-
-    it('should fetch the config 2', done => {
-        ApiConnectionFactory.fromSchema('base/tests/api.json').then(api => {
-            api.calculator.parseInt('1986').then(result => {
-                expect(result).toEqual(1986);
-                done();
-            });
+            server.respond();
         });
     });
 });

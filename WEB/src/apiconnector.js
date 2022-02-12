@@ -47,7 +47,7 @@ export class ApiConnection {
       throw SCHEMA_NOT_FOUND;
 
     for (const [method] of Object.entries(schema.Methods)) {
-      API.prototype[method] = function(...args) {
+      API.prototype[this.#propFmt(method)] = function(...args) {
         return this.$connection.invoke(module, method, args);
       };
     }
@@ -60,7 +60,7 @@ export class ApiConnection {
       if (!descriptor.HasGetter)
         continue;
 
-      Object.defineProperty(API.prototype, property, {
+      Object.defineProperty(API.prototype, this.#propFmt(property), {
         configurable: false,
         enumerable: true,
         get: function() {
@@ -120,6 +120,13 @@ export class ApiConnection {
       case 'application/octet-stream': {
         return response.body;
       }
+
+      //
+      // Without this line, Babel would create erroneous output
+      //
+
+      default:
+        break;
     }
     throw RESPONSE_NOT_VALID;
   }
@@ -183,9 +190,17 @@ export class ApiConnection {
   }
 
   static #startWithLowerCase(str) {
-    if (str.length >= 2 && isUpper(str[0]) && !isUpper(str[1])) {
-      str[0] = str[0].toLowerCase();
+    //
+    // "str[x] = ..." throws in strict mode
+    //
+
+    if (str.length >= 2) {
+      const [first, second, ...rest] = str;
+      if (isUpper(first) && !isUpper(second)) {
+        return [first.toLowerCase(), second, ...rest].join('');
+      }
     }
+
     return str;
 
     function isUpper(chr) { return /[A-Z]/.test(chr); }
