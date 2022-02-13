@@ -7,22 +7,26 @@ export const
   REQUEST_TIMED_OUT = 'Request timed out',
   SCHEMA_NOT_FOUND = 'Schema could not be found';
 
+const
+    ENUMERABLE = { configurable: false, enumerable: true },
+    READ_ONLY = {...ENUMERABLE, writable: false };
+
 export class ApiConnection {
   #urlBase;
   #resultProp;
   #exceptionProp;
-  #propFmt;
+  #fmt;
   #fetchImpl = (...args) => this.#fetch(...args);
   #invokeImpl = (...args) => this.#invoke(...args);
 
   sessionId = null;
   timeout = 0;
 
-  constructor(urlBase, propFmt = ApiConnection.#startWithLowerCase) {
+  constructor(urlBase, fmt = ApiConnection.#startWithLowerCase) {
     this.#urlBase = urlBase;
-    this.#resultProp = propFmt('Result');
-    this.#exceptionProp = propFmt('Exception');
-    this.#propFmt = propFmt;
+    this.#resultProp = fmt('Result');
+    this.#exceptionProp = fmt('Exception');
+    this.#fmt = fmt;
   }
 
   invoke(module, method, args = []) {
@@ -39,7 +43,7 @@ export class ApiConnection {
       throw RESPONSE_NOT_VALID;
 
     //
-    // Don't use prop_fmt so the method and property names remain untouched
+    // Don't use the name formatter (#fmt) here, so the method and property names remain untouched
     //
 
     const schema = ApiConnection.#loadJSON(await response.text())[module];
@@ -47,9 +51,12 @@ export class ApiConnection {
       throw SCHEMA_NOT_FOUND;
 
     for (const [method] of Object.entries(schema.Methods)) {
-      API.prototype[this.#propFmt(method)] = function(...args) {
-        return this.$connection.invoke(module, method, args);
-      };
+      Object.defineProperty(API.prototype, this.#fmt(method), {
+        ...READ_ONLY,
+        value: function(...args) {
+          return this.$connection.invoke(module, method, args);
+        }
+      });
     }
 
     for (const [property, descriptor] of Object.entries(schema.Properties)) {
@@ -60,25 +67,21 @@ export class ApiConnection {
       if (!descriptor.HasGetter)
         continue;
 
-      Object.defineProperty(API.prototype, this.#propFmt(property), {
-        configurable: false,
-        enumerable: true,
+      Object.defineProperty(API.prototype, this.#fmt(property), {
+        ...ENUMERABLE,
         get: function() {
           return this.$connection.invoke(module, `get_${property}`, []);
         }
       });
     }
 
-    //
-    // "API.name = ..." won't work
-    //
-
-    const Class = Object.defineProperty(API, 'name', {value: `${module}_API`});
-
-    return new Class(this);
+    return new API(this);
 
     function API(connection) {
-      this.$connection = connection;
+      Object.defineProperties(this,{
+        $connection: {...READ_ONLY, value: connection},
+        $module: {...READ_ONLY, value: module}
+      });
     }
   }
 
@@ -107,7 +110,7 @@ export class ApiConnection {
 
     switch (response.headers.get('Content-Type').toLowerCase()) {
       case 'application/json': {
-        const data = ApiConnection.#loadJSON(await response.text(), this.#propFmt);
+        const data = ApiConnection.#loadJSON(await response.text(), this.#fmt);
         if (typeof data !== 'object')
           break;
 
@@ -118,7 +121,7 @@ export class ApiConnection {
         return data[this.#resultProp];
       }
       case 'application/octet-stream': {
-        return response.body;
+        return await response.blob();
       }
 
       //
@@ -132,7 +135,7 @@ export class ApiConnection {
   }
 
   static #loadJSON(str, fmt) {
-    return JSON.parse(str, !fmt ? undefined : function(key, value) {
+    return JSON.parse(str, typeof fmt !== 'function' ? undefined : function(key, value) {
       /* eslint-disable no-invalid-this */
       if (typeof this === 'object' && !Array.isArray(this) && key) {
         this[fmt(key)] = value;

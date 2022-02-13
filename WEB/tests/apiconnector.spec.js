@@ -70,7 +70,7 @@ describe('ApiConnection', () => {
             server.respond();
         });
 
-        it('should handle malformed result', done => {
+        it('should throw on malformed result', done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '1986']);
             conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
@@ -79,7 +79,7 @@ describe('ApiConnection', () => {
             server.respond();
         });
 
-        it('should handle invalid content type',  done => {
+        it('should throw on invalid content type',  done => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'cica' }, '{"Exception": null, "Result": 2}']);
             conn.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
@@ -202,6 +202,16 @@ describe('ApiConnection', () => {
                 done();
             });
         });
+
+        it('may receive streams', done => {
+            server.respondWith('POST', 'http://localhost:1986/api?module=IStreamProvider&method=GetStream', [200, { 'Content-Type': 'application/octet-stream' }, 'cica']);
+            conn.invoke('IStreamProvider', 'GetStream', []).then(result => {
+                // eslint-disable-next-line no-undef
+                expect(result instanceof Blob).toBeTrue();
+                done();
+            });
+            server.respond();
+        });
     });
 
     describe('createAPI', () => {
@@ -221,6 +231,15 @@ describe('ApiConnection', () => {
             conn.createAPI('ICalculator').then(api => {
                 expect('add' in api).toBeTrue();
                 expect('PI' in api).toBeTrue();
+                done();
+            });
+            server.respond();
+        });
+
+        it('should throw on invalid content type',  done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'cica' }, '{}']);
+            conn.createAPI('ICalculator').catch(e => {
+                expect(e).toEqual(RESPONSE_NOT_VALID);
                 done();
             });
             server.respond();
@@ -257,6 +276,26 @@ describe('ApiConnection', () => {
                     done();
                 });
                 server.respond();
+            });
+            server.respond();
+        });
+
+        it('should skip setters', done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {}, "Properties": {"PI": {"HasGetter": true, "HasSetter": true}}}}']);
+            conn.createAPI('ICalculator').then(api => {
+                const descr = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(api), 'PI');
+                expect(descr.get).toBeDefined();
+                expect(descr.set).toBeUndefined();
+                done();
+            });
+            server.respond();
+        });
+
+        it('should skip setters (2)', done => {
+            server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {}, "Properties": {"PI": {"HasSetter": true}}}}']);
+            conn.createAPI('ICalculator').then(api => {
+                expect('PI' in api).toBeFalse();
+                done();
             });
             server.respond();
         });
