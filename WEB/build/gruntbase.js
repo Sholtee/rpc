@@ -112,7 +112,8 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
             },
             tests: {
                 options: {
-                    sourceType: 'script'
+                    sourceType: 'script',
+                    targets: 'last 2 years' // tesztek biztos modern bongeszon futnak
                 },
                 files: [{
                     expand: true,

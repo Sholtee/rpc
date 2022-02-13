@@ -9,17 +9,16 @@ for (let file in window.__karma__.files) {
 }
 */
 
-const
-    {ApiConnection, RESPONSE_NOT_VALID, REQUEST_TIMED_OUT, SCHEMA_NOT_FOUND} = window.apiconnector,
-
-    //
-    // WHATWGFetch uses XHR under the hood. It's required since SinonJS is able to fake XHR only.
-    //
-
-    {fetch} = window.WHATWGFetch;
-
 describe('ApiConnection', () => {
-    const noop = function() {};
+    const {
+        apiconnector: { ApiConnection , RESPONSE_NOT_VALID, REQUEST_TIMED_OUT, SCHEMA_NOT_FOUND },
+
+        //
+        // WHATWGFetch uses XHR under the hood. It's required since SinonJS is able to fake XHR only.
+        //
+
+        WHATWGFetch: { fetch }
+    } = window;
 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
 
@@ -45,83 +44,79 @@ describe('ApiConnection', () => {
 
         beforeEach(function() {
             server = sinon.createFakeServer();
-            server.autoRespond = false;
+            server.autoRespond = true;
         });
 
         afterEach(() => server.restore());
 
-        it('should return a Promise', () => expect(conn.invoke('ICalculator', 'Add', [1, 1])).toBeInstanceOf(Promise));
-
-        it('should deserialize the result', done => {
+        it('should return a Promise', () => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
-                expect(result).toBe(2);
-                done();
-            });
-            server.respond();
+            expect(conn.invoke('ICalculator', 'Add', [1, 1])).toBeInstanceOf(Promise);
         });
 
-        it('should deserialize complex result', done => {
+        it('should deserialize the result', async() => {
+            server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
+            expect(await conn.invoke('ICalculator', 'Add', [1, 1])).toBe(2);
+        });
+
+        it('should deserialize complex result', async() => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": {"Cica": 1986}}']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
-                expect(result).toEqual({cica: 1986});
-                done();
-            });
-            server.respond();
+            expect(await conn.invoke('ICalculator', 'Add', [1, 1])).toEqual({cica: 1986});
         });
 
-        it('should throw on malformed result', done => {
+        it('should throw on malformed result', async() => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '1986']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
+            try {
+                await conn.invoke('ICalculator', 'Add', [1, 1]);
+            } catch (e) {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
-                done();
-            });
-            server.respond();
+            }
         });
 
-        it('should throw on invalid content type',  done => {
+        it('should throw on invalid content type', async() => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'cica' }, '{"Exception": null, "Result": 2}']);
-            conn.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
+            try {
+                await conn.invoke('ICalculator', 'Add', api, [1, 1]);
+            } catch (e) {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
-                done();
-            });
-            server.respond();
+            }
         });
 
-        it('should handle text result',  done => {
+        it('should handle text result', async() => {
             server.respondWith('POST', api, [500, { 'Content-Type': 'text/html' }, 'akarmi']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
+            try {
+                await conn.invoke('ICalculator', 'Add', [1, 1]);
+            } catch (e) {
                 expect(e).toEqual('akarmi');
-                done();
-            });
-            server.respond();
+            }
         });
 
-        it('may send the session ID', done => {
-            server.respondWith('POST', /http:\/\/localhost:1986\/api\?module=IGetMySessionIdBack&method=GetBack/, xhr =>
-                xhr.respond(200, { 'Content-Type': 'application/json' }, `{"Exception": null, "Result": "${new URL(xhr.url).searchParams.get('sessionId')}"}`));
+        it('may send the session ID', async() => {
+            server.respondWith(
+                'POST',
+                /http:\/\/localhost:1986\/api\?module=IGetMySessionIdBack&method=GetBack/,
+                xhr => xhr.respond(200, { 'Content-Type': 'application/json' }, `{"Exception": null, "Result": "${new URL(xhr.url).searchParams.get('sessionId')}"}`)
+            );
             conn.sessionId = 'cica';
-            conn.invoke('IGetMySessionIdBack', 'GetBack').then(result => {
-                expect(result).toBe('cica');
-                done();
-            });
-            server.respond();
+            expect(await conn.invoke('IGetMySessionIdBack', 'GetBack')).toBe('cica');
         });
 
-        it('should set the content type', () => {
+        it('should set the content type', async() => {
             let headers = {};
 
             server.respondWith('POST', api, xhr => {
                 headers = xhr.requestHeaders;
             });
 
-            conn.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
-            server.respond();
+            try {
+                await conn.invoke('ICalculator', 'Add', [1, 1]);
+            // eslint-disable-next-line no-empty
+            } catch {}
 
             expect(headers['Content-Type']).toBe('application/json;charset=utf-8');
         });
 
-        it('may send custom headers', () => {
+        it('may send custom headers', async() => {
             conn.onFetch(function(url, opts) {
                 opts.headers['my-header'] = 'value';
                 // eslint-disable-next-line no-invalid-this
@@ -134,13 +129,15 @@ describe('ApiConnection', () => {
                 headers = xhr.requestHeaders;
             });
 
-            conn.invoke('ICalculator', 'Add', [1, 1]).catch(noop);
-            server.respond();
+            try {
+                await conn.invoke('ICalculator', 'Add', [1, 1]);
+            // eslint-disable-next-line no-empty
+            } catch {}
 
             expect(headers['my-header']).toBe('value');
         });
 
-        it('may be decorated', done => {
+        it('may be decorated', async() => {
             let decoratorCalled = 0;
 
             conn.onInvoke(function(...args) {
@@ -150,15 +147,13 @@ describe('ApiConnection', () => {
             });
 
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
-                expect(result).toBe(2);
-                expect(decoratorCalled).toBe(1);
-                done();
-            });
-            server.respond();
+            const result = await conn.invoke('ICalculator', 'Add', [1, 1]);
+
+            expect(result).toBe(2);
+            expect(decoratorCalled).toBe(1);
         });
 
-        it('may be decorated more than once', done => {
+        it('may be decorated more than once', async() => {
             let
                 firstDecoratorCalled = 0,
                 secondDecoratorCalled = 0;
@@ -175,42 +170,39 @@ describe('ApiConnection', () => {
             });
 
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).then(result => {
-                expect(result).toBe(2);
-                expect(firstDecoratorCalled).toBe(1);
-                expect(secondDecoratorCalled).toBe(1);
-                done();
-            });
-            server.respond();
+            const result = await conn.invoke('ICalculator', 'Add', [1, 1]);
+
+            expect(result).toBe(2);
+            expect(firstDecoratorCalled).toBe(1);
+            expect(secondDecoratorCalled).toBe(1);
         });
 
-        it('should handle remote exceptions', done => {
+        it('should handle remote exceptions', async() => {
             server.respondWith('POST', api, [200, { 'Content-Type': 'application/json' }, '{"Exception": {"Message": "error"}, "Result": null}']);
-            conn.invoke('ICalculator', 'Add', [1, 1]).catch(e => {
+
+            try {
+                await conn.invoke('ICalculator', 'Add', [1, 1]);
+            } catch (e) {
                 expect(e.message).toEqual('error');
-                done();
-            });
-            server.respond();
+            }
         });
 
-        it('should timeout', done => {
-            server.autoRespond = true;
+        it('should timeout', async() => {
             server.autoRespondAfter = 1000;
             conn.timeout = 20;
-            conn.invoke('ICalculator', 'Add', api, [1, 1]).catch(e => {
+            try {
+                await conn.invoke('ICalculator', 'Add', api, [1, 1]);
+            } catch (e) {
                 expect(e).toEqual(REQUEST_TIMED_OUT);
-                done();
-            });
+            }
         });
 
-        it('may receive streams', done => {
+        it('may receive streams', async() => {
             server.respondWith('POST', 'http://localhost:1986/api?module=IStreamProvider&method=GetStream', [200, { 'Content-Type': 'application/octet-stream' }, 'cica']);
-            conn.invoke('IStreamProvider', 'GetStream', []).then(result => {
-                // eslint-disable-next-line no-undef
-                expect(result instanceof Blob).toBeTrue();
-                done();
-            });
-            server.respond();
+            const result = await conn.invoke('IStreamProvider', 'GetStream', []);
+
+            // eslint-disable-next-line no-undef
+            expect(result instanceof Blob).toBeTrue();
         });
     });
 
@@ -221,83 +213,68 @@ describe('ApiConnection', () => {
 
         beforeEach(function() {
             server = sinon.createFakeServer();
-            server.autoRespond = false;
+            server.autoRespond = true;
         });
 
         afterEach(() => server.restore());
 
-        it('should parse the schema', done => {
+        it('should parse the schema', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {"Add": {}}, "Properties": {"PI": {"HasGetter": true, "HasSetter": false}}}}']);
-            conn.createAPI('ICalculator').then(api => {
-                expect('add' in api).toBeTrue();
-                expect('PI' in api).toBeTrue();
-                done();
-            });
-            server.respond();
+            const api = await conn.createAPI('ICalculator');
+            expect('add' in api).toBeTrue();
+            expect('PI' in api).toBeTrue();
         });
 
-        it('should throw on invalid content type',  done => {
+        it('should throw on invalid content type', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'cica' }, '{}']);
-            conn.createAPI('ICalculator').catch(e => {
+            try {
+                await conn.createAPI('ICalculator');
+            } catch (e) {
                 expect(e).toEqual(RESPONSE_NOT_VALID);
-                done();
-            });
-            server.respond();
+            }
         });
 
-        it('should throw if the schema cannot be found', done => {
+        it('should throw if the schema cannot be found', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{}']);
-            conn.createAPI('ICalculator').catch(e => {
+            try {
+                await conn.createAPI('ICalculator');
+            } catch (e) {
                 expect(e).toBe(SCHEMA_NOT_FOUND);
-                done();
-            });
-            server.respond();
+            }
         });
 
-        it('should support methods', done => {
+        it('should support methods', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {"Add": {}}, "Properties": {}}}']);
-            conn.createAPI('ICalculator').then(api => {
-                server.respondWith('POST', 'http://localhost:1986/api?module=ICalculator&method=Add', [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
-                api.add(1, 1).then(result => {
-                    expect(result).toBe(2);
-                    done();
-                });
-                server.respond();
-            });
-            server.respond();
+            const api = await conn.createAPI('ICalculator');
+
+            server.respondWith('POST', 'http://localhost:1986/api?module=ICalculator&method=Add', [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 2}']);
+            expect(await api.add(1, 1)).toBe(2);
         });
 
-        it('should support properties', done => {
+        it('should support properties', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {}, "Properties": {"PI": {"HasGetter": true}}}}']);
-            conn.createAPI('ICalculator').then(api => {
-                server.respondWith('POST', 'http://localhost:1986/api?module=ICalculator&method=get_PI', [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 3.14}']);
-                api.PI.then(result => {
-                    expect(result).toEqual(3.14);
-                    done();
-                });
-                server.respond();
-            });
-            server.respond();
+            const api = await conn.createAPI('ICalculator');
+
+            server.respondWith('POST', 'http://localhost:1986/api?module=ICalculator&method=get_PI', [200, { 'Content-Type': 'application/json' }, '{"Exception": null, "Result": 3.14}']);
+            expect(await api.PI).toEqual(3.14);
         });
 
-        it('should skip setters', done => {
+        it('should skip setters', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {}, "Properties": {"PI": {"HasGetter": true, "HasSetter": true}}}}']);
-            conn.createAPI('ICalculator').then(api => {
-                const descr = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(api), 'PI');
-                expect(descr.get).toBeDefined();
-                expect(descr.set).toBeUndefined();
-                done();
-            });
-            server.respond();
+            const
+                api = await conn.createAPI('ICalculator'),
+                descr = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(api), 'PI');
+
+            expect(descr.get).toBeDefined();
+            expect(descr.set).toBeUndefined();
         });
 
-        it('should skip setters (2)', done => {
+        it('should skip setters (2)', async() => {
             server.respondWith('GET', schema, [200, { 'Content-Type': 'application/json' }, '{"ICalculator": {"Methods": {}, "Properties": {"PI": {"HasSetter": true}}}}']);
-            conn.createAPI('ICalculator').then(api => {
-                expect('PI' in api).toBeFalse();
-                done();
-            });
-            server.respond();
+            const
+                api = await conn.createAPI('ICalculator'),
+                descr = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(api), 'PI');
+            expect(descr).toBeUndefined();
         });
     });
 });
