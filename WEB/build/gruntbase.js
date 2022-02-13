@@ -94,7 +94,7 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     sourceType: 'module',
                     plugins: [
                         'transform-async-to-promises',
-                        '<%= babel.__umd_transform%>'
+                        '<%= babel.__umd_transform %>'
                     ]
                 },
                 files: '<%= babel.__app_files%>'
@@ -105,10 +105,10 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     plugins: [
                         'istanbul',
                         'transform-async-to-promises',
-                        '<%= babel.__umd_transform%>'
+                        '<%= babel.__umd_transform %>'
                     ]
                 },
-                files: '<%= babel.__app_files%>'
+                files: '<%= babel.__app_files %>'
             },
             tests: {
                 options: {
@@ -126,7 +126,7 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     sourceType: 'module',
                     plugins: [
                         'transform-async-to-promises',
-                        '<%= babel.__umd_transform%>',
+                        '<%= babel.__umd_transform %>',
                         'remove-comments',
                         ['add-header-comment', {header: [`${pkg.name} v${pkg.version}`, 'Author: Denes Solti']}]
                     ]
@@ -143,10 +143,11 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                 included: true,
                 served: true
             }],
+            __postDetection: availableBrowsers => availableBrowsers.filter(browser => browser.indexOf('IE') < 0),
             tests_using_reporters: {
                 basePath: '',
-                frameworks: '<%= karma.__frameworks%>',
-                files: '<%= karma.__files%>',
+                frameworks: '<%= karma.__frameworks %>',
+                files: '<%= karma.__files %>',
                 exclude: [],
                 reporters: ['junit', 'coverage-istanbul'],
                 port: 1986,
@@ -173,13 +174,13 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     enabled: true,
                     usePhantomJS: false,
                     preferHeadless: true,
-                    postDetection: availableBrowsers => availableBrowsers.filter(browser => browser.indexOf('IE') < 0)
+                    postDetection: '<%= karma.__postDetection %>'
                 }
             },
             tests: {
                 basePath: '',
-                frameworks: '<%= karma.__frameworks%>',
-                files: '<%= karma.__files%>',
+                frameworks: '<%= karma.__frameworks %>',
+                files: '<%= karma.__files %>',
                 exclude: [],
                 reporters: [],
                 port: 1986,
@@ -196,7 +197,7 @@ module.exports = ({task, registerTask, initConfig, file, option}, dir) => {
                     enabled: true,
                     usePhantomJS: false,
                     preferHeadless: false,
-                    postDetection: availableBrowsers => availableBrowsers.filter(browser => browser.indexOf('IE') < 0)
+                    postDetection: '<%= karma.__postDetection %>'
                 }
             }
         },
