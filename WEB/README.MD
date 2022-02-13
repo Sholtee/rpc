@@ -1,81 +1,54 @@
 # RpcDotNet-Connector
 > This package provides the functionality for invoking [RPC.NET](https://github.com/Sholtee/rpc ) services.
 
-**This documentation refers the version 2.X of the library**
+**This documentation refers the version 3.X of the library**
 ## How to use it
-1. Reference this library via *jsdelivr*: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@2.x.x/dist/apiconnector.js"></script>` or install as an *NPM* package: `npm install --save-prod rpcdotnet-connector`
-2. Create and configure a connection factory:
+1. Reference this library via *jsdelivr*: `<script src="https://cdn.jsdelivr.net/npm/rpcdotnet-connector@3.0.0-preview1/dist/apiconnector.js"></script>` or install as an *NPM* package: `npm install --save-prod rpcdotnet-connector@3.0.0-preview1 `
+2. Create an API connection:
    ```js
-   const {ApiConnectionFactory} = window.apiconnector;  // or "import {ApiConnectionFactory} from 'rpcdotnet-connector'" 
+   const { ApiConnection } = window.apiconnector;  // or "import { ApiConnection } from 'rpcdotnet-connector'" 
    ...
-   const factory = new ApiConnectionFactory('http://127.0.0.1:1986/api');
+   const conn = new ApiConnection('http://127.0.0.1:1986/api');
    // Setting the following properties is not required
-   factory.sessionId = 'xXx';
-   factory.timeout = 5000; // ms
-   factory.headers['my-custom-header'] = 'kerekesfacapa';
+   conn.sessionId = 'xXx';
+   conn.timeout = 5000; // ms
    ```
    Optionally you can hook into the invocation process for instance, to bind your [loader](https://loading.io/css/ ):
    ```js
-   ApiConnectionFactory.decorate('invoke', async function(...args) {
+   conn.onFetch(async function(...args) {
      _yourLoaderService.activated++;
      try {
-       return await this.$base(...args);
+       return await this(...args);
      } finally {
        _yourLoaderService.activated--;
      }
    });
    ```
-3. Set up the API connection:
+3. Invoke the remote module:
    ```js
-   const Calculator = factory.createConnection('ICalculator');
-   Calculator
-     .registerMethod('Add' /*remote method name*/, 'add' /*optional local alias*/, [Number, Number] /*optional layout*/)
-     .registerProperty('PI');
-   ```
-   Optionally you may decorate the registered methods:
-   ```js
-   Calculator.decorate('add', function(...args) {
-     // do some cool stuff here
-     return this.$base(...args);
-   });
-   ```
-4. Invoke the API:
-   ```js
-   const calculator = new Calculator();
    // every method invocations are async
-   calculator.add(1, 1).then(result => {...});  // or "let result = await calculator.add(1, 1);"
-   const PI = await calculator.PI;
+   const result = await conn.invoke('ICalculator' /*module*/, 'Add' /*method*/, [1, 2] /*args*/);
    ```
 ## Schema API
-A schema describes the layout of the remote API. It can be a JavaScript object, or a JSON file:
+In practice the `invoke()` method is considered internal. So instead of it, we may use the schema API that creates a "well defined" client against the schema provided by the remote server:
+```js
+const calculator = await conn.createAPI('ICalculator');
+...
+await calculator.add(1, 2); // by default "camelCase" naming convention is used
+```
+FYI: The schema itself looks like:
 ```json
 {
-  "urlBase": "http://localhost:1986/api",
-  "modules": {
-    "ICalculator": {
-      "alias": "calculator",
-      "methods": {
-        "Add": {
-          "alias": "add",
-          "layout": ["Number", "Number"]
-        },
-        "ParseInt": "parseInt"
-      },
-      "properties": {
-         "PI": true
-      }
+  "ICalculator": {
+    "Methods": {
+      "Add": {...},
+      "ParseInt": {...}
+    },
+    "Properties": {
+        "PI": {...}
     }
   }
 }
 ```
-Loading the schema is just a simple line:
-```js
-const api = ApiConnectionFactory.fromSchema(schemaObject); // NOT async
-// or
-const api = await ApiConnectionFactory.fromSchema('path/to/schema.json');
-...
-api.$factory.sessionId = 'xXx';
-let result = await api.calculator.add(1, 5);
-```
-### Version history
+## Version history
 Can be found [here](https://github.com/Sholtee/rpc/tree/master/WEB/history.md ).
