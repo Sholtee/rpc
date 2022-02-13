@@ -19,3 +19,7 @@
   - *fixed:* Incorrect binding
 - 2.0.2:
   - *introduced:* In the schema, member aliases may be defined with a shorthand
+- 3.0.0-preview1:
+  - *done:* Logic has been rewritten from the scratch
+  - *breaking:* Dropped `ApiConnectionFactory` class
+  - *introduced:* `ApiConnection` class

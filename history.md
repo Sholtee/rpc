@@ -84,3 +84,8 @@
   - *introduced:* The underlying DI ecosystem can be replaced
   - *fixed:* Some logger issue
   - *fixed:* Parameter/property name could not be determined in case of validation exception
+- 6.0.0-preview2:
+  - *breaking:* Case insensitive `ModuleInvoncation`
+  - *breaking:* Dropped `RpcAccessControl` pipeline item (`HttpAccessControl` may substitute it)
+  - *introduced:* `IHttpResponseExtensions` class
+  - *introduced:* `SchemaProvider` pipline item
