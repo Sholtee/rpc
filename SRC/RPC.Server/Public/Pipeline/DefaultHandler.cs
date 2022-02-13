@@ -31,8 +31,7 @@ namespace Solti.Utils.Rpc
             // Ha csak valamelyik Handler at nem allitotta akkor HTTP 200 lesz a visszateresi kod.
             //
 
-            context.Response.Close();
-            return Task.CompletedTask;
+            return context.Response.Close();
         }
     }
 }
