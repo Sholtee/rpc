@@ -41,7 +41,16 @@ namespace Solti.Utils.Rpc.Internals
 
         public bool ContainsKey(string key) => OriginalCollection[key] is not null;
 
-        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex) => throw new NotImplementedException();
+        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
+        {
+            if (array is null)
+                throw new ArgumentNullException(nameof(array));
+
+            foreach (KeyValuePair<string, string> kvp in this)
+            {
+                array[arrayIndex++] = kvp;
+            }
+        }
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator() => OriginalCollection
             .AllKeys
