@@ -71,6 +71,12 @@ namespace Solti.Utils.Rpc.Pipeline
 
             IDictionary<string, object> descriptor = CopyEntries(Config.Schema, new Dictionary<string, object>(), module);
 
+            //
+            // Tartalom tipusat meg a Payload beallitasa elott kell megadni.
+            //
+
+            response.Headers["Content-Type"] = "application/json";
+
             await scope.Get<IJsonSerializer>().SerializeAsync
             (
                 descriptor.GetType(),
@@ -83,8 +89,6 @@ namespace Solti.Utils.Rpc.Pipeline
 
                 CancellationToken.None
             );
-
-            response.Headers["Content-Type"] = "application/json";
 
             await response.Close();
 

@@ -66,6 +66,10 @@ namespace Solti.Utils.Rpc.Pipeline
 
             switch (result)
             {
+                //
+                // Tartalom tipusat MINDIG a Payload beallitasa elott kell megadni.
+                //
+
                 case Stream stream:
                     try
                     {

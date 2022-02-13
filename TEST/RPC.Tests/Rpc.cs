@@ -761,6 +761,8 @@ namespace Solti.Utils.Rpc.Tests
 
             HttpResponseMessage response = await client.GetAsync(QueryHelpers.AddQueryString(Host, "module", "IServiceDescriptor"));
 
+            Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
+
             string s = await response.Content.ReadAsStringAsync();
             Assert.That(s, Is.EqualTo(@"{""IServiceDescriptor"":{""Methods"":{},""Properties"":{""Name"":{""Layout"":""TODO"",""HasGetter"":true,""HasSetter"":false},""Version"":{""Layout"":""TODO"",""HasGetter"":true,""HasSetter"":false}}}}"));
 
