@@ -114,8 +114,7 @@ namespace Solti.Utils.Rpc.Pipeline
                     scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
 
                 context.Response.StatusCode = HttpStatusCode.NoContent;
-                context.Response.Close();
-                return Task.CompletedTask;
+                return context.Response.Close();
             }
 
             return Next.HandleAsync(scope, context, cancellation);
