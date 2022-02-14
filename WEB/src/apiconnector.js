@@ -8,8 +8,8 @@ export const
   SCHEMA_NOT_FOUND = 'Schema could not be found';
 
 const
-    ENUMERABLE = { configurable: false, enumerable: true },
-    READ_ONLY = {...ENUMERABLE, writable: false };
+  ENUMERABLE = { configurable: false, enumerable: true },
+  READ_ONLY = {...ENUMERABLE, writable: false };
 
 export class ApiConnection {
   #urlBase;
