@@ -20,6 +20,12 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/sholtee/rpc</RepositoryUrl>
     <RepositoryBranch>$(CurrentBranch)</RepositoryBranch>
+    <!--This feature currently available in preview mode-->
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditLevel>moderate</NuGetAuditLevel>
+    <packageSources>
+      <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+    </packageSources>
   </PropertyGroup>
 
   <ItemGroup>
