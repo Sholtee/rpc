@@ -1,7 +1,6 @@
 {
   "bin": "\\BIN",
   "solution": "\\RPC.sln",
-  "commonprops": "\\SRC\\Common\\Common.targets",
   "app": "\\SRC\\Common\\Common.targets",
   "vendor": "\\Vendor",
   "tests": "\\Test\\*\\*.Tests.csproj",
