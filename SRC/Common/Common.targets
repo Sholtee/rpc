@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<NoWarn>RS0026;RS0036</NoWarn>
+	<NoWarn>CA2007;RS0026;RS0036</NoWarn>
     <OutputPath>..\..\BIN\$(Configuration)\</OutputPath>
     <DocumentationFile>$(OutputPath)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Product>RPC.NET</Product>
