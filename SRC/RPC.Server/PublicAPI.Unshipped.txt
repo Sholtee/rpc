@@ -1,0 +1,247 @@
+﻿abstract Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigure(Solti.Utils.Rpc.WebServiceBuilder serviceBuilder) -> void
+abstract Solti.Utils.Rpc.Internals.LoggerBase.LogCore(string message) -> void
+abstract Solti.Utils.Rpc.Pipeline.RequestHandlerBase<TConfiguration>.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+abstract Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Aspects.Logger<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext context) -> object
+override Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
+override Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
+override Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
+override Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
+override Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
+override Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
+override Solti.Utils.Rpc.Hosting.AppHostBase.OnRun() -> void
+override Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext context) -> object
+override Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Pipeline.Modules.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Pipeline.RequestLimiter.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Pipeline.RequestTimeout.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Pipeline.SchemaProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+override Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Servers.HttpListenerBackend.Dispose(bool disposeManaged) -> void
+override Solti.Utils.Rpc.WebService.AsyncDispose() -> System.Threading.Tasks.ValueTask
+override Solti.Utils.Rpc.WebService.Dispose(bool disposeManaged) -> void
+Solti.Utils.Rpc.Aspects.Logger<TInterface>
+Solti.Utils.Rpc.Aspects.Logger<TInterface>.ConcreteLogger.get -> Microsoft.Extensions.Logging.ILogger
+Solti.Utils.Rpc.Aspects.Logger<TInterface>.CurrentScope.get -> Solti.Utils.DI.Interfaces.IInjector
+Solti.Utils.Rpc.Aspects.Logger<TInterface>.Logger(TInterface target, Solti.Utils.DI.Interfaces.IInjector currentScope, Microsoft.Extensions.Logging.ILogger concreteLogger) -> void
+Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>
+Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Aggregate.get -> bool
+Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.CurrentScope.get -> Solti.Utils.DI.Interfaces.IInjector
+Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.ParameterValidator(TInterface target, Solti.Utils.DI.Interfaces.IInjector currentScope) -> void
+Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.ParameterValidator(TInterface target, Solti.Utils.DI.Interfaces.IInjector currentScope, bool aggregate) -> void
+Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>
+Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.RoleValidator(TInterface target, Solti.Utils.Rpc.Interfaces.IRpcRequestContext requestContext, Solti.Utils.Rpc.Interfaces.IRoleManager roleManager) -> void
+Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>
+Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Connection.get -> System.Data.IDbConnection
+Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.TransactionManager(TInterface target, System.Lazy<System.Data.IDbConnection> dbConn) -> void
+Solti.Utils.Rpc.DefaultHandler
+Solti.Utils.Rpc.DefaultHandler.DefaultHandler() -> void
+Solti.Utils.Rpc.DefaultHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+Solti.Utils.Rpc.DefaultHandler.Next.get -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+Solti.Utils.Rpc.Hosting.AppHostBase
+Solti.Utils.Rpc.Hosting.AppHostBase.AppHostBase(System.Collections.Generic.IReadOnlyList<string> args) -> void
+Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider.get -> Solti.Utils.Rpc.Interfaces.IDiProvider
+Solti.Utils.Rpc.Hosting.AppHostBase.DiProvider.init -> void
+Solti.Utils.Rpc.Hosting.AppHostBase.InvokeInScope(System.Action<Solti.Utils.DI.Interfaces.IInjector> invocation) -> void
+Solti.Utils.Rpc.Hosting.AppHostBase.WebService.get -> Solti.Utils.Rpc.WebService
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.AutoStart.get -> bool
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.AutoStart.set -> void
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Dependencies.get -> System.Collections.Generic.ICollection<string>
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Description.get -> string
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Description.set -> void
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Name.get -> string
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Name.set -> void
+Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor.Win32ServiceDescriptor() -> void
+Solti.Utils.Rpc.IHttpResponseExtensions
+Solti.Utils.Rpc.InjectorDotNetBackend
+Solti.Utils.Rpc.InjectorDotNetBackend.CreateFactory(System.Threading.CancellationToken cancellation) -> Solti.Utils.DI.Interfaces.IScopeFactory
+Solti.Utils.Rpc.InjectorDotNetBackend.InjectorDotNetBackend() -> void
+Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions.get -> Solti.Utils.DI.Interfaces.ScopeOptions
+Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions.set -> void
+Solti.Utils.Rpc.InjectorDotNetBackend.Services.get -> Solti.Utils.DI.Interfaces.IServiceCollection
+Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>
+Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.AspectInterceptor(TInterface target) -> void
+Solti.Utils.Rpc.Internals.CommandLineApplication
+Solti.Utils.Rpc.Internals.CommandLineApplication.Args.get -> System.Collections.Generic.IReadOnlyList<string>
+Solti.Utils.Rpc.Internals.CommandLineApplication.CommandLineApplication(System.Collections.Generic.IReadOnlyList<string> args) -> void
+Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments<T>() -> T
+Solti.Utils.Rpc.Internals.CommandLineApplication.Run() -> int
+Solti.Utils.Rpc.Internals.LoggerBase
+Solti.Utils.Rpc.Internals.LoggerBase.Category.get -> string
+Solti.Utils.Rpc.Internals.LoggerBase.IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) -> bool
+Solti.Utils.Rpc.Internals.LoggerBase.LoggerBase(string category) -> void
+Solti.Utils.Rpc.Internals.ModuleInvocation
+Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
+Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type iface) -> void
+Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule<TInterface>() -> void
+Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Build() -> Solti.Utils.Rpc.Internals.ModuleInvocation
+Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.ModuleInvocationBuilder() -> void
+Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.Modules.get -> System.Collections.Generic.IReadOnlyCollection<System.Type>
+Solti.Utils.Rpc.Internals.ModuleInvocationExtensions
+Solti.Utils.Rpc.Internals.VerbAttribute
+Solti.Utils.Rpc.Internals.VerbAttribute.VerbAttribute(params string[] verbs) -> void
+Solti.Utils.Rpc.Internals.VerbAttribute.VerbAttribute(string verb) -> void
+Solti.Utils.Rpc.Internals.VerbAttribute.Verbs.get -> System.Collections.Generic.IReadOnlyList<string>
+Solti.Utils.Rpc.JsonSerializerBackend
+Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArray(System.Collections.Generic.IReadOnlyList<System.Type> elementTypes, string input) -> object[]
+Solti.Utils.Rpc.JsonSerializerBackend.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList<System.Type> elementTypes, System.IO.Stream input, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<object[]>
+Solti.Utils.Rpc.JsonSerializerBackend.JsonSerializerBackend() -> void
+Solti.Utils.Rpc.JsonSerializerBackend.Options.get -> System.Text.Json.JsonSerializerOptions
+Solti.Utils.Rpc.JsonSerializerBackend.Options.set -> void
+Solti.Utils.Rpc.JsonSerializerBackend.Serialize<T>(T obj) -> string
+Solti.Utils.Rpc.JsonSerializerBackend.SerializeAsync(System.Type type, object obj, System.IO.Stream output, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+Solti.Utils.Rpc.ModulesExtensions
+Solti.Utils.Rpc.Pipeline.ExceptionCatcher
+Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs.get -> bool
+Solti.Utils.Rpc.Pipeline.ExceptionCatcher.AllowLogs.set -> void
+Solti.Utils.Rpc.Pipeline.ExceptionCatcher.ExceptionCatcher(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler
+Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ExceptionCatcherHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig config) -> void
+Solti.Utils.Rpc.Pipeline.HttpAccessControl
+Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedHeaders.get -> System.Collections.Generic.ICollection<string>
+Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedMethods.get -> System.Collections.Generic.ICollection<string>
+Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowedOrigins.get -> System.Collections.Generic.ICollection<string>
+Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs.get -> bool
+Solti.Utils.Rpc.Pipeline.HttpAccessControl.AllowLogs.set -> void
+Solti.Utils.Rpc.Pipeline.HttpAccessControl.HttpAccessControl(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler
+Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.HttpAccessControlHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig config) -> void
+Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig
+Solti.Utils.Rpc.Pipeline.IExceptionCatcherHandlerConfig.AllowLogs.get -> bool
+Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig
+Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.AllowedHeaders.get -> System.Collections.Generic.IReadOnlyCollection<string>
+Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.AllowedMethods.get -> System.Collections.Generic.IReadOnlyCollection<string>
+Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.AllowedOrigins.get -> System.Collections.Generic.IReadOnlyCollection<string>
+Solti.Utils.Rpc.Pipeline.IHttpAccessControlHandlerConfig.AllowLogs.get -> bool
+Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig
+Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.ContextStore.get -> System.Collections.Generic.IDictionary<Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IRpcRequestContext>
+Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig.ModuleInvocation.get -> Solti.Utils.Rpc.Internals.ModuleInvocation
+Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig
+Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.Interval.get -> System.TimeSpan
+Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig.Threshold.get -> int
+Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig
+Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.Timeout.get -> System.TimeSpan
+Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig
+Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema.get -> System.Collections.Generic.IReadOnlyDictionary<string, object>
+Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler
+Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.ModuleInvocationHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig config) -> void
+Solti.Utils.Rpc.Pipeline.Modules
+Solti.Utils.Rpc.Pipeline.Modules.ConfigureSerializer(System.Func<Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IJsonSerializer> factory) -> Solti.Utils.Rpc.Pipeline.Modules
+Solti.Utils.Rpc.Pipeline.Modules.ContextStore.get -> System.Collections.Generic.IDictionary<Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IRpcRequestContext>
+Solti.Utils.Rpc.Pipeline.Modules.ModuleInvocation.get -> Solti.Utils.Rpc.Internals.ModuleInvocation
+Solti.Utils.Rpc.Pipeline.Modules.Modules(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.Modules.Register<TInterface, TImplementation>() -> Solti.Utils.Rpc.Pipeline.Modules
+Solti.Utils.Rpc.Pipeline.Modules.Register<TInterface>(System.Func<Solti.Utils.DI.Interfaces.IInjector, TInterface> factory) -> Solti.Utils.Rpc.Pipeline.Modules
+Solti.Utils.Rpc.Pipeline.Modules.RegisteredModules.get -> System.Collections.Generic.IReadOnlyCollection<System.Type>
+Solti.Utils.Rpc.Pipeline.RequestHandlerBase<TConfiguration>
+Solti.Utils.Rpc.Pipeline.RequestHandlerBase<TConfiguration>.Config.get -> TConfiguration
+Solti.Utils.Rpc.Pipeline.RequestHandlerBase<TConfiguration>.Next.get -> Solti.Utils.Rpc.Interfaces.IRequestHandler
+Solti.Utils.Rpc.Pipeline.RequestHandlerBase<TConfiguration>.RequestHandlerBase(Solti.Utils.Rpc.Interfaces.IRequestHandler next, TConfiguration config) -> void
+Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
+Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Parent.get -> Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder
+Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.RequestHandlerBuilder(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.WebServiceBuilder.get -> Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions
+Solti.Utils.Rpc.Pipeline.RequestLimiter
+Solti.Utils.Rpc.Pipeline.RequestLimiter.RequestLimiter(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.RequestLimiter.SetDynamicInterval(System.Func<System.TimeSpan> getter) -> Solti.Utils.Rpc.Pipeline.RequestLimiter
+Solti.Utils.Rpc.Pipeline.RequestLimiter.SetDynamicThreshold(System.Func<int> getter) -> Solti.Utils.Rpc.Pipeline.RequestLimiter
+Solti.Utils.Rpc.Pipeline.RequestLimiter.SetStaticInterval(System.TimeSpan interval) -> Solti.Utils.Rpc.Pipeline.RequestLimiter
+Solti.Utils.Rpc.Pipeline.RequestLimiter.SetStaticThreshold(int threshold) -> Solti.Utils.Rpc.Pipeline.RequestLimiter
+Solti.Utils.Rpc.Pipeline.RequestLimiterHandler
+Solti.Utils.Rpc.Pipeline.RequestLimiterHandler.RequestLimiterHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IRequestLimiterHandlerConfig config) -> void
+Solti.Utils.Rpc.Pipeline.RequestTimeout
+Solti.Utils.Rpc.Pipeline.RequestTimeout.RequestTimeout(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.RequestTimeout.Timeout.get -> System.TimeSpan
+Solti.Utils.Rpc.Pipeline.RequestTimeout.Timeout.set -> void
+Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler
+Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.RequestTimeoutHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig config) -> void
+Solti.Utils.Rpc.Pipeline.SchemaProvider
+Solti.Utils.Rpc.Pipeline.SchemaProvider.Register(System.Type iface) -> Solti.Utils.Rpc.Pipeline.SchemaProvider
+Solti.Utils.Rpc.Pipeline.SchemaProvider.Register<TInterface>() -> Solti.Utils.Rpc.Pipeline.SchemaProvider
+Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema.get -> System.Collections.Generic.IReadOnlyDictionary<string, object>
+Solti.Utils.Rpc.Pipeline.SchemaProvider.SchemaProvider(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
+Solti.Utils.Rpc.Pipeline.SchemaProviderHandler
+Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.SchemaProviderHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig config) -> void
+Solti.Utils.Rpc.Servers.HttpListenerBackend
+Solti.Utils.Rpc.Servers.HttpListenerBackend.HttpListenerBackend(string url) -> void
+Solti.Utils.Rpc.Servers.HttpListenerBackend.IsStarted.get -> bool
+Solti.Utils.Rpc.Servers.HttpListenerBackend.ReserveUrl.get -> bool
+Solti.Utils.Rpc.Servers.HttpListenerBackend.ReserveUrl.init -> void
+Solti.Utils.Rpc.Servers.HttpListenerBackend.Start() -> void
+Solti.Utils.Rpc.Servers.HttpListenerBackend.Stop() -> void
+Solti.Utils.Rpc.Servers.HttpListenerBackend.Url.get -> string
+Solti.Utils.Rpc.Servers.HttpListenerBackend.WaitForSessionAsync(System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task<Solti.Utils.Rpc.Interfaces.IHttpSession>
+Solti.Utils.Rpc.Servers.HttpSession
+Solti.Utils.Rpc.Servers.HttpSession.HttpSession(Solti.Utils.Rpc.Interfaces.IHttpServer Server, Solti.Utils.Rpc.Interfaces.IHttpRequest Request, Solti.Utils.Rpc.Interfaces.IHttpResponse Response) -> void
+Solti.Utils.Rpc.Servers.HttpSession.Request.get -> Solti.Utils.Rpc.Interfaces.IHttpRequest
+Solti.Utils.Rpc.Servers.HttpSession.Request.init -> void
+Solti.Utils.Rpc.Servers.HttpSession.Response.get -> Solti.Utils.Rpc.Interfaces.IHttpResponse
+Solti.Utils.Rpc.Servers.HttpSession.Response.init -> void
+Solti.Utils.Rpc.Servers.HttpSession.Server.get -> Solti.Utils.Rpc.Interfaces.IHttpServer
+Solti.Utils.Rpc.Servers.HttpSession.Server.init -> void
+Solti.Utils.Rpc.WebService
+Solti.Utils.Rpc.WebService.HttpServer.get -> Solti.Utils.Rpc.Interfaces.IHttpServer
+Solti.Utils.Rpc.WebService.IsListening.get -> bool
+Solti.Utils.Rpc.WebService.IsStarted.get -> bool
+Solti.Utils.Rpc.WebService.Logger.get -> Microsoft.Extensions.Logging.ILogger
+Solti.Utils.Rpc.WebService.MaxWorkers.get -> int
+Solti.Utils.Rpc.WebService.MaxWorkers.set -> void
+Solti.Utils.Rpc.WebService.ScopeFactory.get -> Solti.Utils.DI.Interfaces.IScopeFactory
+Solti.Utils.Rpc.WebService.Start() -> System.Threading.Tasks.Task
+Solti.Utils.Rpc.WebService.Stop() -> System.Threading.Tasks.Task
+Solti.Utils.Rpc.WebService.WebService(Solti.Utils.Rpc.Interfaces.IDiProvider diProvider, System.Threading.CancellationToken cancellation) -> void
+Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.WebServiceBuilder.ConfigureBackend(System.Func<Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpServer> factory) -> Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action<Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator> configCallback) -> Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.WebServiceBuilder.ConfigureServices(System.Action<Solti.Utils.DI.Interfaces.IServiceCollection> configCallback) -> Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.WebServiceBuilder.DiProvider.get -> Solti.Utils.Rpc.Interfaces.IDiProvider
+Solti.Utils.Rpc.WebServiceBuilder.Pipe.get -> Solti.Utils.DI.Interfaces.AbstractServiceEntry
+Solti.Utils.Rpc.WebServiceBuilder.WebServiceBuilder() -> void
+Solti.Utils.Rpc.WebServiceBuilder.WebServiceBuilder(Solti.Utils.Rpc.Interfaces.IDiProvider diProvder) -> void
+Solti.Utils.Rpc.WebServiceBuilderExtensions
+static Solti.Utils.Rpc.IHttpResponseExtensions.WriteResponseString(this Solti.Utils.Rpc.Interfaces.IHttpResponse response, string responseString, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+static Solti.Utils.Rpc.Internals.LoggerBase.GetDefaultCategory<TCategory>() -> string
+static Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.EmptyDelegate.get -> Solti.Utils.Rpc.Internals.ModuleInvocation
+static Solti.Utils.Rpc.Internals.ModuleInvocationExtensions.GetRelatedModules(this Solti.Utils.Rpc.Internals.ModuleInvocation src) -> System.Collections.Generic.IReadOnlyList<System.Type>
+static Solti.Utils.Rpc.ModulesExtensions.InstallBuiltInModules(this Solti.Utils.Rpc.Pipeline.Modules modules) -> Solti.Utils.Rpc.Pipeline.Modules
+static Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.IsPreflight(Solti.Utils.Rpc.Interfaces.IHttpSession context) -> bool
+static Solti.Utils.Rpc.Pipeline.RequestHandlerBuilderExtensions.GetParent<TParent>(this Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder src) -> TParent
+static Solti.Utils.Rpc.Servers.HttpListenerBackend.AddSslCert(System.Net.IPEndPoint ipPort, string certHash) -> void
+static Solti.Utils.Rpc.Servers.HttpListenerBackend.AddUrlReservation(string url) -> void
+static Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveSslCert(System.Net.IPEndPoint ipPort) -> void
+static Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveUrlReservation(string url) -> void
+static Solti.Utils.Rpc.WebServiceBuilderExtensions.BuildMinimalService(this Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, string url = "http://localhost:1986") -> Solti.Utils.Rpc.WebService
+static Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(this Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, System.Action<Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder> configurator, bool useDefaultLogger = true) -> Solti.Utils.Rpc.WebServiceBuilder
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder() -> Solti.Utils.Rpc.WebServiceBuilder
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt() -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices(Solti.Utils.DI.Interfaces.IServiceCollection services) -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureWin32Service(Solti.Utils.Rpc.Hosting.Win32ServiceDescriptor descriptor) -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall() -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnInstall(Solti.Utils.DI.Interfaces.IInjector scope) -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnStart() -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnStop() -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall() -> void
+virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector scope) -> void
+virtual Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
+virtual Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
+virtual Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun() -> void
+virtual Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException(System.Exception ex) -> void
+virtual Solti.Utils.Rpc.Internals.LoggerBase.BeginScope<TState>(TState state) -> System.IDisposable
+virtual Solti.Utils.Rpc.Internals.LoggerBase.Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, TState state, System.Exception exception, System.Func<TState, System.Exception, string> formatter) -> void
+virtual Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo ifaceMethod) -> System.Func<Solti.Utils.DI.Interfaces.IInjector, System.IO.Stream, System.Threading.CancellationToken, System.Threading.Tasks.Task<object[]>>
+virtual Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo member) -> string
+virtual Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.ProcessUnhandledException(System.Exception ex, Solti.Utils.Rpc.Interfaces.IHttpSession context) -> System.Threading.Tasks.Task
+virtual Solti.Utils.Rpc.Pipeline.HttpAccessControlHandler.SetAcHeaders(Solti.Utils.Rpc.Interfaces.IHttpSession context) -> void
+virtual Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateContext(Solti.Utils.Rpc.Interfaces.IHttpSession context, in System.Threading.CancellationToken cancellation) -> Solti.Utils.Rpc.Interfaces.IRpcRequestContext
+virtual Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.CreateResponse(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpResponse response, object result) -> System.Threading.Tasks.Task
+virtual Solti.Utils.Rpc.Pipeline.SchemaProvider.GetMemberId(System.Reflection.MemberInfo member) -> string
+virtual Solti.Utils.Rpc.WebService.DoWork(int workerId, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+virtual Solti.Utils.Rpc.WebServiceBuilder.Build(System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> Solti.Utils.Rpc.WebService

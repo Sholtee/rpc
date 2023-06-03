@@ -1,0 +1,25 @@
+﻿override Solti.Utils.Rpc.RpcClientFactory.Dispose(bool disposeManaged) -> void
+override Solti.Utils.Rpc.RpcClientFactory.MethodCallForwarder<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext context) -> object
+Solti.Utils.Rpc.RpcClientFactory
+Solti.Utils.Rpc.RpcClientFactory.CreateClient<TInterface>() -> System.Threading.Tasks.Task<TInterface>
+Solti.Utils.Rpc.RpcClientFactory.CustomHeaders.get -> System.Collections.Generic.IDictionary<string, string>
+Solti.Utils.Rpc.RpcClientFactory.Host.get -> string
+Solti.Utils.Rpc.RpcClientFactory.MethodCallForwarder<TInterface>
+Solti.Utils.Rpc.RpcClientFactory.MethodCallForwarder<TInterface>.MethodCallForwarder(Solti.Utils.Rpc.RpcClientFactory owner) -> void
+Solti.Utils.Rpc.RpcClientFactory.MethodCallForwarder<TInterface>.Owner.get -> Solti.Utils.Rpc.RpcClientFactory
+Solti.Utils.Rpc.RpcClientFactory.RpcClientFactory(string host) -> void
+Solti.Utils.Rpc.RpcClientFactory.SerializerOptions.get -> System.Text.Json.JsonSerializerOptions
+Solti.Utils.Rpc.RpcClientFactory.ServiceVersion.get -> System.Threading.Tasks.Task<Solti.Utils.Rpc.Interfaces.Version>
+Solti.Utils.Rpc.RpcClientFactory.SessionId.get -> string
+Solti.Utils.Rpc.RpcClientFactory.SessionId.set -> void
+Solti.Utils.Rpc.RpcClientFactory.Timeout.get -> System.TimeSpan
+Solti.Utils.Rpc.RpcClientFactory.Timeout.set -> void
+Solti.Utils.Rpc.RpcException
+Solti.Utils.Rpc.RpcException.RpcException() -> void
+Solti.Utils.Rpc.RpcException.RpcException(string message) -> void
+Solti.Utils.Rpc.RpcException.RpcException(string message, System.Exception innerException) -> void
+virtual Solti.Utils.Rpc.RpcClientFactory.GetMemberId(System.Reflection.MemberInfo member) -> string
+virtual Solti.Utils.Rpc.RpcClientFactory.GetRequestParameters(System.Reflection.MethodInfo method) -> System.Collections.Generic.IDictionary<string, string>
+virtual Solti.Utils.Rpc.RpcClientFactory.InvokeService(System.Reflection.MethodInfo method, object[] args) -> object
+virtual Solti.Utils.Rpc.RpcClientFactory.InvokeServiceAsync(System.Reflection.MethodInfo method, object[] args) -> System.Threading.Tasks.Task<object>
+virtual Solti.Utils.Rpc.RpcClientFactory.ProcessRemoteError(Solti.Utils.Rpc.Interfaces.ExceptionInfo info) -> void
