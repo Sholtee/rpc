@@ -7,11 +7,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
-    using DI.Interfaces;
+    using Interfaces;
     using Primitives;
-    using Properties;
+    using Interfaces.Properties;
 
     /// <summary>
     /// Base class for validator attributes e.g.: <see cref="NotNullAttribute"/>.
@@ -32,23 +32,22 @@ namespace Solti.Utils.Rpc.Interfaces
         public Type? Condition 
         { 
             get => ShouldRunImpl?.GetType();
-            set
+            init
             {
-                if (value is null) ShouldRunImpl = null;
-                else
-                {
-                    ConstructorInfo? ctor = value.GetConstructor(Type.EmptyTypes);
-                    if (ctor is null)
-                        throw new ArgumentException(Errors.PARAMETERLESS_CTOR_REQUIRED , nameof(value));
+                if (value is null)
+                    throw new ArgumentNullException(nameof(value));
 
-                    ShouldRunImpl = ctor
-                        .ToStaticDelegate()
-                        .Invoke(Array.Empty<object?>()) as IConditionalValidatior ?? throw new ArgumentException
-                        (
-                            string.Format(Errors.Culture, Errors.NOT_ASSIGNABLE_FROM, value, typeof(IConditionalValidatior)),
-                            nameof(value)
-                        );
-                }
+                ConstructorInfo? ctor = value.GetConstructor(Type.EmptyTypes);
+                if (ctor is null)
+                    throw new ArgumentException(Errors.PARAMETERLESS_CTOR_REQUIRED , nameof(value));
+
+                ShouldRunImpl = ctor
+                    .ToStaticDelegate()
+                    .Invoke(Array.Empty<object?>()) as IConditionalValidatior ?? throw new ArgumentException
+                    (
+                        string.Format(Errors.Culture, Errors.NOT_ASSIGNABLE_FROM, value, typeof(IConditionalValidatior)),
+                        nameof(value)
+                    );
             }
         }
 
@@ -57,9 +56,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public bool SupportsNull { get; }
 
-        /// <summary>
-        /// See <see cref="IConditionalValidatior.ShouldRun(MethodInfo, IInjector)"/>.
-        /// </summary>
-        public virtual bool ShouldRun(MethodInfo containingMethod, IInjector currentScope) => ShouldRunImpl?.ShouldRun(containingMethod, currentScope) ?? true;
+        /// <inheritdoc/>
+        public virtual bool ShouldRun(MethodInfo containingMethod, object?[] args) => ShouldRunImpl?.ShouldRun(containingMethod, args) ?? true;
     }
 }

@@ -63,11 +63,11 @@ namespace Solti.Utils.Rpc
                 if (context is null)
                     throw new ArgumentNullException(nameof(context));
 
-                return Owner.InvokeService(context.Method, context.Args);
+                return Owner.InvokeService(context.InterfaceMethod, context.Args);
             }
         }
 
-        private static Type GenerateTypedResponseTo(Type returnType) => Cache.GetOrAdd(returnType, () =>
+        private static Type GenerateTypedResponseTo(Type returnType) => Cache.GetOrAdd(returnType, static returnType =>
         {
             if (returnType == typeof(void) || returnType == typeof(Task))
                 returnType = typeof(object);
@@ -248,12 +248,12 @@ namespace Solti.Utils.Rpc
 
             if (remoteException is not null && typeof(Exception).IsAssignableFrom(remoteException))
             {
-                Func<object?[], object>? ctor = remoteException
+                StaticMethod? ctor = remoteException
                     .GetConstructor(new[] { typeof(string) })
                     ?.ToStaticDelegate();
 
                 if (ctor is not null)
-                    ex = (Exception) ctor(new object?[] { info.Message });
+                    ex = (Exception) ctor(new object?[] { info.Message })!;
             }
 
             ex ??= new Exception(info.Message);
@@ -330,7 +330,7 @@ namespace Solti.Utils.Rpc
         public async Task<TInterface> CreateClient<TInterface>() where TInterface : class => (TInterface) (await ProxyGenerator<TInterface, MethodCallForwarder<TInterface>>.GetGeneratedTypeAsync())
             .GetConstructor(new Type[] { typeof(RpcClientFactory) })
             .ToStaticDelegate()
-            .Invoke(new object[] { this });
+            .Invoke(new object[] { this })!;
         #endregion
     }
 }

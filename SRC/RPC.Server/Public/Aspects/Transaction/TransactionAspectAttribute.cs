@@ -5,7 +5,7 @@
 ********************************************************************************/
 using System;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
     using DI.Interfaces;
 

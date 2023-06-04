@@ -2,15 +2,12 @@
 abstract Solti.Utils.Rpc.Internals.LoggerBase.LogCore(string message) -> void
 abstract Solti.Utils.Rpc.Pipeline.RequestHandlerBase<TConfiguration>.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
 abstract Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
-override Solti.Utils.Rpc.Aspects.Logger<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext context) -> object
-override Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
-override Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
-override Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
-override Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
-override Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
-override Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
+override Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.GetInterceptorType(System.Type! iface) -> System.Type!
 override Solti.Utils.Rpc.Hosting.AppHostBase.OnRun() -> void
-override Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Invoke(Solti.Utils.Proxy.InvocationContext context) -> object
+override Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute.GetInterceptorType(System.Type! iface) -> System.Type!
+override Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.GetInterceptorType(System.Type! iface) -> System.Type!
+override Solti.Utils.Rpc.Interfaces.TransactionAspectAttribute.GetInterceptorType(System.Type! iface) -> System.Type!
+override Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.ShouldRun(System.Reflection.MethodInfo! containingMethod, Solti.Utils.DI.Interfaces.IInjector! currentScope) -> bool
 override Solti.Utils.Rpc.Pipeline.ExceptionCatcher.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
 override Solti.Utils.Rpc.Pipeline.ExceptionCatcherHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
 override Solti.Utils.Rpc.Pipeline.HttpAccessControl.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
@@ -26,20 +23,13 @@ override Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync(Solti.Utils.
 override Solti.Utils.Rpc.Servers.HttpListenerBackend.Dispose(bool disposeManaged) -> void
 override Solti.Utils.Rpc.WebService.AsyncDispose() -> System.Threading.Tasks.ValueTask
 override Solti.Utils.Rpc.WebService.Dispose(bool disposeManaged) -> void
-Solti.Utils.Rpc.Aspects.Logger<TInterface>
-Solti.Utils.Rpc.Aspects.Logger<TInterface>.ConcreteLogger.get -> Microsoft.Extensions.Logging.ILogger
-Solti.Utils.Rpc.Aspects.Logger<TInterface>.CurrentScope.get -> Solti.Utils.DI.Interfaces.IInjector
-Solti.Utils.Rpc.Aspects.Logger<TInterface>.Logger(TInterface target, Solti.Utils.DI.Interfaces.IInjector currentScope, Microsoft.Extensions.Logging.ILogger concreteLogger) -> void
-Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>
-Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.Aggregate.get -> bool
-Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.CurrentScope.get -> Solti.Utils.DI.Interfaces.IInjector
-Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.ParameterValidator(TInterface target, Solti.Utils.DI.Interfaces.IInjector currentScope) -> void
-Solti.Utils.Rpc.Aspects.ParameterValidator<TInterface>.ParameterValidator(TInterface target, Solti.Utils.DI.Interfaces.IInjector currentScope, bool aggregate) -> void
-Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>
-Solti.Utils.Rpc.Aspects.RoleValidator<TInterface>.RoleValidator(TInterface target, Solti.Utils.Rpc.Interfaces.IRpcRequestContext requestContext, Solti.Utils.Rpc.Interfaces.IRoleManager roleManager) -> void
-Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>
-Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.Connection.get -> System.Data.IDbConnection
-Solti.Utils.Rpc.Aspects.TransactionManager<TInterface>.TransactionManager(TInterface target, System.Lazy<System.Data.IDbConnection> dbConn) -> void
+Solti.Utils.Rpc.Aspects.TransactionAspectAttribute
+Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.TransactionAspectAttribute() -> void
+Solti.Utils.Rpc.Aspects.ValidatorAttributeBase
+Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.Condition.get -> System.Type?
+Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.Condition.init -> void
+Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.SupportsNull.get -> bool
+Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.ValidatorAttributeBase(bool supportsNull) -> void
 Solti.Utils.Rpc.DefaultHandler
 Solti.Utils.Rpc.DefaultHandler.DefaultHandler() -> void
 Solti.Utils.Rpc.DefaultHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
@@ -66,8 +56,63 @@ Solti.Utils.Rpc.InjectorDotNetBackend.InjectorDotNetBackend() -> void
 Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions.get -> Solti.Utils.DI.Interfaces.ScopeOptions
 Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions.set -> void
 Solti.Utils.Rpc.InjectorDotNetBackend.Services.get -> Solti.Utils.DI.Interfaces.IServiceCollection
-Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>
-Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.AspectInterceptor(TInterface target) -> void
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.LengthBetweenAttribute(int min = 0, int max = 2147483647) -> void
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Max.get -> int
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.Min.get -> int
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.ParameterValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.PropertyValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.MatchAttribute
+Solti.Utils.Rpc.Interfaces.MatchAttribute.MatchAttribute(string! pattern, System.Text.RegularExpressions.RegexOptions options = System.Text.RegularExpressions.RegexOptions.Compiled) -> void
+Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.MatchAttribute.ParameterValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.MatchAttribute.PropertyValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.MustAttribute
+Solti.Utils.Rpc.Interfaces.MustAttribute.MustAttribute(System.Type! predicate) -> void
+Solti.Utils.Rpc.Interfaces.MustAttribute.ParameterValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.MustAttribute.ParameterValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.MustAttribute.PropertyValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.MustAttribute.PropertyValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.NotEmptyAttribute
+Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.NotEmptyAttribute() -> void
+Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.ParameterValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.ParameterValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.PropertyValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.NotEmptyAttribute.PropertyValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.NotNullAttribute
+Solti.Utils.Rpc.Interfaces.NotNullAttribute.NotNullAttribute() -> void
+Solti.Utils.Rpc.Interfaces.NotNullAttribute.ParameterValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.NotNullAttribute.ParameterValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.NotNullAttribute.PropertyValidationErrorMessage.get -> string!
+Solti.Utils.Rpc.Interfaces.NotNullAttribute.PropertyValidationErrorMessage.set -> void
+Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute
+Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute.Aggregate.get -> bool
+Solti.Utils.Rpc.Interfaces.ParameterValidatorAspectAttribute.ParameterValidatorAspectAttribute(bool aggregate = false) -> void
+Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute
+Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(object! roleGroup) -> void
+Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RequiredRolesAttribute(params object![]! roleGroups) -> void
+Solti.Utils.Rpc.Interfaces.RequiredRolesAttribute.RoleGroups.get -> System.Collections.Generic.IReadOnlyList<System.Enum!>!
+Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute
+Solti.Utils.Rpc.Interfaces.RoleValidatorAspectAttribute.RoleValidatorAspectAttribute() -> void
+Solti.Utils.Rpc.Interfaces.TransactionalAttribute
+Solti.Utils.Rpc.Interfaces.TransactionalAttribute.IsolationLevel.get -> System.Data.IsolationLevel
+Solti.Utils.Rpc.Interfaces.TransactionalAttribute.IsolationLevel.set -> void
+Solti.Utils.Rpc.Interfaces.TransactionalAttribute.TransactionalAttribute() -> void
+Solti.Utils.Rpc.Interfaces.TransactionAspectAttribute
+Solti.Utils.Rpc.Interfaces.TransactionAspectAttribute.TransactionAspectAttribute() -> void
+Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute
+Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.Aggregate.get -> bool
+Solti.Utils.Rpc.Interfaces.ValidatePropertiesAttribute.ValidatePropertiesAttribute(bool aggregate = false) -> void
+Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase
+Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition.get -> System.Type?
+Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.Condition.set -> void
+Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.SupportsNull.get -> bool
+Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ValidatorAttributeBase(bool supportsNull) -> void
+Solti.Utils.Rpc.Internals.AspectInterceptor
+Solti.Utils.Rpc.Internals.AspectInterceptor.AspectInterceptor() -> void
 Solti.Utils.Rpc.Internals.CommandLineApplication
 Solti.Utils.Rpc.Internals.CommandLineApplication.Args.get -> System.Collections.Generic.IReadOnlyList<string>
 Solti.Utils.Rpc.Internals.CommandLineApplication.CommandLineApplication(System.Collections.Generic.IReadOnlyList<string> args) -> void
@@ -220,6 +265,7 @@ static Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveSslCert(System.Net.IPEn
 static Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveUrlReservation(string url) -> void
 static Solti.Utils.Rpc.WebServiceBuilderExtensions.BuildMinimalService(this Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, string url = "http://localhost:1986") -> Solti.Utils.Rpc.WebService
 static Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(this Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, System.Action<Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder> configurator, bool useDefaultLogger = true) -> Solti.Utils.Rpc.WebServiceBuilder
+virtual Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo! containingMethod, object?[]! args) -> bool
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder() -> Solti.Utils.Rpc.WebServiceBuilder
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt() -> void
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnConfigureServices(Solti.Utils.DI.Interfaces.IServiceCollection services) -> void
@@ -230,8 +276,9 @@ virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnStart() -> void
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnStop() -> void
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall() -> void
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnUnInstall(Solti.Utils.DI.Interfaces.IInjector scope) -> void
-virtual Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.Decorator(Solti.Utils.Proxy.InvocationContext context, System.Func<object> callNext) -> object
-virtual Solti.Utils.Rpc.Internals.AspectInterceptor<TInterface>.DecoratorAsync(Solti.Utils.Proxy.InvocationContext context, System.Func<System.Threading.Tasks.Task> callNext) -> System.Threading.Tasks.Task<System.Threading.Tasks.Task>
+virtual Solti.Utils.Rpc.Interfaces.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo! containingMethod, Solti.Utils.DI.Interfaces.IInjector! currentScope) -> bool
+virtual Solti.Utils.Rpc.Internals.AspectInterceptor.Decorator(Solti.Utils.DI.Interfaces.IInvocationContext! context, Solti.Utils.DI.Interfaces.Next<Solti.Utils.DI.Interfaces.IInvocationContext!, object?>! callNext) -> object?
+virtual Solti.Utils.Rpc.Internals.AspectInterceptor.DecoratorAsync(Solti.Utils.DI.Interfaces.IInvocationContext! context, Solti.Utils.DI.Interfaces.Next<Solti.Utils.DI.Interfaces.IInvocationContext!, System.Threading.Tasks.Task<object?>!>! callNext) -> System.Threading.Tasks.Task<object?>!
 virtual Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun() -> void
 virtual Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException(System.Exception ex) -> void
 virtual Solti.Utils.Rpc.Internals.LoggerBase.BeginScope<TState>(TState state) -> System.IDisposable
