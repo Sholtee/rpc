@@ -25,6 +25,9 @@ override Solti.Utils.Rpc.WebService.AsyncDispose() -> System.Threading.Tasks.Val
 override Solti.Utils.Rpc.WebService.Dispose(bool disposeManaged) -> void
 Solti.Utils.Rpc.Aspects.TransactionAspectAttribute
 Solti.Utils.Rpc.Aspects.TransactionAspectAttribute.TransactionAspectAttribute() -> void
+Solti.Utils.Rpc.Aspects.ValidatePropertiesAttribute
+Solti.Utils.Rpc.Aspects.ValidatePropertiesAttribute.Aggregate.get -> bool
+Solti.Utils.Rpc.Aspects.ValidatePropertiesAttribute.ValidatePropertiesAttribute(bool aggregate = false) -> void
 Solti.Utils.Rpc.Aspects.ValidatorAttributeBase
 Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.Condition.get -> System.Type?
 Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.Condition.init -> void

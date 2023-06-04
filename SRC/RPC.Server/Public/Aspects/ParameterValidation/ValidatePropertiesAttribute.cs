@@ -4,24 +4,23 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
-    using DI.Interfaces;
+    using Interfaces;
     using Primitives;
 
     /// <summary>
     /// Indicates that the properties of a parameter or property may be validated.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
-    public sealed class ValidatePropertiesAttribute : ValidatorAttributeBase, IAsyncPropertyValidator, IAsyncParameterValidator
+    public sealed class ValidatePropertiesAttribute : ValidatorAttributeBase, IPropertyValidator, IParameterValidator
     {
-        private MethodInfo? ContainingMethod { get; set; }
+        private static readonly ConcurrentDictionary<Type, IReadOnlyList<Action<object>>> FDelegateCache = new();
 
         /// <summary>
         /// Returns true if the validator should collect all the validation errors.
@@ -33,17 +32,15 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public ValidatePropertiesAttribute(bool aggregate = false): base(supportsNull: false) => Aggregate = aggregate;
 
-        private async Task ValidateAsync(Type type, object value, IInjector currentScope)
+        private void Validate(Type type, object value)
         {
-            Debug.Assert(ContainingMethod is not null);
-
             List<ValidationException> validationErrors = new();
 
-            foreach (Func<MethodInfo, IInjector, object, Task> validate in GetValidators(type))
+            foreach (Action<object> validate in GetValidators(type))
             {
                 try
                 {
-                    await validate(ContainingMethod!, currentScope, value);
+                    validate(value);
                 }
                 catch (ValidationException validationError) when (Aggregate)
                 {
@@ -53,87 +50,35 @@ namespace Solti.Utils.Rpc.Interfaces
 
             if (validationErrors.Any())
                 throw new AggregateException(validationErrors);
-
-            static IReadOnlyCollection<Func<MethodInfo, IInjector, object, Task>> GetValidators(Type type) => ValidatorsToDelegate<Func<MethodInfo, IInjector, object, Task>>(type, (prop, validator, getter) => async (containingMethod, currentScope, instance) =>
-            {
-                if (validator is IConditionalValidatior conditional && !conditional.ShouldRun(containingMethod, currentScope))
-                    return;
-
-                object? value = getter(instance);
-
-                if (value is null && !validator.SupportsNull)
-                    return;
-
-                if (validator is IAsyncPropertyValidator asyncValidator)
-                {
-                    await asyncValidator.ValidateAsync(prop, value, currentScope);
-                    return;
-                }
-
-                validator.Validate(prop, value, currentScope);
-            });
         }
 
-        private void Validate(Type type, object value, IInjector currentScope)
+        private static IReadOnlyCollection<Action<object>> GetValidators(Type type)
         {
-            Debug.Assert(ContainingMethod is not null);
+            return FDelegateCache.GetOrAdd(type, type => GetValidatorsCore(type).ToArray());
 
-            List<ValidationException> validationErrors = new();
-
-            foreach (Action<MethodInfo, IInjector, object> validate in GetValidators(type))
+            static IEnumerable<Action<object>> GetValidatorsCore(Type type)
             {
-                try
+                foreach (PropertyInfo prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty | BindingFlags.FlattenHierarchy))
                 {
-                    validate(ContainingMethod!, currentScope, value);
-                }
-                catch (ValidationException validationError) when (Aggregate)
-                {
-                    validationErrors.Add(validationError);
+                    InstanceMethod getter = prop.ToGetter();
+
+                    foreach (IPropertyValidator parameterValidator in prop.GetCustomAttributes().OfType<IPropertyValidator>())
+                    {
+                        yield return instance =>
+                        {
+                            object? value = getter(instance);
+
+                            if (value is not null || parameterValidator.SupportsNull)
+                                parameterValidator.Validate(prop, value);
+                        };
+                    }
                 }
             }
-
-            if (validationErrors.Any())
-                throw new AggregateException(validationErrors);
-
-            static IReadOnlyCollection<Action<MethodInfo, IInjector, object>> GetValidators(Type type) => ValidatorsToDelegate<Action<MethodInfo, IInjector, object>>(type, (prop, validator, getter) => (containingMethod, currentScope, instance) =>
-            {
-                if (validator is not IConditionalValidatior conditional || conditional.ShouldRun(containingMethod, currentScope))
-                {
-                    object? value = getter(instance);
-
-                    if (value is not null || validator.SupportsNull)
-                        validator.Validate(prop, value, currentScope);
-                }
-            });
-        }
-               
-        private static IReadOnlyCollection<TDelegate> ValidatorsToDelegate<TDelegate>(Type type, Func<PropertyInfo, IPropertyValidator, Func<object, object?>, TDelegate> convert) where TDelegate : Delegate => Cache.GetOrAdd(type, () => type
-            .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty | BindingFlags.GetProperty | BindingFlags.FlattenHierarchy)
-            .SelectMany(prop =>
-            {
-                Func<object, object?> getter = prop.ToGetter();
-
-                return prop
-                    .GetCustomAttributes()
-                    .OfType<IPropertyValidator>()
-                    .Select(validator => convert(prop, validator, getter));
-            })
-            .ToArray());
-
-        /// <inheritdoc/>
-        public override bool ShouldRun(MethodInfo containingMethod, IInjector currentScope)
-        {
-            ContainingMethod = containingMethod;
-            return base.ShouldRun(containingMethod, currentScope);
         }
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector currentScope) => Validate(param.ParameterType, value!, currentScope);
+        void IParameterValidator.Validate(ParameterInfo param, object? value) => Validate(param.ParameterType, value!);
 
-        Task IAsyncParameterValidator.ValidateAsync(ParameterInfo param, object? value, IInjector currentScope) => ValidateAsync(param.ParameterType, value!, currentScope);
-
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector currentScope) => Validate(prop.PropertyType, value!, currentScope);
-
-        Task IAsyncPropertyValidator.ValidateAsync(PropertyInfo prop, object? value, IInjector currentScope) => ValidateAsync(prop.PropertyType, value!, currentScope);
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value) => Validate(prop.PropertyType, value!);
 
         //
         // Mivel ezek explicit implementaciok ezert az attributumok alkalmazasakor nem lehet beallitani oket
