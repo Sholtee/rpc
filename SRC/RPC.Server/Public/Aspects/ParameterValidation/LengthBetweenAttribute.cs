@@ -8,10 +8,10 @@ using System.Collections;
 using System.Linq;
 using System.Reflection;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
-    using DI.Interfaces;
-    using Properties;
+    using Interfaces;
+    using Interfaces.Properties;
 
     /// <summary>
     /// Ensures that the string representation of a parameter or property matches the given pattern.
@@ -53,7 +53,7 @@ namespace Solti.Utils.Rpc.Interfaces
 
         private static int GetCount(object value) => (value as ICollection)?.Count ?? ((IEnumerable) value).Cast<object>().Count();
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector currentScope)
+        void IParameterValidator.Validate(ParameterInfo param, object? value)
         {
             int count = GetCount(value!);
 
@@ -64,7 +64,7 @@ namespace Solti.Utils.Rpc.Interfaces
                 };
         }
 
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector currentScope)
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value)
         {
             int count = GetCount(value!);
 

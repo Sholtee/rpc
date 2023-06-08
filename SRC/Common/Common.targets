@@ -4,7 +4,7 @@
     <Authors>Denes Solti</Authors>
     <Version>6.0.0-preview2</Version>
     <Configurations>Debug;Release</Configurations>
-    <LangVersion>9</LangVersion>
+    <LangVersion>11</LangVersion>
     <Nullable>enable</Nullable>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

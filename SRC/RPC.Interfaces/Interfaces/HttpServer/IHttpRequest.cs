@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -23,6 +24,21 @@ namespace Solti.Utils.Rpc.Interfaces
         /// The query parameters of the request.
         /// </summary>
         IReadOnlyDictionary<string, string> QueryParameters { get; }
+
+        /// <summary>
+        /// The request id.
+        /// </summary>
+        Guid Id { get; }
+
+        /// <summary>
+        /// The URL of the requested ersource.
+        /// </summary>
+        Uri Url { get; }
+
+        /// <summary>
+        /// Content type
+        /// </summary>
+        string ContentType { get; }
 
         /// <summary>
         /// The HTTP method.

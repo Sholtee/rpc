@@ -6,7 +6,7 @@
 using System;
 using System.Data;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
     /// <summary>
     /// Marks a method to be transactional.
@@ -17,6 +17,6 @@ namespace Solti.Utils.Rpc.Interfaces
         /// <summary>
         /// The <see cref="System.Data.IsolationLevel"/> of the transaction.
         /// </summary>
-        public IsolationLevel IsolationLevel { get; set; } = IsolationLevel.Unspecified;
+        public IsolationLevel IsolationLevel { get; init; } = IsolationLevel.Unspecified;
     }
 }

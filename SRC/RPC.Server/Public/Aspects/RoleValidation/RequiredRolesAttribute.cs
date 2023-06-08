@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
-    using Properties;
+    using Interfaces.Properties;
 
     /// <summary>
     /// Specifies the roles required for the module method invocation.

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Internals
 {
+    using Aspects;
     using DI.Interfaces;
     using Interfaces;
 

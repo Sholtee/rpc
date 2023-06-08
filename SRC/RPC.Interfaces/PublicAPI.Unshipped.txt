@@ -21,8 +21,6 @@ Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>
 Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.Build() -> TBuiltService
 Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.IParameterizedBuilder<TParam>
 Solti.Utils.Rpc.Interfaces.IBuilder<TBuiltService>.IParameterizedBuilder<TParam>.Build(TParam param) -> TBuiltService
-Solti.Utils.Rpc.Interfaces.IConditionalValidatior
-Solti.Utils.Rpc.Interfaces.IConditionalValidatior.ShouldRun(System.Reflection.MethodInfo! containingMethod, object?[]! args) -> bool
 Solti.Utils.Rpc.Interfaces.ICustomValidator
 Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull.get -> bool
 Solti.Utils.Rpc.Interfaces.IDiProvider
@@ -31,12 +29,15 @@ Solti.Utils.Rpc.Interfaces.IDiProvider.Services.get -> Solti.Utils.DI.Interfaces
 Solti.Utils.Rpc.Interfaces.IgnoreAttribute
 Solti.Utils.Rpc.Interfaces.IgnoreAttribute.IgnoreAttribute() -> void
 Solti.Utils.Rpc.Interfaces.IHttpRequest
+Solti.Utils.Rpc.Interfaces.IHttpRequest.ContentType.get -> string!
 Solti.Utils.Rpc.Interfaces.IHttpRequest.Headers.get -> System.Collections.Generic.IReadOnlyDictionary<string, string>
+Solti.Utils.Rpc.Interfaces.IHttpRequest.Id.get -> System.Guid
 Solti.Utils.Rpc.Interfaces.IHttpRequest.Method.get -> string
 Solti.Utils.Rpc.Interfaces.IHttpRequest.OriginalRequest.get -> object
 Solti.Utils.Rpc.Interfaces.IHttpRequest.Payload.get -> System.IO.Stream
 Solti.Utils.Rpc.Interfaces.IHttpRequest.QueryParameters.get -> System.Collections.Generic.IReadOnlyDictionary<string, string>
 Solti.Utils.Rpc.Interfaces.IHttpRequest.RemoteEndPoint.get -> System.Net.IPEndPoint
+Solti.Utils.Rpc.Interfaces.IHttpRequest.Url.get -> System.Uri!
 Solti.Utils.Rpc.Interfaces.IHttpResponse
 Solti.Utils.Rpc.Interfaces.IHttpResponse.Close() -> System.Threading.Tasks.Task
 Solti.Utils.Rpc.Interfaces.IHttpResponse.Headers.get -> System.Collections.Generic.IDictionary<string, string>
@@ -58,6 +59,11 @@ Solti.Utils.Rpc.Interfaces.IHttpSession.Server.get -> Solti.Utils.Rpc.Interfaces
 Solti.Utils.Rpc.Interfaces.IJsonSerializer
 Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList<System.Type> elementTypes, System.IO.Stream input, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<object[]>
 Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync(System.Type type, object obj, System.IO.Stream output, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
+Solti.Utils.Rpc.Interfaces.ILogger
+Solti.Utils.Rpc.Interfaces.ILogger.Level.get -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.ILogger.Level.set -> void
+Solti.Utils.Rpc.Interfaces.ILogger.Log(Solti.Utils.Rpc.Interfaces.LogLevel logLevel, string! eventId, string! message, object? state, System.Exception? exception) -> void
+Solti.Utils.Rpc.Interfaces.ILoggerExtensions
 Solti.Utils.Rpc.Interfaces.IParameterValidator
 Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage.get -> string
 Solti.Utils.Rpc.Interfaces.IParameterValidator.ParameterValidationErrorMessage.set -> void
@@ -87,6 +93,14 @@ Solti.Utils.Rpc.Interfaces.IRpcRequestContext.SessionId.get -> string
 Solti.Utils.Rpc.Interfaces.IServiceDescriptor
 Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Name.get -> System.Threading.Tasks.Task<string>
 Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Version.get -> System.Threading.Tasks.Task<Solti.Utils.Rpc.Interfaces.Version>
+Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Critical = 1 -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Debug = 5 -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Disabled = 0 -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Error = 2 -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Information = 4 -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Trace = 6 -> Solti.Utils.Rpc.Interfaces.LogLevel
+Solti.Utils.Rpc.Interfaces.LogLevel.Warning = 3 -> Solti.Utils.Rpc.Interfaces.LogLevel
 Solti.Utils.Rpc.Interfaces.MemberInfoExtensions
 Solti.Utils.Rpc.Interfaces.MissingModuleException
 Solti.Utils.Rpc.Interfaces.MissingModuleException.MissingModuleException(string module) -> void
@@ -106,6 +120,12 @@ Solti.Utils.Rpc.Interfaces.Version.Minor.set -> void
 Solti.Utils.Rpc.Interfaces.Version.Patch.get -> int
 Solti.Utils.Rpc.Interfaces.Version.Patch.set -> void
 Solti.Utils.Rpc.Interfaces.Version.Version() -> void
+static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Critical(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null, System.Exception? exception = null) -> void
+static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Debug(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null) -> void
+static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Error(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null, System.Exception? exception = null) -> void
+static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Info(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null) -> void
+static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Trace(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null) -> void
+static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Warning(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null, System.Exception? exception = null) -> void
 static Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId(this System.Reflection.MemberInfo member) -> string
 static Solti.Utils.Rpc.Interfaces.Version.implicit operator Solti.Utils.Rpc.Interfaces.Version(System.Diagnostics.FileVersionInfo src) -> Solti.Utils.Rpc.Interfaces.Version
 static Solti.Utils.Rpc.Interfaces.Version.implicit operator Solti.Utils.Rpc.Interfaces.Version(System.Version src) -> Solti.Utils.Rpc.Interfaces.Version

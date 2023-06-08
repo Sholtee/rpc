@@ -5,61 +5,52 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-
-using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Solti.Utils.Rpc.Internals
 {
-    using Primitives.Patterns;
+    using Interfaces;
 
     /// <summary>
-    /// Minimalist logger implementation, intended for private use only.
+    /// Minimalist logger implementation, meant to dump log streams containing parseable JSON data
     /// </summary>
+    /// <remarks>Every request should have its own logger instance.</remarks>
     public abstract class LoggerBase : ILogger
     {
-        private readonly Stack<string> FScopes = new();
-
-        private sealed class Popper : Disposable
+        private sealed class LogEntry
         {
-            public string State { get; }
+            public required LogLevel Level { get; init; }
 
-            public Stack<string> Scopes { get; }
+            public required string EventId { get; init; }
 
-            public Popper(Stack<string> scopes)
-            {
-                Scopes = scopes;
-                State = scopes.Peek();
-            }
+            public required string Message { get; init; }
 
-            [SuppressMessage("Usage", "CA2215:Dispose methods should call base class dispose")]
-            protected override void Dispose(bool disposeManaged)
-            {
-                CheckNotDisposed();
+            public required string Origin { get; init; }
 
-                //
-                // A szulo hatokor nem szabadithato elobb fol mint a gyermek hatokor
-                //
+            public DateTime TimeStampUtc { get; } = DateTime.UtcNow;
 
-                if (Scopes.Peek() != State)
-                    throw new InvalidOperationException();
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+            public Guid? RequestId { get; init; }
 
-                Scopes.Pop();
-            }
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+            public object? State { get; init; }
+
+            [JsonIgnore]
+            public Exception? Exception { get; init; }
+
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull), JsonPropertyName(nameof(Exception))]
+            public string? Error => Exception?.Message;
+
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+            public string? StackTrace => Exception?.StackTrace;
         }
-
-        /// <summary>
-        /// Gets the default category.
-        /// </summary>
-        protected static string GetDefaultCategory<TCategory>() => $"'{Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName)}' ({typeof(TCategory).Name})";
 
         /// <summary>
         /// Creates a new <see cref="LoggerBase"/> instance.
         /// </summary>
-        protected LoggerBase(string category) => Category = category;
+        protected LoggerBase(IHttpRequest? request) => Request = request;
 
         /// <summary>
         /// The concrete logger invocation.
@@ -68,52 +59,47 @@ namespace Solti.Utils.Rpc.Internals
         protected abstract void LogCore(string message);
 
         /// <summary>
-        /// See category.
+        /// The associated request.
         /// </summary>
-        public string Category { get; }
+        public IHttpRequest? Request { get; }
+
+        /// <inheritdoc/>
+        public LogLevel Level { get; set; }
 
         /// <summary>
-        /// See <see cref="ILogger.BeginScope{TState}(TState)"/>.
+        /// The origin of dumped log entries.
         /// </summary>
-        public virtual IDisposable BeginScope<TState>(TState state)
+        public string Origin { get; set; } = Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName);
+
+        /// <inheritdoc/>
+        public virtual void Log(LogLevel logLevel, string eventId, string message, object? state, Exception? exception)
         {
-            if (state is null)
-                throw new ArgumentNullException(nameof(state));
+            if (logLevel > Level)
+                return;
 
-            string scope = state is IDictionary<string, object> dict
-                ? $"[{string.Join(", ", dict.Select(kv => $"{kv.Key ?? string.Empty} = {kv.Value ?? "NULL"}"))}]"
-                : state.ToString();
+            JsonSerializerOptions options = new()
+            {
+                WriteIndented = false
+            };
+            options.Converters.Add(new TypeConverter());
 
-            FScopes.Push(scope);
-            return new Popper(FScopes);
-        }
-
-        /// <summary>
-        /// See <see cref="ILogger.IsEnabled(LogLevel)"/>.
-        /// </summary>
-        #pragma warning disable CS3001 // LogLevel is not CLS-compliant
-        public bool IsEnabled(LogLevel logLevel) => true;
-        #pragma warning restore CS3001
-
-        /// <summary>
-        /// See <see cref="ILogger.Log{TState}(LogLevel, EventId, TState, Exception, Func{TState, Exception, string})"/>.
-        /// </summary>
-        #pragma warning disable CS3001 // LogLevel & EventId are not CLS-compliant
-        public virtual void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
-        #pragma warning restore CS3001
-        {
-            if (!IsEnabled(logLevel)) return;
-
-            if (formatter is null)
-                throw new ArgumentNullException(nameof(formatter));
-
-            string message = formatter(state, exception);
-            if (string.IsNullOrEmpty(message)) return;
-            if (exception != null) message += $" -> {Environment.NewLine}{exception}";
-
-            message = $"{Category}: {string.Join(" ", FScopes.Reverse())} { logLevel }: {message}";
-
-            LogCore(message);
+            LogCore
+            (
+                JsonSerializer.Serialize
+                (
+                    new LogEntry
+                    {
+                        Level     = logLevel,
+                        EventId   = eventId ?? throw new ArgumentNullException(nameof(eventId)),
+                        Message   = message ?? throw new ArgumentNullException(nameof(message)),
+                        State     = state,
+                        Origin    = Origin,
+                        RequestId = Request?.Id,
+                        Exception = exception
+                    },
+                    options
+                )
+            );
         }
     }
 }

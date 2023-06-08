@@ -6,10 +6,10 @@
 using System;
 using System.Reflection;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
-    using DI.Interfaces;
-    using Properties;
+    using Interfaces;
+    using Interfaces.Properties;
 
     /// <summary>
     /// Ensures that a parameter or property is not null.
@@ -27,7 +27,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string PropertyValidationErrorMessage { get; set; } = Errors.NULL_PROPERTY;
         
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value)
         {
             if (value is null)
                 throw new ValidationException(PropertyValidationErrorMessage) 
@@ -41,7 +41,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string ParameterValidationErrorMessage { get; set; } = Errors.NULL_PARAM;
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
+        void IParameterValidator.Validate(ParameterInfo param, object? value)
         {
             if (value is null)
                 throw new ValidationException(ParameterValidationErrorMessage)

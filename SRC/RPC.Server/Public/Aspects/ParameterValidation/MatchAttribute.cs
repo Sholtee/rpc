@@ -8,10 +8,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Solti.Utils.Rpc.Interfaces
+namespace Solti.Utils.Rpc.Aspects
 {
-    using DI.Interfaces;
-    using Properties;
+    using Interfaces;
+    using Interfaces.Properties;
 
     /// <summary>
     /// Ensures that the string representation of a parameter or property matches the given pattern.
@@ -32,7 +32,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string PropertyValidationErrorMessage { get; set; } = Errors.PROPERTY_NOT_MATCHES;
 
-        void IPropertyValidator.Validate(PropertyInfo prop, object? value, IInjector _)
+        void IPropertyValidator.Validate(PropertyInfo prop, object? value)
         {
             if (!Regex.Match(value!.ToString()).Success)
                 throw new ValidationException(PropertyValidationErrorMessage) 
@@ -46,7 +46,7 @@ namespace Solti.Utils.Rpc.Interfaces
         /// </summary>
         public string ParameterValidationErrorMessage { get; set; } = Errors.PARAM_NOT_MATCHES;
 
-        void IParameterValidator.Validate(ParameterInfo param, object? value, IInjector _)
+        void IParameterValidator.Validate(ParameterInfo param, object? value)
         {
             if (!Regex.Match(value!.ToString()).Success)
                 throw new ValidationException(ParameterValidationErrorMessage)

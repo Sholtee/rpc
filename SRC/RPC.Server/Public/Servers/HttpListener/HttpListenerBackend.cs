@@ -42,6 +42,9 @@ namespace Solti.Utils.Rpc.Servers
                 Payload         = originalRequest.InputStream;
                 RemoteEndPoint  = originalRequest.RemoteEndPoint;
                 OriginalRequest = originalRequest;
+                Id              = originalRequest.RequestTraceIdentifier;
+                Url             = originalRequest.Url;
+                ContentType     = originalRequest.ContentType;
             }
 
             public IReadOnlyDictionary<string, string> Headers { get; }
@@ -55,6 +58,12 @@ namespace Solti.Utils.Rpc.Servers
             public IPEndPoint RemoteEndPoint { get; }
 
             public object OriginalRequest { get; }
+
+            public Guid Id { get; }
+
+            public Uri Url { get; }
+
+            public string ContentType { get; }
         }
 
         private sealed class HttpListenerResponseWrapper : IHttpResponse

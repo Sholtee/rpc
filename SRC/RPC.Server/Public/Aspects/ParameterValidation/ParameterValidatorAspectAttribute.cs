@@ -8,11 +8,12 @@ using System;
 namespace Solti.Utils.Rpc.Aspects
 {
     using DI.Interfaces;
+    using Internals;
 
     /// <summary>
     /// Indicates that the methods of a service may validate their parameters.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public sealed class ParameterValidatorAspectAttribute : AspectAttribute
     {
         /// <summary>
@@ -23,20 +24,6 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="ParameterValidatorAspectAttribute"/> instance.
         /// </summary>
-        public ParameterValidatorAspectAttribute(bool aggregate = false) => Aggregate = aggregate;
-
-        /// <inheritdoc/>
-        public override Type GetInterceptorType(Type iface)
-        {
-            if (iface is null)
-                throw new ArgumentNullException(nameof(iface));
-
-            //
-            // Rpc.Server szerelveny verzioja megegyezik az Rpc.Interfaces szerelveny verziojaval
-            //
-
-            Type interceptor = Type.GetType($"Solti.Utils.Rpc.Aspects.ParameterValidator`1, Solti.Utils.Rpc.Server, Version = {GetType().Assembly.GetName().Version}, Culture = neutral, PublicKeyToken = null", throwOnError: true);
-            return interceptor.MakeGenericType(iface);
-        }
+        public ParameterValidatorAspectAttribute(bool aggregate = false): base(typeof(ParameterValidator)) => Aggregate = aggregate;
     }
 }

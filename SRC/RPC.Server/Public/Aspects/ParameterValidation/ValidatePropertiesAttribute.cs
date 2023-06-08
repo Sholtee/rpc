@@ -84,8 +84,8 @@ namespace Solti.Utils.Rpc.Aspects
         // Mivel ezek explicit implementaciok ezert az attributumok alkalmazasakor nem lehet beallitani oket
         //
 
-        string IParameterValidator.ParameterValidationErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string IParameterValidator.ParameterValidationErrorMessage { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
 
-        string IPropertyValidator.PropertyValidationErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string IPropertyValidator.PropertyValidationErrorMessage { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
     }
 }

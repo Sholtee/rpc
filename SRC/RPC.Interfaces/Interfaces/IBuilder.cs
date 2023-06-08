@@ -3,6 +3,8 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
+
 namespace Solti.Utils.Rpc.Interfaces
 {
     /// <summary>

@@ -9,12 +9,12 @@
 
   <ItemGroup>
     <Compile Include="..\Common\AssemblyAttributes.cs" Link="Properties\AssemblyAttributes.cs" />
-    <Compile Include="..\Common\IsExternalInit.cs" Link="Properties\IsExternalInit.cs" />
+    <Compile Include="..\Common\IsExternalInit.cs" Link="IsExternalInit.cs" />
+	<Compile Include="..\Common\RequiredMemberAttribute.cs" Link="RequiredMemberAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Injector.NET" Version="9.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.*" />
     <PackageReference Include="Solti.Utils.Primitives" Version="8.*" />
     <PackageReference Include="System.Runtime.Caching" Version="7.*" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.*" />
