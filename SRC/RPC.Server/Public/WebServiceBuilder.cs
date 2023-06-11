@@ -10,7 +10,6 @@ using System.Threading;
 
 namespace Solti.Utils.Rpc
 {
-    using DI;
     using DI.Interfaces;
     using Interfaces;
 
@@ -42,19 +41,19 @@ namespace Solti.Utils.Rpc
             DiProvider = diProvder ?? throw new ArgumentNullException(nameof(diProvder));
             Pipe = DiProvider
                 .Services
-                .Service<IRequestHandler, DefaultHandler>(Lifetime.Scoped)
+                .Service<IRequestHandler, DefaultHandler>(DiProvider.Lifetimes.Scoped())
                 .Last();
         }
 
         /// <summary>
         /// Configures the required services.
         /// </summary>
-        public WebServiceBuilder ConfigureServices(Action<IServiceCollection> configCallback)
+        public WebServiceBuilder ConfigureServices(Action<IServiceCollection, Lifetimes> configCallback)
         {
             if (configCallback is null)
                 throw new ArgumentNullException(nameof(configCallback));
 
-            configCallback(DiProvider.Services);
+            configCallback(DiProvider.Services, DiProvider.Lifetimes);
             return this;
         }
 
@@ -73,7 +72,9 @@ namespace Solti.Utils.Rpc
         /// <summary>
         /// Configures the backend implementation.
         /// </summary>
-        public WebServiceBuilder ConfigureBackend(Func<IInjector, IHttpServer> factory) => ConfigureServices(svcs => svcs.Factory<IHttpServer>(factory, Lifetime.Singleton));
+        public WebServiceBuilder ConfigureBackend(FactoryDelegate<IHttpServer> factory) => 
+            ConfigureServices((svcs, lifetimes) =>
+                svcs.Factory<IHttpServer>(i => factory(i), lifetimes.Singleton()));
 
         /// <summary>
         /// Builds a new <see cref="WebService"/> instance.

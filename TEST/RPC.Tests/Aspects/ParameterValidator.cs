@@ -13,7 +13,6 @@ using NUnit.Framework;
 
 namespace Solti.Utils.Rpc.Aspects.Tests
 {
-    using DI;
     using DI.Interfaces;
     using Interfaces;
     using Interfaces.Properties;

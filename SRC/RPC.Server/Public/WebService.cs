@@ -4,15 +4,10 @@
 * Author: Denes Solti                                                           *
 ********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Microsoft.Extensions.Logging;
-
-#pragma warning disable CA1031 // Do not catch general exception types
 
 namespace Solti.Utils.Rpc
 {
@@ -41,7 +36,7 @@ namespace Solti.Utils.Rpc
             int workerId = Interlocked.Increment(ref FActiveWorkers);
 
             //
-            // Mindenkepp Trace-re keruljon.
+            // At this point we cannot grab logger instances, so trace instead
             //
 
             Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.LISTENER_THREAD_STARTED, workerId));
@@ -58,8 +53,8 @@ namespace Solti.Utils.Rpc
                         cts.Cancel();
 
                     //
-                    // Meg ha tudjuk is hogy a "worker" befejezodott akkor is legyen "await" hogy ha kivetel
-                    // volt akkor azt tovabb tudjuk dobni.
+                    // Use "await" even if we know that the worker was stopped successfully. Doing so will ensure that we
+                    // won't eat any exceptions thrown by the "wroker".
                     //
 
                     await worker;
@@ -68,13 +63,12 @@ namespace Solti.Utils.Rpc
             catch (Exception ex)
             {
                 if (ex is not OperationCanceledException)
-                    Trace.WriteLine(string.Format(TraceRes.Culture, TraceRes.EXCEPTION_IN_LISTENER_THREAD, workerId, ex));
+                    Trace.TraceError(string.Format(TraceRes.Culture, TraceRes.EXCEPTION_IN_LISTENER_THREAD, workerId, ex));
             }
             finally
             {
                 //
-                // Leallitaskor is dekrementaljuk az FActiveRequests valtozot, igy ha az negativ erteket er el akkor az utolso
-                // feldolgozo fogja kikuldeni az ertesitest a sikeres leallasrol.
+                // The last worker is supposed to notify the server about the successful termination.
                 //
 
                 if (Interlocked.Decrement(ref FActiveWorkers) is TERMINATED)
@@ -121,37 +115,44 @@ namespace Solti.Utils.Rpc
         {
             IHttpSession context = await HttpServer.WaitForSessionAsync(cancellation);
 
-            await using IInjector scope = ScopeFactory.CreateScope();
-
-            //
-            // Mivel nem tudjuk hogy a naplo szerviz szalbiztos e ezert minden munkafolyamat sajat peldanyt ker
-            //
+            await using IInjector scope = ScopeFactory.CreateScope(tag: context);
 
             ILogger? logger = scope.TryGet<ILogger>();
 
-            //
-            // Nem gond ha "logScope" NULL, nem lesz kivetel a using blokk vegen:
-            // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/statements#the-using-statement
-            //
+            DateTime started = DateTime.UtcNow;
 
-            using IDisposable? logScope = logger?.BeginScope(new Dictionary<string, object>
+            logger?.Info("WSVC-400", TraceRes.REQUEST_AVAILABLE, new
             {
-                ["Worker ID"] = workerId,
-                ["Url"] = HttpServer.Url,
-                ["Remote EndPoint"] = context.Request.RemoteEndPoint
+                WrokerId = workerId,
+                HttpServer.Url,
+                RequestId = context.Request.Id,
+                context.Request.RemoteEndPoint,
+                Started = started
             });
-
-            logger?.LogInformation(TraceRes.REQUEST_AVAILABLE);
 
             try
             {
                 await scope.Get<IRequestHandler>().HandleAsync(scope, context, cancellation);
 
-                logger?.LogInformation(TraceRes.REQUEST_PROCESSED);
+                logger?.Info("WSVC-401", TraceRes.REQUEST_PROCESSED, new
+                {
+                    WrokerId = workerId,
+                    HttpServer.Url,
+                    RequestId = context.Request.Id,
+                    context.Request.RemoteEndPoint,
+                    Took = (DateTime.UtcNow - started).TotalMilliseconds
+                });
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, TraceRes.REQUEST_PROCESSING_FAILED);
+                logger?.Error("WSVC-200", TraceRes.REQUEST_PROCESSING_FAILED, exception: ex, state: new
+                {
+                    WrokerId = workerId,
+                    HttpServer.Url,
+                    RequestId = context.Request.Id,
+                    context.Request.RemoteEndPoint,
+                    Took = (DateTime.UtcNow - started).TotalMilliseconds
+                });
 
                 if (!context.Response.IsClosed)
                 {
@@ -174,13 +175,12 @@ namespace Solti.Utils.Rpc
             ScopeFactory = diProvider.CreateFactory(cancellation);
 
             //
-            // TODO: Egyedi IScopeFactory implementacioknal a factory nem biztos hogy a gyoker scope is egyben.
+            // FIXME: In case of custom IScopeFactory implementation this cast may not work.
             //
 
             IInjector root = (IInjector) ScopeFactory;
 
             HttpServer = root.Get<IHttpServer>(); // singleton
-            Logger = root.TryGet<ILogger>(); // singleton | scoped
         }
 
         /// <summary>
@@ -192,12 +192,6 @@ namespace Solti.Utils.Rpc
         /// The underlying <see cref="IHttpServer"/> implementation.
         /// </summary>
         protected IHttpServer HttpServer { get; }
-
-        /// <summary>
-        /// The logger associated with this instance.
-        /// </summary>
-        /// <remarks>This logger belongs to the service itself, not intended to be used in worker threads.</remarks>
-        protected ILogger? Logger { get; } 
 
         /// <summary>
         /// Starts the service.
@@ -219,7 +213,7 @@ namespace Solti.Utils.Rpc
                 _ = CreateWorkerLoop();
             }
 
-            Logger?.LogInformation(TraceRes.SERVICE_STARTED);
+            Trace.TraceInformation(string.Format(TraceRes.Culture, TraceRes.SERVICE_STARTED));
 
             return Task.CompletedTask;
         }
@@ -233,25 +227,25 @@ namespace Solti.Utils.Rpc
                 throw new InvalidOperationException();
 
             //
-            // Workerek ertesitese hogy alljanak le.
+            // Notify the workers to stop
             //
 
             FStopSignal.Set();
 
             //
-            // Ujabb kereseket mar nem fogadunk.
+            // Prevent new requests from being processed
             //
 
             HttpServer.Stop();
 
             if (Interlocked.Decrement(ref FActiveWorkers) is not TERMINATED)
                 //
-                // Megvarjuk amig mindenki leall
+                // Wait while every workers stop
                 //
 
                 await FTerminatedSignal.AsTask();
 
-            Logger?.LogInformation(TraceRes.SERVICE_TERMINATED);
+            Trace.TraceInformation(string.Format(TraceRes.Culture, TraceRes.SERVICE_TERMINATED));
         }
 
         /// <summary>

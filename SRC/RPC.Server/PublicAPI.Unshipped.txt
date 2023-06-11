@@ -103,8 +103,7 @@ Solti.Utils.Rpc.IHttpResponseExtensions
 Solti.Utils.Rpc.InjectorDotNetBackend
 Solti.Utils.Rpc.InjectorDotNetBackend.CreateFactory(System.Threading.CancellationToken cancellation) -> Solti.Utils.DI.Interfaces.IScopeFactory
 Solti.Utils.Rpc.InjectorDotNetBackend.InjectorDotNetBackend() -> void
-Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions.get -> Solti.Utils.DI.Interfaces.ScopeOptions
-Solti.Utils.Rpc.InjectorDotNetBackend.ScopeOptions.set -> void
+Solti.Utils.Rpc.InjectorDotNetBackend.Lifetimes.get -> Solti.Utils.Rpc.Interfaces.Lifetimes!
 Solti.Utils.Rpc.InjectorDotNetBackend.Services.get -> Solti.Utils.DI.Interfaces.IServiceCollection
 Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute
 Solti.Utils.Rpc.Interfaces.LengthBetweenAttribute.LengthBetweenAttribute(int min = 0, int max = 2147483647) -> void
@@ -228,6 +227,9 @@ Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig
 Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.Timeout.get -> System.TimeSpan
 Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig
 Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema.get -> System.Collections.Generic.IReadOnlyDictionary<string, object>
+Solti.Utils.Rpc.Pipeline.ISessionHolder
+Solti.Utils.Rpc.Pipeline.ISessionHolder.Value.get -> Solti.Utils.Rpc.Interfaces.IHttpSession?
+Solti.Utils.Rpc.Pipeline.ISessionHolder.Value.set -> void
 Solti.Utils.Rpc.Pipeline.ISessionProviderConfig
 Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler
 Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.ModuleInvocationHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig config) -> void
@@ -303,9 +305,9 @@ Solti.Utils.Rpc.WebService.Start() -> System.Threading.Tasks.Task
 Solti.Utils.Rpc.WebService.Stop() -> System.Threading.Tasks.Task
 Solti.Utils.Rpc.WebService.WebService(Solti.Utils.Rpc.Interfaces.IDiProvider diProvider, System.Threading.CancellationToken cancellation) -> void
 Solti.Utils.Rpc.WebServiceBuilder
-Solti.Utils.Rpc.WebServiceBuilder.ConfigureBackend(System.Func<Solti.Utils.DI.Interfaces.IInjector, Solti.Utils.Rpc.Interfaces.IHttpServer> factory) -> Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.WebServiceBuilder.ConfigureBackend(Solti.Utils.DI.Interfaces.FactoryDelegate<Solti.Utils.Rpc.Interfaces.IHttpServer!>! factory) -> Solti.Utils.Rpc.WebServiceBuilder!
 Solti.Utils.Rpc.WebServiceBuilder.ConfigurePipeline(System.Action<Solti.Utils.Rpc.Interfaces.IRequestPipeConfigurator> configCallback) -> Solti.Utils.Rpc.WebServiceBuilder
-Solti.Utils.Rpc.WebServiceBuilder.ConfigureServices(System.Action<Solti.Utils.DI.Interfaces.IServiceCollection> configCallback) -> Solti.Utils.Rpc.WebServiceBuilder
+Solti.Utils.Rpc.WebServiceBuilder.ConfigureServices(System.Action<Solti.Utils.DI.Interfaces.IServiceCollection!, Solti.Utils.Rpc.Interfaces.Lifetimes!>! configCallback) -> Solti.Utils.Rpc.WebServiceBuilder!
 Solti.Utils.Rpc.WebServiceBuilder.DiProvider.get -> Solti.Utils.Rpc.Interfaces.IDiProvider
 Solti.Utils.Rpc.WebServiceBuilder.Pipe.get -> Solti.Utils.DI.Interfaces.AbstractServiceEntry
 Solti.Utils.Rpc.WebServiceBuilder.WebServiceBuilder() -> void

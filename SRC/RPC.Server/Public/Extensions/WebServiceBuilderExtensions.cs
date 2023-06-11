@@ -8,7 +8,6 @@ using System.Reflection;
 
 namespace Solti.Utils.Rpc
 {
-    using DI;
     using DI.Interfaces;
     using Interfaces;
     using Internals;
@@ -30,7 +29,7 @@ namespace Solti.Utils.Rpc
 
             return webServiceBuilder
                 .ConfigureBackend(_ => new HttpListenerBackend(url) { ReserveUrl = true })
-                .ConfigureServices(svcs => svcs.Service<ILogger, TraceLogger>(Lifetime.Scoped))
+                .ConfigureServices(static (svcs, lifetimes) => svcs.Service<ILogger, TraceLogger>(lifetimes.Scoped()))
                 .Build();
         }
 
@@ -82,7 +81,7 @@ namespace Solti.Utils.Rpc
                     .Use<ExceptionCatcher>(configurator));
 
             if (useDefaultLogger)
-                webServiceBuilder.ConfigureServices(services => services.Service<ILogger, TraceLogger>(Lifetime.Scoped));
+                webServiceBuilder.ConfigureServices(static (svcs, lifetime) => svcs.Service<ILogger, TraceLogger>(lifetime.Scoped()));
 
             return webServiceBuilder;
         }

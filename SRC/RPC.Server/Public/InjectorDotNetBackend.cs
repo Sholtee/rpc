@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Solti.Utils.Rpc
@@ -16,15 +17,26 @@ namespace Solti.Utils.Rpc
     /// </summary>
     public class InjectorDotNetBackend : IDiProvider
     {
-        /// <summary>
-        /// The configuration applied on each created scope.
-        /// </summary>
-        public ScopeOptions ScopeOptions { get; set; } = new();
+        private sealed class InjectorDotNetLifetimes : Lifetimes
+        {
+            private static readonly IReadOnlyDictionary<string, LifetimeBase> FAvailableLifetimes = new Dictionary<string, LifetimeBase>
+            {
+                { nameof(Lifetime.Singleton), Lifetime.Singleton },
+                { nameof(Lifetime.Scoped),    Lifetime.Scoped },
+                { nameof(Lifetime.Transient), Lifetime.Transient },
+                { nameof(Lifetime.Pooled),    Lifetime.Pooled },
+            };
+
+            public override LifetimeBase this[string name] => FAvailableLifetimes[name];
+        }
 
         /// <inheritdoc/>
-        public IServiceCollection Services { get; } = new ServiceCollection();
+        public IServiceCollection Services { get; } = ServiceCollection.Create();
 
         /// <inheritdoc/>
-        public IScopeFactory CreateFactory(CancellationToken cancellation) => ScopeFactory.Create(Services, ScopeOptions, cancellation);
+        public Lifetimes Lifetimes { get; } = new InjectorDotNetLifetimes();
+
+        /// <inheritdoc/>
+        public IScopeFactory CreateFactory(CancellationToken cancellation) => ScopeFactory.Create(Services);
     }
 }

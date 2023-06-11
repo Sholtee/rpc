@@ -11,8 +11,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Logging;
-
 namespace Solti.Utils.Rpc.Pipeline
 {
     using DI.Interfaces;
@@ -111,7 +109,7 @@ namespace Solti.Utils.Rpc.Pipeline
             if (IsPreflight(context))
             {
                 if (Config.AllowLogs)
-                    scope.TryGet<ILogger>()?.LogInformation(Trace.PREFLIGHT_REQUEST);
+                    scope.TryGet<ILogger>()?.Info("ACHA-400", Trace.PREFLIGHT_REQUEST);
 
                 context.Response.StatusCode = HttpStatusCode.NoContent;
                 return context.Response.Close();

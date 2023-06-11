@@ -7,7 +7,6 @@ using System;
 
 namespace Solti.Utils.Rpc.Hosting
 {
-    using DI;
     using DI.Interfaces;
     using Internals;
 

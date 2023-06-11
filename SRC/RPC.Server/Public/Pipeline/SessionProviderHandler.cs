@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Solti.Utils.Rpc.Pipeline
 {
-    using DI;
     using DI.Interfaces;
     using Interfaces;
 
@@ -19,8 +18,14 @@ namespace Solti.Utils.Rpc.Pipeline
     {
     }
 
+    /// <summary>
+    /// Contains the session information if available
+    /// </summary>
     file interface ISessionHolder
     {
+        /// <summary>
+        /// 
+        /// </summary>
         IHttpSession? Value { get; set; }
     }
 
@@ -67,10 +72,10 @@ namespace Solti.Utils.Rpc.Pipeline
 
             WebServiceBuilder.ConfigureServices
             (
-                svcs => svcs
-                    .Service<ISessionHolder, SessionHolder>(Lifetime.Scoped, suppressDispose)
-                    .Factory<IHttpRequest>(static i => i.Get<ISessionHolder>(null).Value!.Request, Lifetime.Scoped, suppressDispose)
-                    .Factory<IHttpResponse>(static i => i.Get<ISessionHolder>(null).Value!.Response, Lifetime.Scoped, suppressDispose)
+                (svcs, lifetimes) => svcs
+                    .Service<ISessionHolder, SessionHolder>(lifetimes.Scoped(), suppressDispose)
+                    .Factory<IHttpRequest>(static i => i.Get<ISessionHolder>(null).Value!.Request, lifetimes.Scoped(), suppressDispose)
+                    .Factory<IHttpResponse>(static i => i.Get<ISessionHolder>(null).Value!.Response, lifetimes.Scoped(), suppressDispose)
             );
 
             return new SessionProviderHandler(next, this);

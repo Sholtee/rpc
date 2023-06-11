@@ -1,4 +1,5 @@
-﻿override Solti.Utils.Rpc.Interfaces.Version.Equals(object obj) -> bool
+﻿abstract Solti.Utils.Rpc.Interfaces.Lifetimes.this[string! name].get -> Solti.Utils.DI.Interfaces.LifetimeBase!
+override Solti.Utils.Rpc.Interfaces.Version.Equals(object obj) -> bool
 override Solti.Utils.Rpc.Interfaces.Version.GetHashCode() -> int
 Solti.Utils.Rpc.Interfaces.AliasAttribute
 Solti.Utils.Rpc.Interfaces.AliasAttribute.AliasAttribute(string name) -> void
@@ -25,6 +26,7 @@ Solti.Utils.Rpc.Interfaces.ICustomValidator
 Solti.Utils.Rpc.Interfaces.ICustomValidator.SupportsNull.get -> bool
 Solti.Utils.Rpc.Interfaces.IDiProvider
 Solti.Utils.Rpc.Interfaces.IDiProvider.CreateFactory(System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> Solti.Utils.DI.Interfaces.IScopeFactory
+Solti.Utils.Rpc.Interfaces.IDiProvider.Lifetimes.get -> Solti.Utils.Rpc.Interfaces.Lifetimes!
 Solti.Utils.Rpc.Interfaces.IDiProvider.Services.get -> Solti.Utils.DI.Interfaces.IServiceCollection
 Solti.Utils.Rpc.Interfaces.IgnoreAttribute
 Solti.Utils.Rpc.Interfaces.IgnoreAttribute.IgnoreAttribute() -> void
@@ -60,6 +62,7 @@ Solti.Utils.Rpc.Interfaces.IJsonSerializer
 Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList<System.Type> elementTypes, System.IO.Stream input, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<object[]>
 Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync(System.Type type, object obj, System.IO.Stream output, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
 Solti.Utils.Rpc.Interfaces.ILogger
+Solti.Utils.Rpc.Interfaces.ILogger.BeginScope(object? state) -> System.IDisposable!
 Solti.Utils.Rpc.Interfaces.ILogger.Level.get -> Solti.Utils.Rpc.Interfaces.LogLevel
 Solti.Utils.Rpc.Interfaces.ILogger.Level.set -> void
 Solti.Utils.Rpc.Interfaces.ILogger.Log(Solti.Utils.Rpc.Interfaces.LogLevel logLevel, string! eventId, string! message, object? state, System.Exception? exception) -> void
@@ -93,6 +96,9 @@ Solti.Utils.Rpc.Interfaces.IRpcRequestContext.SessionId.get -> string
 Solti.Utils.Rpc.Interfaces.IServiceDescriptor
 Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Name.get -> System.Threading.Tasks.Task<string>
 Solti.Utils.Rpc.Interfaces.IServiceDescriptor.Version.get -> System.Threading.Tasks.Task<Solti.Utils.Rpc.Interfaces.Version>
+Solti.Utils.Rpc.Interfaces.Lifetimes
+Solti.Utils.Rpc.Interfaces.Lifetimes.Lifetimes() -> void
+Solti.Utils.Rpc.Interfaces.LifetimesExtensions
 Solti.Utils.Rpc.Interfaces.LogLevel
 Solti.Utils.Rpc.Interfaces.LogLevel.Critical = 1 -> Solti.Utils.Rpc.Interfaces.LogLevel
 Solti.Utils.Rpc.Interfaces.LogLevel.Debug = 5 -> Solti.Utils.Rpc.Interfaces.LogLevel
@@ -126,6 +132,10 @@ static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Error(this Solti.Utils.Rpc.I
 static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Info(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null) -> void
 static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Trace(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null) -> void
 static Solti.Utils.Rpc.Interfaces.ILoggerExtensions.Warning(this Solti.Utils.Rpc.Interfaces.ILogger! logger, string! eventId, string! message, object? state = null, System.Exception? exception = null) -> void
+static Solti.Utils.Rpc.Interfaces.LifetimesExtensions.Pooled(this Solti.Utils.Rpc.Interfaces.Lifetimes! src) -> Solti.Utils.DI.Interfaces.LifetimeBase!
+static Solti.Utils.Rpc.Interfaces.LifetimesExtensions.Scoped(this Solti.Utils.Rpc.Interfaces.Lifetimes! src) -> Solti.Utils.DI.Interfaces.LifetimeBase!
+static Solti.Utils.Rpc.Interfaces.LifetimesExtensions.Singleton(this Solti.Utils.Rpc.Interfaces.Lifetimes! src) -> Solti.Utils.DI.Interfaces.LifetimeBase!
+static Solti.Utils.Rpc.Interfaces.LifetimesExtensions.Transient(this Solti.Utils.Rpc.Interfaces.Lifetimes! src) -> Solti.Utils.DI.Interfaces.LifetimeBase!
 static Solti.Utils.Rpc.Interfaces.MemberInfoExtensions.GetId(this System.Reflection.MemberInfo member) -> string
 static Solti.Utils.Rpc.Interfaces.Version.implicit operator Solti.Utils.Rpc.Interfaces.Version(System.Diagnostics.FileVersionInfo src) -> Solti.Utils.Rpc.Interfaces.Version
 static Solti.Utils.Rpc.Interfaces.Version.implicit operator Solti.Utils.Rpc.Interfaces.Version(System.Version src) -> Solti.Utils.Rpc.Interfaces.Version
