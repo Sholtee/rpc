@@ -48,6 +48,7 @@ namespace Solti.Utils.Rpc
 
             webServiceBuilder
                 .ConfigurePipeline(pipeline => pipeline
+                    .Use<SessionProvider>()
                     .Use<Modules>(modules =>
                     {
                         modules.InstallBuiltInModules();
