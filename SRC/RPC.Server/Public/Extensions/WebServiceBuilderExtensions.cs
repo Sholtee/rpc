@@ -6,12 +6,9 @@
 using System;
 using System.Reflection;
 
-using Microsoft.Extensions.Logging;
-
-#pragma warning disable CA1054 // URI-like parameters should not be strings
-
 namespace Solti.Utils.Rpc
 {
+    using DI;
     using DI.Interfaces;
     using Interfaces;
     using Internals;
@@ -33,7 +30,7 @@ namespace Solti.Utils.Rpc
 
             return webServiceBuilder
                 .ConfigureBackend(_ => new HttpListenerBackend(url) { ReserveUrl = true })
-                .ConfigureServices(svcs => svcs.Factory<ILogger>(i => TraceLogger.Create<WebService>(), Lifetime.Scoped))
+                .ConfigureServices(svcs => svcs.Service<ILogger, TraceLogger>(Lifetime.Scoped))
                 .Build();
         }
 
@@ -84,7 +81,7 @@ namespace Solti.Utils.Rpc
                     .Use<ExceptionCatcher>(configurator));
 
             if (useDefaultLogger)
-                webServiceBuilder.ConfigureServices(services => services.Factory<ILogger>(_ => TraceLogger.Create<WebService>(), Lifetime.Scoped));
+                webServiceBuilder.ConfigureServices(services => services.Service<ILogger, TraceLogger>(Lifetime.Scoped));
 
             return webServiceBuilder;
         }

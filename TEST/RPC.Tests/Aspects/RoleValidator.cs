@@ -35,16 +35,16 @@ namespace Solti.Utils.Rpc.Aspects.Tests
         [RoleValidatorAspect]
         public interface IModule
         {
-            [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
+            [RequiredRoles<MyRoles>(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
             void Print();
-            [RequiredRoles(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
+            [RequiredRoles<MyRoles>(MyRoles.User | MyRoles.MayPrint, MyRoles.Admin)]
             Task<string> PrintAsync();
-            [RequiredRoles(MyRoles.Anonymous)]
+            [RequiredRoles<MyRoles>(MyRoles.Anonymous)]
             void Login();
             void MissingRequiredRoleAttribute();
             int Property 
             {
-                [RequiredRoles(MyRoles.Anonymous)]
+                [RequiredRoles<MyRoles>(MyRoles.Anonymous)]
                 get;
             }
         }

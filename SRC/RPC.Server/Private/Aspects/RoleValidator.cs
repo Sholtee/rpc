@@ -5,6 +5,7 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Security.Authentication;
 using System.Threading.Tasks;
@@ -14,6 +15,11 @@ namespace Solti.Utils.Rpc.Internals
     using DI.Interfaces;
     using Interfaces;
     using Properties;
+
+    internal interface IRequiredRolesAttribute
+    {
+        IReadOnlyList<Enum> RoleGroups { get; }
+    }
 
     /// <summary>
     /// Contains the role validation logic.
@@ -27,7 +33,10 @@ namespace Solti.Utils.Rpc.Internals
 
         private static IReadOnlyList<Enum> GetRequiredRoles(MethodInfo method)
         {
-            RequiredRolesAttribute? attr = method.GetCustomAttribute<RequiredRolesAttribute>();
+            IRequiredRolesAttribute? attr = method
+                .GetCustomAttributes()
+                .OfType<IRequiredRolesAttribute>()
+                .SingleOrDefault();
 
             //
             // Meg ha nem is szukseges szerep a metodus meghivasahoz, akkor is muszaj h szerepeljen az attributum

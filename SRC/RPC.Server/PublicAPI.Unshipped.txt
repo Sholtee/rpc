@@ -20,6 +20,8 @@ override Solti.Utils.Rpc.Pipeline.RequestTimeout.Build(Solti.Utils.Rpc.Interface
 override Solti.Utils.Rpc.Pipeline.RequestTimeoutHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
 override Solti.Utils.Rpc.Pipeline.SchemaProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler
 override Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector scope, Solti.Utils.Rpc.Interfaces.IHttpSession context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task
+override Solti.Utils.Rpc.Pipeline.SessionProvider.Build(Solti.Utils.Rpc.Interfaces.IRequestHandler! next) -> Solti.Utils.Rpc.Interfaces.IRequestHandler!
+override Solti.Utils.Rpc.Pipeline.SessionProviderHandler.HandleAsync(Solti.Utils.DI.Interfaces.IInjector! scope, Solti.Utils.Rpc.Interfaces.IHttpSession! context, System.Threading.CancellationToken cancellation) -> System.Threading.Tasks.Task!
 override Solti.Utils.Rpc.Servers.HttpListenerBackend.Dispose(bool disposeManaged) -> void
 override Solti.Utils.Rpc.WebService.AsyncDispose() -> System.Threading.Tasks.ValueTask
 override Solti.Utils.Rpc.WebService.Dispose(bool disposeManaged) -> void
@@ -58,10 +60,10 @@ Solti.Utils.Rpc.Aspects.NotNullAttribute.PropertyValidationErrorMessage.set -> v
 Solti.Utils.Rpc.Aspects.ParameterValidatorAspectAttribute
 Solti.Utils.Rpc.Aspects.ParameterValidatorAspectAttribute.Aggregate.get -> bool
 Solti.Utils.Rpc.Aspects.ParameterValidatorAspectAttribute.ParameterValidatorAspectAttribute(bool aggregate = false) -> void
-Solti.Utils.Rpc.Aspects.RequiredRolesAttribute
-Solti.Utils.Rpc.Aspects.RequiredRolesAttribute.RequiredRolesAttribute(object! roleGroup) -> void
-Solti.Utils.Rpc.Aspects.RequiredRolesAttribute.RequiredRolesAttribute(params object![]! roleGroups) -> void
-Solti.Utils.Rpc.Aspects.RequiredRolesAttribute.RoleGroups.get -> System.Collections.Generic.IReadOnlyList<System.Enum!>!
+Solti.Utils.Rpc.Aspects.RequiredRolesAttribute<TRoles>
+Solti.Utils.Rpc.Aspects.RequiredRolesAttribute<TRoles>.RequiredRolesAttribute(params TRoles[]! roleGroups) -> void
+Solti.Utils.Rpc.Aspects.RequiredRolesAttribute<TRoles>.RequiredRolesAttribute(TRoles roleGroup) -> void
+Solti.Utils.Rpc.Aspects.RequiredRolesAttribute<TRoles>.RoleGroups.get -> System.Collections.Generic.IReadOnlyList<System.Enum!>!
 Solti.Utils.Rpc.Aspects.RoleValidatorAspectAttribute
 Solti.Utils.Rpc.Aspects.RoleValidatorAspectAttribute.RoleValidatorAspectAttribute() -> void
 Solti.Utils.Rpc.Aspects.TransactionalAttribute
@@ -226,6 +228,7 @@ Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig
 Solti.Utils.Rpc.Pipeline.IRequestTimeoutHandlerConfig.Timeout.get -> System.TimeSpan
 Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig
 Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig.Schema.get -> System.Collections.Generic.IReadOnlyDictionary<string, object>
+Solti.Utils.Rpc.Pipeline.ISessionProviderConfig
 Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler
 Solti.Utils.Rpc.Pipeline.ModuleInvocationHandler.ModuleInvocationHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.IModuleInvocationHandlerConfig config) -> void
 Solti.Utils.Rpc.Pipeline.Modules
@@ -266,6 +269,11 @@ Solti.Utils.Rpc.Pipeline.SchemaProvider.Schema.get -> System.Collections.Generic
 Solti.Utils.Rpc.Pipeline.SchemaProvider.SchemaProvider(Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder parent) -> void
 Solti.Utils.Rpc.Pipeline.SchemaProviderHandler
 Solti.Utils.Rpc.Pipeline.SchemaProviderHandler.SchemaProviderHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler next, Solti.Utils.Rpc.Pipeline.ISchemaProviderHandlerConfig config) -> void
+Solti.Utils.Rpc.Pipeline.SessionProvider
+Solti.Utils.Rpc.Pipeline.SessionProvider.SessionProvider(Solti.Utils.Rpc.WebServiceBuilder! webServiceBuilder, Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder? parent) -> void
+Solti.Utils.Rpc.Pipeline.SessionProvider.WebServiceBuilder.get -> Solti.Utils.Rpc.WebServiceBuilder!
+Solti.Utils.Rpc.Pipeline.SessionProviderHandler
+Solti.Utils.Rpc.Pipeline.SessionProviderHandler.SessionProviderHandler(Solti.Utils.Rpc.Interfaces.IRequestHandler! next, Solti.Utils.Rpc.Pipeline.ISessionProviderConfig! config) -> void
 Solti.Utils.Rpc.Servers.HttpListenerBackend
 Solti.Utils.Rpc.Servers.HttpListenerBackend.HttpListenerBackend(string url) -> void
 Solti.Utils.Rpc.Servers.HttpListenerBackend.IsStarted.get -> bool
@@ -315,6 +323,10 @@ static Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveSslCert(System.Net.IPEn
 static Solti.Utils.Rpc.Servers.HttpListenerBackend.RemoveUrlReservation(string url) -> void
 static Solti.Utils.Rpc.WebServiceBuilderExtensions.BuildMinimalService(this Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, string url = "http://localhost:1986") -> Solti.Utils.Rpc.WebService
 static Solti.Utils.Rpc.WebServiceBuilderExtensions.ConfigureRpcService(this Solti.Utils.Rpc.WebServiceBuilder webServiceBuilder, System.Action<Solti.Utils.Rpc.Pipeline.RequestHandlerBuilder> configurator, bool useDefaultLogger = true) -> Solti.Utils.Rpc.WebServiceBuilder
+System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute
+System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute.CompilerFeatureRequiredAttribute(string! name) -> void
+System.Runtime.CompilerServices.RequiredMemberAttribute
+System.Runtime.CompilerServices.RequiredMemberAttribute.RequiredMemberAttribute() -> void
 virtual Solti.Utils.Rpc.Aspects.ValidatorAttributeBase.ShouldRun(System.Reflection.MethodInfo! containingMethod, object?[]! args) -> bool
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.CreateServiceBuilder() -> Solti.Utils.Rpc.WebServiceBuilder
 virtual Solti.Utils.Rpc.Hosting.AppHostBase.OnBuilt() -> void

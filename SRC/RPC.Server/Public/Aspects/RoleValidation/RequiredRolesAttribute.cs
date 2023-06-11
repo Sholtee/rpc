@@ -5,19 +5,19 @@
 ********************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Solti.Utils.Rpc.Aspects
 {
     using Interfaces.Properties;
+    using Internals;
 
     /// <summary>
     /// Specifies the roles required for the module method invocation.
     /// </summary>
     /// <remarks>The module should be annotated with the <see cref="RoleValidatorAspectAttribute"/>.</remarks>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class RequiredRolesAttribute: Attribute
+    public sealed class RequiredRolesAttribute<TRoles>: Attribute, IRequiredRolesAttribute where TRoles: Enum
     {
         /// <summary>
         /// The list of role groups required for module method invocation, e.g.: <br/>
@@ -28,19 +28,17 @@ namespace Solti.Utils.Rpc.Aspects
         public IReadOnlyList<Enum> RoleGroups { get; }
 
         /// <summary>
-        /// Creates a new <see cref="RequiredRolesAttribute"/> instance. You may specify more groups: <br/>
+        /// Creates a new <see cref="RequiredRolesAttribute{TRoles}"/> instance. You may specify more groups: <br/>
         /// [MyRoles.Admin)]
         /// </summary>
         /// <param name="roleGroup"></param>
-        [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments", Justification = "See 'RoleGroups'")]
-        public RequiredRolesAttribute(object roleGroup): this(new[] { roleGroup }) { } // "object[]" nem felel meg a CLS specifikacionak
+        public RequiredRolesAttribute(TRoles roleGroup): this(new TRoles[] { roleGroup }) { }
 
         /// <summary>
-        /// Creates a new <see cref="RequiredRolesAttribute"/> instance. You may specify more groups: <br/>
+        /// Creates a new <see cref="RequiredRolesAttribute{TRoles}"/> instance. You may specify more groups: <br/>
         /// [RequiredRoles(MyRoles.StandardUser | MyRoles.CanPrint, MyRoles.Admin)]
         /// </summary>
-        [SuppressMessage("Design", "CA1019:Define accessors for attribute arguments", Justification = "See 'RoleGroups'")]
-        public RequiredRolesAttribute(params object[] roleGroups) // CS0181 "roleGroups" Enum[] nem lehet =(
+        public RequiredRolesAttribute(params TRoles[] roleGroups)
         {
             if (roleGroups is null)
                 throw new ArgumentNullException(nameof(roleGroups));

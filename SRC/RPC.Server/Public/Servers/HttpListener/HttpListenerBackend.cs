@@ -34,45 +34,32 @@ namespace Solti.Utils.Rpc.Servers
 
         private sealed class HttpListenerRequestWrapper : IHttpRequest
         {
-            public HttpListenerRequestWrapper(HttpListenerRequest originalRequest)
-            {
-                Headers         = new NameValueCollectionWrapper(originalRequest.Headers);
-                QueryParameters = new NameValueCollectionWrapper(originalRequest.QueryString);
-                Method          = originalRequest.HttpMethod;
-                Payload         = originalRequest.InputStream;
-                RemoteEndPoint  = originalRequest.RemoteEndPoint;
-                OriginalRequest = originalRequest;
-                Id              = originalRequest.RequestTraceIdentifier;
-                Url             = originalRequest.Url;
-                ContentType     = originalRequest.ContentType;
-            }
+            public HttpListenerRequestWrapper(HttpListenerRequest originalRequest) => OriginalRequest = originalRequest;
 
-            public IReadOnlyDictionary<string, string> Headers { get; }
+            public IReadOnlyDictionary<string, string> Headers => new NameValueCollectionWrapper(OriginalRequest.Headers);
 
-            public IReadOnlyDictionary<string, string> QueryParameters { get; }
+            public IReadOnlyDictionary<string, string> QueryParameters => new NameValueCollectionWrapper(OriginalRequest.QueryString);
 
-            public string Method { get; }
+            public string Method => OriginalRequest.HttpMethod;
 
-            public Stream Payload { get; }
+            public Stream Payload => OriginalRequest.InputStream;
 
-            public IPEndPoint RemoteEndPoint { get; }
+            public IPEndPoint RemoteEndPoint => OriginalRequest.RemoteEndPoint;
 
-            public object OriginalRequest { get; }
+            object IHttpRequest.OriginalRequest => OriginalRequest;
 
-            public Guid Id { get; }
+            public Guid Id => OriginalRequest.RequestTraceIdentifier;
 
-            public Uri Url { get; }
+            public Uri Url => OriginalRequest.Url;
 
-            public string ContentType { get; }
+            public HttpListenerRequest OriginalRequest { get; }
+
+            public string ContentType => OriginalRequest.ContentType;
         }
 
         private sealed class HttpListenerResponseWrapper : IHttpResponse
         {
-            public HttpListenerResponseWrapper(HttpListenerResponse originalResponse)
-            {
-                OriginalResponse = originalResponse;
-                Headers = new NameValueCollectionWrapper(originalResponse.Headers);
-            }
+            public HttpListenerResponseWrapper(HttpListenerResponse originalResponse) => OriginalResponse = originalResponse; 
 
             public HttpListenerResponse OriginalResponse { get; }
 
@@ -80,7 +67,7 @@ namespace Solti.Utils.Rpc.Servers
 
             public Stream Payload => OriginalResponse.OutputStream;
 
-            public IDictionary<string, string> Headers { get; }
+            public IDictionary<string, string> Headers => new NameValueCollectionWrapper(OriginalResponse.Headers);
 
             public bool IsClosed { get; private set; }
 

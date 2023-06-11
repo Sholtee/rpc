@@ -5,10 +5,12 @@
 ********************************************************************************/
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 
 namespace Solti.Utils.Rpc
 {
+    using DI;
     using DI.Interfaces;
     using Interfaces;
 
@@ -41,7 +43,7 @@ namespace Solti.Utils.Rpc
             Pipe = DiProvider
                 .Services
                 .Service<IRequestHandler, DefaultHandler>(Lifetime.Scoped)
-                .LastEntry;
+                .Last();
         }
 
         /// <summary>

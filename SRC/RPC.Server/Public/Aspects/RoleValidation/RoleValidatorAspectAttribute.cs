@@ -21,6 +21,6 @@ namespace Solti.Utils.Rpc.Aspects
         /// <summary>
         /// Creates a new <see cref="RoleValidatorAspectAttribute"/> instance.
         /// </summary>
-        public RoleValidatorAspectAttribute() : base(typeof(RoleValidator));
+        public RoleValidatorAspectAttribute() : base(typeof(RoleValidator)) { }
     }
 }

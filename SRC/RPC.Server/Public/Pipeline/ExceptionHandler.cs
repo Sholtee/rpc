@@ -8,10 +8,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Logging;
-
-#pragma warning disable CA1031 // We have to catch all kind of exceptions here
-
 namespace Solti.Utils.Rpc.Pipeline
 {
     using DI.Interfaces;
@@ -92,7 +88,7 @@ namespace Solti.Utils.Rpc.Pipeline
             catch (Exception ex)
             {
                 if (Config.AllowLogs)
-                    scope.TryGet<ILogger>()?.LogError(ex, Trace.REQUEST_PROCESSING_FAILED);
+                    scope.TryGet<ILogger>()?.Error("EXHA-200", Trace.REQUEST_PROCESSING_FAILED, exception: ex);
 
                 await ProcessUnhandledException(ex, context);
             }
