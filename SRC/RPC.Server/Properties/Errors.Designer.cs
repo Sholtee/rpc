@@ -187,6 +187,15 @@ namespace Solti.Utils.Rpc.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot request context outside of session..
+        /// </summary>
+        internal static string NO_SESSION {
+            get {
+                return ResourceManager.GetString("NO_SESSION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The JSON string must represent an array..
         /// </summary>
         internal static string NOT_AN_ARRAY {

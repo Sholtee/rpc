@@ -3,6 +3,7 @@
 *                                                                               *
 * Author: Denes Solti                                                           *
 ********************************************************************************/
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace Solti.Utils.Rpc.Pipeline
 {
     using DI.Interfaces;
     using Interfaces;
+    using Properties;
 
     /// <summary>
     /// 
@@ -60,6 +62,9 @@ namespace Solti.Utils.Rpc.Pipeline
             public IHttpSession? Value { get; set; }
         }
 
+        private static IHttpSession GetSession(IInjector injector) =>
+            injector.Get<ISessionHolder>(null).Value ?? throw new InvalidOperationException(Errors.NO_SESSION);
+
         /// <summary>
         /// Creates a new <see cref="SessionProvider"/> instance.
         /// </summary>
@@ -74,8 +79,8 @@ namespace Solti.Utils.Rpc.Pipeline
             (
                 (svcs, lifetimes) => svcs
                     .Service<ISessionHolder, SessionHolder>(lifetimes.Scoped(), suppressDispose)
-                    .Factory<IHttpRequest>(static i => i.Get<ISessionHolder>(null).Value!.Request, lifetimes.Scoped(), suppressDispose)
-                    .Factory<IHttpResponse>(static i => i.Get<ISessionHolder>(null).Value!.Response, lifetimes.Scoped(), suppressDispose)
+                    .Factory<IHttpRequest>(static i => GetSession(i).Request, lifetimes.Scoped(), suppressDispose)
+                    .Factory<IHttpResponse>(static i => GetSession(i).Response, lifetimes.Scoped(), suppressDispose)
             );
 
             return new SessionProviderHandler(next, this);

@@ -62,7 +62,7 @@ Solti.Utils.Rpc.Interfaces.IJsonSerializer
 Solti.Utils.Rpc.Interfaces.IJsonSerializer.DeserializeMultiTypeArrayAsync(System.Collections.Generic.IReadOnlyList<System.Type> elementTypes, System.IO.Stream input, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<object[]>
 Solti.Utils.Rpc.Interfaces.IJsonSerializer.SerializeAsync(System.Type type, object obj, System.IO.Stream output, System.Threading.CancellationToken cancellation = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task
 Solti.Utils.Rpc.Interfaces.ILogger
-Solti.Utils.Rpc.Interfaces.ILogger.BeginScope(object? state) -> System.IDisposable!
+Solti.Utils.Rpc.Interfaces.ILogger.BeginScope(object! state) -> System.IDisposable!
 Solti.Utils.Rpc.Interfaces.ILogger.Level.get -> Solti.Utils.Rpc.Interfaces.LogLevel
 Solti.Utils.Rpc.Interfaces.ILogger.Level.set -> void
 Solti.Utils.Rpc.Interfaces.ILogger.Log(Solti.Utils.Rpc.Interfaces.LogLevel logLevel, string! eventId, string! message, object? state, System.Exception? exception) -> void

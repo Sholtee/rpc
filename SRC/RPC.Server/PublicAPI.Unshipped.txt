@@ -168,12 +168,11 @@ Solti.Utils.Rpc.Internals.CommandLineApplication.CommandLineApplication(System.C
 Solti.Utils.Rpc.Internals.CommandLineApplication.GetParsedArguments<T>() -> T
 Solti.Utils.Rpc.Internals.CommandLineApplication.Run() -> int
 Solti.Utils.Rpc.Internals.LoggerBase
+Solti.Utils.Rpc.Internals.LoggerBase.BeginScope(object! state) -> System.IDisposable!
 Solti.Utils.Rpc.Internals.LoggerBase.Level.get -> Solti.Utils.Rpc.Interfaces.LogLevel
 Solti.Utils.Rpc.Internals.LoggerBase.Level.set -> void
-Solti.Utils.Rpc.Internals.LoggerBase.LoggerBase(Solti.Utils.Rpc.Interfaces.IHttpRequest? request) -> void
-Solti.Utils.Rpc.Internals.LoggerBase.Origin.get -> string!
-Solti.Utils.Rpc.Internals.LoggerBase.Origin.set -> void
-Solti.Utils.Rpc.Internals.LoggerBase.Request.get -> Solti.Utils.Rpc.Interfaces.IHttpRequest?
+Solti.Utils.Rpc.Internals.LoggerBase.LoggerBase() -> void
+Solti.Utils.Rpc.Internals.LoggerBase.Scopes.get -> System.Collections.Generic.Stack<System.Collections.Generic.IDictionary<string!, object?>!>!
 Solti.Utils.Rpc.Internals.ModuleInvocation
 Solti.Utils.Rpc.Internals.ModuleInvocationBuilder
 Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.AddModule(System.Type iface) -> void
@@ -345,7 +344,6 @@ virtual Solti.Utils.Rpc.Internals.AspectInterceptor.Decorator(Solti.Utils.DI.Int
 virtual Solti.Utils.Rpc.Internals.AspectInterceptor.DecoratorAsync(Solti.Utils.DI.Interfaces.IInvocationContext! context, Solti.Utils.DI.Interfaces.Next<Solti.Utils.DI.Interfaces.IInvocationContext!, System.Threading.Tasks.Task<object?>!>! callNext) -> System.Threading.Tasks.Task<object?>!
 virtual Solti.Utils.Rpc.Internals.CommandLineApplication.OnRun() -> void
 virtual Solti.Utils.Rpc.Internals.CommandLineApplication.OnUnhandledException(System.Exception ex) -> void
-virtual Solti.Utils.Rpc.Internals.LoggerBase.BeginScope(string! scopeId, object? state) -> System.IDisposable!
 virtual Solti.Utils.Rpc.Internals.LoggerBase.Log(Solti.Utils.Rpc.Interfaces.LogLevel logLevel, string! eventId, string! message, object? state, System.Exception? exception) -> void
 virtual Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetDeserializerFor(System.Reflection.MethodInfo ifaceMethod) -> System.Func<Solti.Utils.DI.Interfaces.IInjector, System.IO.Stream, System.Threading.CancellationToken, System.Threading.Tasks.Task<object[]>>
 virtual Solti.Utils.Rpc.Internals.ModuleInvocationBuilder.GetMemberId(System.Reflection.MemberInfo member) -> string

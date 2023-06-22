@@ -54,6 +54,11 @@ namespace Solti.Utils.Rpc.Interfaces
     public interface ILogger
     {
         /// <summary>
+        /// Begins a new logica scope
+        /// </summary>
+        IDisposable BeginScope(object state);
+
+        /// <summary>
         /// Writes a log entry.
         /// </summary>
         void Log(LogLevel logLevel, string eventId, string message, object? state, Exception? exception);

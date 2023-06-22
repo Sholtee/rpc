@@ -168,6 +168,9 @@
   <data name="NO_ROLES_SPECIFIED" xml:space="preserve">
     <value>There is no RequiredRoles attribute specified for the module method {0}.</value>
   </data>
+  <data name="NO_SESSION" xml:space="preserve">
+    <value>Cannot request context outside of session.</value>
+  </data>
   <data name="SC_INVOCATION_FAILED" xml:space="preserve">
     <value>Service Control Manager invocation failed.</value>
   </data>

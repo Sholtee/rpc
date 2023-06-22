@@ -119,13 +119,14 @@ namespace Solti.Utils.Rpc
 
             ILogger? logger = scope.TryGet<ILogger>();
 
+            using IDisposable? logScope = logger?.BeginScope(new { RequestId = context.Request.Id });
+
             DateTime started = DateTime.UtcNow;
 
             logger?.Info("WSVC-400", TraceRes.REQUEST_AVAILABLE, new
             {
                 WrokerId = workerId,
                 HttpServer.Url,
-                RequestId = context.Request.Id,
                 context.Request.RemoteEndPoint,
                 Started = started
             });
@@ -136,10 +137,6 @@ namespace Solti.Utils.Rpc
 
                 logger?.Info("WSVC-401", TraceRes.REQUEST_PROCESSED, new
                 {
-                    WrokerId = workerId,
-                    HttpServer.Url,
-                    RequestId = context.Request.Id,
-                    context.Request.RemoteEndPoint,
                     Took = (DateTime.UtcNow - started).TotalMilliseconds
                 });
             }
@@ -147,10 +144,6 @@ namespace Solti.Utils.Rpc
             {
                 logger?.Error("WSVC-200", TraceRes.REQUEST_PROCESSING_FAILED, exception: ex, state: new
                 {
-                    WrokerId = workerId,
-                    HttpServer.Url,
-                    RequestId = context.Request.Id,
-                    context.Request.RemoteEndPoint,
                     Took = (DateTime.UtcNow - started).TotalMilliseconds
                 });
 
