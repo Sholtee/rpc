@@ -84,6 +84,11 @@ namespace Solti.Utils.Rpc.Internals
                         Level = logLevel,
                         EventId = eventId ?? throw new ArgumentNullException(nameof(eventId)),
                         Message = message ?? throw new ArgumentNullException(nameof(message)),
+
+                        //
+                        // Merge scopes and state
+                        //
+
                         State = Scopes.Reverse().Aggregate
                         (
                             state is not null ? AsDictionary(state) : new Dictionary<string, object?>(),
@@ -134,6 +139,17 @@ namespace Solti.Utils.Rpc.Internals
             return new ScopeLifetime(Scopes);
         }
 
+        private static readonly MethodInfo FDictionaryAdd = 
+        (
+            (MethodCallExpression) 
+            (
+                (Expression<Action<Dictionary<string, object?>>>)
+                (
+                    static dict => dict.Add(null!, null)
+                )
+            ).Body
+        ).Method;
+
         private static IDictionary<string, object?> AsDictionary(object state)
         {
             return state as IDictionary<string, object?> ?? FConverterCache.GetOrAdd(state.GetType(), ConverterFactory).Invoke(state);
@@ -141,17 +157,17 @@ namespace Solti.Utils.Rpc.Internals
             static Func<object, IDictionary<string, object?>> ConverterFactory(Type type)
             {
                 ParameterExpression
-                    state = Expression.Parameter(typeof(object), nameof(state)),
+                    state     = Expression.Parameter(typeof(object), nameof(state)),
                     converted = Expression.Variable(type, nameof(converted)),
-                    result = Expression.Variable(typeof(IDictionary<string, object?>), nameof(result));
+                    result    = Expression.Variable(typeof(IDictionary<string, object?>), nameof(result));
 
                 BlockExpression block = Expression.Block
                 (
-                    type: typeof(IDictionary<string, object?>),
-                    variables: new[] { result, converted },
+                    type:        typeof(IDictionary<string, object?>),
+                    variables:   new ParameterExpression[] { result, converted },
                     expressions: new Expression[]
                     {
-                        Expression.Assign(result, Expression.New(typeof(Dictionary<string, object>))),
+                        Expression.Assign(result, Expression.New(typeof(Dictionary<string, object?>))),
                         Expression.Assign(converted, Expression.Convert(state, type))
                     }
                     .Concat
@@ -161,10 +177,10 @@ namespace Solti.Utils.Rpc.Internals
                             .Where(static prop => prop.CanRead)
                             .Select
                             (
-                                prop => Expression.Invoke
+                                prop => Expression.Call
                                 (
-                                    Expression.Constant((Action<IDictionary<string, object?>, string, object?>)AddValue),
                                     result,
+                                    FDictionaryAdd,
                                     Expression.Constant(prop.Name),
                                     Expression.Convert
                                     (
@@ -178,8 +194,6 @@ namespace Solti.Utils.Rpc.Internals
                 );
 
                 return Expression.Lambda<Func<object, IDictionary<string, object?>>>(body: block, state).Compile();
-
-                static void AddValue(IDictionary<string, object?> result, string name, object? value) => result[name] = value;
             }
         }
     }
